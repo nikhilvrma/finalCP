@@ -30,22 +30,22 @@ class Function_lib {
 		return 0;
 	}
 
-	public function getCourses(){
+	public function checkEMailExist($email){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getCourses();
+		return $CI->function->checkEMailExist($email);
 	}
 
-	public function getColleges(){
+	public function checkMobileExist($mobile){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getColleges();
+		return $CI->function->checkMobileExist($mobile);
 	}
 
-	public function getSkillQuestions(){
+	public function register($data){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getSkillQuestions();
+		return $CI->function->register($data);
 	}
 
 }

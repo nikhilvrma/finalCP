@@ -30,11 +30,7 @@ class Home extends CI_Controller {
 		$this->load->view('login', $this->data);
 	}
 
-	public function employer(){
-		$this->data['pageTitle'] = "Employer";
 
-		$this->load->view('employer', $this->data);
-	}
 
 	public function verifyContactDetails(){
 		$this->data['pageTitle'] = "Verify Contact Details";
@@ -99,6 +95,13 @@ class Home extends CI_Controller {
 		$this->data['activePage'] = "7";
 		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 		$this->load->view('changePassword', $this->data);
+	}
+
+
+	public function employer(){
+		$this->data['pageTitle'] = "Employer";
+
+		$this->load->view('employer', $this->data);
 	}
 
 

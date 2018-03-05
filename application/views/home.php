@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?php echo $pageTitle."|Backoffice-CampusPuppy"; ?></title>
+    <title><?php echo $pageTitle; ?></title>
 
     <?php echo $headerFiles; ?>
 
@@ -48,7 +48,11 @@
     <div class="container" style="margin-top: 70px;">
 
 
-
+      <?php if($message['content']!=''){?>
+      <ol class="breadcrumb" style="background-color: white !important; margin-top: 20px; border: 1px solid <?=$message['color']?>;">
+        <li style="color: <?=$message['color']?>;"><?=$message['content']?></li>
+      </ol>
+    	<?php }?>
 
       <div class="row">
 

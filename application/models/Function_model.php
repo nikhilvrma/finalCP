@@ -20,21 +20,24 @@ class Function_model extends CI_Model {
 		return $result->result_array();
 	}
 
-	public function getCourses(){
-		$result = $this->db->get('courses');
-		return $result->result_array();
+	public function checkEMailExist($email){
+		$result = $this->db->get_where('users', array('email' => $email), 1, 0);
+		if ($result->num_rows()>0) {
+			return true;
+		}
+		return false;
 	}
 
-	public function getColleges(){
-		$result = $this->db->get('colleges');
-		return $result->result_array();
+	public function checkMobileExist($mobile){
+		$result = $this->db->get_where('users', array('mobile' => $mobile), 1, 0);
+		if ($result->num_rows()>0) {
+			return true;
+		}
+		return false;
 	}
 
-	public function getSkillQuestions(){
-		$this->db->select('skillQuestions.question, skills.skill_name');
-		$this->db->join('skills', 'skills.skillID=skillQuestions.skill_id');
-		$result = $this->db->get('skillQuestions');
-		return $result->result_array();
+	public function register($data){
+		return $this->db->insert('users', $data);
 	}
 
 }
