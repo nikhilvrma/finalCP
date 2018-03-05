@@ -68,4 +68,6 @@ $route['change-password'] = 'home/changePassword';
 
 $route['employer'] = 'home/employer';
 
+$route['employer/job-offers'] = 'home/jobOffers';
+
 $route['translate_uri_dashes'] = FALSE;

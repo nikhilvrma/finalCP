@@ -41,4 +41,41 @@ class Functions extends CI_Controller {
 		redirect(base_url('login'));
 	}
 
+	public function register(){
+		$name = '';
+		$email = '';
+		$mobile = '';
+		$password = '';
+		$cpassword = '';
+		$accountType = '';
+		if($x = $this->input->post('name')){
+			$name = $x;
+		}
+		if($x = $this->input->post('email')){
+			$email = $x;
+		}
+		if($x = $this->input->post('mobile')){
+			$mobile = $x;
+		}
+		if($x = $this->input->post('password')){
+			$password = $x;
+		}
+		if($x = $this->input->post('cpassword')){
+			$cpassword = $x;
+		}
+		if($x = $this->input->post('accountType')){
+			$accountType = $x;
+		}
+		$password = md5($password);
+		$cpassword = md5($cpassword);
+		$data = array(
+			'name' => $name,
+			'email' => $email,
+			'mobile' => $mobile,
+			'password' => $password,
+			'accountType' => $accountType
+		);
+
+	}
+
 }

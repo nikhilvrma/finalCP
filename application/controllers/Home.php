@@ -20,7 +20,9 @@ class Home extends CI_Controller {
 	}
 
 	public function index() {
-		redirect(base_url('login'));
+		$this->data['pageTitle'] = "CampusPuppy";
+		$this->load->view('home', $this->data);
+
 	}
 
 	public function login(){
