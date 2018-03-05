@@ -59,7 +59,7 @@
 
               <div class="col-lg-12 mb-4">
               <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#education">
-                Add Education
+                Add Work Experience
               </button>
               </div>
 
@@ -67,7 +67,7 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Add Education</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Add Work Experience</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -75,49 +75,110 @@
                     <form>
                     <div class="modal-body">
 
+                        <div class="row">
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
-                            <label>Education Type:</label>
-                            <select class="form-control" name="" required>
-                              <option value="1">High School</option>
-                              <option value="1">Senior Seconday (or equivalent) School</option>
-                              <option value="1">Graduation</option>
-                                <option value="1">Post-Graduation</option>
-                              </select>
+                            <label>Company Name:</label>
+                            <input type="text" class="form-control" name="" required>
                           </div>
                         </div>
-
+                        </div>
+                        <div class="row">
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
-                            <label>Year:</label>
+                            <label>Position:</label>
+                            <input type="text" class="form-control" name="" required>
+                          </div>
+                        </div>
+                        </div>
+
+                        <div class="row">
+                        <div class="col-md-12">
+                        <label><b>Start Date</b></label>
+                      </div>
+
+                        <div class="col-md-8 control-group form-group">
+                          <div class="controls">
+                            <label>Start Month:</label>
                             <select class="form-control" name="" required>
-                              <?php for($i=2025; $i>1960; $i--){ ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                              <?php } ?>
+                              <option value="1">January</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
                             </select>
-                            <p class="help-block"></p>
                           </div>
                         </div>
 
-                        <div class="col-md-12 control-group form-group">
+                        <div class="col-md-4 control-group form-group">
                           <div class="controls">
-                            <label>Score Type:</label>
+                            <label>Start Year:</label>
+                            <input type="text" class="form-control" name="" required>
+                          </div>
+                        </div>
+
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                          <label><b>End Date</b></label>
+                        </div>
+                        <div class="col-md-8 control-group form-group">
+                          <div class="controls">
+                            <label>End Month:</label>
                             <select class="form-control" name="" required>
-                              <option>CGPA</option>
-                              <option>Percentage</option>
+                              <option value="1">January</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
                             </select>
-                            <p class="help-block"></p>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 control-group form-group">
+                          <div class="controls">
+                            <label>End Year:</label>
+                            <input type="text" class="form-control" name="" required>
                           </div>
                         </div>
 
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
-                            <label>Score:</label>
-                            <input class="form-control" placeholder="Score">
-                            <p class="help-block"></p>
+                            <input type="checkbox" name="" required>
+                            <label> Currently Work Here</label>
                           </div>
                         </div>
 
+                        </div>
+
+
+                        <div class="row">
+                        <div class="col-md-12 control-group form-group">
+                          <div class="controls">
+                            <label>Role:</label>
+                            <textarea class="form-control" id="role" name="" required>
+                            </textarea>
+                          </div>
+                        </div>
+                        </div>
+
+
+                        <div class="row">
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Supporting Document:</label>
@@ -125,19 +186,13 @@
                             <p class="help-block"></p>
                           </div>
                         </div>
-
-                        <div class="col-md-12 control-group form-group">
-                          <div class="controls">
-                            <label>School/Education Board:</label>
-                            <input type="text" class="form-control" placeholder="School/Education Board">
-                            <p class="help-block"></p>
-                          </div>
                         </div>
+
 
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Add Education</button>
+                      <button type="button" class="btn btn-primary">Add Work Experience</button>
                     </div>
                   </form>
                   </div>
@@ -159,6 +214,13 @@
     <?php echo $footer; ?>
 
     <?php echo $footerFiles; ?>
+
+    <script src="<?= base_url('assets/ckeditor/ckeditor.js')?>"></script>
+    <script>
+      $(document).ready(function(){
+        editor = CKEDITOR.replace('role');
+      });
+      </script>
 
   </body>
 

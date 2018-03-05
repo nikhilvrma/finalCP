@@ -57,6 +57,9 @@ $route['skills'] = 'home/skills';
 $route['skill-test'] = 'home/skillTest';
 $route['skill-test-guidelines'] = 'home/skillTestGuidelines';
 $route['educational-details'] = 'home/educationalDetails';
+
+$route['verify-contact-details'] = 'home/verifyContactDetails';
+
 $route['work-experience'] = 'home/workExperience';
 $route['resume'] = 'home/resume';
 

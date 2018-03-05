@@ -34,6 +34,15 @@ class Home extends CI_Controller {
 		$this->load->view('employer', $this->data);
 	}
 
+	public function verifyContactDetails(){
+		$this->data['pageTitle'] = "Verify Contact Details";
+		$this->data['activePage'] = "0";
+
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+
+		$this->load->view('verifyContactDetails', $this->data);
+	}
+
 	public function generalDetails(){
 		$this->data['pageTitle'] = "General Details";
 		$this->data['activePage'] = "2";
