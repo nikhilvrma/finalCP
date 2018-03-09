@@ -104,5 +104,9 @@ class Home extends CI_Controller {
 		$this->load->view('employer', $this->data);
 	}
 
+	public function report(){
+		$this->load->view('report', $this->data);
+	}
+
 
 }
