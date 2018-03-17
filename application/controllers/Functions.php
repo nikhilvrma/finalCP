@@ -15,22 +15,28 @@ class Functions extends CI_Controller {
 	}
 
 	public function login(){
-		$username = '';
+		$email = '';
 		$password = '';
-		if($x = $this->input->post('username')){
-			$username = $x;
+		if($x = $this->input->post('email')){
+			$email = $x;
 		}
 		if($x = $this->input->post('password')){
 			$password = $x;
 		}
-		$password = md5($password);
-		$result = $this->function_lib->login($username, $password);
-		if($result){
-			redirect(base_url('/add-new-user'));
+		if($this->function_lib->checkEMailExist($email)){
+			$password = md5($password);
+			$result = $this->function_lib->login($email, $password);
+			if($result){
+				redirect(base_url('/general-details'));
+			}
+			else{
+				$this->session->set_flashdata('message', array('content'=>'Wrong Password. Please Try Again.','color'=>'red'));
+				redirect(base_url());
+			}
 		}
 		else{
-			$this->session->set_flashdata('message', array('content'=>'Check Username and/or Password','color'=>'red'));
-			redirect(base_url('/login'));
+			$this->session->set_flashdata('message', array('content'=>'This E-Mail Address is not registered with us. Please Register to Proceed Ahead.','color'=>'red'));
+			redirect(base_url());
 		}
 	}
 
@@ -38,7 +44,7 @@ class Functions extends CI_Controller {
 		$this->session->set_userdata('user_data', false);
 		$this->session->set_userdata('user_data', []);
 		$this->session->sess_destroy();
-		redirect(base_url('login'));
+		redirect(base_url());
 	}
 
 	public function register(){

@@ -7,16 +7,16 @@ class Function_model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function login($username,$password){
-		$result = $this->db->get_where('users', array('username' => $username,'password' => $password, 'active'=>1), 1, 0);
+	public function login($email,$password){
+		$result = $this->db->get_where('users', array('email' => $email,'password' => $password, 'active'=>1), 1, 0);
 		if ($result->num_rows()>0) {
 			return $result;
 		}
 		return false;
 	}
 
-	public function getUserData($username){
-		$result = $this->db->get_where('adminAuth', array('username' => $username));
+	public function getUserData($email){
+		$result = $this->db->get_where('users', array('email' => $email));
 		return $result->result_array();
 	}
 

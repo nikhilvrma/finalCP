@@ -23,20 +23,22 @@
         </a>
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
+        <form method="post" action="<?php echo base_url('functions/login'); ?>">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item" style="margin-right: 10px;">
             <label style="color: white;"><b>E-Mail Address</b></label>
-            <input type="text" placeholder="E-Mail Address" style="padding: 5px;">
+            <input type="text" name="email" placeholder="E-Mail Address" style="padding: 5px;">
           </li>
           <li class="nav-item" style="margin-right: 10px;">
             <label style="color: white;"><b>Password</b></label>
-            <input type="password" placeholder="Password" style="padding: 5px;">
+            <input type="password" name="password" placeholder="Password" style="padding: 5px;">
             <a style="color: white; font-size: 12px;">Forgot Password?</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-primary" href="about.html" style="margin: auto; border-color: white !important; margin-top: 30px;">Sign In</a>
+            <button type="submit" class="btn btn-primary" style="margin: auto; border-color: white !important; margin-top: 30px;">Sign In</button>
           </li>
         </ul>
+        </form>
     </div>
 
 

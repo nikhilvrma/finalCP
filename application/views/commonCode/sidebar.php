@@ -1,7 +1,7 @@
 <div class="col-lg-3 mb-4">
   <center><img class="img-responsive" src="<?php echo base_url('assets/images/profile-images/default-user.jpg'); ?>" style="width: 70%; margin: 10px; border-radius: 50%;"></center>
   <center><b>Nikhil Verma</b></center>
-  <center><a style="font-size: 14px;">Sign Out</a></center>
+  <center><a href="<?php echo base_url('functions/signout'); ?>" style="font-size: 14px;">Sign Out</a></center>
   <div class="list-group" style="margin-top: 15px;">
 
     <a class="list-group-item sidebar-item"><b style="float: right;">User-Profile</b></a>

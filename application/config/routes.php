@@ -63,7 +63,6 @@ $route['verify-contact-details'] = 'home/verifyContactDetails';
 $route['work-experience'] = 'home/workExperience';
 $route['resume'] = 'home/resume';
 
-$route['login'] = 'home/login';
 $route['change-password'] = 'home/changePassword';
 
 $route['employer'] = 'home/employer';

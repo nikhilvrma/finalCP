@@ -2,17 +2,20 @@
 
 class Function_lib {
 
-	public function login($username,$password){
+	public function login($email,$password){
 		$CI =& get_instance();
 		$CI->load->model('function_model','function');
-		$result = $CI->function->login($username,$password);
-		$userData = $CI->function->getUserData($username);
+		$result = $CI->function->login($email,$password);
+		$userData = $CI->function->getUserData($email);
 		if ($result) {
 			$data = array(
 				'loggedIn' => true,
-				'username' => $username,
+				'email' => $email,
 				'name' => $userData[0]['name'],
-				'profileImage'	=>	$userData[0]['profileImage']
+				'profileImage'	=>	$userData[0]['profileImage'],
+				'accountType' => $userData[0]['accountType'],
+				'emailVerified' => $userData[0]['emailVerified'],
+				'mobileVerified' => $userData[0]['mobileVerified']
 				);
 			$CI->session->set_userdata('user_data', $data);
 			return 1;

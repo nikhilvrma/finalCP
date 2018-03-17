@@ -19,36 +19,55 @@ class Home extends CI_Controller {
 		// $this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
 	}
 
-	public function index() {
-		$this->data['pageTitle'] = "CampusPuppy";
-		$this->load->view('home', $this->data);
-
+	public function index(){
+		if($this->function_lib->auth()){
+			redirect(base_url('general-details'));
+		}
+		else{
+			$this->data['pageTitle'] = "CampusPuppy";
+			$this->load->view('home', $this->data);
+		}
 	}
-
-	public function login(){
-		$this->data['pageTitle'] = "Login";
-		$this->load->view('login', $this->data);
-	}
-
 
 
 	public function verifyContactDetails(){
-		$this->data['pageTitle'] = "Verify Contact Details";
-		$this->data['activePage'] = "0";
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				redirect(base_url('general-details'));
+			}
+			else{
+				$this->data['pageTitle'] = "Verify Contact Details";
+				$this->data['activePage'] = "0";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('verifyContactDetails', $this->data);
+			}
+		}
+		else{
+			redirect(base_url());
+		}
 
-		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-
-		$this->load->view('verifyContactDetails', $this->data);
 	}
 
 	public function generalDetails(){
-		$this->data['pageTitle'] = "General Details";
-		$this->data['activePage'] = "2";
-		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-		$this->load->view('generalDetails', $this->data);
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "General Details";
+				$this->data['activePage'] = "2";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('generalDetails', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
+
 	}
 
 	public function skills(){
+		$this->auth();
 		$this->data['pageTitle'] = "Skills";
 		$this->data['activePage'] = "3";
 		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
@@ -56,6 +75,7 @@ class Home extends CI_Controller {
 	}
 
 	public function skillTest(){
+		$this->auth();
 		$this->data['pageTitle'] = "Skill Test";
 		$this->data['activePage'] = "3";
 		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
@@ -63,6 +83,7 @@ class Home extends CI_Controller {
 	}
 
 	public function skillTestGuidelines(){
+		$this->auth();
 		$this->data['pageTitle'] = "Skill Test Guidelines";
 		$this->data['activePage'] = "3";
 		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
@@ -70,6 +91,7 @@ class Home extends CI_Controller {
 	}
 
 	public function educationalDetails(){
+		$this->auth();
 		$this->data['pageTitle'] = "Educational Details";
 		$this->data['activePage'] = "4";
 		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
@@ -77,6 +99,7 @@ class Home extends CI_Controller {
 	}
 
 	public function workExperience(){
+		$this->auth();
 		$this->data['pageTitle'] = "Work Experience";
 		$this->data['activePage'] = "5";
 		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
@@ -84,6 +107,7 @@ class Home extends CI_Controller {
 	}
 
 	public function resume(){
+		$this->auth();
 		$this->data['pageTitle'] = "Resume";
 		$this->data['activePage'] = "6";
 		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
@@ -91,10 +115,25 @@ class Home extends CI_Controller {
 	}
 
 	public function changePassword(){
+		$this->auth();
 		$this->data['pageTitle'] = "Change Password";
 		$this->data['activePage'] = "7";
 		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 		$this->load->view('changePassword', $this->data);
+	}
+
+	public function auth(){
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				redirect(base_url('general-details'));
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
 	}
 
 
