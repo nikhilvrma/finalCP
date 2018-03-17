@@ -36,6 +36,11 @@ class Function_model extends CI_Model {
 		return false;
 	}
 
+	public function updateGeneralDetails($data, $userID){
+		$this->db->where('userID', $userID);
+		return $this->db->update('users', $data);
+	}
+
 	public function register($data){
 		return $this->db->insert('users', $data);
 	}

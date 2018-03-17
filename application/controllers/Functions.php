@@ -107,8 +107,25 @@ class Functions extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'Your Password and Confirm Password do not match with each-other. Please Try Again.','color'=>'red'));
 			redirect(base_url());
 		}
+	}
 
-
+	public function updateGeneralDetails(){
+		$careerObjective = '';
+		if($x = $this->input->post('careerObjective')){
+			$careerObjective = $x;
+		}
+		$data = array(
+			'careerObjective' => $careerObjective
+		);
+		$result = $this->function_lib->updateGeneralDetails($data, $_SESSION['user_data']['userID']);
+		if($result){
+			$this->session->set_flashdata('message', array('content'=>'Career Objective successfully Updated','color'=>'green'));
+			redirect(base_url('general-details'));
+		}
+		else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}
 	}
 
 }

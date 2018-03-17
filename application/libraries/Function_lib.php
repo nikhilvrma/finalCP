@@ -10,6 +10,7 @@ class Function_lib {
 		if ($result) {
 			$data = array(
 				'loggedIn' => true,
+				'userID' => $userData[0]['userID'],
 				'email' => $email,
 				'name' => $userData[0]['name'],
 				'profileImage'	=>	$userData[0]['profileImage'],
@@ -33,6 +34,12 @@ class Function_lib {
 		return 0;
 	}
 
+	public function updateGeneralDetails($data, $userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->updateGeneralDetails($data, $userID);
+	}
+
 	public function checkEMailExist($email){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -49,6 +56,12 @@ class Function_lib {
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->register($data);
+	}
+
+	public function getUserData($email){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getUserData($email);
 	}
 
 }

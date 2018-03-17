@@ -54,6 +54,8 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "General Details";
 				$this->data['activePage'] = "2";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->data['generalData'] = $this->function_lib->getUserData($_SESSION['user_data']['email']);
+				$this->data['generalData'] = $this->data['generalData'][0];
 				$this->load->view('generalDetails', $this->data);
 			}
 			else{
@@ -67,65 +69,114 @@ class Home extends CI_Controller {
 	}
 
 	public function skills(){
-		$this->auth();
-		$this->data['pageTitle'] = "Skills";
-		$this->data['activePage'] = "3";
-		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-		$this->load->view('skills', $this->data);
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "Skills";
+				$this->data['activePage'] = "3";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('skills', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
 	}
 
 	public function skillTest(){
-		$this->auth();
-		$this->data['pageTitle'] = "Skill Test";
-		$this->data['activePage'] = "3";
-		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-		$this->load->view('skillTest', $this->data);
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "Skill Test";
+				$this->data['activePage'] = "3";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('skillTest', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
 	}
 
 	public function skillTestGuidelines(){
-		$this->auth();
-		$this->data['pageTitle'] = "Skill Test Guidelines";
-		$this->data['activePage'] = "3";
-		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-		$this->load->view('skillTestGuidelines', $this->data);
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "Skill Test Guidelines";
+				$this->data['activePage'] = "3";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('skillTestGuidelines', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
 	}
 
 	public function educationalDetails(){
-		$this->auth();
-		$this->data['pageTitle'] = "Educational Details";
-		$this->data['activePage'] = "4";
-		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-		$this->load->view('educationalDetails', $this->data);
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "Educational Details";
+				$this->data['activePage'] = "4";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('educationalDetails', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
 	}
 
 	public function workExperience(){
-		$this->auth();
-		$this->data['pageTitle'] = "Work Experience";
-		$this->data['activePage'] = "5";
-		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-		$this->load->view('workExperience', $this->data);
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "Work Experience";
+				$this->data['activePage'] = "5";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('workExperience', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
 	}
 
 	public function resume(){
-		$this->auth();
-		$this->data['pageTitle'] = "Resume";
-		$this->data['activePage'] = "6";
-		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-		$this->load->view('resume', $this->data);
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "Resume";
+				$this->data['activePage'] = "6";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('resume', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
 	}
 
 	public function changePassword(){
-		$this->auth();
-		$this->data['pageTitle'] = "Change Password";
-		$this->data['activePage'] = "7";
-		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-		$this->load->view('changePassword', $this->data);
-	}
-
-	public function auth(){
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
-				redirect(base_url('general-details'));
+				$this->data['pageTitle'] = "Change Password";
+				$this->data['activePage'] = "7";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('changePassword', $this->data);
 			}
 			else{
 				redirect(base_url('verify-contact-details'));

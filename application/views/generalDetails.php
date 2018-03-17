@@ -22,6 +22,7 @@
 
 
       <?php if($message['content']!=''){?>
+        
       <ol class="breadcrumb" style="background-color: white !important; margin-top: 20px; border: 1px solid <?=$message['color']?>;">
         <li style="color: <?=$message['color']?>;"><?=$message['content']?></li>
       </ol>
@@ -37,7 +38,7 @@
           <div class="clearfix"></div>
           <hr>
 
-          <form name="sentMessage" id="contactForm" novalidate>
+          <form method="post" action="<?php echo base_url('functions/updateGeneralDetails'); ?>">
 
             <div class="row">
 
@@ -46,7 +47,7 @@
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label>Full Name:</label>
-                  <input type="text" class="form-control" name="" value="Nikhil Verma" required>
+                  <input type="text" class="form-control" value="<?php echo $generalData['name']; ?>" disabled>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -54,7 +55,7 @@
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
                   <label>E-Mail Address:</label>
-                  <input type="email" class="form-control" name="" value="vrmanikhil@gmail.com" required>
+                  <input type="email" class="form-control" value="<?php echo $generalData['email']; ?>" disabled>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -62,7 +63,7 @@
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
                   <label>Mobile Number:</label>
-                  <input type="text" maxlength="10" value="7503705892" class="form-control" name="" required>
+                  <input type="text" maxlength="10" class="form-control" value="<?php echo $generalData['mobile']; ?>" disabled>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -70,7 +71,8 @@
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label>Career Objective:</label>
-                  <textarea class="form-control" id="careerObjective" required>
+                  <textarea class="form-control" id="careerObjective" name="careerObjective" required>
+                     <?php echo $generalData['careerObjective']; ?>
                   </textarea>
                   <p class="help-block"></p>
                 </div>
