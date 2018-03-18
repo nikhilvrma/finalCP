@@ -23,7 +23,7 @@
 
 
       <?php if($message['content']!=''){?>
-      <ol class="breadcrumb" style="background-color: white !important; border: 1px solid <?=$message['color']?>;">
+      <ol class="breadcrumb" style="background-color: white !important; margin-top: 30px; border: 1px solid <?=$message['color']?>;">
         <li style="color: <?=$message['color']?>;"><?=$message['content']?></li>
       </ol>
     	<?php }?>
@@ -45,7 +45,7 @@
 
               <div class="col-md-12 mb-4 control-group form-group">
                 <div class="controls">
-                  <label>Current Password:</label>
+                  <label><b>Current Password:</b></label>
                   <input type="password" class="form-control" name="currentPassword" required placeholder="Current Password">
                   <p class="help-block"></p>
                 </div>
@@ -53,7 +53,7 @@
 
               <div class="col-md-12 mb-4 control-group form-group">
                 <div class="controls">
-                  <label>New Password:</label>
+                  <label><b>New Password:</b></label>
                   <input type="password" class="form-control" name="newPassword" required placeholder="New Password">
                   <p class="help-block"></p>
                 </div>
@@ -61,7 +61,7 @@
 
               <div class="col-md-12 mb-4 control-group form-group">
                 <div class="controls">
-                  <label>Confirm New Password:</label>
+                  <label><b>Confirm New Password:</b></label>
                   <input type="password" class="form-control" name="confirmNewPassword" required placeholder="Confirm New Password">
                   <p class="help-block"></p>
                 </div>

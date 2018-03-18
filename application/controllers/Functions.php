@@ -164,7 +164,7 @@ class Functions extends CI_Controller {
 			}
 		}
 		else{
-			$this->session->set_flashdata('message', array('content'=>'Your New Password, does not matches with Confirm New Password, Please Try Again.','color'=>'green'));
+			$this->session->set_flashdata('message', array('content'=>'Your New Password, does not matches with Confirm New Password, Please Try Again.','color'=>'red'));
 			redirect(base_url('change-password'));
 		}
 	}

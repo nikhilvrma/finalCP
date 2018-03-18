@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 09, 2018 at 08:57 PM
+-- Generation Time: Mar 18, 2018 at 10:08 PM
 -- Server version: 5.7.21-0ubuntu0.16.04.1
 -- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
@@ -2113,6 +2113,32 @@ INSERT INTO `indianCities` (`cityID`, `city`, `state`) VALUES
 (565, 'Wokha', 'Nagaland'),
 (566, 'Yavatmal', 'Maharashtra'),
 (567, 'Zunhebotto', 'Nagaland');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `offers`
+--
+
+CREATE TABLE `offers` (
+  `offerID` int(11) NOT NULL,
+  `offerType` enum('1','2') NOT NULL,
+  `offerTitle` varchar(255) NOT NULL,
+  `offerDescription` longtext NOT NULL,
+  `openings` int(5) NOT NULL,
+  `joiningDate` date NOT NULL,
+  `applicationDeadline` date NOT NULL,
+  `approved` tinyint(1) NOT NULL DEFAULT '0',
+  `active` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `offers`
+--
+
+INSERT INTO `offers` (`offerID`, `offerType`, `offerTitle`, `offerDescription`, `openings`, `joiningDate`, `applicationDeadline`, `approved`, `active`) VALUES
+(1, '1', 'This is a Test Offer Title', '<p>sdfs</p>', 5, '0545-04-05', '0545-04-05', 0, 0),
+(2, '1', 'This is a Test Offer Title', '<p>ad</p>', 5, '2018-04-01', '2018-03-22', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -5824,6 +5850,7 @@ CREATE TABLE `users` (
   `mobile` bigint(10) NOT NULL,
   `mobileVerified` tinyint(1) NOT NULL,
   `resumeReferenceNumber` varchar(255) DEFAULT NULL,
+  `careerObjective` text,
   `password` varchar(255) NOT NULL,
   `gender` enum('M','F') DEFAULT NULL,
   `profileImage` varchar(255) NOT NULL DEFAULT 'assets/images/profile-images/default-user.jpg',
@@ -5837,9 +5864,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userID`, `name`, `email`, `emailVerified`, `mobile`, `mobileVerified`, `resumeReferenceNumber`, `password`, `gender`, `profileImage`, `accountType`, `cityID`, `active`, `created_at`) VALUES
-(1, 'Nikhil Verma', 'vrmanikhil@gmail.com', 0, 7503705892, 0, NULL, '0cc175b9c0f1b6a831c399e269772661', 'M', 'assets/images/profile-images/default-user.jpg', '1', 135, 1, '2018-03-05 14:37:47'),
-(2, 'Itishri Singh', 'itishri.singh12@gmail.com', 0, 4554545454, 0, NULL, '0cc175b9c0f1b6a831c399e269772661', NULL, 'assets/images/profile-images/default-user.jpg', '1', 135, 1, '2018-03-05 14:43:24');
+INSERT INTO `users` (`userID`, `name`, `email`, `emailVerified`, `mobile`, `mobileVerified`, `resumeReferenceNumber`, `careerObjective`, `password`, `gender`, `profileImage`, `accountType`, `cityID`, `active`, `created_at`) VALUES
+(1, 'Nikhil Verma', 'vrmanikhil@gmail.com', 1, 7503705892, 1, NULL, '<p>This is my Career Objective.</p>', '0cc175b9c0f1b6a831c399e269772661', 'M', 'assets/images/profile-images/default-user.jpg', '1', 135, 1, '2018-03-18 16:33:21'),
+(2, 'Itishri Singh', 'itishri.singh12@gmail.com', 0, 4554545454, 0, NULL, NULL, '0cc175b9c0f1b6a831c399e269772661', NULL, 'assets/images/profile-images/default-user.jpg', '1', 135, 1, '2018-03-05 14:43:24'),
+(3, 'Sahil Kumar Maurya', 'sahil.kr.maurya@gmail.com', 0, 9875454555, 0, NULL, NULL, '0cc175b9c0f1b6a831c399e269772661', NULL, 'assets/images/profile-images/default-user.jpg', '1', 135, 1, '2018-03-17 19:59:52');
 
 -- --------------------------------------------------------
 
@@ -5914,6 +5942,12 @@ ALTER TABLE `feedbackQuestions`
 --
 ALTER TABLE `indianCities`
   ADD PRIMARY KEY (`cityID`);
+
+--
+-- Indexes for table `offers`
+--
+ALTER TABLE `offers`
+  ADD PRIMARY KEY (`offerID`);
 
 --
 -- Indexes for table `skillQuestions`
@@ -5992,6 +6026,11 @@ ALTER TABLE `feedbackQuestions`
 ALTER TABLE `indianCities`
   MODIFY `cityID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=568;
 --
+-- AUTO_INCREMENT for table `offers`
+--
+ALTER TABLE `offers`
+  MODIFY `offerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `skillQuestions`
 --
 ALTER TABLE `skillQuestions`
@@ -6010,7 +6049,7 @@ ALTER TABLE `subSkills`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `workExperience`
 --
