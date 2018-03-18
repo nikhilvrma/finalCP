@@ -78,27 +78,36 @@
             <div class="col-md-12 mb-4">
 
               <div class="card">
-                <h6 class="card-header cardheader">NIKHIL VERMA</h6>
+                <h6 class="card-header cardheader">NIKHIL VERMA<br><br><label style="font-size: 14px;">View Profile</label></h6>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Offer Type: </b>Job Offer</p>
-                      <p class="card-text"><b>Offer Location(s): </b>New Delhi, Gurgaon</p>
+                      <p class="card-text" style="font-size: 14px;"><b>Skills: </b><br>
+                        <ul style="font-size: 14px;">
+                          <li>General Aptitude <sup style="color: red;">Premium</sup></li>
+                          <li>PHP</li>
+                          <li>HTML</li>
+                        </ul>
+                      </p>
                     </div>
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Application Deadline: </b>1st April 2018</p>
-                      <p class="card-text"><b>Joining Date: </b>25th March 2018</p>
+                      <p class="card-text"><b>Status: </b><label style="color: green;">Selected</label></p>
+                      <p class="card-text"><b>Gender: </b>Male</p>
+                      <p class="card-text"><b>Location: </b>New Delhi, Delhi</p>
                     </div>
                     <div class="col-md-12 mb-4">
-                      <p class="card-text"><b>Skills Required: </b>General Aptitude, PHP, HTML, CSS</p>
+                      <p class="card-text"><b>E-Mail Address: </b><i>Select Applicant to unlock E-Mail Address</i></p>
+                      <p class="card-text"><b>Mobile Number: </b><i>Select Applicant to unlock Mobile Number</i></p>
                     </div>
                   </div>
 
                 </div>
                 <div class="card-footer">
                   <small class="text-muted" style="float: right;">
-                    <a class="btn btn-primary" style="color: white; margin: 10px;">Access Applicants</a>
-                    <a class="btn btn-primary" style="color: white; margin: 10px;">View Offer</a>
+                    <a class="btn btn-success" style="color: white; margin: 10px;">Select Applicant</a>
+                    <a class="btn btn-warning" style="color: white; margin: 10px;">Short-List Applicant</a>
+                    <a class="btn btn-danger" style="color: white; margin: 10px;">Reject Applicant</a>
+                    <a class="btn btn-primary" style="color: white; margin: 10px;">Compare Applicant</a>
                   </small>
                 </div>
               </div>
