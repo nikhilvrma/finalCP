@@ -66,6 +66,9 @@ $route['resume'] = 'home/resume';
 $route['change-password'] = 'home/changePassword';
 
 $route['add-new-offer'] = 'home/addNewOffer';
+$route['my-added-offers'] = 'home/myAddedOffers';
+$route['hiring-nucleus/applicants'] = 'home/applicants';
+$route['hiring-nucleus/compare-applicants'] = 'home/compareApplicants';
 
 $route['employer'] = 'home/employer';
 $route['report'] = 'home/report';

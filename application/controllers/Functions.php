@@ -220,6 +220,7 @@ class Functions extends CI_Controller {
 				$this->session->set_flashdata('message', array('content'=>'Offer Joining Date cannot be before the Offer Application Deadline. Please Try Again.','color'=>'red'));
 				redirect(base_url('add-new-offer'));
 			}
+
 			if($offerType == '' || $offerTitle == '' || $offerDescription == '' || $openings == '' || $joiningDate == '' || $applicationDeadline == ''){
 				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.2','color'=>'red'));
 				redirect(base_url('add-new-offer'));
