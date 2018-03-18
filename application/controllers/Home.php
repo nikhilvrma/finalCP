@@ -187,6 +187,23 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function addNewOffer(){
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "Add New Offer";
+				$this->data['activePage'] = "9";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('addNewOffer', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
+	}
+
 
 	public function employer(){
 		$this->data['pageTitle'] = "Employer";

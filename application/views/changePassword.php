@@ -39,7 +39,7 @@
           <div class="clearfix"></div>
           <hr>
 
-          <form name="sentMessage" id="contactForm" novalidate>
+          <form action="<?php echo base_url('functions/changePassword'); ?>" method="post">
 
             <div class="row">
 
@@ -69,7 +69,7 @@
 
             </div>
 
-            <button type="submit" class="btn btn-lg btn-primary" id="sendMessageButton" style="float: right;">Change Password</button>
+            <button type="submit" class="btn btn-lg btn-primary" style="float: right;">Change Password</button>
           </form>
 
         </div>

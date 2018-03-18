@@ -45,4 +45,21 @@ class Function_model extends CI_Model {
 		return $this->db->insert('users', $data);
 	}
 
+	public function addOffer($data){
+		return $this->db->insert('offers', $data);
+	}
+
+	public function checkPasswordMatch($email, $password){
+		$result = $this->db->get_where('users', array('email' => $email,'password' => $password), 1, 0);
+		if ($result->num_rows()>0) {
+			return true;
+		}
+		return false;
+	}
+
+	public function changePassword($email, $password){
+		$query = "UPDATE users SET password='$password' WHERE email='$email'";
+		return $this->db->query($query);
+	}
+
 }

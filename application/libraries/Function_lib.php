@@ -64,4 +64,22 @@ class Function_lib {
 		return $CI->function->getUserData($email);
 	}
 
+	public function addOffer($data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->addOffer($data);
+	}
+
+	public function checkPasswordMatch($email, $password){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->checkPasswordMatch($email, $password);
+	}
+
+	public function changePassword($email, $password){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->changePassword($email, $password);
+	}
+
 }

@@ -65,6 +65,8 @@ $route['resume'] = 'home/resume';
 
 $route['change-password'] = 'home/changePassword';
 
+$route['add-new-offer'] = 'home/addNewOffer';
+
 $route['employer'] = 'home/employer';
 $route['report'] = 'home/report';
 

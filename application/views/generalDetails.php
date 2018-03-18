@@ -22,7 +22,7 @@
 
 
       <?php if($message['content']!=''){?>
-        
+
       <ol class="breadcrumb" style="background-color: white !important; margin-top: 20px; border: 1px solid <?=$message['color']?>;">
         <li style="color: <?=$message['color']?>;"><?=$message['content']?></li>
       </ol>
@@ -86,6 +86,44 @@
 
             <button type="submit" class="btn btn-lg btn-primary" id="sendMessageButton" style="float: right;">Update General Details</button>
           </form>
+
+          <div class="clearfix"></div>
+
+          <h3 class="mt-4 mb-3" style="float: right;">Profile Image</h3>
+          <div class="clearfix"></div>
+          <hr>
+          <div class="row">
+
+          <div class="col-md-4 mb-4">
+            <b>Current Profile Image</b>
+            <center><img src="<?php echo base_url().$_SESSION['user_data']['profileImage']; ?>" style="width: 100%;"></center>
+          </div>
+
+          <div class="col-md-8 mb-4">
+            <b>Upload New Profile Image</b>
+
+            <form method="post" action="<?php echo base_url('functions/updateProfileImage'); ?>">
+
+
+                <br>
+
+                <div class="col-md-12 control-group form-group">
+                  <div class="controls">
+                    <label>New Profile Image:</label>
+                    <input type="file" class="form-control">
+                    <p class="help-block" style="font-size: 14px;">Formats allowed include .jpg, .jpeg, and .png<br>Maximum file size allowed in 4 MB</p>
+                  </div>
+                </div>
+
+
+
+
+
+              <button type="submit" class="btn btn-primary" style="float: right;">Update Profile Image</button>
+            </form>
+
+          </div>
+        </div>
 
         </div>
       </div>
