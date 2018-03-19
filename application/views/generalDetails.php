@@ -78,8 +78,21 @@
                 </div>
               </div>
 
+              <div class="col-md-12 control-group form-group">
+                <div class="controls">
+                  <label>Company Name:</label>
+                  <input type="text" class="form-control" placeholder="Company Name">
+                  <p class="help-block"></p>
+                </div>
+              </div>
 
-
+              <div class="col-md-12 control-group form-group">
+                <div class="controls">
+                  <label>Company Description:</label>
+                  <textarea class="form-control" id="companyDescription"></textarea>
+                  <p class="help-block"></p>
+                </div>
+              </div>
 
 
             </div>
@@ -125,6 +138,44 @@
           </div>
         </div>
 
+        <div class="clearfix"></div>
+
+        <h3 class="mt-4 mb-3" style="float: right;">Company Logo</h3>
+        <div class="clearfix"></div>
+        <hr>
+        <div class="row">
+
+        <div class="col-md-5 mb-4">
+          <b>Current Uploaded Company Logo</b>
+          <p style="margin-top: 20px; font-size: 14px;">No Logo Uploaded Yet</p>
+        </div>
+
+        <div class="col-md-7 mb-4">
+          <b>Upload New Company Logo</b>
+
+          <form method="post" action="<?php echo base_url('functions/updateProfileImage'); ?>">
+
+
+              <br>
+
+              <div class="col-md-12 control-group form-group">
+                <div class="controls">
+                  <label>New Company Logo:</label>
+                  <input type="file" class="form-control">
+                  <p class="help-block" style="font-size: 14px;">Formats allowed include .jpg, .jpeg, and .png<br>Maximum file size allowed in 4 MB</p>
+                </div>
+              </div>
+
+
+
+
+
+            <button type="submit" class="btn btn-primary" style="float: right;">Update Company Logo</button>
+          </form>
+
+        </div>
+      </div>
+
         </div>
       </div>
 
@@ -138,6 +189,7 @@
     <script>
       $(document).ready(function(){
         editor = CKEDITOR.replace('careerObjective');
+        editor = CKEDITOR.replace('companyDescription');
       });
       </script>
 
