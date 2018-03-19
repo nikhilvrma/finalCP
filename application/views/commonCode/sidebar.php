@@ -6,6 +6,8 @@
 
     <a class="list-group-item sidebar-item"><b style="float: right;">User-Profile</b></a>
     <a href="<?php echo base_url('general-details'); ?>" class="list-group-item sidebar-item <?php if($activePage=="2") { echo "sidebar-active"; } ?>">General Details</a>
+
+    <?php if($_SESSION['user_data']['accountType']=='1') { ?>
     <a href="<?php echo base_url('skills'); ?>" class="list-group-item sidebar-item <?php if($activePage=="3") { echo "sidebar-active"; } ?>">Skills</a>
     <a href="<?php echo base_url('educational-details'); ?>" class="list-group-item sidebar-item <?php if($activePage=="4") { echo "sidebar-active"; } ?>">Educational Details</a>
     <a href="<?php echo base_url('work-experience'); ?>" class="list-group-item sidebar-item <?php if($activePage=="5") { echo "sidebar-active"; } ?>">Work Experience</a>
@@ -13,11 +15,12 @@
 
     <a class="list-group-item sidebar-item"><b style="float: right;">Applied Offers</b></a>
     <a href="<?php echo base_url('applied-offers'); ?>" class="list-group-item sidebar-item <?php if($activePage=="10") { echo "sidebar-active"; } ?>">My Applied Job/Internship Offer(s)</a>
-
+    <?php } ?>
+    <?php if($_SESSION['user_data']['accountType']=='2') { ?>
     <a class="list-group-item sidebar-item"><b style="float: right;">Job/Internship Offers</b></a>
     <a href="<?php echo base_url('my-added-offers'); ?>" class="list-group-item sidebar-item <?php if($activePage=="8") { echo "sidebar-active"; } ?>">My Added Offer(s)</a>
     <a href="<?php echo base_url('add-new-offer'); ?>" class="list-group-item sidebar-item <?php if($activePage=="9") { echo "sidebar-active"; } ?>">Add New Offer</a>
-
+    <?php } ?>
     <a class="list-group-item sidebar-item"><b style="float: right;">Profile Settings</b></a>
     <a href="<?php echo base_url('change-password'); ?>" class="list-group-item sidebar-item <?php if($activePage=="7") { echo "sidebar-active"; } ?>">Change Password</a>
 

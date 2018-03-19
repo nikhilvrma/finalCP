@@ -272,6 +272,34 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function aboutUs(){
+		$this->data['pageTitle'] = "About Us";
+		$this->data['activePage'] = "0";
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+		$this->load->view('aboutUs', $this->data);
+	}
+
+	public function termsAndConditions(){
+		$this->data['pageTitle'] = "Terms and Conditions";
+		$this->data['activePage'] = "0";
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+		$this->load->view('termsAndConditions', $this->data);
+	}
+
+	public function privacyPolicy(){
+		$this->data['pageTitle'] = "Privacy Policy";
+		$this->data['activePage'] = "0";
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+		$this->load->view('privacyPolicy', $this->data);
+	}
+
+	public function contactUs(){
+		$this->data['pageTitle'] = "Contact Us";
+		$this->data['activePage'] = "0";
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+		$this->load->view('contactUs', $this->data);
+	}
+
 
 	public function employer(){
 		$this->data['pageTitle'] = "Employer";

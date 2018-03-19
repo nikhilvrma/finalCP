@@ -46,7 +46,7 @@
 
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
-                  <label>Full Name:</label>
+                  <label><b>Full Name:</b></label>
                   <input type="text" class="form-control" value="<?php echo $generalData['name']; ?>" disabled>
                   <p class="help-block"></p>
                 </div>
@@ -54,7 +54,7 @@
 
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label>E-Mail Address:</label>
+                  <label><b>E-Mail Address:</b></label>
                   <input type="email" class="form-control" value="<?php echo $generalData['email']; ?>" disabled>
                   <p class="help-block"></p>
                 </div>
@@ -62,7 +62,7 @@
 
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label>Mobile Number:</label>
+                  <label><b>Mobile Number:</b></label>
                   <input type="text" maxlength="10" class="form-control" value="<?php echo $generalData['mobile']; ?>" disabled>
                   <p class="help-block"></p>
                 </div>
@@ -70,7 +70,7 @@
 
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
-                  <label>Career Objective:</label>
+                  <label><b>Career Objective:</b></label>
                   <textarea class="form-control" id="careerObjective" name="careerObjective" required>
                      <?php echo $generalData['careerObjective']; ?>
                   </textarea>
@@ -80,7 +80,7 @@
 
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
-                  <label>Company Name:</label>
+                  <label><b>Company Name:</b></label>
                   <input type="text" class="form-control" placeholder="Company Name">
                   <p class="help-block"></p>
                 </div>
@@ -88,7 +88,7 @@
 
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
-                  <label>Company Description:</label>
+                  <label><b>Company Description:</b></label>
                   <textarea class="form-control" id="companyDescription"></textarea>
                   <p class="help-block"></p>
                 </div>
