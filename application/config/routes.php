@@ -67,6 +67,9 @@ $route['change-password'] = 'home/changePassword';
 
 $route['add-new-offer'] = 'home/addNewOffer';
 $route['my-added-offers'] = 'home/myAddedOffers';
+
+$route['applied-offers'] = 'home/appliedOffers';
+
 $route['hiring-nucleus/applicants'] = 'home/applicants';
 $route['hiring-nucleus/compare-applicants'] = 'home/compareApplicants';
 
