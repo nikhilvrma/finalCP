@@ -55,6 +55,7 @@
                     </div>
                     <div class="col-md-12 mb-4">
                       <p class="card-text"><b>Skills Required: </b>General Aptitude, PHP, HTML, CSS</p>
+                      <p class="card-text"><b>Message from the Employer: </b>None</p>
                     </div>
                   </div>
 
