@@ -44,7 +44,7 @@
 
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label>Offer Type:</label>
+                  <label><b>Offer Type:</b></label>
                   <select class="form-control" name="offerType">
                     <option value="1">Job Offer</option>
                     <option value="2">Internship Offer</option>
@@ -55,7 +55,7 @@
 
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label>Number of Openings:</label>
+                  <label><b>Number of Openings:</b></label>
                   <input type="text" class="form-control" name="openings">
                   <p class="help-block"></p>
                 </div>
@@ -63,7 +63,7 @@
 
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
-                  <label>Offer Title:</label>
+                  <label><b>Offer Title:</b></label>
                   <input type="text" maxlength="255" class="form-control" name="offerTitle" placeholder="Offer Title">
                   <p class="help-block"></p>
                 </div>
@@ -71,7 +71,7 @@
 
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
-                  <label>Offer Description:</label>
+                  <label><b>Offer Description:</b></label>
                   <textarea class="form-control" id="offerDescription" name="offerDescription" required>
 
                   </textarea>
@@ -81,7 +81,7 @@
 
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label>Joining Date:</label>
+                  <label><b>Joining Date:</b></label>
                   <input type="date" class="form-control" name="joiningDate">
                   <p class="help-block"></p>
                 </div>
@@ -89,7 +89,7 @@
 
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label>Application Deadline:</label>
+                  <label><b>Application Deadline:</b></label>
                   <input type="date" class="form-control" name="applicationDeadline">
                   <p class="help-block"></p>
                 </div>

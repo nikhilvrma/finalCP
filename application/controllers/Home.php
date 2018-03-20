@@ -159,6 +159,8 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Resume";
 				$this->data['activePage'] = "6";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->data['resumeReferenceNumber'] = $this->function_lib->getUserData($_SESSION['user_data']['email']);
+				$this->data['resumeReferenceNumber'] = $this->data['resumeReferenceNumber'][0]['resumeReferenceNumber'];
 				$this->load->view('resume', $this->data);
 			}
 			else{
@@ -310,6 +312,8 @@ class Home extends CI_Controller {
 	public function report(){
 		$this->load->view('report', $this->data);
 	}
+
+
 
 
 }

@@ -46,7 +46,7 @@
               <div class="card">
                 <h6 class="card-header cardheader">CampusPuppy Resume Reference Number</h6>
                 <div class="card-body">
-                  <h1>CPRasnd08283nasdk</h1>
+                  <h1><?php echo $resumeReferenceNumber; ?></h1>
                 </div>
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary" id="sendMessageButton" style="float: right;"><i class="fa fa-download"></i> Download Resume</button>
