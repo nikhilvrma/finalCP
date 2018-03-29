@@ -28,8 +28,7 @@
     	<?php }?>
 
       <div class="row">
-
-        <?php echo $sidebar; ?>
+        <?php echo $sidebar;?>
 
         <div class="col-lg-9 mb-4">
 
@@ -46,24 +45,27 @@
                 </div>
               </div>
 
+            <?php if($premiumSkills){?>
               <div class="col-lg-6 mb-4">
-          <div class="card h-100">
-            <h5 class="card-header cardheader">General Aptitude<sup style="color: red;"> Premium</sup></h5>
-
-            <div class="card-body">
-              <p class="card-text"><b>Skill-Score</b><h3 style="float: right;">76%</h3></p>
-            </div>
-
-
-          </div>
-        </div>
+                <div class="card h-100">
+                  <h5 class="card-header cardheader">General Aptitude<sup style="color: red;"> Premium</sup></h5>
+                  <div class="card-body">
+                    <p class="card-text"><b>Skill-Score</b><h3 style="float: right;">76%</h3></p>
+                  </div>
+                </div>
+              </div>
+            <?php }else{?>
+              <div class="col-lg-12">
+                <p><center>No Premium Skills Added.</center></p>
+              </div>
+            <?php } ?>
 
         <div class="col-md-12 control-group form-group">
           <div class="controls">
             <h5>Other Skills</h5>
           </div>
         </div>
-
+         <?php if($otherSkills){?>
         <div class="col-lg-6 mb-4">
           <div class="card h-100">
             <h5 class="card-header cardheader">Android</h5>
@@ -87,6 +89,12 @@
             </div>
           </div>
         </div>
+        <?php }else{?>
+          <div class="col-lg-12">
+            <p><center>No Premium Skills Added.</center></p>
+          </div>
+        <?php } ?>
+
 
         <div class="col-md-12 control-group form-group">
           <div class="controls">
@@ -96,17 +104,15 @@
 
         <div class="col-md-12 control-group form-group">
 
-        <form class="form-inline">
-  <label class="sr-only" for="skill">Name</label>
-  <select class="form-control mb-2 mr-sm-2" id="skill" style="width: 80%;">
-    <option>PHP</option>
-    <option>HTML</option>
-  </select>
-
-
-
-  <button type="submit" class="btn btn-primary mb-2" style="width: 18%;">Add Skill</button>
-</form>
+        <form class="form-inline" action = "<?= base_url('skill_functions/addSkills')?>" method = "POST">
+          <label class="sr-only" for="skill">Name</label>
+          <select class="form-control mb-2 mr-sm-2" id="skill" name = "skill" style="width: 80%;">
+            <?php foreach($skills as $value){?>
+              <option value="<?= $value['skillID']?>"><?= $value['skill_name']?></option>
+            <?php }?>
+          </select>
+          <button type="submit" class="btn btn-primary mb-2" style="width: 18%;">Add Skill</button>
+        </form>
 </div>
 
 

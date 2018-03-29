@@ -5,7 +5,7 @@ class Home extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->library(array('session', 'function_lib'));
+		$this->load->library(array('session', 'function_lib', 'skill_lib'));
 		$this->load->helper(array('url'));
 		$this->data = array();
 
@@ -73,6 +73,18 @@ class Home extends CI_Controller {
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Skills";
 				$this->data['activePage'] = "3";
+				if(!empty($x = $this->skill_lib->getPremiumSkills($_SESSION['user_data']['userID'])))
+					$this->data['premiumSkills'] = $x;
+				else
+					$this->data['premiumSkills'] = null;
+				if(!empty($x = $this->skill_lib->getOtherSkills($_SESSION['user_data']['userID'])))
+					$this->data['otherSkills'] = $x;
+				else
+					$this->data['otherSkills'] = null;
+				if(!empty($x = $this->skill_lib->getNotAddedSkills($_SESSION['user_data']['userID'])))	
+					$this->data['skills'] = $x;
+				else
+					$this->data['skills'] = null;
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->load->view('skills', $this->data);
 			}
@@ -88,6 +100,28 @@ class Home extends CI_Controller {
 	public function skillTest(){
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				if($_SESSION['userData']['intest']){
+				// if(false){
+					$_SESSION['questionData'] = NULL;
+					$skill_id = $_SESSION['userData']['currentSkill'];
+					$_SESSION['userData']['currentSkill'] = NULL;
+					$_SESSION['userData']['currentSkillName'] = NULL;
+					$_SESSION['userData'][$skill_id]['totalScore'] = NULL;
+					$_SESSION['userData'][$skill_id]['skips'] = NULL;
+					$_SESSION['userData'][$skill_id]['skipStatus'] = NULL;
+					$_SESSION['userData'][$skill_id]['totalTime'] = NULL;
+					$_SESSION['userData'][$skill_id]['responses'] = NULL;
+					$_SESSION['userData']['intest'] = false;
+					$this->session->set_flashdata('message', array('content'=>'Page Reload Not allowed During test.','color'=>'red'));
+					redirect(base_url('skills'));
+				}
+				$_SESSION['userData']['intest'] = true;
+				$this->data['skillData']['skillID'] = $_SESSION['userData']['currentSkill'];
+				$this->data['skillData']['skillName'] = $_SESSION['userData']['currentSkillName'];
+				$this->data['questionData'] = $_SESSION['questionData'];
+				$totalTime = $_SESSION['userData'][$_SESSION['userData']['currentSkill']]['totalTime'];
+				$this->data['totalTime'] = $totalTime;
+				$this->data['skips'] = $_SESSION['userData'][$_SESSION['userData']['currentSkill']]['skips'];
 				$this->data['pageTitle'] = "Skill Test";
 				$this->data['activePage'] = "3";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
@@ -107,6 +141,8 @@ class Home extends CI_Controller {
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Skill Test Guidelines";
 				$this->data['activePage'] = "3";
+				$this->data['skill'] = $_SESSION['userData']['currentSkill'];
+				$this->data['settings'] = $this->skill_lib->getTestSettings($_SESSION['userData']['currentSkill'])[0];
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->load->view('skillTestGuidelines', $this->data);
 			}

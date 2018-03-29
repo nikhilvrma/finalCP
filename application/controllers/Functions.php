@@ -5,7 +5,7 @@ class Functions extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->library(array('session', 'function_lib'));
+		$this->load->library(array('session', 'function_lib', 'skill_lib'));
 		$this->load->helper(array('url'));
 		$this->data = array();
 
