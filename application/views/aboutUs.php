@@ -21,46 +21,43 @@
     <div class="container" style="margin-top: 10px;">
 
 
-
       <?php if($message['content']!=''){?>
-      <ol class="breadcrumb" style="background-color: white !important; border: 1px solid <?=$message['color']?>;">
+
+      <ol class="breadcrumb" style="background-color: white !important; margin-top: 20px; border: 1px solid <?=$message['color']?>;">
         <li style="color: <?=$message['color']?>;"><?=$message['content']?></li>
       </ol>
     	<?php }?>
 
-
       <div class="row">
-
+      <?php if(isset($_SESSION['user_data']['loggedIn']) && $_SESSION['user_data']['loggedIn']){ ?>
         <?php echo $sidebar; ?>
-
+      <?php } ?>
+      <?php if(isset($_SESSION['user_data']['loggedIn']) && $_SESSION['user_data']['loggedIn']){ ?>
         <div class="col-lg-9 mb-4">
+      <?php } ?>
+      <?php if(!(isset($_SESSION['user_data']['loggedIn']) && !($_SESSION['user_data']['loggedIn']))) { ?>
+        <div class="col-lg-12 mb-4">
+      <?php } ?>
+
+            <ol class="breadcrumb" style="margin-top: 30px;">
+            <li class="breadcrumb-item">
+              <a href="<?php echo base_url(); ?>">Home</a>
+            </li>
+            <li class="breadcrumb-item active"><?php echo $pageTitle; ?></li>
+          </ol>
 
           <h3 class="mt-4 mb-3" style="float: right;"><?php echo $pageTitle; ?></h3>
           <div class="clearfix"></div>
           <hr>
 
-
-            <div class="row">
-
-              <div class="col-lg-12 mb-4">
-              <div class="card">
-                <h6 class="card-header cardheader">CampusPuppy Resume Reference Number</h6>
-                <div class="card-body">
-                  <h1><?php echo $resumeReferenceNumber; ?></h1>
-                </div>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary" id="sendMessageButton" style="float: right;"><i class="fa fa-download"></i> Download Resume</button>
-                </div>
-              </div>
-              </div>
-
-            </div>
+          <p style="font-size: 15px;">About Us, good Morning India</p>
 
 
         </div>
       </div>
 
     </div>
+  </div>
 
     <?php echo $footer; ?>
 

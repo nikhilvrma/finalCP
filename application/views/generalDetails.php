@@ -46,7 +46,7 @@
 
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
-                  <label>Full Name:</label>
+                  <label><b>Full Name:</b></label>
                   <input type="text" class="form-control" value="<?php echo $generalData['name']; ?>" disabled>
                   <p class="help-block"></p>
                 </div>
@@ -54,7 +54,7 @@
 
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label>E-Mail Address:</label>
+                  <label><b>E-Mail Address:</b></label>
                   <input type="email" class="form-control" value="<?php echo $generalData['email']; ?>" disabled>
                   <p class="help-block"></p>
                 </div>
@@ -62,7 +62,7 @@
 
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label>Mobile Number:</label>
+                  <label><b>Mobile Number:</b></label>
                   <input type="text" maxlength="10" class="form-control" value="<?php echo $generalData['mobile']; ?>" disabled>
                   <p class="help-block"></p>
                 </div>
@@ -70,7 +70,7 @@
 
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
-                  <label>Career Objective:</label>
+                  <label><b>Career Objective:</b></label>
                   <textarea class="form-control" id="careerObjective" name="careerObjective" required>
                      <?php echo $generalData['careerObjective']; ?>
                   </textarea>
@@ -78,8 +78,21 @@
                 </div>
               </div>
 
+              <div class="col-md-12 control-group form-group">
+                <div class="controls">
+                  <label><b>Company Name:</b></label>
+                  <input type="text" class="form-control" placeholder="Company Name">
+                  <p class="help-block"></p>
+                </div>
+              </div>
 
-
+              <div class="col-md-12 control-group form-group">
+                <div class="controls">
+                  <label><b>Company Description:</b></label>
+                  <textarea class="form-control" id="companyDescription"></textarea>
+                  <p class="help-block"></p>
+                </div>
+              </div>
 
 
             </div>
@@ -125,6 +138,44 @@
           </div>
         </div>
 
+        <div class="clearfix"></div>
+
+        <h3 class="mt-4 mb-3" style="float: right;">Company Logo</h3>
+        <div class="clearfix"></div>
+        <hr>
+        <div class="row">
+
+        <div class="col-md-5 mb-4">
+          <b>Current Uploaded Company Logo</b>
+          <p style="margin-top: 20px; font-size: 14px;">No Logo Uploaded Yet</p>
+        </div>
+
+        <div class="col-md-7 mb-4">
+          <b>Upload New Company Logo</b>
+
+          <form method="post" action="<?php echo base_url('functions/updateProfileImage'); ?>">
+
+
+              <br>
+
+              <div class="col-md-12 control-group form-group">
+                <div class="controls">
+                  <label>New Company Logo:</label>
+                  <input type="file" class="form-control">
+                  <p class="help-block" style="font-size: 14px;">Formats allowed include .jpg, .jpeg, and .png<br>Maximum file size allowed in 4 MB</p>
+                </div>
+              </div>
+
+
+
+
+
+            <button type="submit" class="btn btn-primary" style="float: right;">Update Company Logo</button>
+          </form>
+
+        </div>
+      </div>
+
         </div>
       </div>
 
@@ -138,6 +189,7 @@
     <script>
       $(document).ready(function(){
         editor = CKEDITOR.replace('careerObjective');
+        editor = CKEDITOR.replace('companyDescription');
       });
       </script>
 

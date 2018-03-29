@@ -52,6 +52,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 
+$route['about-us'] = 'home/aboutUs';
+$route['terms-and-conditions'] = 'home/termsAndConditions';
+$route['privacy-policy'] = 'home/privacyPolicy';
+$route['contact-us'] = 'home/contactUs';
+
 $route['general-details'] = 'home/generalDetails';
 $route['skills'] = 'home/skills';
 $route['skill-test'] = 'home/skillTest';
@@ -67,6 +72,9 @@ $route['change-password'] = 'home/changePassword';
 
 $route['add-new-offer'] = 'home/addNewOffer';
 $route['my-added-offers'] = 'home/myAddedOffers';
+
+$route['applied-offers'] = 'home/appliedOffers';
+
 $route['hiring-nucleus/applicants'] = 'home/applicants';
 $route['hiring-nucleus/compare-applicants'] = 'home/compareApplicants';
 

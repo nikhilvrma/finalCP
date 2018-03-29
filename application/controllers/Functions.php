@@ -93,6 +93,15 @@ class Functions extends CI_Controller {
 					);
 					$result = $this->function_lib->register($data);
 					if($result){
+						if($accountType=='1'){
+							$userID = $this->function_lib->getUserData($email);
+							$userID = $userID[0]['userID'];
+							$resumeReferenceNumber = $this->generateReumseReferenceNumber($userID);
+							$data = array(
+								'resumeReferenceNumber' => $resumeReferenceNumber
+							);
+							$this->function_lib->updateGeneralDetails($data, $userID);
+						}
 						$this->session->set_flashdata('message', array('content'=>'Thank You for registering on CampusPuppy. Login Now to Continue','color'=>'green'));
 						redirect(base_url());
 					}
@@ -251,5 +260,36 @@ class Functions extends CI_Controller {
 		}
 
 	}
+
+	public function generateReumseReferenceNumber($userID){
+			$userID = dechex($userID);
+			$lengthUserID = strlen((string)$userID);
+			if($lengthUserID == '1'){
+				$append = md5($userID);
+				$append = substr($append, 0, 5);
+			}
+			if($lengthUserID == '2'){
+				$append = md5($userID);
+				$append = substr($append, 0, 4);
+			}
+			if($lengthUserID == '3'){
+				$append = md5($userID);
+				$append = substr($append, 0, 3);
+			}
+			if($lengthUserID == '4'){
+				$append = md5($userID);
+				$append = substr($append, 0, 2);
+			}
+			if($lengthUserID == '5'){
+				$append = md5($userID);
+				$append = substr($append, 0, 1);
+			}
+			if($lengthUserID == '6'){
+				$append = "";
+			}
+			$userID = $append.$userID;
+			$resumeReferenceNumber = "CPR".$userID;
+			return $resumeReferenceNumber;
+		}
 
 }

@@ -195,6 +195,8 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Resume";
 				$this->data['activePage'] = "6";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->data['resumeReferenceNumber'] = $this->function_lib->getUserData($_SESSION['user_data']['email']);
+				$this->data['resumeReferenceNumber'] = $this->data['resumeReferenceNumber'][0]['resumeReferenceNumber'];
 				$this->load->view('resume', $this->data);
 			}
 			else{
@@ -244,7 +246,7 @@ class Home extends CI_Controller {
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "My Added Offers";
-				$this->data['activePage'] = "10";
+				$this->data['activePage'] = "8";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->load->view('myAddedOffers', $this->data);
 			}
@@ -261,7 +263,7 @@ class Home extends CI_Controller {
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Applicants";
-				$this->data['activePage'] = "10";
+				$this->data['activePage'] = "8";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->load->view('applicants', $this->data);
 			}
@@ -278,7 +280,7 @@ class Home extends CI_Controller {
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Compare Applicants";
-				$this->data['activePage'] = "10";
+				$this->data['activePage'] = "8";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->load->view('compareApplicants', $this->data);
 			}
@@ -291,6 +293,51 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function appliedOffers(){
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "Applied Offers";
+				$this->data['activePage'] = "10";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('appliedOffers', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
+	}
+
+	public function aboutUs(){
+		$this->data['pageTitle'] = "About Us";
+		$this->data['activePage'] = "0";
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+		$this->load->view('aboutUs', $this->data);
+	}
+
+	public function termsAndConditions(){
+		$this->data['pageTitle'] = "Terms and Conditions";
+		$this->data['activePage'] = "0";
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+		$this->load->view('termsAndConditions', $this->data);
+	}
+
+	public function privacyPolicy(){
+		$this->data['pageTitle'] = "Privacy Policy";
+		$this->data['activePage'] = "0";
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+		$this->load->view('privacyPolicy', $this->data);
+	}
+
+	public function contactUs(){
+		$this->data['pageTitle'] = "Contact Us";
+		$this->data['activePage'] = "0";
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+		$this->load->view('contactUs', $this->data);
+	}
+
 
 	public function employer(){
 		$this->data['pageTitle'] = "Employer";
@@ -301,6 +348,8 @@ class Home extends CI_Controller {
 	public function report(){
 		$this->load->view('report', $this->data);
 	}
+
+
 
 
 }

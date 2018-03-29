@@ -14,7 +14,7 @@
 
   </head>
 
-  <body style="background-image: url('http://www.campuspuppy.com/assets/img/landing-page-bg.png');">
+  <body style="background-image: url(<?php echo base_url('assets/images/home_page_bg.png') ?>);">
 
     <nav class="navbar fixed-top nav-bg navbar-expand-lg navbar-dark bg-dark fixed-top" style="height: 110px;">
       <div class="container">
