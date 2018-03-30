@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Job Application and Assessment Report- Prashant Mishra</title>
+  <title>Report</title>
 
   <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
   <link href="<?php echo base_url('assets/css/backoffice.css'); ?>" rel="stylesheet">
@@ -21,16 +21,16 @@
 
        <div class="col-lg-12 mb-4">
 
-         <h4 class="mt-4 mb-3" style="float: right;"><b>JOB APPLICATION and ASSESSMENT REPORT</b></h4>
+         <h4 class="mt-4 mb-3" style="float: right;"><b>RESUME</b></h4>
 
          <p class="mt-4 mb-3" style="float: right; font-size: 14px;"></p>
          <div class="clearfix"></div>
 
          <div style="background: black; color: white; padding: 10px; height: 40px;">
-           <p><b>PRASHANT MISHRA</b></p>
+           <p><b>NIKHIL VERMA</b></p>
          </div>
          <br>
-         <p style="font-size: 15px;"><b>E-Mail Address:</b> prashantmishra@gmail.com<br><b>Mobile Number:</b> +91-999911XXXX<br><b>Location:</b> New Delhi</p>
+         <p style="font-size: 15px;"><b>E-Mail Address:</b> vrmanikhil@gmail.com<br><b>Mobile Number:</b> +91-7503705892<br><b>Location:</b> New Delhi</p>
 
          <hr>
 
@@ -49,19 +49,19 @@
                  <tr>
                    <td><b>High-School</b> <i class="fa fa-check-circle"></i></td>
                    <td>Central Board of Secondary Education, New Delhi</td>
-                   <td>2010</td>
+                   <td>2009</td>
                    <td>90%</td>
                  </tr>
                  <tr>
                    <td><b>Intermediate (or equivalent)</b></td>
                    <td>Central Board of Secondary Education, New Delhi</td>
-                   <td>2012</td>
+                   <td>2011</td>
                    <td>80%</td>
                  </tr>
                  <tr>
-                   <td><b>Graduation</b> <i class="fa fa-check-circle"></i><br><br>Bachelor of Technology- Mechanical Engineering</td>
+                   <td><b>Graduation</b> <i class="fa fa-check-circle"></i><br><br>Bachelor of Technology- Computer Science and Engineering</td>
                    <td>Dr. APJ Abdul Kalam Technical University, Lucknow</td>
-                   <td>2017</td>
+                   <td>2016</td>
                    <td>70%</td>
                  </tr>
                </tbody>
@@ -73,17 +73,17 @@
           <b>Skills</b>
           <ul style="font-size: 15px; margin-top: 15px;">
             <li>General Aptitude <i class="fa fa-check-circle"></i></li>
-            <li>Solid Mechanics <i class="fa fa-check-circle"></i></li>
             <li>Sales and Marketing</li>
-            <li>Microsoft Excel</li>
+            <li>Solid Mechanics <i class="fa fa-check-circle"></i></li>
             <li>Business Development</li>
+            <li>Finance</li>
           </ul>
 
           <hr>
 
           <b>Work-Experience</b>
           <ul style="font-size: 15px; margin-top: 15px;">
-            <li><b>XYZ Private Limited</b><br>Junior Engineer Intern<br>May 2017 - <i>July 2017</i><br><br><b>Role: </b>Worked as Junior Engineer Intern for XYZ Private Limited, where my basic role was to manage A, B, and C projects.</li>
+            <li><b>XYZ Private Limited</b><br>Web Developer<br>July 2016 - <i>Currently Work</i><br><br><b>Role: </b>Worked on Website Management and Development for the web-based projects of the firm. Responsible for creattion and management.</li>
           </ul>
 
           <hr>
@@ -130,7 +130,7 @@
                   <tr>
                     <td>2.</td>
                     <td>Solid Mechanics</td>
-                    <td>61.89</td>
+                    <td>41.89</td>
                     <td>
                       <table class="table" style="font-size: 14px;">
                         <tr>
@@ -149,7 +149,7 @@
                     </td>
                     <td>
                       <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 83%;" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100">83%</div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 83%;" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100">83%</div>
                       </div>
                     </td>
                   </tr>
@@ -213,12 +213,34 @@ which involves taking chances or risking interest of any department. You are ful
               </table>
            </div>
 
+
+          <hr>
+          <div class="table-responsive">
+          <b>Feedback</b>
+              <table class="table" style="width: 100%; margin-top: 20px; font-size: 15px;">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Question</th>
+                    <th>Response</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1.</td>
+                    <td>Are you satisfied with the current work enviroment?.</td>
+                    <td>Yes</td>
+                  </tr>
+                </tbody>
+              </table>
+           </div>
+
+
        </div>
      </div>
-     <p style="float: right; font-size: 12px;"><b>Note: </b><i class="fa fa-check-circle"></i> indicates a verified skill or a detail, verified by CampusPuppy. Details without <i class="fa fa-check-circle"></i> are claimed by the user and not verified by CampusPuppy</p>
-     <div class="clearfix"></div>
+
      <div style="background: black; color: white; padding: 10px; height: 35px;">
-       <center><p style="font-size: 12px;">Application and Assessment Report generated by <b>CampusPuppy</b> as, on <i>16 March 2018, 02:30 PM</i></p></center>
+       <center><p style="font-size: 12px;">Resume generated by <b>CampusPuppy</b> as, on <i>16 March 2018, 02:30 PM</i></p></center>
      </div>
 
    </div>
