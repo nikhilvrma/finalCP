@@ -42,14 +42,18 @@
               <div class="col-lg-12 mb-4">
               <p>
                 <ol>
-                  <li>This test has no fixed number of questions.</li>
-                  <li>This test goes on for 5 minutes.</li>
+                  <?php if($settings['numberQuestions'] != NULL){?>
+                    <li>This test has <?= $settings['numberQuestions']?> questions.</li>
+                  <?php }else{ ?>
+                    <li>This test has no fixed number of questions.</li>
+                  <?php }?>
+                  <li>This test goes on for <?= $settings['testTime']/60?> minutes.</li>
                 </ol>
               </p>
               </div>
               <div class="col-lg-12 mb-4">
               <center>
-                <button class="btn btn-lg btn-primary">Start Test</button>
+                <a class="btn btn-lg btn-primary" href = "<?= base_url('skill_functions/beginTest?skillID='.$skill);?>">Start Test</a>
               </center>
               </div>
 
