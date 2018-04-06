@@ -52,7 +52,7 @@
                 </div>
               </div>
 
-              <div class="col-md-6 control-group form-group">
+              <div class="col-md-4 control-group form-group">
                 <div class="controls">
                   <label><b>E-Mail Address:</b></label>
                   <input type="email" class="form-control" value="<?php echo $generalData['email']; ?>" disabled>
@@ -60,10 +60,18 @@
                 </div>
               </div>
 
-              <div class="col-md-6 control-group form-group">
+              <div class="col-md-3 control-group form-group">
                 <div class="controls">
                   <label><b>Mobile Number:</b></label>
                   <input type="text" maxlength="10" class="form-control" value="<?php echo $generalData['mobile']; ?>" disabled>
+                  <p class="help-block"></p>
+                </div>
+              </div>
+
+              <div class="col-md-5 control-group form-group">
+                <div class="controls">
+                  <label><b>Current Location:</b></label>
+                  <input type="text" class="form-control">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -75,6 +83,41 @@
                      <?php echo $generalData['careerObjective']; ?>
                   </textarea>
                   <p class="help-block"></p>
+                </div>
+              </div>
+
+              <div class="col-md-12 control-group form-group">
+                <div class="controls">
+                  <label><b>Preferred Location(s):</b></label>
+                  <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">City</th>
+                      <th scope="col" style="width: 20%">Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>New Delhi, Delhi</td>
+                      <td><a class="btn btn-danger" style="color: white; font-size: 14px;"><i class="fa fa-trash"></i> Remove</a></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Ghaziabad, Uttar Pradesh</td>
+                      <td><a class="btn btn-danger" style="color: white; font-size: 14px;"><i class="fa fa-trash"></i> Remove</a></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Noida, Uttar Pradesh</td>
+                      <td><a class="btn btn-danger" style="color: white; font-size: 14px;"><i class="fa fa-trash"></i> Remove</a></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLocation" style="color: white; float: right;">Add Location</button></td>
+                    </tr>
+                  </tbody>
+                </table>
                 </div>
               </div>
 
@@ -115,7 +158,7 @@
           <div class="col-md-8 mb-4">
             <b>Upload New Profile Image</b>
 
-           
+
                 <br>
 
                 <div class="col-md-12 control-group form-group">
@@ -146,7 +189,7 @@
         <div class="col-md-7 mb-4">
           <b>Upload New Company Logo</b>
 
-          
+
 
 
               <br>
@@ -161,7 +204,7 @@
 
 
 
-            
+
 
         </div>
       </div>
@@ -174,8 +217,8 @@
     <div class="modal fade" role="dialog" id="myModal">
     <div class="modal-dialog">
    <div class="modal-content">
-    
-       
+
+
      <div class="modal-body">
       <h3>Edit Profile Pic</h3>
       <form action="<?php echo base_url('functions/updateProfileImage'); ?>" method="POST" class="form" enctype="multipart/form-data">
@@ -211,8 +254,8 @@
       <div class="modal fade" role="dialog" id="myModal2">
     <div class="modal-dialog">
    <div class="modal-content">
-    
-       
+
+
      <div class="modal-body">
       <h3>Edit Company Logo</h3>
       <form action="<?php echo base_url('functions/updateCompanyImage'); ?>" method="POST" class="form" enctype="multipart/form-data">
@@ -243,6 +286,38 @@
     </div>
   </div>
 </div>
+  </div>
+
+  <div class="modal fade" id="addLocation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Location</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+        <div class="modal-body">
+
+            <div class="row">
+            <div class="col-md-12 control-group form-group">
+              <div class="controls">
+                <label>Location:</label>
+                <input type="text" class="form-control" name="" required>
+              </div>
+            </div>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Add Location</button>
+        </div>
+      </form>
+      </div>
+    </div>
   </div>
 
 
