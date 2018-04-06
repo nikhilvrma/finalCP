@@ -29,6 +29,10 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function emailer(){
+			$this->load->view('emailers/forgotPassword', $this->data);
+	}
+
 
 	public function verifyContactDetails(){
 		if($this->function_lib->auth()){
@@ -81,7 +85,7 @@ class Home extends CI_Controller {
 					$this->data['otherSkills'] = $x;
 				else
 					$this->data['otherSkills'] = null;
-				if(!empty($x = $this->skill_lib->getNotAddedSkills($_SESSION['user_data']['userID'])))	
+				if(!empty($x = $this->skill_lib->getNotAddedSkills($_SESSION['user_data']['userID'])))
 					$this->data['skills'] = $x;
 				else
 					$this->data['skills'] = null;
