@@ -137,6 +137,52 @@ class Functions extends CI_Controller {
 		}
 	}
 
+	public function updateProfileImage(){
+		$profilePic = '';
+		$userID = $_SESSION['user_data']['userID'];
+		if($x = $this->input->post('profilePic')){
+			$profilePic = $x;
+		}
+		
+		if($profilePic == '' || $profilePic == 'data:,'){
+			$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
+			redirect(base_url('general-details'));
+		}else{
+            $result = $this->function_lib->uploadImage($profilePic, 'profile', 'assets/uploads/ProfileImages/');
+			if($result){
+				$this->session->set_flashdata('message', array('content'=>'Profile Image Successfully changed.','color'=>'green'));
+				redirect(base_url('general-details'));
+			}
+			else{
+				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
+				redirect(base_url('general-details'));
+			}
+        }
+	}
+
+	public function updateCompanyImage(){
+		$companyLogo = '';
+		$userID = $_SESSION['user_data']['userID'];
+		if($x = $this->input->post('companyLogo')){
+			$companyLogo = $x;
+		}
+		var_dump($companyLogo); die;
+		if($companyLogo == '' || $companyLogo == 'data:,'){
+			$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','class'=>'error'));
+			redirect(base_url('general-details'));
+		}else{
+            $result = $this->function_lib->uploadImage($companyLogo, 'company', 'assets/uploads/CompanyLogo/');
+			if($result){
+				$this->session->set_flashdata('message', array('content'=>'Logo Successfully changed.','class'=>'success'));
+				redirect(base_url('general-details'));
+			}
+			else{
+				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','class'=>'error'));
+				redirect(base_url('general-details'));
+			}
+        }
+	}
+
 	public function changePassword(){
 		$currentPassword = '';
 		$newPassword = '';

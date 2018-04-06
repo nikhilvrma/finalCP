@@ -56,7 +56,7 @@
               </div>
             <?php }else{?>
               <div class="col-lg-12">
-                <p><center>No Premium Skills Added.</center></p>
+                <p><center>No Premium Skills Found.</center></p>
               </div>
             <?php } ?>
 

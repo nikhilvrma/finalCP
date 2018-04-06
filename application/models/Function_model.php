@@ -41,6 +41,35 @@ class Function_model extends CI_Model {
 		return $this->db->update('users', $data);
 	}
 
+	public function updateCompanyLogo($userId, $logo){
+		$CI =& get_instance();
+		$_SESSION['user_data']['companyLogo'] = $image['companyLogo'];
+		$this->db->where('userID', $userId);
+		return $this->db->update('employerUsers', $logo);
+	}
+
+	public function getFilename($type, $userId){
+		if($type == 'company'){
+			$this->db->select('companyName');
+			$this->db->where('userID', $userId);
+			$result = $this->db->get('employerUsers')->result_array();
+			$result = $result[0]['companyName'];
+		}else{
+			$this->db->select('name');
+			$this->db->where('userID', $userId);
+			$result = $this->db->get('users')->result_array();
+			$result = $result[0]['name'];
+		}
+		return str_replace(' ', '_', $result).$userId;
+	}
+
+	public function updateProfileImage($userId, $image){
+		$CI =& get_instance();
+		$_SESSION['user_data']['profileImage'] = $image['profileImage'];
+		$this->db->where('userID', $userId);
+		return $this->db->update('users', $image);
+	}
+
 	public function register($data){
 		return $this->db->insert('users', $data);
 	}
@@ -77,7 +106,14 @@ class Function_model extends CI_Model {
 	public function getNotAddedSkills($userID){
 		$this->db->select('skillID');
 		$result = $this->db->get_where('userSkills', array('userID'=>$userID))->result_array();
-		$this->db->where_not_in($result);
+		// echo "string";
+		// var_dump($result);die;
+		$i = 0;
+		foreach ($result as $key => $value) {
+			$res[$i] = $value['skillID'];
+			$i++;
+		}
+		$this->db->where_not_in('skillID',$res);
 		$result = $this->db->get_where('skills', array('active' => 1));
 		return $result->result_array();
 	}
@@ -128,7 +164,7 @@ class Function_model extends CI_Model {
 
 	public function addSkilltoUser($skill_id, $user_id, $score){
 		$data = ['skillID'=> $skill_id, 'userID'=> $user_id, 'score'=> $score, 'status'=> 4, 'type' => 1];
-		// var_dump($data);die;
+		// var_dump($data);die;	
 		return $this->db->insert('userSkills', $data);
 	}
 ////////////////////////////////////////////////////////////
