@@ -72,17 +72,17 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <form>
+                    <form method = "POST" action = "<?= base_url('functions/addEducation');?>">
                     <div class="modal-body">
 
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Education Type:</label>
-                            <select class="form-control" name="" required>
+                            <select class="form-control" name="type" required>
                               <option value="1">High School</option>
-                              <option value="1">Senior Seconday (or equivalent) School</option>
-                              <option value="1">Graduation</option>
-                                <option value="1">Post-Graduation</option>
+                              <option value="2">Senior Seconday (or equivalent) School</option>
+                              <option value="3">Graduation</option>
+                                <option value="4">Post-Graduation</option>
                               </select>
                           </div>
                         </div>
@@ -90,7 +90,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Year:</label>
-                            <select class="form-control" name="" required>
+                            <select class="form-control" name="year" required>
                               <?php for($i=2025; $i>1960; $i--){ ?>
                                 <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                               <?php } ?>
@@ -102,7 +102,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Score Type:</label>
-                            <select class="form-control" name="" required>
+                            <select class="form-control" name="scoreType" required>
                               <option>CGPA</option>
                               <option>Percentage</option>
                             </select>
@@ -113,7 +113,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Score:</label>
-                            <input class="form-control" placeholder="Score">
+                            <input class="form-control" placeholder="Score" name = "score">
                             <p class="help-block"></p>
                           </div>
                         </div>
@@ -121,7 +121,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Supporting Document:</label>
-                            <input type="file" class="form-control" placeholder="Score">
+                            <input type="file" class="form-control" name = "file" placeholder="Score">
                             <p class="help-block"></p>
                           </div>
                         </div>
@@ -129,7 +129,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>School/Education Board:</label>
-                            <input type="text" class="form-control" placeholder="School/Education Board">
+                            <input type="text" class="form-control" name = "board" placeholder="School/Education Board">
                             <p class="help-block"></p>
                           </div>
                         </div>

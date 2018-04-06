@@ -118,6 +118,15 @@ class Functions extends CI_Controller {
 		}
 	}
 
+
+	public function addEducation(){
+
+	}
+
+	public function addWorkExperience(){
+
+	}
+	
 	public function updateGeneralDetails(){
 		$careerObjective = '';
 		if($x = $this->input->post('careerObjective')){

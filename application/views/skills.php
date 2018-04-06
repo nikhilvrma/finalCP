@@ -65,31 +65,36 @@
             <h5>Other Skills</h5>
           </div>
         </div>
-         <?php if($otherSkills){?>
-        <div class="col-lg-6 mb-4">
-          <div class="card h-100">
-            <h5 class="card-header cardheader">Android</h5>
-            <div class="card-body">
-              <p class="card-text"><b>Skill-Score</b><h3 style="float: right;">16%</h3></p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary" style="float: right;">Re-Take Test</a>
-            </div>
-          </div>
-        </div>
+         <?php if($otherSkills){
+          foreach($otherSkills as $value){?>
 
         <div class="col-lg-6 mb-4">
           <div class="card h-100">
-            <h5 class="card-header cardheader">JAVA</h5>
-            <div class="card-body">
+            <h5 class="card-header cardheader"><?= $value['skill_name']?></h5>
+            <!-- <div class="card-body">
               <p class="card-text"><b>Skill-Score</b><h3 style="float: right;">26%</h3></p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary" style="float: right;">Re-Take Test</a>
-            </div>
+            </div> -->
           </div>
         </div>
-        <?php }else{?>
+
+         <div class="col-lg-6 mb-4">
+          <div class="card h-100">
+            <h5 class="card-header cardheader"><?= $value['skill_name']?></h5>
+          </div>
+        </div>
+
+         <div class="col-lg-6 mb-4">
+          <div class="card h-100">
+            <h5 class="card-header cardheader"><?= $value['skill_name']?></h5>
+          </div>
+        </div>
+
+         <div class="col-lg-6 mb-4">
+          <div class="card h-100">
+            <h5 class="card-header cardheader"><?= $value['skill_name']?></h5>
+          </div>
+        </div>
+        <?php }}else{?>
           <div class="col-lg-12">
             <p><center>No Other Skills Added.</center></p>
           </div>
