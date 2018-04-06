@@ -85,10 +85,12 @@ class Home extends CI_Controller {
 					$this->data['otherSkills'] = $x;
 				else
 					$this->data['otherSkills'] = null;
+				// var_dump($x);die;
 				if(!empty($x = $this->skill_lib->getNotAddedSkills($_SESSION['user_data']['userID'])))
 					$this->data['skills'] = $x;
 				else
 					$this->data['skills'] = null;
+				// var_dump($x);die;
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->load->view('skills', $this->data);
 			}

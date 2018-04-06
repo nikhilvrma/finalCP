@@ -40,6 +40,49 @@ class Function_lib {
 		return $CI->function->updateGeneralDetails($data, $userID);
 	}
 
+	public function uploadImage($image, $type ,$path = 'assets/uploads/'){
+		if(empty($image)){
+			return false;
+		}
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		var_dump(base_url());
+		$upload_path = $path;
+		$name = $CI->function->getFilename($type,$_SESSION['user_data']['userID']);
+		$upload_path .= $name.'_'.str_replace(['-',':'],'',(new DateTime())->format('d-m-YH:i:s')).'.jpg';
+		$ifp = fopen($upload_path, "wb");
+		$data = explode(',', $image);
+		fwrite($ifp, base64_decode($data[1]));
+		fclose($ifp);
+		var_dump($upload_path);
+		if($this->validateImage($upload_path)){
+			if($type == 'company' ){
+				$logo['companyLogo'] = base_url($upload_path);
+				return $CI->function->updateCompanyLogo($_SESSION['user_data']['userID'], $logo);
+			}else{
+				$picture['profileImage'] = base_url($upload_path);
+				return $CI->function->updateProfileImage($_SESSION['user_data']['userID'], $picture);
+			}
+		}else{
+			return false;
+		}
+		return false;
+	}
+
+	public function validateImage($file)
+	{
+		$data = getimagesize($file);
+		if($data[0] > 400 || $data[1] > 400){
+			$this->set_flashdata('error', 'Image dimensions must be under 300 * 300.');
+			return false;
+		}else if(filesize($file) > 2048000){
+			$this->set_flashdata('error', 'The file size must be under 2MB.');
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 	public function checkEMailExist($email){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');

@@ -145,7 +145,6 @@ class Skill_functions extends CI_Controller {
 		$score = $_SESSION['userData'][$skill_id]['totalScore'];
 		if($score >= 10){
 			$result = $this->skill_lib->addSkill($score, $userID, $skill_id);
-			// var_dump($result);die;
 			if(!$result){
 				$this->session->set_flashdata('message', array('content'=>'Some Error Occured. Please Try Again.1','color'=>'red'));
 				$this->updateInfo();
