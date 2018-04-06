@@ -123,16 +123,52 @@
                 <div class="col-md-12 control-group form-group">
                   <div class="controls">
                     <label>New Profile Image:</label>
-                    <input type="file" class="form-control">
+                     <input type="file" class="form__input updatedUserPic" id="updatedUserPic" required accept="image/*" name = img[]>
+                     <input type="hidden" name="profilePic">
                     <p class="help-block" style="font-size: 14px;">Formats allowed include .jpg, .jpeg, and .png<br>Maximum file size allowed in 4 MB</p>
+                  </div>
+                  <div class = "form-group">
+                    <div class = "crop" style = "display:none">
+                      <img src="" alt="" id="cropped-pic" hidden style ="padding-left: 25%">
+                    </div>
+                  </div>
+                  <div class="form-group action-bar">
+                    <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
+                     <button type="submit" class="btn btn-primary" style="float: right; display: none">Update Profile Image</button>
                   </div>
                 </div>
 
 
+                <!-- <form action="<?= base_url('web/editUserProfilePic')?>" method="POST" class="form" enctype="multipart/form-data">
+                  <div class="horizontal-group">
+                    <div class="form-group">
+                      <img src="" alt="" id="userProfilePic">
+                    </div>
+                    <div class="form-group">
+                      <div class = "inputPic">
+                        <label for="updatedUserPic">Upload Profile Image <span style="color: red; font-size: 12px;">required</span></label>
+                        <input type="file" class="form__input updatedUserPic" id="updatedUserPic" required accept="image/*" name = img[]>
+                        <input type="hidden" name="profilePic">
+                      </div>
+                    </div>
+                  </div>
+                  <div class = "form-group">
+                    <div class = "crop" style = "display:none">
+                      <img src="" alt="" id="cropped-pic" hidden style ="padding-left: 25%">
+                    </div>
+                  </div>
+                  <div class="form-group action-bar">
+                    <button data-remodal-action="close" class="btn save_pic" style="display: none">Close</button>
+                    <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
+                    <input type = 'submit'  class="btn btn--primary save_pic" value="Save Changes" style="display: none">
+                  </div>
+                </form>
+ -->
 
 
 
-              <button type="submit" class="btn btn-primary" style="float: right;">Update Profile Image</button>
+
+             
             </form>
 
           </div>
