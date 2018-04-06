@@ -76,24 +76,6 @@
             </div> -->
           </div>
         </div>
-
-         <div class="col-lg-6 mb-4">
-          <div class="card h-100">
-            <h5 class="card-header cardheader"><?= $value['skill_name']?></h5>
-          </div>
-        </div>
-
-         <div class="col-lg-6 mb-4">
-          <div class="card h-100">
-            <h5 class="card-header cardheader"><?= $value['skill_name']?></h5>
-          </div>
-        </div>
-
-         <div class="col-lg-6 mb-4">
-          <div class="card h-100">
-            <h5 class="card-header cardheader"><?= $value['skill_name']?></h5>
-          </div>
-        </div>
         <?php }}else{?>
           <div class="col-lg-12">
             <p><center>No Other Skills Added.</center></p>

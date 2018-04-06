@@ -22,6 +22,11 @@ class Skill_functions extends CI_Controller {
 	 		$this->session->set_flashdata('message', array('content'=>'Please select a skill to proceed further.','color'=>'red'));
 			redirect(base_url('skills'));
 	 	}
+	 	if(!$this->skill_lib->testAvailable($skillID)){
+	 		$_SESSION['userData']['currentSkill'] = $skillID;
+			$_SESSION['userData'][$skillID]['totalScore'] = 10;
+	 		$this->endTest();
+	 	}
 	 	$_SESSION['userData']['currentSkill'] = $skillID;
 	 	redirect(base_url('skill-test-guidelines'));
 	 }

@@ -72,6 +72,16 @@ class Skill_lib {
 			}
 	}
 
+	public function testAvailable($skillID){
+		$CI = &get_instance();
+		$CI->load->model('function_model', 'function');
+		if($CI->function->testAvailable($skillID) == 1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function getSkillData($skill_id){
 		$CI = &get_instance();
 		$CI->load->model('function_model', 'function');

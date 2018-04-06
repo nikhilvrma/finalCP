@@ -167,5 +167,11 @@ class Function_model extends CI_Model {
 		// var_dump($data);die;	
 		return $this->db->insert('userSkills', $data);
 	}
+
+	public function testAvailable($skillID){
+		$this->db->select('testAvailable');
+		$result = $this->db->get_where('skills', array('skillID'=>$skillID))->result_array();
+		return $result[0]['testAvailable'];
+	}
 ////////////////////////////////////////////////////////////
 }
