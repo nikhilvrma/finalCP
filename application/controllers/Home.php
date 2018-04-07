@@ -30,7 +30,7 @@ class Home extends CI_Controller {
 	}
 
 	public function emailer(){
-			$this->load->view('emailers/forgotPassword', $this->data);
+			$this->load->view('emailers/offers', $this->data);
 	}
 
 
@@ -355,7 +355,160 @@ class Home extends CI_Controller {
 		$this->load->view('report', $this->data);
 	}
 
+	// public function sendEMail(){
+	// 	$this->load->helper('mail_helper');
+	// 	$email = 'vrmanikhil@gmail.com';
+	// 	$message =  $this->load->view('emailers/offers', $this->data, true);
+	// 	$data = array(
+	// 			'sendToEmail' => $email,
+	// 			'fromName' => 'Campus Puppy Private Limited',
+	// 			'fromEmail' => 'no-reply@campuspuppy.com',
+	// 			'subject' => 'Offers|Campus Puppy Private Limited',
+	// 			'message' => $message,
+	// 			'using' =>'pepipost'
+	// 			);
+	// 	sendEmail($data);
+	// }
 
+	// public function sendSMS(){
+	// 	$mobile = "7503705892";
+	// 	$msg = "Test Message";
+	// 	$authKey = "163538ADD0UybtU59590664";
+	// 	$mobileNumber = $mobile;
+	// 	$senderId = "CPUPPY";
+	// 	$message = urlencode($msg);
+	// 	$route = "4";
+	// 	$postData = array(
+	// 	    'authkey' => $authKey,
+	// 	    'mobiles' => $mobileNumber,
+	// 	    'message' => $message,
+	// 	    'sender' => $senderId,
+	// 	    'route' => $route
+	// 	);
+	// 	$url="http://api.msg91.com/api/sendhttp.php";
+	// 	$ch = curl_init();
+	// 	curl_setopt_array($ch, array(
+	// 	    CURLOPT_URL => $url,
+	// 	    CURLOPT_RETURNTRANSFER => true,
+	// 	    CURLOPT_POST => true,
+	// 	    CURLOPT_POSTFIELDS => $postData
+	// 	    //,CURLOPT_FOLLOWLOCATION => true
+	// 	));
+	// 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+	// 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	// 	$output = curl_exec($ch);
+	// 	if(curl_errno($ch)){
+	//   // echo 'error:' . curl_error($ch);
+	// 	}
+	// 	curl_close($ch);
+	// 	// echo $output;
+	// }
 
+	public function generateVerificationCode($type){
+		$this->load->library(array('contact_lib'));
+		$mobile = "";
+		$email = "";
+
+		if($type=="1"){
+			date_default_timezone_set("Asia/Kolkata");
+			$mobile = $this->function_lib->getUserData($_SESSION['user_data']['email'])[0]['mobile'];
+			$checkCode = $this->contact_lib->checkVerificationCode($mobile, $email, $type);
+			$currentTime = strtotime(date("d M Y H:i:s"));
+			if($checkCode){
+				$expiry = $checkCode[0]['expiry'];
+				$timeDifference = $expiry-$currentTime;
+				if($timeDifference>0 && $timeDifference<7200){
+					$msg = "Your Mobile Number Verification Token is: ".$checkCode[0]['code'].". The token is valid for only next 2 hours.";
+					echo $msg."1";
+					// $this->sendSMS($mobile, $msg);
+				}
+				else{
+					$code = rand(1000,9999);
+					$expiry = $currentTime + 7200;
+					$codeData = array(
+						'code' => $code,
+						'mobile' => $mobile,
+						'generatedAt' => $currentTime,
+						'expiry' => $expiry,
+						'codeType' => '1',
+						'userID' => $_SESSION['user_data']['userID'],
+						'active' => '1'
+					);
+					$this->contact_lib->insertVerificationCode($codeData);
+					$msg =  "Your Mobile Number Verification Token is: ".$code.". The token is valid for only next 2 hours.";
+					echo $msg."2";
+					// $this->sendSMS($mobile, $msg);
+				}
+			}
+			else {
+				$code = rand(1000,9999);
+				$expiry = $currentTime + 7200;
+				$codeData = array(
+					'code' => $code,
+					'mobile' => $mobile,
+					'generatedAt' => $currentTime,
+					'expiry' => $expiry,
+					'codeType' => '1',
+					'userID' => $_SESSION['user_data']['userID'],
+					'active' => '1'
+				);
+				$this->contact_lib->insertVerificationCode($codeData);
+				$msg =  "Your Mobile Number Verification Token is: ".$code.". The token is valid for only next 2 hours.";
+				echo $msg."3";
+				// $this->sendSMS($mobile, $msg);
+			}
+		}
+
+		if($type=="2"){
+			date_default_timezone_set("Asia/Kolkata");
+			$email = $_SESSION['user_data']['email'];
+			$checkCode = $this->contact_lib->checkVerificationCode($mobile, $email, $type);
+			$currentTime = strtotime(date("d M Y H:i:s"));
+			if($checkCode){
+				$expiry = $checkCode[0]['expiry'];
+				$timeDifference = $expiry-$currentTime;
+				if($timeDifference>0 && $timeDifference<7200){
+					$msg = "Your E-Mail Verification Token is: ".$checkCode[0]['code'].". The token is valid for only next 2 hours.";
+					echo $msg."1";
+					// $this->sendSMS($mobile, $msg);
+				}
+				else{
+					$code = rand(1000,9999);
+					$expiry = $currentTime + 7200;
+					$codeData = array(
+						'code' => $code,
+						'email' => $email,
+						'generatedAt' => $currentTime,
+						'expiry' => $expiry,
+						'codeType' => '2',
+						'userID' => $_SESSION['user_data']['userID'],
+						'active' => '1'
+					);
+					$this->contact_lib->insertVerificationCode($codeData);
+					$msg =  "Your E-Mail Verification Token is: ".$code.". The token is valid for only next 2 hours.";
+					echo $msg."2";
+					// $this->sendSMS($mobile, $msg);
+				}
+			}
+			else {
+				$code = rand(1000,9999);
+				$expiry = $currentTime + 7200;
+				$codeData = array(
+					'code' => $code,
+					'email' => $email,
+					'generatedAt' => $currentTime,
+					'expiry' => $expiry,
+					'codeType' => '2',
+					'userID' => $_SESSION['user_data']['userID'],
+					'active' => '1'
+				);
+				$this->contact_lib->insertVerificationCode($codeData);
+				$msg =  "Your E-Mail Verification Token is: ".$code.". The token is valid for only next 2 hours.";
+				echo $msg."3";
+				// $this->sendSMS($mobile, $msg);
+			}
+		}
+
+	}
 
 }
