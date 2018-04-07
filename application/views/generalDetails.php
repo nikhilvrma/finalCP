@@ -71,11 +71,18 @@
               <div class="col-md-5 control-group form-group">
                 <div class="controls">
                   <label><b>Current Location:</b></label>
-                  <input type="text" class="form-control">
+                  <select name = "location">
+                    <option value = "0"> </option>
+                    <?php foreach($locations as $location){?>
+
+                    <option value="<?= $location['cityID']?>"><?=$location['city']?>, <?=$location['state']?></option>
+                    <?php } ?>
+                  </select>
                   <p class="help-block"></p>
                 </div>
               </div>
 
+              <?php if($_SESSION['user_data']['accountType'] == 1){?>
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label><b>Career Objective:</b></label>
@@ -99,16 +106,6 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">1</th>
-                      <td>New Delhi, Delhi</td>
-                      <td><a class="btn btn-danger" style="color: white; font-size: 14px;"><i class="fa fa-trash"></i> Remove</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Ghaziabad, Uttar Pradesh</td>
-                      <td><a class="btn btn-danger" style="color: white; font-size: 14px;"><i class="fa fa-trash"></i> Remove</a></td>
-                    </tr>
-                    <tr>
                       <th scope="row">3</th>
                       <td>Noida, Uttar Pradesh</td>
                       <td><a class="btn btn-danger" style="color: white; font-size: 14px;"><i class="fa fa-trash"></i> Remove</a></td>
@@ -120,7 +117,8 @@
                 </table>
                 </div>
               </div>
-
+              <?php } ?>
+              <?php if($_SESSION['user_data']['accountType'] == 2){?>
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label><b>Company Name:</b></label>
@@ -136,7 +134,7 @@
                   <p class="help-block"></p>
                 </div>
               </div>
-
+              <?php } ?>
 
             </div>
 
@@ -175,7 +173,7 @@
         </div>
 
         <div class="clearfix"></div>
-
+        <?php if($_SESSION['user_data']['accountType'] == 2){?>
         <h3 class="mt-4 mb-3" style="float: right;">Company Logo</h3>
         <div class="clearfix"></div>
         <hr>
@@ -208,6 +206,7 @@
 
         </div>
       </div>
+      <?php } ?>
 
         </div>
       </div>
@@ -304,7 +303,12 @@
             <div class="col-md-12 control-group form-group">
               <div class="controls">
                 <label>Location:</label>
-                <input type="text" class="form-control" name="" required>
+                <select name = "preferredLocation">
+                    <option value = "0"> </option>
+                    <?php foreach($locations as $location){?>
+                    <option value="<?= $location['cityID']?>"><?=$location['city']?>, <?=$location['state']?></option>
+                    <?php } ?>
+                  </select>
               </div>
             </div>
             </div>
@@ -329,8 +333,12 @@
     <script src="<?= base_url('assets/js/croppie.js')?>"></script>
     <script>
       $(document).ready(function(){
+        <?php if($_SESSION['user_data']['accountType'] == 1){?>
         editor = CKEDITOR.replace('careerObjective');
+        <?php } ?>
+        <?php if($_SESSION['user_data']['accountType'] == 2){?>
         editor = CKEDITOR.replace('companyDescription');
+        <?php } ?>
       });
       </script>
 

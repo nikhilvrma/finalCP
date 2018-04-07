@@ -72,14 +72,14 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <form>
+                    <form method = "POST" action = "<?= base_url('functions/addWorkExperience');?>" enctype ="multipart/form-data">
                     <div class="modal-body">
 
                         <div class="row">
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Company Name:</label>
-                            <input type="text" class="form-control" name="" required>
+                            <input type="text" class="form-control" name="companyName" required>
                           </div>
                         </div>
                         </div>
@@ -87,20 +87,20 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Position:</label>
-                            <input type="text" class="form-control" name="" required>
+                            <input type="text" class="form-control" name="position" required>
                           </div>
                         </div>
                         </div>
 
                         <div class="row">
                         <div class="col-md-12">
-                        <label><b>Start Date</b></label>
+                        <label><b>Start</b></label>
                       </div>
 
                         <div class="col-md-8 control-group form-group">
                           <div class="controls">
                             <label>Start Month:</label>
-                            <select class="form-control" name="" required>
+                            <select class="form-control" name="startMonth" required>
                               <option value="1">January</option>
                               <option value="2">February</option>
                               <option value="3">March</option>
@@ -120,7 +120,7 @@
                         <div class="col-md-4 control-group form-group">
                           <div class="controls">
                             <label>Start Year:</label>
-                            <input type="text" class="form-control" name="" required>
+                            <input type="text" class="form-control" name="startYear" required>
                           </div>
                         </div>
 
@@ -128,12 +128,12 @@
 
                         <div class="row">
                           <div class="col-md-12">
-                          <label><b>End Date</b></label>
+                          <label><b>End</b></label>
                         </div>
                         <div class="col-md-8 control-group form-group">
                           <div class="controls">
                             <label>End Month:</label>
-                            <select class="form-control" name="" required>
+                            <select class="form-control" name="endMonth" required>
                               <option value="1">January</option>
                               <option value="2">February</option>
                               <option value="3">March</option>
@@ -153,13 +153,13 @@
                         <div class="col-md-4 control-group form-group">
                           <div class="controls">
                             <label>End Year:</label>
-                            <input type="text" class="form-control" name="" required>
+                            <input type="text" class="form-control" name="endYear" required>
                           </div>
                         </div>
 
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
-                            <input type="checkbox" name="" required>
+                            <input type="checkbox" name="currentWorking" required>
                             <label> Currently Work Here</label>
                           </div>
                         </div>
@@ -171,7 +171,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Role:</label>
-                            <textarea class="form-control" id="role" name="" required>
+                            <textarea class="form-control" id="role" name="role" required>
                             </textarea>
                           </div>
                         </div>
@@ -182,7 +182,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Supporting Document:</label>
-                            <input type="file" class="form-control" placeholder="Score">
+                            <input type="file" class="form-control" name = "file" placeholder="Score">
                             <p class="help-block"></p>
                           </div>
                         </div>
@@ -192,7 +192,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Add Work Experience</button>
+                      <button type="submit" class="btn btn-primary">Add Work Experience</button>
                     </div>
                   </form>
                   </div>

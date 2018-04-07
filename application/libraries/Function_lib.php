@@ -34,6 +34,12 @@ class Function_lib {
 		return 0;
 	}
 
+	public function getAllLocations(){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getAllLocations();
+	}
+
 	public function updateGeneralDetails($data, $userID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -123,6 +129,24 @@ class Function_lib {
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->changePassword($email, $password);
+	}
+
+	public function checkEducationUnique($userID, $type){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->checkEducationUnique($userID, $type);
+	}
+
+	public function addEducation($data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->addEducation($data);
+	}
+
+	public function addWorkExperience($data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->addWorkExperience($data);
 	}
 
 }

@@ -45,16 +45,17 @@
                 </div>
               </div>
 
-            <?php if($premiumSkills){?>
+            <?php if($premiumSkills){
+             foreach($premiumSkills as $value){?>
               <div class="col-lg-6 mb-4">
                 <div class="card h-100">
-                  <h5 class="card-header cardheader">General Aptitude<sup style="color: red;"> Premium</sup></h5>
+                  <h5 class="card-header cardheader"><?= $value['skill_name']?><sup style="color: red;"> Premium</sup></h5>
                   <div class="card-body">
-                    <p class="card-text"><b>Skill-Score</b><h3 style="float: right;">76%</h3></p>
+                    <p class="card-text"><b>Skill-Score</b><h3 style="float: right;"><?= $value['score']?></h3></p>
                   </div>
                 </div>
               </div>
-            <?php }else{?>
+            <?php }}else{?>
               <div class="col-lg-12">
                 <p><center>No Premium Skills Found.</center></p>
               </div>
@@ -65,7 +66,7 @@
             <h5>Other Skills</h5>
           </div>
         </div>
-         <?php if($otherSkills){
+         <?php if(isset($otherSkills)){
           foreach($otherSkills as $value){?>
 
         <div class="col-lg-6 mb-4">

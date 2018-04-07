@@ -60,6 +60,7 @@ class Home extends CI_Controller {
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->data['generalData'] = $this->function_lib->getUserData($_SESSION['user_data']['email']);
 				$this->data['generalData'] = $this->data['generalData'][0];
+				$this->data['locations'] = $this->function_lib->getAllLocations();
 				$this->load->view('generalDetails', $this->data);
 			}
 			else{

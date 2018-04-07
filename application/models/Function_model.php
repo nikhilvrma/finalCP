@@ -15,6 +15,10 @@ class Function_model extends CI_Model {
 		return false;
 	}
 
+	public function getAllLocations(){
+		return $this->db->get('indianCities')->result_array();
+	} 
+
 	public function getUserData($email){
 		$result = $this->db->get_where('users', array('email' => $email));
 		return $result->result_array();
@@ -91,6 +95,22 @@ class Function_model extends CI_Model {
 		return $this->db->query($query);
 	}
 
+	public function checkEducationUnique($userID, $type){
+		$result = $this->db->get_where('educationalDetails', array('userID' => $userID, 'educationType' => $type));
+		if($result->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public function addEducation($data){
+		return $this->db->insert('educationalDetails', $data);
+	} 
+
+	public function addWorkExperience($data){
+		return $this->db->insert('workExperience', $data);
+	} 
 
 
 
@@ -105,15 +125,18 @@ class Function_model extends CI_Model {
 
 	public function getNotAddedSkills($userID){
 		$this->db->select('skillID');
-		$result = $this->db->get_where('userSkills', array('userID'=>$userID))->result_array();
+		$result = $this->db->get_where('userSkills', array('userID'=>$userID));
 		// echo "string";
 		// var_dump($result);die;
 		$i = 0;
+		if($result->num_rows()>0){
 		foreach ($result as $key => $value) {
 			$res[$i] = $value['skillID'];
 			$i++;
 		}
+		$result = $result->result_array();
 		$this->db->where_not_in('skillID',$res);
+		}
 		$result = $this->db->get_where('skills', array('active' => 1));
 		return $result->result_array();
 	}
@@ -173,5 +196,7 @@ class Function_model extends CI_Model {
 		$result = $this->db->get_where('skills', array('skillID'=>$skillID))->result_array();
 		return $result[0]['testAvailable'];
 	}
+
+
 ////////////////////////////////////////////////////////////
 }
