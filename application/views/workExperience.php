@@ -54,7 +54,7 @@
                 </div>
                 <div class="card-footer">
                   <a href="<?= base_url('functions/deleteWorkExperience?id='.$experience['workExperienceID'])?>" class="btn btn-danger" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
-                  <button id = "editWorkEx"  class="btn btn-success" style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></button>
+                  <button class="btn btn-success editWorkEx" data = '<?= json_encode($experience);?>' style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></button>
                 </div>
               </div>
               </div>
@@ -77,13 +77,13 @@
                       </button>
                     </div>
                     <form method = "POST" action = "<?= base_url('functions/addWorkExperience');?>" enctype ="multipart/form-data">
-                    <div class="modal-body">
+                    <div class="modal-body workEx">
 
                         <div class="row">
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Company Name:</label>
-                            <input type="text" class="form-control" name="companyName" required>
+                            <input type="text" class="form-control" id= "companyName" name="companyName" required>
                           </div>
                         </div>
                         </div>
@@ -91,7 +91,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Position:</label>
-                            <input type="text" class="form-control" name="position" required>
+                            <input type="text" class="form-control" id = "position"  name="position" required>
                           </div>
                         </div>
                         </div>
@@ -104,7 +104,7 @@
                         <div class="col-md-8 control-group form-group">
                           <div class="controls">
                             <label>Start Month:</label>
-                            <select class="form-control" name="startMonth" required>
+                            <select class="form-control" name="startMonth" id = "startMonth" required>
                               <option value="January">January</option>
                               <option value="February">February</option>
                               <option value="March">March</option>
@@ -124,7 +124,7 @@
                         <div class="col-md-4 control-group form-group">
                           <div class="controls">
                             <label>Start Year:</label>
-                            <input type="text" class="form-control" name="startYear" required>
+                            <input type="number" class="form-control" id = "startYear" name="startYear" required min="1960" max="<?php echo date("Y"); ?>">
                           </div>
                         </div>
 
@@ -137,7 +137,7 @@
                         <div class="col-md-8 control-group form-group">
                           <div class="controls">
                             <label>End Month:</label>
-                            <select class="form-control" name="endMonth" required>
+                            <select class="form-control" name="endMonth" id= "endMonth">
                               <option value="January">January</option>
                               <option value="February">February</option>
                               <option value="March">March</option>
@@ -157,13 +157,13 @@
                         <div class="col-md-4 control-group form-group">
                           <div class="controls">
                             <label>End Year:</label>
-                            <input type="text" class="form-control" name="endYear" required>
+                            <input type="number" class="form-control" id = "endYear" name="endYear" min="1960" max="<?php echo date("Y"); ?>">
                           </div>
                         </div>
 
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
-                            <input type="checkbox" name="currentWorking" value="1" required>
+                            <input type="checkbox" name="currentWorking" id = "currentWorking" value="1">
                             <label> Currently Work Here</label>
                           </div>
                         </div>
@@ -195,7 +195,7 @@
 
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-secondary" id = "clearModal" data-dismiss="modal">Close</button>
                       <button type="submit" class="btn btn-primary">Add Work Experience</button>
                     </div>
                   </form>
@@ -224,6 +224,35 @@
       $(document).ready(function(){
         editor = CKEDITOR.replace('role');
       });
+      </script>
+
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $('.editWorkEx').on('click', function(res){
+            data = $(this).attr('data');
+            data = JSON.parse(data);
+            console.log(data);
+            $('#companyName').val(data.companyName)
+            $('#position').val(data.position)
+            $('#startMonth').val(data.startMonth)
+            $('#startYear').val(data.startYear)
+            if(!(data.currentlyWorking == 1)){
+              $('#endMonth').val(data.endMonth)
+              $('#endYear').val(data.endYear)
+              $('#currentWorking').attr('checked', false)
+            }else{
+              $('#currentWorking').attr('checked', true)
+            }
+            CKEDITOR.instances.editor.setData("hello")
+            $('#education').modal('show');
+          })
+        });
+      </script>
+
+      <script type="text/javascript">
+         $('#education').on('hidden.bs.modal', function () {
+          $(this).find('form').trigger('reset');
+        })
       </script>
 
   </body>

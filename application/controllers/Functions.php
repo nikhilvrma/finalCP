@@ -222,16 +222,16 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('endYear')){
 			$endYear = $x;
 		}
-		if($x = $this->input->post('currentlyWorking')){
+		if($x = $this->input->post('currentWorking')){
 			$currentWorking = $x;
 		}
-
-		if($companyName == "" || $position == "" || $role == "" || $startYear == "" || $startMonth == "" || $endYear == "" || $endMonth == "" || $currentWorking == ""){
+		// var_dump($currentWorking);die;
+		if($companyName == "" || $position == "" || $role == "" || $startYear == "" || $startMonth == ""){
 			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 			redirect(base_url('work-experience'));
 		} 
 
-		if($endYear<$startYear){
+		if($endYear != "" && $endYear<$startYear){
 			$this->session->set_flashdata('message', array('content'=>'End date cannot be less than start date.','color'=>'red'));
 			redirect(base_url('work-experience'));
 		}
@@ -369,11 +369,25 @@ class Functions extends CI_Controller {
 	}
 
 	public function deleteEducationalDetail(){
-
+		$education = $this->input->get('id');
+		if($this->function_lib->deleteEducationalDetail($education)){
+			$this->session->set_flashdata('message', array('content'=>'Education Deleted.','color'=>'green'));
+			redirect(base_url('educational-details'));
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url('educational-details'));
+		}	
 	}
 
 	public function deleteWorkExperience(){
-		
+		$experience = $this->input->get('id');
+		if($this->function_lib->deleteWorkExperience($experience)){
+			$this->session->set_flashdata('message', array('content'=>'Experience Deleted.','color'=>'green'));
+			redirect(base_url('work-experience'));
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url('work-experience'));
+		}	
 	}
 
 	public function updateProfileImage(){

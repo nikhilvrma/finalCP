@@ -64,6 +64,16 @@ class Function_model extends CI_Model {
 		return $this->db->delete('preferredLocations');
 	}
 
+	public function deleteEducationalDetail($education){
+		$this->db->where(array('educationID' => $education));
+		return $this->db->delete('educationalDetails');
+	}
+
+	public function deleteWorkExperience($experience){
+		$this->db->where(array('workExperienceID' => $experience));
+		return $this->db->delete('workExperience');
+	}
+
 	public function updateGeneralDetails($data, $userID){
 		$this->db->where('userID', $userID);
 		return $this->db->update('users', $data);

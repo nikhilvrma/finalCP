@@ -70,6 +70,18 @@ class Function_lib {
 		return $CI->function->deletePreferredLocation($location, $userID);
 	}
 
+	public function deleteEducationalDetail($education){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->deleteEducationalDetail($education);
+	}
+
+	public function deleteWorkExperience($experience){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->deleteWorkExperience($experience);
+	}
+
 	public function getAllLocations(){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
