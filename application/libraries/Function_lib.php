@@ -40,6 +40,18 @@ class Function_lib {
 		return $CI->function->getPreferredLocations($userID);
 	}
 
+	public function getUserEducationalDetails($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getUserEducationalDetails($userID);
+	}
+
+	public function getUserWorkExperience($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getUserWorkExperience($userID);
+	}
+
 	public function insertPreferredLocation($data){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');

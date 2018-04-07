@@ -41,22 +41,24 @@
             <div class="row">
 
 
-
+              <?php if(!empty($workExperience)){
+                foreach($workExperience as $experience){
+                  ?>
               <div class="col-lg-12 mb-4">
               <div class="card">
-                <h6 class="card-header"><b>Campus Puppy Private Limited</b> <i class="fa fa-check-circle"></i></h6>
+                <h6 class="card-header"><b><?= $experience['companyName']?></b> <?php if($experience['status'] == 2){?><i class="fa fa-check-circle"></i><?php }?></h6>
                 <div class="card-body">
-                  <p class="card-text"><b>Duration: </b>April 2018- Present</p>
-                  <p class="card-text"><b>Position: </b>Co-Founder</p>
-                  <p class="card-text"><b>Role: </b>blah blah blah</p>
+                  <p class="card-text"><b>Duration: </b><?= $experience['startMonth']?> <?= $experience['startYear']?> - <?php if($experience['currentlyWorking'] == 1){echo "Present";}else{?><?= $experience['endMonth']?> <?= $experience['endYear']?><?php } ?></p>
+                  <p class="card-text"><b>Position: </b><?= $experience['position']?></p>
+                  <p class="card-text"><b>Role: </b><?= $experience['role']?></p>
                 </div>
                 <div class="card-footer">
-                  <a href="#" class="btn btn-danger" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
-                  <a href="#" class="btn btn-success" style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></a>
+                  <a href="<?= base_url('functions/deleteWorkExperience?id='.$experience['workExperienceID'])?>" class="btn btn-danger" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
+                  <button id = "editWorkEx"  class="btn btn-success" style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></button>
                 </div>
               </div>
               </div>
-
+              <?php } }?>
               <div class="col-lg-12 mb-4">
               <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#education">
                 Add Work Experience
@@ -101,18 +103,18 @@
                           <div class="controls">
                             <label>Start Month:</label>
                             <select class="form-control" name="startMonth" required>
-                              <option value="1">January</option>
-                              <option value="2">February</option>
-                              <option value="3">March</option>
-                              <option value="4">April</option>
-                              <option value="5">May</option>
-                              <option value="6">June</option>
-                              <option value="7">July</option>
-                              <option value="8">August</option>
-                              <option value="9">September</option>
-                              <option value="10">October</option>
-                              <option value="11">November</option>
-                              <option value="12">December</option>
+                              <option value="January">January</option>
+                              <option value="February">February</option>
+                              <option value="March">March</option>
+                              <option value="April">April</option>
+                              <option value="May">May</option>
+                              <option value="June">June</option>
+                              <option value="July">July</option>
+                              <option value="August">August</option>
+                              <option value="September">September</option>
+                              <option value="October">October</option>
+                              <option value="November">November</option>
+                              <option value="December">December</option>
                             </select>
                           </div>
                         </div>
@@ -134,18 +136,18 @@
                           <div class="controls">
                             <label>End Month:</label>
                             <select class="form-control" name="endMonth" required>
-                              <option value="1">January</option>
-                              <option value="2">February</option>
-                              <option value="3">March</option>
-                              <option value="4">April</option>
-                              <option value="5">May</option>
-                              <option value="6">June</option>
-                              <option value="7">July</option>
-                              <option value="8">August</option>
-                              <option value="9">September</option>
-                              <option value="10">October</option>
-                              <option value="11">November</option>
-                              <option value="12">December</option>
+                              <option value="January">January</option>
+                              <option value="February">February</option>
+                              <option value="March">March</option>
+                              <option value="April">April</option>
+                              <option value="May">May</option>
+                              <option value="June">June</option>
+                              <option value="July">July</option>
+                              <option value="August">August</option>
+                              <option value="September">September</option>
+                              <option value="October">October</option>
+                              <option value="November">November</option>
+                              <option value="December">December</option>
                             </select>
                           </div>
                         </div>
@@ -159,7 +161,7 @@
 
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
-                            <input type="checkbox" name="currentWorking" required>
+                            <input type="checkbox" name="currentWorking" value="1" required>
                             <label> Currently Work Here</label>
                           </div>
                         </div>

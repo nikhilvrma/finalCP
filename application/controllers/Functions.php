@@ -222,7 +222,7 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('endYear')){
 			$endYear = $x;
 		}
-		if($x = $this->input->post('currentWorking')){
+		if($x = $this->input->post('currentlyWorking')){
 			$currentWorking = $x;
 		}
 
@@ -366,6 +366,14 @@ class Functions extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url('general-details'));
 		}	
+	}
+
+	public function deleteEducationalDetail(){
+
+	}
+
+	public function deleteWorkExperience(){
+		
 	}
 
 	public function updateProfileImage(){
