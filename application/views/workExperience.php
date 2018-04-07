@@ -58,7 +58,9 @@
                 </div>
               </div>
               </div>
-              <?php } }?>
+              <?php } }else{
+                echo "No Work Experience Added.";
+              }?>
               <div class="col-lg-12 mb-4">
               <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#education">
                 Add Work Experience
