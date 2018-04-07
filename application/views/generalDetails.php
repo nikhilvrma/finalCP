@@ -67,15 +67,15 @@
                   <p class="help-block"></p>
                 </div>
               </div>
-             
+
               <div class="col-md-5 control-group form-group">
                 <div class="controls">
                   <label><b>Current Location:</b></label>
-                  <select name = "location">
+                  <select name = "location" class="form-control">
                     <option value = "0"> </option>
                     <?php foreach($locations as $location){
                       if($location['cityID'] != $generalData['cityID']){
-                      ?>    
+                      ?>
                     <option value="<?= $location['cityID']?>"><?=$location['city']?>, <?=$location['state']?></option>
                     <?php }else{?>
                     <option value="<?= $location['cityID']?>" selected><?=$location['city']?>, <?=$location['state']?></option>
@@ -102,9 +102,9 @@
                   <table class="table">
                     <?php if(!empty($preferredLocation)){
                       $i = 1;
-                     
+
                       ?>
-                     
+
                   <thead>
                     <tr>
                       <th scope="col">#</th>
