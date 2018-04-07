@@ -34,6 +34,30 @@ class Function_lib {
 		return 0;
 	}
 
+	public function getPreferredLocations($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getPreferredLocations($userID);
+	}
+
+	public function insertPreferredLocation($data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->insertPreferredLocation($data);
+	}
+
+	public function checkPreferredLocationUnique($location, $userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->checkPreferredLocationUnique($location, $userID);
+	}
+
+	public function deletePreferredLocation($location, $userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->deletePreferredLocation($location, $userID);
+	}
+
 	public function getAllLocations(){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -44,6 +68,12 @@ class Function_lib {
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->updateGeneralDetails($data, $userID);
+	}
+
+	public function updateCompanyDetails($data, $userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->updateCompanyDetails($data, $userID);
 	}
 
 	public function uploadImage($image, $type ,$path = 'assets/uploads/'){

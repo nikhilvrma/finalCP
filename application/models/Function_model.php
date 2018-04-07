@@ -40,9 +40,38 @@ class Function_model extends CI_Model {
 		return false;
 	}
 
+	public function getPreferredLocations($userID){
+		$this->db->join('indianCities', 'preferredLocations.cityID = indianCities.cityID');
+		$result = $this->db->get_where('preferredLocations', array('userID'=>$userID));
+		return $result->result_array();
+	}
+
+	public function insertPreferredLocation($data){
+		return $this->db->insert('preferredLocations', $data);
+	}
+
+	public function checkPreferredLocationUnique($location, $userID){
+		$result = $this->db->get_where('preferredLocations', array('cityID'=> $location, 'userID' => $userID));
+		if($result->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}	
+
+	public function deletePreferredLocation($location, $userID){
+		$this->db->where(array('userID' => $userID, 'cityID' => $location));
+		return $this->db->delete('preferredLocations');
+	}
+
 	public function updateGeneralDetails($data, $userID){
 		$this->db->where('userID', $userID);
 		return $this->db->update('users', $data);
+	}
+
+	public function updateCompanyDetails($data, $userID){
+		$this->db->where('userID', $userID);
+		return $this->db->update('employerUsers', $data);
 	}
 
 	public function updateCompanyLogo($userId, $logo){

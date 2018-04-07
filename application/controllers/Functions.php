@@ -276,14 +276,49 @@ class Functions extends CI_Controller {
 	}
 
 	public function updateGeneralDetails(){
-		$careerObjective = '';
-		if($x = $this->input->post('careerObjective')){
-			$careerObjective = $x;
+		$location = '';
+		if($_SESSION['user_data']['accountType'] == 1){
+			$careerObjective = '';
+			if($x = $this->input->post('careerObjective')){
+				$careerObjective = $x;
+			}
+			if($x = $this->input->post('location')){
+				$location = $x;
+			}
+			$data = array(
+				'careerObjective' => $careerObjective,
+				'cityID' => $location
+			);
+			$result = $this->function_lib->updateGeneralDetails($data, $_SESSION['user_data']['userID']);
+		}else{
+			$companyName = '';
+			$companyDescription = '';
+			if($x = $this->input->post('companyName')){
+				$companyName = $x;
+			}
+			if($x = $this->input->post('companyDescription')){
+				$companyDescription = $x;
+			}
+			if($x = $this->input->post('location')){
+				$location = $x;
+			}
+			$data = array(
+				'cityID' => $location
+			);
+			$result = $this->function_lib->updateGeneralDetails($data, $_SESSION['user_data']['userID']);
+			if($result){
+				$data = array(
+					'companyName' => $companyName,
+					'companyDescription' => $companyDescription
+				);
+				$result = $this->function_lib->updateCompanyDetails($data, $_SESSION['user_data']['userID']);
+			}else{
+				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+				redirect(base_url('general-details'));
+			}
+
 		}
-		$data = array(
-			'careerObjective' => $careerObjective
-		);
-		$result = $this->function_lib->updateGeneralDetails($data, $_SESSION['user_data']['userID']);
+		
 		if($result){
 			$this->session->set_flashdata('message', array('content'=>'Career Objective successfully Updated','color'=>'green'));
 			redirect(base_url('general-details'));
@@ -292,6 +327,45 @@ class Functions extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url('general-details'));
 		}
+	}
+
+
+	public function addPreferredLocation(){
+		$location = "";
+		if($x = $this->input->post('preferredLocation')){
+			$location = $x;
+		}
+
+		if($location == 0){
+				$this->session->set_flashdata('message', array('content'=>'Select a location To add Preferred Location.','color'=>'red'));
+				redirect(base_url('general-details'));
+		}
+		$data = array(
+			'cityID' => $location,
+			'userID' => $_SESSION['user_data']['userID']
+		);
+		if($this->function_lib->checkPreferredLocationUnique($location, $_SESSION['user_data']['userID'])){
+			$this->session->set_flashdata('message', array('content'=>'Preferred Location already Added.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}
+		if($this->function_lib->insertPreferredLocation($data)){
+			$this->session->set_flashdata('message', array('content'=>'Preferred Location Added.','color'=>'green'));
+			redirect(base_url('general-details'));
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}	
+	}
+
+	public function deletePreferredLocation(){
+		$location = $this->input->get('location');
+		if($this->function_lib->deletePreferredLocation($location, $_SESSION['user_data']['userID'])){
+			$this->session->set_flashdata('message', array('content'=>'Preferred Location Deleted.','color'=>'green'));
+			redirect(base_url('general-details'));
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}	
 	}
 
 	public function updateProfileImage(){

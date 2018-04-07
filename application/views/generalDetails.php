@@ -67,16 +67,19 @@
                   <p class="help-block"></p>
                 </div>
               </div>
-
+             
               <div class="col-md-5 control-group form-group">
                 <div class="controls">
                   <label><b>Current Location:</b></label>
                   <select name = "location">
                     <option value = "0"> </option>
-                    <?php foreach($locations as $location){?>
-
+                    <?php foreach($locations as $location){
+                      if($location['cityID'] != $generalData['cityID']){
+                      ?>    
                     <option value="<?= $location['cityID']?>"><?=$location['city']?>, <?=$location['state']?></option>
-                    <?php } ?>
+                    <?php }else{?>
+                    <option value="<?= $location['cityID']?>" selected><?=$location['city']?>, <?=$location['state']?></option>
+                  <?php  }} ?>
                   </select>
                   <p class="help-block"></p>
                 </div>
@@ -97,6 +100,11 @@
                 <div class="controls">
                   <label><b>Preferred Location(s):</b></label>
                   <table class="table">
+                    <?php if(!empty($preferredLocation)){
+                      $i = 1;
+                     
+                      ?>
+                     
                   <thead>
                     <tr>
                       <th scope="col">#</th>
@@ -105,14 +113,21 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <?php  foreach($preferredLocation as $location){?>
                     <tr>
-                      <th scope="row">3</th>
-                      <td>Noida, Uttar Pradesh</td>
-                      <td><a class="btn btn-danger" style="color: white; font-size: 14px;"><i class="fa fa-trash"></i> Remove</a></td>
+                      <th scope="row"><?= $i?></th>
+                      <td><?= $location['city']?>, <?= $location['state']?></td>
+                      <td><a class="btn btn-danger" href = "<?= base_url('functions/deletePreferredLocation?location='.$location['cityID'])?>" style="color: white; font-size: 14px;"><i class="fa fa-trash"></i> Remove</a></td>
                     </tr>
+                    <?php $i++;}}else{?>
+                     <tbody>
+                    <tr>No Preferred Location Added.</tr>
+                    <?php }if(sizeof($preferredLocation) < 5){ ?>
+
                     <tr>
                       <td colspan="3"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLocation" style="color: white; float: right;">Add Location</button></td>
                     </tr>
+                    <?php } ?>
                   </tbody>
                 </table>
                 </div>
@@ -296,7 +311,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form>
+        <form method = "POST" action = "<?= base_url('functions/addPreferredLocation')?>">
         <div class="modal-body">
 
             <div class="row">
@@ -317,7 +332,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Add Location</button>
+          <button type="submit" class="btn btn-primary">Add Location</button>
         </div>
       </form>
       </div>
