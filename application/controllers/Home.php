@@ -170,6 +170,7 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Educational Details";
 				$this->data['activePage'] = "4";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->data['educations'] = $this->function_lib->getUserEducationalDetails($_SESSION['user_data']['userID']);
 				$this->load->view('educationalDetails', $this->data);
 			}
 			else{
@@ -187,6 +188,7 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Work Experience";
 				$this->data['activePage'] = "5";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->data['workExperience'] = $this->function_lib->getUserWorkExperience($_SESSION['user_data']['userID']);
 				$this->load->view('workExperience', $this->data);
 			}
 			else{

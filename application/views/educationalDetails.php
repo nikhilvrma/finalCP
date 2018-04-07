@@ -41,21 +41,24 @@
             <div class="row">
 
               
-
+              <?php if(!empty($educations)){
+                foreach($educations as $education){?>
               <div class="col-lg-12 mb-4">
               <div class="card">
-                <h6 class="card-header"><b>High-School</b> <i class="fa fa-check-circle"></i></h6>
+                <h6 class="card-header"><b><?php if($education['educationType'] == 1){echo "High School";}elseif($education['educationType'] == 2){echo "Senior Secondary";}elseif($education['educationType'] == 3){echo "Graduation";}else{echo "Post Post-Graduation";}?></b> <?php if
+                  ($education['status'] == 2){?><i class="fa fa-check-circle"></i><?php } ?></h6>
                 <div class="card-body">
-                  <p class="card-text"><b>Year: </b>2018</p>
-                  <p class="card-text"><b>Score: </b>9.8 CGPA</p>
-                  <p class="card-text"><b>School/Board/College/University: </b>Central Board of Secondary Education, New Delhi</p>
+                  <p class="card-text"><b>Year: </b><?= $education['year']?></p>
+                  <p class="card-text"><b>Score: </b><?=$education['score']?> <?php if($education['scoreType'] == 1){echo "CGPA";}else{echo "%";}?></p>
+                  <p class="card-text"><b>School/Board/College/University: </b><?= $education['institute']?></p>
                 </div>
                 <div class="card-footer">
-                  <a href="#" class="btn btn-danger" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
-                  <a href="#" class="btn btn-success" style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></a>
+                  <a href="<?= base_url('functions/deleteEducationalDetail?id='.$education['educationID'])?>" class="btn btn-danger" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
+                  <button class="btn btn-success" id = "editEducation" style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></button>
                 </div>
               </div>
               </div>
+              <?php }} ?>
 
               <div class="col-lg-12 mb-4">
               <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#education">

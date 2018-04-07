@@ -137,6 +137,16 @@ class Function_model extends CI_Model {
 		return $this->db->insert('educationalDetails', $data);
 	} 
 
+	public function getUserEducationalDetails($userID){
+		$result = $this->db->get_where('educationalDetails', array('userID'=>$userID));
+		return $result->result_array();
+	}
+
+	public function getUserWorkExperience($userID){
+		$result = $this->db->get_where('workExperience', array('userID'=>$userID));
+		return $result->result_array();
+	}
+
 	public function addWorkExperience($data){
 		return $this->db->insert('workExperience', $data);
 	} 
@@ -158,12 +168,13 @@ class Function_model extends CI_Model {
 		// echo "string";
 		// var_dump($result);die;
 		$i = 0;
+		$result1 = $result->result_array();
 		if($result->num_rows()>0){
-		foreach ($result as $key => $value) {
+		foreach ($result1 as $key => $value) {
 			$res[$i] = $value['skillID'];
 			$i++;
 		}
-		$result = $result->result_array();
+		
 		$this->db->where_not_in('skillID',$res);
 		}
 		$result = $this->db->get_where('skills', array('active' => 1));
