@@ -72,7 +72,7 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <form method = "POST" action = "<?= base_url('functions/addEducation');?>">
+                    <form method = "POST" action = "<?= base_url('functions/addEducation');?>" enctype ="multipart/form-data">
                     <div class="modal-body">
 
                         <div class="col-md-12 control-group form-group">
@@ -103,8 +103,8 @@
                           <div class="controls">
                             <label>Score Type:</label>
                             <select class="form-control" name="scoreType" required>
-                              <option>CGPA</option>
-                              <option>Percentage</option>
+                              <option value = "1">CGPA</option>
+                              <option value = "2">Percentage</option>
                             </select>
                             <p class="help-block"></p>
                           </div>
@@ -137,7 +137,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Add Education</button>
+                      <button type="submit" class="btn btn-primary">Add Education</button>
                     </div>
                   </form>
                   </div>

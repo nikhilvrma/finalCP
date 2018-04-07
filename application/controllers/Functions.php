@@ -120,22 +120,205 @@ class Functions extends CI_Controller {
 
 
 	public function addEducation(){
+		$type = "";
+		$year = "";
+		$scoreType = "";
+		$score = "";
+		$board = "";
+		if($x = $this->input->post('type')){
+			$type = $x;
+		}
+		if($x = $this->input->post('year')){
+			$year = $x;
+		}
+		if($x = $this->input->post('scoreType')){
+			$scoreType = $x;
+		}
+		if($x = $this->input->post('score')){
+			$score = $x;
+		}
+		if($x = $this->input->post('board')){
+			$board = $x;
+		}
 
+		if($type == "" || $year == "" || $scoreType == "" || $score == "" || $board == ""){
+			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
+			redirect(base_url('educational-details'));
+		}
+		if($scoreType == 1){
+			if(!($score >= 0.0 && $score <= 10.0)){
+				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
+				redirect(base_url('educational-details'));
+			}
+		}else{
+			if(!($score >= 0 && $score <= 100)){
+				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
+				redirect(base_url('educational-details'));
+			}
+		}
+
+		if($this->function_lib->checkEducationUnique($_SESSION['user_data']['userID'], $type)){
+			$this->session->set_flashdata('message', array('content'=>'This Educational Detail is already added. Please Remove the Previous added Detail to add the new data.','color'=>'red'));
+				redirect(base_url('educational-details'));
+		}else{
+			$config['upload_path'] = 'assets/uploads/EducationalDocuments';
+		 	$config['allowed_types'] = 'pdf';
+		 	$config['max_size']	= '3000';
+		 	$this->load->library('upload', $config);
+		 	$result = $this->upload->do_upload('file');
+		 	$x = $this->upload->data();
+		 	$error = $this->upload->display_errors();
+			$base_url = base_url();
+			$fileName = $base_url.'assets/uploads/EducationalDocuments/'.$x['file_name'];
+
+			$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'educationType' => $type,
+				'year' => $year,
+				'score' => $score,
+				'scoreType' => $scoreType,
+				'institute' => $board,
+				'supportingDocument' => $fileName
+			);
+			if($result)
+			if($this->function_lib->addEducation($data)){
+				$this->session->set_flashdata('message', array('content'=>'Education Added Successfully.','color'=>'green'));
+				redirect(base_url('educational-details'));
+			}else{
+				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
+				redirect(base_url('educational-details'));
+			}
+		}
 	}
 
 	public function addWorkExperience(){
+		$companyName = "";
+		$position = "";
+		$role = "";
+		$startMonth = "";
+		$startYear = "";
+		$endMonth = "";
+		$endYear = "";
+		$currentWorking = "";
 
-	}
-	
-	public function updateGeneralDetails(){
-		$careerObjective = '';
-		if($x = $this->input->post('careerObjective')){
-			$careerObjective = $x;
+		if($x = $this->input->post('companyName')){
+			$companyName = $x;
 		}
+		if($x = $this->input->post('position')){
+			$position = $x;
+		}
+		if($x = $this->input->post('role')){
+			$role = $x;
+		}
+		if($x = $this->input->post('startMonth')){
+			$startMonth = $x;
+		}
+		if($x = $this->input->post('startYear')){
+			$startYear = $x;
+		}
+		if($x = $this->input->post('endMonth')){
+			$endMonth = $x;
+		}
+		if($x = $this->input->post('endYear')){
+			$endYear = $x;
+		}
+		if($x = $this->input->post('currentWorking')){
+			$currentWorking = $x;
+		}
+
+		if($companyName == "" || $position == "" || $role == "" || $startYear == "" || $startMonth == "" || $endYear == "" || $endMonth == "" || $currentWorking == ""){
+			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
+			redirect(base_url('work-experience'));
+		} 
+
+		if($endYear<$startYear){
+			$this->session->set_flashdata('message', array('content'=>'End date cannot be less than start date.','color'=>'red'));
+			redirect(base_url('work-experience'));
+		}
+
+		if($endYear == $startYear){
+			if($endMonth <= $startMonth){
+				$this->session->set_flashdata('message', array('content'=>'End date cannot be less than start date.','color'=>'red'));
+				redirect(base_url('work-experience'));
+			}
+		}
+
+		$config['upload_path'] = 'assets/uploads/WorkExperience';
+	 	$config['allowed_types'] = 'pdf';
+	 	$config['max_size']	= '3000';
+	 	$this->load->library('upload', $config);
+	 	$result = $this->upload->do_upload('file');
+	 	$x = $this->upload->data();
+	 	$error = $this->upload->display_errors();
+		$base_url = base_url();
+		$fileName = $base_url.'assets/uploads/WorkExperience/'.$x['file_name'];
+
 		$data = array(
-			'careerObjective' => $careerObjective
+			'userID' => $_SESSION['user_data']['userID'],
+			'companyName' => $companyName,
+			'position' => $position,
+			'role' => $role,
+			'startYear' => $startYear,
+			'startMonth' => $startMonth,
+			'endYear' => $endYear,
+			'endMonth' => $endMonth,
+			'currentlyWorking' => $currentWorking,
+			'supportingDocument' => $fileName
 		);
-		$result = $this->function_lib->updateGeneralDetails($data, $_SESSION['user_data']['userID']);
+		if($result)
+		if($this->function_lib->addWorkExperience($data)){
+			$this->session->set_flashdata('message', array('content'=>'Work Experience Added Successfully.','color'=>'green'));
+			redirect(base_url('work-experience'));
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
+			redirect(base_url('work-experience'));
+		}
+	}
+
+	public function updateGeneralDetails(){
+		$location = '';
+		if($_SESSION['user_data']['accountType'] == 1){
+			$careerObjective = '';
+			if($x = $this->input->post('careerObjective')){
+				$careerObjective = $x;
+			}
+			if($x = $this->input->post('location')){
+				$location = $x;
+			}
+			$data = array(
+				'careerObjective' => $careerObjective,
+				'cityID' => $location
+			);
+			$result = $this->function_lib->updateGeneralDetails($data, $_SESSION['user_data']['userID']);
+		}else{
+			$companyName = '';
+			$companyDescription = '';
+			if($x = $this->input->post('companyName')){
+				$companyName = $x;
+			}
+			if($x = $this->input->post('companyDescription')){
+				$companyDescription = $x;
+			}
+			if($x = $this->input->post('location')){
+				$location = $x;
+			}
+			$data = array(
+				'cityID' => $location
+			);
+			$result = $this->function_lib->updateGeneralDetails($data, $_SESSION['user_data']['userID']);
+			if($result){
+				$data = array(
+					'companyName' => $companyName,
+					'companyDescription' => $companyDescription
+				);
+				$result = $this->function_lib->updateCompanyDetails($data, $_SESSION['user_data']['userID']);
+			}else{
+				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+				redirect(base_url('general-details'));
+			}
+
+		}
+		
 		if($result){
 			$this->session->set_flashdata('message', array('content'=>'Career Objective successfully Updated','color'=>'green'));
 			redirect(base_url('general-details'));
@@ -144,6 +327,45 @@ class Functions extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url('general-details'));
 		}
+	}
+
+
+	public function addPreferredLocation(){
+		$location = "";
+		if($x = $this->input->post('preferredLocation')){
+			$location = $x;
+		}
+
+		if($location == 0){
+				$this->session->set_flashdata('message', array('content'=>'Select a location To add Preferred Location.','color'=>'red'));
+				redirect(base_url('general-details'));
+		}
+		$data = array(
+			'cityID' => $location,
+			'userID' => $_SESSION['user_data']['userID']
+		);
+		if($this->function_lib->checkPreferredLocationUnique($location, $_SESSION['user_data']['userID'])){
+			$this->session->set_flashdata('message', array('content'=>'Preferred Location already Added.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}
+		if($this->function_lib->insertPreferredLocation($data)){
+			$this->session->set_flashdata('message', array('content'=>'Preferred Location Added.','color'=>'green'));
+			redirect(base_url('general-details'));
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}	
+	}
+
+	public function deletePreferredLocation(){
+		$location = $this->input->get('location');
+		if($this->function_lib->deletePreferredLocation($location, $_SESSION['user_data']['userID'])){
+			$this->session->set_flashdata('message', array('content'=>'Preferred Location Deleted.','color'=>'green'));
+			redirect(base_url('general-details'));
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}	
 	}
 
 	public function updateProfileImage(){

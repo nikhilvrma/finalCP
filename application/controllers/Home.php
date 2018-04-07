@@ -60,6 +60,8 @@ class Home extends CI_Controller {
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->data['generalData'] = $this->function_lib->getUserData($_SESSION['user_data']['email']);
 				$this->data['generalData'] = $this->data['generalData'][0];
+				$this->data['locations'] = $this->function_lib->getAllLocations();
+				$this->data['preferredLocation'] = $this->function_lib->getPreferredLocations($_SESSION['user_data']['userID']);
 				$this->load->view('generalDetails', $this->data);
 			}
 			else{
@@ -71,6 +73,7 @@ class Home extends CI_Controller {
 		}
 
 	}
+
 
 	public function skills(){
 		if($this->function_lib->auth()){
