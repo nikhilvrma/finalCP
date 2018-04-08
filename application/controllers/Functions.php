@@ -242,36 +242,81 @@ class Functions extends CI_Controller {
 				redirect(base_url('work-experience'));
 			}
 		}
-
-		$config['upload_path'] = 'assets/uploads/WorkExperience';
-	 	$config['allowed_types'] = 'pdf';
-	 	$config['max_size']	= '3000';
-	 	$this->load->library('upload', $config);
-	 	$result = $this->upload->do_upload('file');
-	 	$x = $this->upload->data();
-	 	$error = $this->upload->display_errors();
-		$base_url = base_url();
-		$fileName = $base_url.'assets/uploads/WorkExperience/'.$x['file_name'];
-
-		$data = array(
-			'userID' => $_SESSION['user_data']['userID'],
-			'companyName' => $companyName,
-			'position' => $position,
-			'role' => $role,
-			'startYear' => $startYear,
-			'startMonth' => $startMonth,
-			'endYear' => $endYear,
-			'endMonth' => $endMonth,
-			'currentlyWorking' => $currentWorking,
-			'supportingDocument' => $fileName
-		);
-		if($result)
-		if($this->function_lib->addWorkExperience($data)){
-			$this->session->set_flashdata('message', array('content'=>'Work Experience Added Successfully.','color'=>'green'));
-			redirect(base_url('work-experience'));
+		if(isset($_POST['edit']) && $_POST['edit'] == 1){
+			$config['upload_path'] = 'assets/uploads/WorkExperience';
+		 	$config['allowed_types'] = 'pdf';
+		 	$config['max_size']	= '3000';
+		 	$this->load->library('upload', $config);
+		 	$result = $this->upload->do_upload('file');
+		 	$x = $this->upload->data();
+		 	$error = $this->upload->display_errors();
+			$base_url = base_url();
+			$fileName = $base_url.'assets/uploads/WorkExperience/'.$x['file_name'];
+			if($error == ''){
+			$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'companyName' => $companyName,
+				'position' => $position,
+				'role' => $role,
+				'startYear' => $startYear,
+				'startMonth' => $startMonth,
+				'endYear' => $endYear,
+				'endMonth' => $endMonth,
+				'currentlyWorking' => $currentWorking,
+				'supportingDocument' => $fileName
+			);
+			}else{
+				$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'companyName' => $companyName,
+				'position' => $position,
+				'role' => $role,
+				'startYear' => $startYear,
+				'startMonth' => $startMonth,
+				'endYear' => $endYear,
+				'endMonth' => $endMonth,
+				'currentlyWorking' => $currentWorking,
+			);
+			}		
+			if($result)
+			if($this->function_lib->addWorkExperience($data)){
+				$this->session->set_flashdata('message', array('content'=>'Work Experience Added Successfully.','color'=>'green'));
+				redirect(base_url('work-experience'));
+			}else{
+				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
+				redirect(base_url('work-experience'));
+			}
 		}else{
-			$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
-			redirect(base_url('work-experience'));
+			$config['upload_path'] = 'assets/uploads/WorkExperience';
+		 	$config['allowed_types'] = 'pdf';
+		 	$config['max_size']	= '3000';
+		 	$this->load->library('upload', $config);
+		 	$result = $this->upload->do_upload('file');
+		 	$x = $this->upload->data();
+		 	$error = $this->upload->display_errors();
+			$base_url = base_url();
+			$fileName = $base_url.'assets/uploads/WorkExperience/'.$x['file_name'];
+
+			$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'companyName' => $companyName,
+				'position' => $position,
+				'role' => $role,
+				'startYear' => $startYear,
+				'startMonth' => $startMonth,
+				'endYear' => $endYear,
+				'endMonth' => $endMonth,
+				'currentlyWorking' => $currentWorking,
+				'supportingDocument' => $fileName
+			);
+			if($result)
+			if($this->function_lib->updateWorkExperience($data, $_POST['id'])){
+				$this->session->set_flashdata('message', array('content'=>'Work Experience Updated Successfully.','color'=>'green'));
+				redirect(base_url('work-experience'));
+			}else{
+				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
+				redirect(base_url('work-experience'));
+			}
 		}
 	}
 
@@ -484,6 +529,9 @@ class Functions extends CI_Controller {
 		$openings = '';
 		$joiningDate = '';
 		$applicationDeadline = '';
+		$minStipend = '';
+		$maxStipend = '';
+		$duration = '';
 		if($x = $this->input->post('offerType')){
 			$offerType = $x;
 		}
@@ -501,6 +549,15 @@ class Functions extends CI_Controller {
 		}
 		if($x = $this->input->post('applicationDeadline')){
 			$applicationDeadline = $x;
+		}
+		if($x = $this->input->post('minStipend')){
+			$minStipend = $x;
+		}
+		if($x = $this->input->post('maxStipend')){
+			$maxStipend = $x;
+		}
+		if($x = $this->input->post('duration')){
+			$duration = $x;
 		}
 		if($offerType == '1' || $offerType == '2'){
 			date_default_timezone_set("Asia/Kolkata");
@@ -529,7 +586,12 @@ class Functions extends CI_Controller {
 				redirect(base_url('add-new-offer'));
 			}
 
-			if($offerType == '' || $offerTitle == '' || $offerDescription == '' || $openings == '' || $joiningDate == '' || $applicationDeadline == ''){
+			if($maxStipend < $minStipend){
+				$this->session->set_flashdata('message', array('content'=>'Maximum Stipend Cannot be less than Minimum Stipend. Please Try Again.','color'=>'red'));
+				redirect(base_url('add-new-offer'));
+			}
+
+			if($offerType == '' || $offerTitle == '' || $offerDescription == '' || $openings == '' || $joiningDate == '' || $applicationDeadline == '' || $maxStipend == '' || $minStipend == '' || $duration == ''){
 				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.2','color'=>'red'));
 				redirect(base_url('add-new-offer'));
 			}
@@ -540,7 +602,10 @@ class Functions extends CI_Controller {
 					'offerDescription' => $offerDescription,
 					'openings' => $openings,
 					'joiningDate' => $joiningDate,
-					'applicationDeadline' => $applicationDeadline
+					'applicationDeadline' => $applicationDeadline,
+					'maxStipend' => $maxStipend,
+					'minStipend' => $minStipend,
+					'duration' => $duration
 				);
 				$result = $this->function_lib->addOffer($data);
 				if($result){

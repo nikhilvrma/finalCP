@@ -94,11 +94,27 @@
                   <p class="help-block"></p>
                 </div>
               </div>
-
-
-
-
-
+              <div class="col-md-6 control-group form-group">
+                <div class="controls">
+                  <label><b>Minimum Stipend:</b></label>
+                  <input type="text" class="form-control" name="minStipend">
+                  <p class="help-block"></p>
+                </div>
+              </div>
+              <div class="col-md-6 control-group form-group">
+                <div class="controls">
+                  <label><b>Maximum Stipend:</b></label>
+                  <input type="text" class="form-control" name="maxStipend">
+                  <p class="help-block"></p>
+                </div>
+              </div>
+              <div class="col-md-6 control-group form-group">
+                <div class="controls">
+                  <label><b>Duration:</b></label>
+                  <input type="text" class="form-control" name="duration" placeholder="in months">
+                  <p class="help-block"></p>
+                </div>
+              </div>
             </div>
 
             <button type="submit" class="btn btn-lg btn-primary" style="float: right;">Add Offer</button>

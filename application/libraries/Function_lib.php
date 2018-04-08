@@ -203,4 +203,16 @@ class Function_lib {
 		return $CI->function->addWorkExperience($data);
 	}
 
+	public function updateEducation($data, $id){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->updateEducation($data, $id);
+	}
+
+	public function updateWorkExperience($data, $id){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->updateWorkExperience($data, $id);
+	}
+
 }

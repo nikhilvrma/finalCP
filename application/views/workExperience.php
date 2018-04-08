@@ -186,17 +186,21 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Supporting Document:</label>
-                            <input type="file" class="form-control" name = "file" placeholder="Score">
+                            <input type="file" class="form-control" name = "file" id ="file" placeholder="Score">
                             <p class="help-block"></p>
                           </div>
                         </div>
+                        </div>
+
+                         <div class = "hiddenInput">
+                          
                         </div>
 
 
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" id = "clearModal" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">Add Work Experience</button>
+                      <button type="submit" class="btn btn-primary submitButton">Add Work Experience</button>
                     </div>
                   </form>
                   </div>
@@ -243,7 +247,10 @@
             }else{
               $('#currentWorking').attr('checked', true)
             }
-            CKEDITOR.instances.editor.setData("hello")
+             $('#file').attr('required', false)
+            CKEDITOR.instances['role'].setData("hello")
+            $('.hiddenInput').append('<input type="hidden" name ="edit" value = "1"><input type = "hidden" name ="id" value = "'+data.workExperienceID+'">')
+            $('.submitButton').html("Edit Work Experience")
             $('#education').modal('show');
           })
         });
@@ -251,6 +258,9 @@
 
       <script type="text/javascript">
          $('#education').on('hidden.bs.modal', function () {
+          $('.hiddenInput').empty()
+          $('#file').attr('required', true)
+          $('.submitButton').html("Add Work Experience")
           $(this).find('form').trigger('reset');
         })
       </script>

@@ -147,6 +147,11 @@ class Function_model extends CI_Model {
 		return $this->db->insert('educationalDetails', $data);
 	} 
 
+	public function updateEducation($data, $educationID){
+		$this->db->where('educationID', $educationID);
+		return $this->db->update('educationalDetails', $data);
+	} 
+
 	public function getUserEducationalDetails($userID){
 		$result = $this->db->get_where('educationalDetails', array('userID'=>$userID));
 		return $result->result_array();
@@ -161,6 +166,10 @@ class Function_model extends CI_Model {
 		return $this->db->insert('workExperience', $data);
 	} 
 
+	public function updateWorkExperience($data, $workExperience){
+		$this->db->update('workExperienceID', $workExperience);
+		return $this->db->insert('workExperience', $data);
+	} 
 
 
 

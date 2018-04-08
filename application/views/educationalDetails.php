@@ -54,7 +54,7 @@
                 </div>
                 <div class="card-footer">
                   <a href="<?= base_url('functions/deleteEducationalDetail?id='.$education['educationID'])?>" class="btn btn-danger" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
-                  <button class="btn btn-success" id = "editEducation" data = "<?php echo json_encode($education);?>" style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></button>
+                  <button class="btn btn-success editWorkEx"  data = '<?= json_encode($education);?>' style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></button>
                 </div>
               </div>
               </div>
@@ -83,7 +83,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Education Type:</label>
-                            <select class="form-control" name="type" required>
+                            <select class="form-control" name="type" id ="type" required>
                               <option value="1">High School</option>
                               <option value="2">Senior Seconday (or equivalent) School</option>
                               <option value="3">Graduation</option>
@@ -95,7 +95,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Year:</label>
-                            <select class="form-control" name="year" required>
+                            <select class="form-control" name="year" id = "year" required>
                               <?php for($i=2025; $i>1960; $i--){ ?>
                                 <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                               <?php } ?>
@@ -107,7 +107,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Score Type:</label>
-                            <select class="form-control" name="scoreType" required>
+                            <select class="form-control" name="scoreType" id = "scoreType" required>
                               <option value = "1">CGPA</option>
                               <option value = "2">Percentage</option>
                             </select>
@@ -118,7 +118,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Score:</label>
-                            <input class="form-control" placeholder="Score" name = "score">
+                            <input class="form-control" placeholder="Score" id = "score" name = "score">
                             <p class="help-block"></p>
                           </div>
                         </div>
@@ -126,7 +126,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Supporting Document:</label>
-                            <input type="file" class="form-control" name = "file" placeholder="Score">
+                            <input type="file" class="form-control" name = "file" id ="file" placeholder="Score">
                             <p class="help-block"></p>
                           </div>
                         </div>
@@ -134,15 +134,18 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>School/Education Board:</label>
-                            <input type="text" class="form-control" name = "board" placeholder="School/Education Board">
+                            <input type="text" class="form-control" name = "board" id = "board" placeholder="School/Education Board">
                             <p class="help-block"></p>
                           </div>
+                        </div>
+                        <div class = "hiddenInput">
+                          
                         </div>
 
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">Add Education</button>
+                      <button type="submit" class="btn btn-primary submitButton">Add Education</button>
                     </div>
                   </form>
                   </div>
@@ -164,6 +167,35 @@
     <?php echo $footer; ?>
 
     <?php echo $footerFiles; ?>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $('.editWorkEx').on('click', function(res){
+            data = $(this).attr('data');
+            console.log(data)
+            data = JSON.parse(data);
+            console.log(data);
+            $('#type').val(data.educationType)
+            $('#year').val(data.year)
+            $('#board').val(data.institute)
+            $('#scoreType').val(data.scoreType)
+            $('#score').val(data.score)
+            $('.submitButton').html("Edit Education")
+            $('.hiddenInput').append('<input type="hidden" name ="edit" value = "1"><input type = "hidden" name ="id" value = "'+data.educationID+'">')
+            $('#file').attr('required', false)
+            $('#education').modal('show');
+          })
+        });
+      </script>
+
+      <script type="text/javascript">
+         $('#education').on('hidden.bs.modal', function () {
+          $('.hiddenInput').empty()
+          $('#file').attr('required', true)
+          $('.submitButton').html("Add Education")
+          $(this).find('form').trigger('reset');
+        })
+      </script>
 
   </body>
 
