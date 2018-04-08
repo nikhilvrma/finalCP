@@ -167,8 +167,8 @@ class Function_model extends CI_Model {
 	} 
 
 	public function updateWorkExperience($data, $workExperience){
-		$this->db->update('workExperienceID', $workExperience);
-		return $this->db->insert('workExperience', $data);
+		$this->db->where('workExperienceID', $workExperience);
+		return $this->db->update('workExperience', $data);
 	} 
 
 

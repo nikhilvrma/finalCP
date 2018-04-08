@@ -157,10 +157,48 @@ class Functions extends CI_Controller {
 			}
 		}
 
-		if($this->function_lib->checkEducationUnique($_SESSION['user_data']['userID'], $type)){
+		if($this->function_lib->checkEducationUnique($_SESSION['user_data']['userID'], $type) && !(isset($_POST['edit']) && $_POST['edit'] == 1)){
 			$this->session->set_flashdata('message', array('content'=>'This Educational Detail is already added. Please Remove the Previous added Detail to add the new data.','color'=>'red'));
 				redirect(base_url('educational-details'));
 		}else{
+			if(isset($_POST['edit']) && $_POST['edit'] == 1){
+				$config['upload_path'] = 'assets/uploads/EducationalDocuments';
+			 	$config['allowed_types'] = 'pdf';
+			 	$config['max_size']	= '3000';
+			 	$this->load->library('upload', $config);
+			 	$result = $this->upload->do_upload('file');
+			 	$x = $this->upload->data();
+			 	$error = $this->upload->display_errors();
+				$base_url = base_url();
+				$fileName = $base_url.'assets/uploads/EducationalDocuments/'.$x['file_name'];
+				if($error == ''){
+				$data = array(
+					'userID' => $_SESSION['user_data']['userID'],
+					'educationType' => $type,
+					'year' => $year,
+					'score' => $score,
+					'scoreType' => $scoreType,
+					'institute' => $board,
+					'supportingDocument' => $fileName
+				);
+				}else{
+					$data = array(
+					'userID' => $_SESSION['user_data']['userID'],
+					'educationType' => $type,
+					'year' => $year,
+					'score' => $score,
+					'scoreType' => $scoreType,
+					'institute' => $board,
+				);
+				}
+				if($this->function_lib->updateEducation($data, $_POST['id'])){
+					$this->session->set_flashdata('message', array('content'=>'Education Added Successfully.','color'=>'green'));
+					redirect(base_url('educational-details'));
+				}else{
+					$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
+					redirect(base_url('educational-details'));
+				}
+			}else{
 			$config['upload_path'] = 'assets/uploads/EducationalDocuments';
 		 	$config['allowed_types'] = 'pdf';
 		 	$config['max_size']	= '3000';
@@ -188,6 +226,7 @@ class Functions extends CI_Controller {
 				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
 				redirect(base_url('educational-details'));
 			}
+		}
 		}
 	}
 
@@ -278,8 +317,7 @@ class Functions extends CI_Controller {
 				'currentlyWorking' => $currentWorking,
 			);
 			}		
-			if($result)
-			if($this->function_lib->addWorkExperience($data)){
+			if($this->function_lib->updateWorkExperience($data, $_POST['id'])){
 				$this->session->set_flashdata('message', array('content'=>'Work Experience Added Successfully.','color'=>'green'));
 				redirect(base_url('work-experience'));
 			}else{
@@ -310,8 +348,8 @@ class Functions extends CI_Controller {
 				'supportingDocument' => $fileName
 			);
 			if($result)
-			if($this->function_lib->updateWorkExperience($data, $_POST['id'])){
-				$this->session->set_flashdata('message', array('content'=>'Work Experience Updated Successfully.','color'=>'green'));
+			if($this->function_lib->addWorkExperience($data, $id)){
+				$this->session->set_flashdata('message', array('content'=>'Work Experience Added Successfully.','color'=>'green'));
 				redirect(base_url('work-experience'));
 			}else{
 				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
