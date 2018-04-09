@@ -215,4 +215,10 @@ class Function_lib {
 		return $CI->function->updateWorkExperience($data, $id);
 	}
 
+	public function getSkills(){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getSkills();
+	}
+
 }

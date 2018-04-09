@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 08, 2018 at 02:13 AM
+-- Generation Time: Apr 09, 2018 at 05:29 PM
 -- Server version: 5.7.21-0ubuntu0.16.04.1
 -- PHP Version: 7.0.28-0ubuntu0.16.04.1
 
@@ -43,6 +43,20 @@ CREATE TABLE `adminAuth` (
 
 INSERT INTO `adminAuth` (`adminID`, `name`, `username`, `password`, `profileImage`, `createdAt`, `createdBy`, `active`) VALUES
 (1, 'Nikhil Verma', 'nikhilverma', 'a1547f4bad7ea7296466badf3d47e0d2', 'assets/images/admin/nikhilverma.jpg', '2018-02-13 19:23:30', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `applicants`
+--
+
+CREATE TABLE `applicants` (
+  `applicantID` int(8) NOT NULL,
+  `offerID` int(5) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `appliedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2141,8 +2155,18 @@ CREATE TABLE `offers` (
   `openings` int(5) NOT NULL,
   `joiningDate` date NOT NULL,
   `applicationDeadline` date NOT NULL,
+  `minCompensation` bigint(10) DEFAULT NULL,
+  `maxCompensation` bigint(10) DEFAULT NULL,
+  `compensation` bigint(10) DEFAULT NULL,
+  `duration` int(5) DEFAULT NULL,
+  `partTime` tinyint(1) NOT NULL,
+  `workFromHome` tinyint(1) NOT NULL,
+  `addedBy` int(5) NOT NULL,
+  `skillRequired` tinyint(1) NOT NULL,
+  `locationRequired` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL DEFAULT '0',
-  `active` tinyint(1) NOT NULL DEFAULT '0'
+  `active` tinyint(1) NOT NULL DEFAULT '0',
+  `addedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -7226,6 +7250,12 @@ ALTER TABLE `adminAuth`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `applicants`
+--
+ALTER TABLE `applicants`
+  ADD PRIMARY KEY (`applicantID`);
+
+--
 -- Indexes for table `behaviourCategories`
 --
 ALTER TABLE `behaviourCategories`
@@ -7338,6 +7368,11 @@ ALTER TABLE `workExperience`
 --
 ALTER TABLE `adminAuth`
   MODIFY `adminID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `applicants`
+--
+ALTER TABLE `applicants`
+  MODIFY `applicantID` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `behaviourCategories`
 --

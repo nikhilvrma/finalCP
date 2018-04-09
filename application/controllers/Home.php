@@ -242,6 +242,7 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Add New Offer";
 				$this->data['activePage'] = "9";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->data['skills'] = $this->function_lib->getSkills();
 				$this->load->view('addNewOffer', $this->data);
 			}
 			else{

@@ -17,7 +17,7 @@ class Function_model extends CI_Model {
 
 	public function getAllLocations(){
 		return $this->db->get('indianCities')->result_array();
-	} 
+	}
 
 	public function getUserData($email){
 		$result = $this->db->get_where('users', array('email' => $email));
@@ -57,7 +57,7 @@ class Function_model extends CI_Model {
 		}else{
 			return false;
 		}
-	}	
+	}
 
 	public function deletePreferredLocation($location, $userID){
 		$this->db->where(array('userID' => $userID, 'cityID' => $location));
@@ -145,12 +145,12 @@ class Function_model extends CI_Model {
 
 	public function addEducation($data){
 		return $this->db->insert('educationalDetails', $data);
-	} 
+	}
 
 	public function updateEducation($data, $educationID){
 		$this->db->where('educationID', $educationID);
 		return $this->db->update('educationalDetails', $data);
-	} 
+	}
 
 	public function getUserEducationalDetails($userID){
 		$result = $this->db->get_where('educationalDetails', array('userID'=>$userID));
@@ -164,12 +164,12 @@ class Function_model extends CI_Model {
 
 	public function addWorkExperience($data){
 		return $this->db->insert('workExperience', $data);
-	} 
+	}
 
 	public function updateWorkExperience($data, $workExperience){
 		$this->db->update('workExperienceID', $workExperience);
 		return $this->db->insert('workExperience', $data);
-	} 
+	}
 
 
 
@@ -193,7 +193,7 @@ class Function_model extends CI_Model {
 			$res[$i] = $value['skillID'];
 			$i++;
 		}
-		
+
 		$this->db->where_not_in('skillID',$res);
 		}
 		$result = $this->db->get_where('skills', array('active' => 1));
@@ -246,7 +246,7 @@ class Function_model extends CI_Model {
 
 	public function addSkilltoUser($skill_id, $user_id, $score){
 		$data = ['skillID'=> $skill_id, 'userID'=> $user_id, 'score'=> $score, 'status'=> 4, 'type' => 1];
-		// var_dump($data);die;	
+		// var_dump($data);die;
 		return $this->db->insert('userSkills', $data);
 	}
 
@@ -254,6 +254,11 @@ class Function_model extends CI_Model {
 		$this->db->select('testAvailable');
 		$result = $this->db->get_where('skills', array('skillID'=>$skillID))->result_array();
 		return $result[0]['testAvailable'];
+	}
+
+	public function getSkills(){
+		$result = $this->db->get_where('skills', array('active'=>1));
+		return $result->result_array();
 	}
 
 
