@@ -94,17 +94,49 @@
                   <p class="help-block"></p>
                 </div>
               </div>
-              <div class="col-md-6 control-group form-group">
+               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label><b>Minimum Stipend:</b></label>
-                  <input type="text" class="form-control" name="minStipend">
+                  <label><b>Compensation Type:</b></label>
+                  <select class="form-control" name="applicantType">
+                    <option value="1">Fixed Compensation</option>
+                    <option value="2">Compensation Offered In Range.</option>
+                    <option value ="3">No Compensation/Expenses Covered</option>
+                  </select>
+                  <p class="help-block"></p>
+                </div>
+              </div>
+               <div class="col-md-6 control-group form-group">
+                <div class="controls">
+                  <label><b>Compensation:</b></label>
+                  <input type="text" class="form-control" name="compensation">
                   <p class="help-block"></p>
                 </div>
               </div>
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label><b>Maximum Stipend:</b></label>
-                  <input type="text" class="form-control" name="maxStipend">
+                  <label><b>Minimum Compensation:</b></label>
+                  <input type="text" class="form-control" name="minCompensation">
+                  <p class="help-block"></p>
+                </div>
+              </div>
+              <div class="col-md-6 control-group form-group">
+                <div class="controls">
+                  <label><b>Maximum Compensation:</b></label>
+                  <input type="text" class="form-control" name="maxCompensation">
+                  <p class="help-block"></p>
+                </div>
+              </div>
+               <div class="col-md-6 control-group form-group">
+                <div class="controls">
+                  <label><b>Work From Home</b></label><br>
+                  Is Work From Home available?? <input type="checkbox" class ="form-control" name="workHome">
+                  <p class="help-block"></p>
+                </div>
+              </div>
+               <div class="col-md-6 control-group form-group">
+                <div class="controls">
+                  <label><b>Part Time :</b></label><br>
+                  Is This Offer Part Time <input type="checkbox" class ="form-control" name="partTime">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -119,6 +151,25 @@
                 <div class="controls">
                   <label><b>Type of Applicants:</b></label>
                   <select class="form-control" name="applicantType">
+                    <option value="1">Anyone can Apply</option>
+                    <option value="2">Applicants with specific Skills</option>
+                  </select>
+                  <p class="help-block"></p>
+                </div>
+              </div>
+
+               <div class="col-md-6 control-group form-group">
+                <div class="controls">
+                  <label><b>Location Required :</b></label><br>
+                  Is The location Required? <input type="checkbox" class ="form-control" name="locationRequired">
+                  <p class="help-block"></p>
+                </div>
+              </div>
+
+              <div class="col-md-6 control-group form-group">
+                <div class="controls">
+                  <label><b>Location:</b></label>
+                  <select class="form-control" name="location">
                     <option value="1">Anyone can Apply</option>
                     <option value="2">Applicants with specific Skills</option>
                   </select>
@@ -154,7 +205,6 @@
                 </div>
 
               </div>
-
 
 
 
