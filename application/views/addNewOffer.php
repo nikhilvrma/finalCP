@@ -42,10 +42,10 @@
 
             <div class="row">
 
-              <div class="col-md-6 control-group form-group">
+              <div class="col-md-6 control-group form-group offerType">
                 <div class="controls">
                   <label><b>Offer Type:</b></label>
-                  <select class="form-control" name="offerType">
+                  <select class="form-control" name="offerType" id ="offerType">
                     <option value="1">Job Offer</option>
                     <option value="2">Internship Offer</option>
                   </select>
@@ -53,7 +53,7 @@
                 </div>
               </div>
 
-              <div class="col-md-6 control-group form-group">
+              <div class="col-md-6 control-group form-group openings">
                 <div class="controls">
                   <label><b>Number of Openings:</b></label>
                   <input type="text" class="form-control" name="openings">
@@ -94,10 +94,11 @@
                   <p class="help-block"></p>
                 </div>
               </div>
+
                <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label><b>Compensation Type:</b></label>
-                  <select class="form-control" name="applicantType">
+                  <label><b><span class ="reimburse">Compensation</span> Type:</b></label>
+                  <select class="form-control" name="compensationType" id = "compensationType">
                     <option value="1">Fixed Compensation</option>
                     <option value="2">Compensation Offered In Range.</option>
                     <option value ="3">No Compensation/Expenses Covered</option>
@@ -105,79 +106,92 @@
                   <p class="help-block"></p>
                 </div>
               </div>
-               <div class="col-md-6 control-group form-group">
+            
+               <div class="col-md-6 control-group form-group compensation">
                 <div class="controls">
-                  <label><b>Compensation:</b></label>
+                  <label><b><span class ="reimburse">Compensation</span>:</b></label>
                   <input type="text" class="form-control" name="compensation">
                   <p class="help-block"></p>
                 </div>
               </div>
+            
+            <div class="row col-md-12 rangeCompensation" style ="display: none">
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label><b>Minimum Compensation:</b></label>
+                  <label><b>Minimum <span class ="reimburse">Compensation:</span></b></label>
                   <input type="text" class="form-control" name="minCompensation">
                   <p class="help-block"></p>
                 </div>
               </div>
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label><b>Maximum Compensation:</b></label>
+                  <label><b>Maximum <span class ="reimburse">Compensation:</span></b></label>
                   <input type="text" class="form-control" name="maxCompensation">
                   <p class="help-block"></p>
                 </div>
               </div>
+            </div>
+              <div class = "row col-md-12">
                <div class="col-md-6 control-group form-group">
                 <div class="controls">
-                  <label><b>Work From Home</b></label><br>
-                  Is Work From Home available?? <input type="checkbox" class ="form-control" name="workHome">
+                  <label><b>Work From Home:</b></label>
+                  <select class="form-control" name="workHome" id="workHome">
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                  </select>
                   <p class="help-block"></p>
                 </div>
               </div>
-               <div class="col-md-6 control-group form-group">
+
+
+                <div class="col-md-6 control-group form-group location" style="display: none">
                 <div class="controls">
-                  <label><b>Part Time :</b></label><br>
-                  Is This Offer Part Time <input type="checkbox" class ="form-control" name="partTime">
+                  <label><b>Location:</b></label>
+                  <select class="form-control" id ="location" name="location">
+                    <option value = "0"> </option>
+                    <?php foreach($locations as $location){
+                      ?>
+                    <option value="<?= $location['cityID']?>"><?=$location['city']?>, <?=$location['state']?></option>
+                  <?php  } ?>
+                  </select>
                   <p class="help-block"></p>
                 </div>
               </div>
-              <div class="col-md-6 control-group form-group">
+               </div>
+
+              <div class = "row col-md-12">
+               <div class="col-md-6 control-group form-group">
+                <div class="controls">
+                  <label><b>Part Time:</b></label>
+                  <select class="form-control" name="partTime" id="partTime">
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                  </select>
+                  <p class="help-block"></p>
+                </div>
+              </div>
+              <div class="col-md-6 control-group form-group duration" style="display: none">
                 <div class="controls">
                   <label><b>Duration:</b></label>
                   <input type="text" class="form-control" name="duration" placeholder="in months">
                   <p class="help-block"></p>
                 </div>
               </div>
+              </div>
+            
+
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
                   <label><b>Type of Applicants:</b></label>
-                  <select class="form-control" name="applicantType">
+                  <select class="form-control" name="applicantType" id="applicantType">
                     <option value="1">Anyone can Apply</option>
                     <option value="2">Applicants with specific Skills</option>
                   </select>
                   <p class="help-block"></p>
                 </div>
               </div>
-
-               <div class="col-md-6 control-group form-group">
-                <div class="controls">
-                  <label><b>Location Required :</b></label><br>
-                  Is The location Required? <input type="checkbox" class ="form-control" name="locationRequired">
-                  <p class="help-block"></p>
-                </div>
-              </div>
-
-              <div class="col-md-6 control-group form-group">
-                <div class="controls">
-                  <label><b>Location:</b></label>
-                  <select class="form-control" name="location">
-                    <option value="1">Anyone can Apply</option>
-                    <option value="2">Applicants with specific Skills</option>
-                  </select>
-                  <p class="help-block"></p>
-                </div>
-              </div>
-
-              <div class="col-md-12">
+             
+              <div class="col-md-12 selectSkills" style = "display: none">
                 <label><b>Skills:</b></label>
                 <div class="row">
                   <div class="col-10 col-sm-10">
@@ -194,18 +208,18 @@
 
               </div>
 
-              <div class="col-md-12 selectedSkills">
+              <div class="col-md-12 selectedSkills" style = "display: none">
                 <br>
                 <label><b>Selected Skills:</b></label>
                 <div class="row">
                   <div class="col-12 col-sm-12">
-                    <input type="hidden" name="selected_skills">
+                    <input type="hidden" name="selectedSkills">
                   </div>
 
                 </div>
 
               </div>
-
+            </div>
 
 
             </div>
@@ -252,7 +266,7 @@
   	    selectedSkills.push(skill);
   	    $('.selectedSkills').append(html);
   	  }
-  	  $("input[name=\"selected_skills\"]").val(JSON.stringify(selectedSkills));
+  	  $("input[name=\"selectedSkills\"]").val(JSON.stringify(selectedSkills));
   	    // console.log(selectedSkills)
   	});
 
@@ -281,6 +295,65 @@
   	});
 
   	</script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#offerType').on('change', function(){
+          value = $(this).val();
+          if(value == 2){
+            $('.reimburse').html('Stipend');
+            $('.duration').show();
+          }else{
+            $('.reimburse').html('Compensation');
+          }
+        });
+
+         $('#workHome').on('change', function(){
+          value = $(this).val();
+          console.log(value);
+          if(value == 2){
+            $('.location').show();
+          }else if(value == 1){
+            $('.location').hide();
+          }
+        });
+
+        //  $('#partTime').on('change', function(){
+        //   value = $(this).val();
+        //   if(value == 2){
+        //     if($('#offerType').val() == 2)
+        //       $('.duration').show();
+        //   }else if(value == 1){
+        //     $('.duration').hide();
+        //   }
+        // });
+
+        $('#applicantType').on('change', function(){
+          value = $(this).val();
+          if(value == 1){
+            $('.selectSkills').hide();
+            $('.selectedSkills').hide();
+          }else if(value == 2){
+            $('.selectSkills').show();
+            $('.selectedSkills').show();
+          }
+        });
+
+        $('#compensationType').on('change', function(){
+          value = $(this).val();
+          console.log(value);
+          if(value == 1){
+            $('.compensation').show();
+            $('.rangeCompensation').hide();
+          }else if(value == 2){
+            $('.compensation').hide();
+            $('.rangeCompensation').show();
+          }else if(value == 3){
+            $('.compensation').hide();
+            $('.rangeCompensation').hide();
+          }
+        });
+      });
+    </script>
 
   </body>
 

@@ -40,6 +40,35 @@ class Function_model extends CI_Model {
 		return false;
 	}
 
+	public function register($data){
+		return $this->db->insert('users', $data);
+	}
+
+	public function checkPasswordMatch($email, $password){
+		$result = $this->db->get_where('users', array('email' => $email,'password' => $password), 1, 0);
+		if ($result->num_rows()>0) {
+			return true;
+		}
+		return false;
+	}
+
+	public function changePassword($email, $password){
+		$query = "UPDATE users SET password='$password' WHERE email='$email'";
+		return $this->db->query($query);
+	}
+
+
+
+
+	////////////////////////////////////////////////////////////
+
+
+	///////////////////General Details/////////////////////////
+
+
+
+
+
 	public function getPreferredLocations($userID){
 		$this->db->join('indianCities', 'preferredLocations.cityID = indianCities.cityID');
 		$result = $this->db->get_where('preferredLocations', array('userID'=>$userID));
@@ -62,16 +91,6 @@ class Function_model extends CI_Model {
 	public function deletePreferredLocation($location, $userID){
 		$this->db->where(array('userID' => $userID, 'cityID' => $location));
 		return $this->db->delete('preferredLocations');
-	}
-
-	public function deleteEducationalDetail($education){
-		$this->db->where(array('educationID' => $education));
-		return $this->db->delete('educationalDetails');
-	}
-
-	public function deleteWorkExperience($experience){
-		$this->db->where(array('workExperienceID' => $experience));
-		return $this->db->delete('workExperience');
 	}
 
 	public function updateGeneralDetails($data, $userID){
@@ -113,26 +132,23 @@ class Function_model extends CI_Model {
 		return $this->db->update('users', $image);
 	}
 
-	public function register($data){
-		return $this->db->insert('users', $data);
+
+
+/////////////////////////////////////////////////////////////////
+
+//////////////Education And Work Experience//////////////////////
+
+
+	public function deleteEducationalDetail($education){
+		$this->db->where(array('educationID' => $education));
+		return $this->db->delete('educationalDetails');
 	}
 
-	public function addOffer($data){
-		return $this->db->insert('offers', $data);
+	public function deleteWorkExperience($experience){
+		$this->db->where(array('workExperienceID' => $experience));
+		return $this->db->delete('workExperience');
 	}
 
-	public function checkPasswordMatch($email, $password){
-		$result = $this->db->get_where('users', array('email' => $email,'password' => $password), 1, 0);
-		if ($result->num_rows()>0) {
-			return true;
-		}
-		return false;
-	}
-
-	public function changePassword($email, $password){
-		$query = "UPDATE users SET password='$password' WHERE email='$email'";
-		return $this->db->query($query);
-	}
 
 	public function checkEducationUnique($userID, $type){
 		$result = $this->db->get_where('educationalDetails', array('userID' => $userID, 'educationType' => $type));
@@ -173,8 +189,11 @@ class Function_model extends CI_Model {
 
 
 
-////////////////////////////////////////////////////////////
-//Skills
+/////////////////////////////////////////////////////////////////
+
+
+
+///////////////////////////Skills////////////////////////////////
 
 	public function getActiveSkills(){
 		$result = $this->db->get_where('skills', array('active' => 1));
@@ -263,4 +282,55 @@ class Function_model extends CI_Model {
 
 
 ////////////////////////////////////////////////////////////
+
+
+
+///////////////////////////OFFERS///////////////////////////
+
+
+	public function addOffer($data){
+		return $this->db->insert('offers', $data);
+	}
+
+	public function getCurrentofferID($userID){
+		$this->db->select('offerID');
+		$this->db->order_by('offerID', 'DESC');
+		return $this->db->get_where('offers', array('addedBy'=> $userID), 1)->result_array()[0]['offerID'];
+	}
+	
+
+	public function addOfferSkills($data){
+		// var_dump($data);
+		foreach ($data as $key => $value) {
+			var_dump($value);
+			if($this->db->insert('offerSkills', $value)){
+				continue;
+			}else{
+				$c = 1;
+				break;
+			}
+		}
+		if(isset($c) && $c == 1){
+			return false;
+		}else{
+			return true;
+		}
+
+	}
+
+	public function addOfferLocation($data){
+			if(!$this->db->insert('offerLocation', $data)){
+				$c = 1;
+			}
+		if(isset($c) && $c == 1){
+			return false;
+		}else{
+			return true;
+		}
+
+	}
+
+
+
+///////////////////////////////////////////////////////////
 }

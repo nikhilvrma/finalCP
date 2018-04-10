@@ -567,9 +567,17 @@ class Functions extends CI_Controller {
 		$openings = '';
 		$joiningDate = '';
 		$applicationDeadline = '';
-		$minStipend = '';
-		$maxStipend = '';
+		$compensationType = '';
+		$compensation = '';
+		$minCompensation = '';
+		$maxCompensation = '';
+		$workHome = '';
+		$location = '';
+		$partTime = '';
 		$duration = '';
+		$applicantType = '';
+		$selectedSkills = '';
+
 		if($x = $this->input->post('offerType')){
 			$offerType = $x;
 		}
@@ -588,15 +596,56 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('applicationDeadline')){
 			$applicationDeadline = $x;
 		}
-		if($x = $this->input->post('minStipend')){
-			$minStipend = $x;
+		if($x = $this->input->post('compensationType')){
+			$compensationType = $x;
 		}
-		if($x = $this->input->post('maxStipend')){
-			$maxStipend = $x;
+		if($x = $this->input->post('compensation')){
+			$compensation = $x;
+		}
+		if($x = $this->input->post('minCompensation')){
+			$minCompensation = $x;
+		}
+		if($x = $this->input->post('maxCompensation')){
+			$maxCompensation = $x;
+		}
+		if($x = $this->input->post('workHome')){
+			$workHome = $x;
+		}
+		if($x = $this->input->post('location')){
+			$location = $x;
+		}
+		if($x = $this->input->post('partTime')){
+			$partTime = $x;
 		}
 		if($x = $this->input->post('duration')){
 			$duration = $x;
 		}
+		if($x = $this->input->post('applicantType')){
+			$applicantType = $x;
+		}
+		if($x = $this->input->post('selectedSkills')){
+			$selectedSkills = $x;
+		}
+		$redirect = array(
+			'offerType' => $offerType,
+			'offerDescription'=> $offerDescription,
+			'offerTitle'=> $offerTitle,
+			'openings'=> $openings,
+			'joiningDate'=> $joiningDate,
+			'applicationDeadline'=> $applicationDeadline,
+			'compensationType'=> $compensationType,
+			'compensation'=> $compensation,
+			'minCompensation' => $minCompensation,
+			'maxCompensation' => $maxCompensation,
+			'workHome' => $workHome,
+			'location'=> $location,
+			'partTime' => $partTime,
+			'duration' => $duration,
+			'applicantType' => $applicantType,
+			'selectedSkills' => $selectedSkills
+		);
+		$_SESSION['redirect'] = $redirect;
+
 		if($offerType == '1' || $offerType == '2'){
 			date_default_timezone_set("Asia/Kolkata");
 			$today = date('Y-m-d');
@@ -604,19 +653,19 @@ class Functions extends CI_Controller {
 			$d2 = DateTime::createFromFormat('Y-m-d', $applicationDeadline);
 
 			if (!($d1 && $d1->format('Y-m-d') === $joiningDate)){
-				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.4','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 				redirect(base_url('add-new-offer'));
 			}
 			if ($joiningDate < $today){
-				$this->session->set_flashdata('message', array('content'=>'Offer Joining Date has already Passed. Please Try Again.1','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Offer Joining Date has already Passed. Please Try Again.','color'=>'red'));
 				redirect(base_url('add-new-offer'));
 			}
 			if (!($d2 && $d2->format('Y-m-d') === $applicationDeadline)){
-				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.5','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 				redirect(base_url('add-new-offer'));
 			}
 			if ($applicationDeadline < $today){
-				$this->session->set_flashdata('message', array('content'=>'Application Deadline already Passed. Please Try Again.1','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Application Deadline already Passed. Please Try Again.','color'=>'red'));
 				redirect(base_url('add-new-offer'));
 			}
 			if ($applicationDeadline > $joiningDate){
@@ -624,40 +673,108 @@ class Functions extends CI_Controller {
 				redirect(base_url('add-new-offer'));
 			}
 
-			if($maxStipend < $minStipend){
-				$this->session->set_flashdata('message', array('content'=>'Maximum Stipend Cannot be less than Minimum Stipend. Please Try Again.','color'=>'red'));
-				redirect(base_url('add-new-offer'));
+			
+			if($compensationType == 1){
+				if($compensation == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					redirect(base_url('add-new-offer'));
+				}
+				$data['compensation'] = $compensation;
+			}else if($compensationType == 2){
+				if($maxCompensation == '' || $minCompensation == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					redirect(base_url('add-new-offer'));
+				}
+				if($maxCompensation < $minCompensation){
+					if($offerType == 2){
+						$this->session->set_flashdata('message', array('content'=>'Maximum Stipend Cannot be less than Minimum Stipend. Please Try Again.','color'=>'red'));
+					}else{
+						$this->session->set_flashdata('message', array('content'=>'Maximum Compensation Cannot be less than Minimum Compensation. Please Try Again.','color'=>'red'));
+					}
+					redirect(base_url('add-new-offer'));
+				}
+
+				$data['minCompensation'] = $minCompensation;
+				$data['maxCompensation'] = $maxCompensation;
+
 			}
 
-			if($offerType == '' || $offerTitle == '' || $offerDescription == '' || $openings == '' || $joiningDate == '' || $applicationDeadline == '' || $maxStipend == '' || $minStipend == '' || $duration == ''){
-				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.2','color'=>'red'));
+			if($workHome == 2){
+				if($location == 0){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.1','color'=>'red'));
+					redirect(base_url('add-new-offer'));
+				}
+			}	
+
+			if($offerType == 2){
+				if($duration == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.2','color'=>'red'));
+					redirect(base_url('add-new-offer'));
+				}else{
+					$data['duration'] = $duration;
+				}
+			}
+
+			if($applicantType == 2){
+				if($selectedSkills == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.3','color'=>'red'));
+					redirect(base_url('add-new-offer'));
+				}
+			}
+
+			if($offerType == '' || $offerTitle == '' || $offerDescription == '' || $openings == '' || $joiningDate == '' || $applicationDeadline == ''){
+				$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.4','color'=>'red'));
 				redirect(base_url('add-new-offer'));
 			}
 			else{
-				$data = array(
-					'offerType' => $offerType,
-					'offerTitle' => $offerTitle,
-					'offerDescription' => $offerDescription,
-					'openings' => $openings,
-					'joiningDate' => $joiningDate,
-					'applicationDeadline' => $applicationDeadline,
-					'maxStipend' => $maxStipend,
-					'minStipend' => $minStipend,
-					'duration' => $duration
-				);
+				
+					$data['offerType'] = $offerType;
+					$data['offerTitle'] = $offerTitle;
+					$data['offerDescription'] = $offerDescription;
+					$data['openings'] = $openings;
+					$data['joiningDate'] = $joiningDate;
+					$data['applicationDeadline'] = $applicationDeadline;
+					$data['workFromHome'] = $workHome;
+					$data['partTime'] = $partTime;
+					$data['addedBy'] = $_SESSION['user_data']['userID'];
+					$data['skillRequired'] = $applicantType;
+				
 				$result = $this->function_lib->addOffer($data);
 				if($result){
-					$this->session->set_flashdata('message', array('content'=>'Offer added Successfully.','color'=>'green'));
-					redirect(base_url('add-new-offer'));
-				}
-				else{
-					$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.1','color'=>'red'));
+					$offerID = $this->function_lib->getCurrentOfferID($_SESSION['user_data']['userID']);
+					if($applicantType == 2){
+						$skills = json_decode($selectedSkills);
+						$i = 0;
+						foreach ($skills as $key => $value) {
+							$dat[$i]['offerID'] = $offerID;
+							$dat[$i]['skillID'] = $value->skillID;
+							$i++;
+						}
+						$result1 = $this->function_lib->addOfferSkills($dat);
+					}else{
+						$result1 = true;
+					}
+					if($workHome == 2){
+						$dats = array(
+							'offerID' => $offerID,
+							'cityID' => $location
+						);
+						$result2 = $this->function_lib->addOfferLocation($dats);
+					}else{
+						$result2 = true;
+					}	
+					if($result1 && $result2){
+						$this->session->set_flashdata('message', array('content'=>'Offer added Successfully.','color'=>'green'));
+						redirect(base_url('add-new-offer'));
+					}
+				}else{
+					$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 					redirect(base_url('add-new-offer'));
 				}
 			}
 		}
 		else{
-			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.3','color'=>'red'));
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url('add-new-offer'));
 		}
 

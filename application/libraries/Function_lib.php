@@ -221,4 +221,21 @@ class Function_lib {
 		return $CI->function->getSkills();
 	}
 
+	public function getCurrentOfferID($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getCurrentOfferID($userID);
+	}
+
+	public function addOfferSkills($data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->addOfferSkills($data);
+	}
+
+	public function addOfferLocation($data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->addOfferLocation($data);
+	}
 }
