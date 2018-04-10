@@ -323,6 +323,13 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function offer(){
+		$this->data['pageTitle'] = "Offer";
+		$this->data['activePage'] = "0";
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+		$this->load->view('offer', $this->data);
+	}
+
 	public function aboutUs(){
 		$this->data['pageTitle'] = "About Us";
 		$this->data['activePage'] = "0";
