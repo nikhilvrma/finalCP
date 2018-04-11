@@ -74,6 +74,7 @@ $route['add-new-offer'] = 'home/addNewOffer';
 $route['my-added-offers'] = 'home/myAddedOffers';
 
 $route['applied-offers'] = 'home/appliedOffers';
+$route['available-offers'] = 'home/availableOffers';
 
 $route['offer'] = 'home/offer';
 
