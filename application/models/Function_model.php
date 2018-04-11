@@ -242,6 +242,12 @@ class Function_model extends CI_Model {
 		return $result->result_array();
 	}
 
+	public function getUserSkills($userID){
+		$this->db->join('skills','skills.skillID = userSkills.skillID');
+		$result = $this->db->get_where('userSkills', array('userID' => $userID));
+		return $result->result_array();
+	}
+
 	public function getOtherSkills($userID){
 		$this->db->join('skills','skills.skillID = userSkills.skillID');
 		$result = $this->db->get_where('userSkills', array('type' => 1, 'userID' => $userID));
