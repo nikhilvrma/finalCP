@@ -50,7 +50,12 @@
                 <div class="card-body">
                   <p class="card-text"><b>Year: </b><?= $education['year']?></p>
                   <p class="card-text"><b>Score: </b><?=$education['score']?> <?php if($education['scoreType'] == 1){echo "CGPA";}else{echo "%";}?></p>
-                  <p class="card-text"><b>School/Board/College/University: </b><?= $education['institute']?></p>
+                  <?php if($education['educationType'] == 1 || $education['educationType'] == 2){?>
+                    <p class="card-text"><b>School/Board/College/University: </b><?= $education['institute']?></p>
+                  <?php } ?>
+                  <?php if($education['educationType'] == 3 || $education['educationType'] == 4){?>
+                    <p class="card-text"><b>School/Board/College/University: </b><?= $education['college']?></p>
+                  <?php } ?>
                 </div>
                 <div class="card-footer">
                   <a href="<?= base_url('functions/deleteEducationalDetail?id='.$education['educationID'])?>" class="btn btn-danger" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
@@ -131,13 +136,51 @@
                           </div>
                         </div>
 
-                        <div class="col-md-12 control-group form-group">
+                        <div class="col-md-12 control-group form-group schoolData">
                           <div class="controls">
                             <label>School/Education Board:</label>
                             <input type="text" class="form-control" name = "board" id = "board" placeholder="School/Education Board">
                             <p class="help-block"></p>
                           </div>
                         </div>
+
+                        <div class="col-md-12 control-group form-group colleges" style = "display: none;">
+                          <div class="controls">
+                            <label>Colleges:</label>
+                            <select class="form-control" name="college" id ="college" >
+                               <option value=""></option>
+                              <?php foreach($colleges as $college){?>
+                                <option value="<?= $college['college_id']?>"><?= $college['college']?></option>
+                              <?php } ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12 control-group form-group courses" id = "courseBach" style = "display: none;">
+                          <div class="controls">
+                            <label>Courses:</label>
+                            <select class="form-control" name="courseBach" id ="coursesBach" >
+                              <option value=""></option>
+                              <?php foreach($courses as $course){if($course['courseType'] == 3){?>
+                                <option value="<?= $course['course_id']?>"><?= $course['course']?></option>
+                              <?php } } ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12 control-group form-group courses" id = "courseMast" style = "display: none;">
+                          <div class="controls">
+                            <label>Courses:</label>
+                            <select class="form-control" name="courseMast" id ="coursesMast" >
+                              <option value=""></option>
+                              <?php foreach($courses as $course){if($course['courseType'] == 4){?>
+                                <option value="<?= $course['course_id']?>"><?= $course['course']?></option>
+                              <?php } } ?>
+                            </select>
+                          </div>
+                        </div>
+
+
                         <div class = "hiddenInput">
                           
                         </div>
@@ -177,13 +220,49 @@
             console.log(data);
             $('#type').val(data.educationType)
             $('#year').val(data.year)
-            $('#board').val(data.institute)
+            if(data.educationType == 1 || data.educationType == 2){
+              $('#board').val(data.institute)
+            }
+            if(data.educationType == 3 || data.educationType == 4){
+              $('.colleges').show();
+              $('#college').val(data.instituteID);
+              $('#board').hide();
+              if(data.educationType == 3){
+                $('#courseBach').show();
+                $('#coursesBach').val(data.courseID)
+              }
+              if(data.educationType == 4){
+                $('#courseMast').show();
+                $('#coursesMast').val(data.courseID)
+              }
+            }
             $('#scoreType').val(data.scoreType)
             $('#score').val(data.score)
             $('.submitButton').html("Edit Education")
             $('.hiddenInput').append('<input type="hidden" name ="edit" value = "1"><input type = "hidden" name ="id" value = "'+data.educationID+'">')
             $('#file').attr('required', false)
             $('#education').modal('show');
+          })
+
+          $('#type').on('change', function(){
+            value = $(this).val();
+            if(value == 3 || value == 4){
+              $('.colleges').show();
+               $('.schoolData').hide();
+              if(value == 3){
+                $('#courseMast').hide();
+                $('#courseBach').show();
+              }
+              if(value == 4){
+                  $('#courseBach').hide();
+                  $('#courseMast').show();
+              }
+
+            }else if(value == 1 || value == 2){
+              $('.colleges').hide();
+              $('.courses').hide();
+              $('.schoolData').show();
+            }
           })
         });
       </script>

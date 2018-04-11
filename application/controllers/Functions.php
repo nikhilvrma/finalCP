@@ -125,6 +125,9 @@ class Functions extends CI_Controller {
 		$scoreType = "";
 		$score = "";
 		$board = "";
+		$courseBach = '';
+		$courseMast = '';
+		$college = '';
 		if($x = $this->input->post('type')){
 			$type = $x;
 		}
@@ -140,9 +143,18 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('board')){
 			$board = $x;
 		}
+		if($x = $this->input->post('courseMast')){
+			$courseMast = $x;
+		}
+		if($x = $this->input->post('courseBach')){
+			$courseBach = $x;
+		}
+		if($x = $this->input->post('college')){
+			$college = $x;
+		}
 
-		if($type == "" || $year == "" || $scoreType == "" || $score == "" || $board == ""){
-			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
+		if($type == "" || $year == "" || $scoreType == "" || $score == ""){
+			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.1','color'=>'red'));
 			redirect(base_url('educational-details'));
 		}
 		if($scoreType == 1){
@@ -171,26 +183,89 @@ class Functions extends CI_Controller {
 			 	$error = $this->upload->display_errors();
 				$base_url = base_url();
 				$fileName = $base_url.'assets/uploads/EducationalDocuments/'.$x['file_name'];
+				if($type == 1 || $type == 2){
+				if($board == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.2','color'=>'red'));
+					redirect(base_url('educational-details'));
+				}
+				if($error == ''){
+					$data = array(
+						'userID' => $_SESSION['user_data']['userID'],
+						'educationType' => $type,
+						'year' => $year,
+						'score' => $score,
+						'scoreType' => $scoreType,
+						'institute' => $board,
+						'supportingDocument' => $fileName
+					);
+				}else{
+					$data = array(
+						'userID' => $_SESSION['user_data']['userID'],
+						'educationType' => $type,
+						'year' => $year,
+						'score' => $score,
+						'scoreType' => $scoreType,
+						'institute' => $board
+					);
+				}
+			}
+
+			if($type == 3){
+				if($college == ''|| $courseBach == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.3','color'=>'red'));
+					redirect(base_url('educational-details'));
+				}
 				if($error == ''){
 				$data = array(
-					'userID' => $_SESSION['user_data']['userID'],
-					'educationType' => $type,
-					'year' => $year,
-					'score' => $score,
-					'scoreType' => $scoreType,
-					'institute' => $board,
-					'supportingDocument' => $fileName
+				'userID' => $_SESSION['user_data']['userID'],
+				'educationType' => $type,
+				'year' => $year,
+				'score' => $score,
+				'scoreType' => $scoreType,
+				'instituteID' => $college,
+				'courseID' => $courseBach,
+				'supportingDocument' => $fileName
 				);
 				}else{
 					$data = array(
-					'userID' => $_SESSION['user_data']['userID'],
-					'educationType' => $type,
-					'year' => $year,
-					'score' => $score,
-					'scoreType' => $scoreType,
-					'institute' => $board,
+				'userID' => $_SESSION['user_data']['userID'],
+				'educationType' => $type,
+				'year' => $year,
+				'score' => $score,
+				'scoreType' => $scoreType,
+				'instituteID' => $college,
+				'courseID' => $courseBach
 				);
+				}	
+			}
+			if($type == 4){
+				if($college == ''|| $courseMast == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.4','color'=>'red'));
+					redirect(base_url('educational-details'));
 				}
+				if($error == ''){
+				$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'educationType' => $type,
+				'year' => $year,
+				'score' => $score,
+				'scoreType' => $scoreType,
+				'instituteID' => $college,
+				'courseID' => $courseMast,
+				'supportingDocument' => $fileName
+				);
+			}else{
+				$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'educationType' => $type,
+				'year' => $year,
+				'score' => $score,
+				'scoreType' => $scoreType,
+				'instituteID' => $college,
+				'courseID' => $courseMast
+				);
+			}
+			}
 				if($this->function_lib->updateEducation($data, $_POST['id'])){
 					$this->session->set_flashdata('message', array('content'=>'Education Added Successfully.','color'=>'green'));
 					redirect(base_url('educational-details'));
@@ -208,17 +283,89 @@ class Functions extends CI_Controller {
 		 	$error = $this->upload->display_errors();
 			$base_url = base_url();
 			$fileName = $base_url.'assets/uploads/EducationalDocuments/'.$x['file_name'];
+			if($type == 1 || $type == 2){
+				if($board == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.2','color'=>'red'));
+					redirect(base_url('educational-details'));
+				}
+				if($error == ''){
+					$data = array(
+						'userID' => $_SESSION['user_data']['userID'],
+						'educationType' => $type,
+						'year' => $year,
+						'score' => $score,
+						'scoreType' => $scoreType,
+						'institute' => $board,
+						'supportingDocument' => $fileName
+					);
+				}else{
+					$data = array(
+						'userID' => $_SESSION['user_data']['userID'],
+						'educationType' => $type,
+						'year' => $year,
+						'score' => $score,
+						'scoreType' => $scoreType,
+						'institute' => $board
+					);
+				}
+			}
 
-			$data = array(
+			if($type == 3){
+				if($college == ''|| $courseBach == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.3','color'=>'red'));
+					redirect(base_url('educational-details'));
+				}
+				if($error == ''){
+				$data = array(
 				'userID' => $_SESSION['user_data']['userID'],
 				'educationType' => $type,
 				'year' => $year,
 				'score' => $score,
 				'scoreType' => $scoreType,
-				'institute' => $board,
+				'instituteID' => $college,
+				'courseID' => $courseBach,
 				'supportingDocument' => $fileName
-			);
-			if($result)
+				);
+				}else{
+					$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'educationType' => $type,
+				'year' => $year,
+				'score' => $score,
+				'scoreType' => $scoreType,
+				'instituteID' => $college,
+				'courseID' => $courseBach
+				);
+				}	
+			}
+			if($type == 4){
+				if($college == ''|| $courseMast == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.4','color'=>'red'));
+					redirect(base_url('educational-details'));
+				}
+				if($error == ''){
+				$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'educationType' => $type,
+				'year' => $year,
+				'score' => $score,
+				'scoreType' => $scoreType,
+				'instituteID' => $college,
+				'courseID' => $courseMast,
+				'supportingDocument' => $fileName
+				);
+			}else{
+				$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'educationType' => $type,
+				'year' => $year,
+				'score' => $score,
+				'scoreType' => $scoreType,
+				'instituteID' => $college,
+				'courseID' => $courseMast
+				);
+			}
+			}
 			if($this->function_lib->addEducation($data)){
 				$this->session->set_flashdata('message', array('content'=>'Education Added Successfully.','color'=>'green'));
 				redirect(base_url('educational-details'));
@@ -347,7 +494,7 @@ class Functions extends CI_Controller {
 				'currentlyWorking' => $currentWorking,
 				'supportingDocument' => $fileName
 			);
-			if($result)
+			
 			if($this->function_lib->addWorkExperience($data, $id)){
 				$this->session->set_flashdata('message', array('content'=>'Work Experience Added Successfully.','color'=>'green'));
 				redirect(base_url('work-experience'));
@@ -673,7 +820,7 @@ class Functions extends CI_Controller {
 				redirect(base_url('add-new-offer'));
 			}
 
-			
+
 			if($compensationType == 1){
 				if($compensation == ''){
 					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));

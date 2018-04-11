@@ -171,6 +171,8 @@ class Home extends CI_Controller {
 				$this->data['activePage'] = "4";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->data['educations'] = $this->function_lib->getUserEducationalDetails($_SESSION['user_data']['userID']);
+				$this->data['colleges'] = $this->function_lib->getColleges();
+				$this->data['courses'] = $this->function_lib->getCourses();
 				$this->load->view('educationalDetails', $this->data);
 			}
 			else{
@@ -261,6 +263,7 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "My Added Offers";
 				$this->data['activePage'] = "8";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->data['offers'] = $this->function_lib->getAddedOffers($_SESSION['user_data']['userID']);
 				$this->load->view('myAddedOffers', $this->data);
 			}
 			else{

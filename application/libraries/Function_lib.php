@@ -82,6 +82,20 @@ class Function_lib {
 		return $CI->function->deleteWorkExperience($experience);
 	}
 
+	public function getColleges(){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getColleges();
+	}
+	
+
+	public function getCourses(){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getCourses();
+	}
+	
+
 	public function getAllLocations(){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -215,6 +229,7 @@ class Function_lib {
 		return $CI->function->updateWorkExperience($data, $id);
 	}
 
+
 	public function getSkills(){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -237,5 +252,11 @@ class Function_lib {
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->addOfferLocation($data);
+	}
+
+	public function getAddedOffers($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getAddedOffers($userID);
 	}
 }

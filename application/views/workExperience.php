@@ -130,7 +130,7 @@
 
                         </div>
 
-                        <div class="row">
+                        <div class="row endDates">
                           <div class="col-md-12">
                           <label><b>End</b></label>
                         </div>
@@ -161,15 +161,16 @@
                           </div>
                         </div>
 
+                        
+
+                        </div>
+
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <input type="checkbox" name="currentWorking" id = "currentWorking" value="1">
                             <label> Currently Work Here</label>
                           </div>
                         </div>
-
-                        </div>
-
 
                         <div class="row">
                         <div class="col-md-12 control-group form-group">
@@ -231,6 +232,7 @@
       </script>
 
       <script type="text/javascript">
+        var value = null;
         $(document).ready(function(){
           $('.editWorkEx').on('click', function(res){
             data = $(this).attr('data');
@@ -246,6 +248,8 @@
               $('#currentWorking').attr('checked', false)
             }else{
               $('#currentWorking').attr('checked', true)
+              $('#endMonth').hide()
+              $('#endYear').hide()
             }
              $('#file').attr('required', false)
             CKEDITOR.instances['role'].setData("hello")
@@ -253,6 +257,18 @@
             $('.submitButton').html("Edit Work Experience")
             $('#education').modal('show');
           })
+
+          $('#currentWorking').on('change', function(){
+            if(value != 1)
+              value = $(this).val()
+            else
+              value = ' ';
+            if(value == 1){
+              $('.endDates').hide();
+            }else{
+              $('.endDates').show();
+             } 
+          });
         });
       </script>
 

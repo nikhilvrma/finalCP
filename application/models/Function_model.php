@@ -19,6 +19,14 @@ class Function_model extends CI_Model {
 		return $this->db->get('indianCities')->result_array();
 	}
 
+	public function getColleges(){
+		return $this->db->get_where('colleges', array('active' => 1))->result_array();
+	}
+
+	public function getCourses(){
+		return $this->db->get_where('courses', array('active' => 1))->result_array();
+	}
+
 	public function getUserData($email){
 		$result = $this->db->get_where('users', array('email' => $email));
 		return $result->result_array();
@@ -169,6 +177,7 @@ class Function_model extends CI_Model {
 	}
 
 	public function getUserEducationalDetails($userID){
+		$this->db->join('colleges', 'educationalDetails.instituteID = colleges.college_id', 'left');
 		$result = $this->db->get_where('educationalDetails', array('userID'=>$userID));
 		return $result->result_array();
 	}
@@ -330,7 +339,10 @@ class Function_model extends CI_Model {
 
 	}
 
-
+	public function getAddedOffers($userID){
+		$this->db->select('offerID, offerTitle, applicationDeadline, joiningDate');
+		$result = $this->db->get_where('offers', array('userID'=>$userID))->result_array();
+	}
 
 ///////////////////////////////////////////////////////////
 }
