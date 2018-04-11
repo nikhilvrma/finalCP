@@ -251,7 +251,6 @@
               $('#endMonth').hide()
               $('#endYear').hide()
             }
-             $('#file').attr('required', false)
             CKEDITOR.instances['role'].setData("hello")
             $('.hiddenInput').append('<input type="hidden" name ="edit" value = "1"><input type = "hidden" name ="id" value = "'+data.workExperienceID+'">')
             $('.submitButton').html("Edit Work Experience")
@@ -275,7 +274,6 @@
       <script type="text/javascript">
          $('#education').on('hidden.bs.modal', function () {
           $('.hiddenInput').empty()
-          $('#file').attr('required', true)
           $('.submitButton').html("Add Work Experience")
           $(this).find('form').trigger('reset');
         })

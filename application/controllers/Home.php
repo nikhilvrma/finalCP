@@ -385,7 +385,10 @@ class Home extends CI_Controller {
 		$this->load->view('employer', $this->data);
 	}
 
-	public function report(){
+	public function report($userID){
+		$this->data['generalData'] = $this->function_lib->getUserGeneralData($userID)[0];
+		$this->data['educationalDetails'] = $this->function_lib->getUserEducationalDetails($userID);
+		$this->data['workExperience'] = $this->function_lib->getUserWorkExperience($userID);
 		$this->load->view('report', $this->data);
 	}
 

@@ -20,6 +20,7 @@ class Function_model extends CI_Model {
 	}
 
 	public function getColleges(){
+		$this->db->order_by('college', 'ASC');
 		return $this->db->get_where('colleges', array('active' => 1))->result_array();
 	}
 
@@ -138,6 +139,13 @@ class Function_model extends CI_Model {
 		$_SESSION['user_data']['profileImage'] = $image['profileImage'];
 		$this->db->where('userID', $userId);
 		return $this->db->update('users', $image);
+	}
+
+	public function getUserGeneralData($userID){
+		$this->db->select('users.name, users.email, users.mobile, users.cityID, indianCities.city, indianCities.state');
+		$this->db->join('indianCities', 'users.cityID = indianCities.cityID');
+		$result = $this->db->get_where('users', array('userID'=>$userID))->result_array();
+		return $result;
 	}
 
 

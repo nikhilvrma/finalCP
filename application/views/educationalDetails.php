@@ -240,7 +240,6 @@
             $('#score').val(data.score)
             $('.submitButton').html("Edit Education")
             $('.hiddenInput').append('<input type="hidden" name ="edit" value = "1"><input type = "hidden" name ="id" value = "'+data.educationID+'">')
-            $('#file').attr('required', false)
             $('#education').modal('show');
           })
 
@@ -270,7 +269,6 @@
       <script type="text/javascript">
          $('#education').on('hidden.bs.modal', function () {
           $('.hiddenInput').empty()
-          $('#file').attr('required', true)
           $('.submitButton').html("Add Education")
           $(this).find('form').trigger('reset');
         })

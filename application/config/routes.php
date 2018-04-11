@@ -82,7 +82,7 @@ $route['hiring-nucleus/applicants'] = 'home/applicants';
 $route['hiring-nucleus/compare-applicants'] = 'home/compareApplicants';
 
 $route['employer'] = 'home/employer';
-$route['report'] = 'home/report';
+$route['report/(:num)'] = 'home/report/$1';
 
 $route['employer/job-offers'] = 'home/jobOffers';
 

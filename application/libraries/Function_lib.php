@@ -40,6 +40,12 @@ class Function_lib {
 		return $CI->function->getPreferredLocations($userID);
 	}
 
+	public function getUserGeneralData($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getUserGeneralData($userID);
+	}
+
 	public function getUserEducationalDetails($userID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -259,4 +265,6 @@ class Function_lib {
 		$CI->load->model('function_model','function');
 		return $CI->function->getAddedOffers($userID);
 	}
+
+
 }

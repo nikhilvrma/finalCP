@@ -27,15 +27,16 @@
          <div class="clearfix"></div>
 
          <div style="background: black; color: white; padding: 10px; height: 40px;">
-           <p><b>PRASHANT MISHRA</b></p>
+           <p><b><?= $generalData['name']?></b></p>
          </div>
          <br>
-         <p style="font-size: 15px;"><b>E-Mail Address:</b> prashantmishra@gmail.com<br><b>Mobile Number:</b> +91-999911XXXX<br><b>Location:</b> New Delhi</p>
+         <p style="font-size: 15px;"><b>E-Mail Address:</b> <?=$generalData['email']?><br><b>Mobile Number:</b> +91-<?=$generalData['mobile']?><br><b>Location:</b> <?= $generalData['city']?>, <?=$generalData['state']?></p>
 
          <hr>
 
          <div class="table-responsive">
          <b>Educational Details</b>
+          <?php if(!empty($educationalDetails)){?>
              <table class="table" style="width: 100%; margin-top: 20px; font-size: 15px;">
                <thead>
                  <tr>
@@ -46,26 +47,24 @@
                  </tr>
                </thead>
                <tbody>
+                <?php foreach ($educationalDetails as $key => $education) {?>
                  <tr>
-                   <td><b>High-School</b> <i class="fa fa-check-circle"></i></td>
-                   <td>Central Board of Secondary Education, New Delhi</td>
-                   <td>2010</td>
-                   <td>90%</td>
+                   <td><b><?php if($education['educationType'] == 1){echo "High School";}elseif($education['educationType'] == 2){echo "Senior Secondary";}elseif($education['educationType'] == 3){echo "Graduation";}else{echo "Post Post-Graduation";}?></b> <?php if($education['status'] == 2){?><i class="fa fa-check-circle"></i><?php } ?></td>
+                    <?php if($education['educationType'] == 1 || $education['educationType'] == 2){?>
+                     <td><?= $education['institute']?></td>
+                    <?php } ?>
+                    <?php if($education['educationType'] == 3 || $education['educationType'] == 4){?>
+                    <td><?= $education['college']?></td>
+                    <?php } ?>
+                   <td><?= $education['year']?></td>
+                   <td><?= $education['score']?> <?php if($education['scoreType'] == 1){echo "CGPA";}else{echo "%";}?></td>
                  </tr>
-                 <tr>
-                   <td><b>Intermediate (or equivalent)</b></td>
-                   <td>Central Board of Secondary Education, New Delhi</td>
-                   <td>2012</td>
-                   <td>80%</td>
-                 </tr>
-                 <tr>
-                   <td><b>Graduation</b> <i class="fa fa-check-circle"></i><br><br>Bachelor of Technology- Mechanical Engineering</td>
-                   <td>Dr. APJ Abdul Kalam Technical University, Lucknow</td>
-                   <td>2017</td>
-                   <td>70%</td>
-                 </tr>
+                 <?php } ?>
                </tbody>
              </table>
+             <?php }else{
+              echo "<center><b>No Education Found.</b></center>";
+             } ?>
           </div>
 
           <hr>
