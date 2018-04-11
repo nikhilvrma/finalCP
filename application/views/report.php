@@ -108,7 +108,7 @@
                     
                     <?php foreach($premiumSkills as $premiumSkill){?>
                   <tr>
-                    <td>1.</td>
+                    <td><?= $i?>.</td>
                     <td><?=$premiumSkill['skill_name']?></td>
                     <td><?= $premiumSkill['score']?></td>
                     <td>
