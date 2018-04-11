@@ -40,7 +40,7 @@
 
             <div class="row">
 
-              
+
               <?php if(!empty($educations)){
                 foreach($educations as $education){?>
               <div class="col-lg-12 mb-4">
@@ -58,7 +58,7 @@
                   <?php } ?>
                 </div>
                 <div class="card-footer">
-                  <button href="<?= base_url('functions/deleteEducationalDetail?id='.$education['educationID'])?>" class="btn btn-danger deleteEducation" data = "$education['educationID']" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></button>
+                  <a href="<?= base_url('functions/deleteEducationalDetail?id='.$education['educationID'])?>" class="btn btn-danger delete deleteEducation" data = "$education['educationID']" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
                   <button class="btn btn-success editWorkEx"  data = '<?= json_encode($education);?>' style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></button>
                 </div>
               </div>
@@ -182,7 +182,7 @@
 
 
                         <div class = "hiddenInput">
-                          
+
                         </div>
 
                     </div>
@@ -210,6 +210,14 @@
     <?php echo $footer; ?>
 
     <?php echo $footerFiles; ?>
+
+    <script>
+    $(document).on('click','.delete',function(event){
+      if (!confirm("Are you sure you want to delete this educational profile?")) {
+        event.preventDefault();
+      }
+    });
+  </script>
 
     <script type="text/javascript">
         $(document).ready(function(){

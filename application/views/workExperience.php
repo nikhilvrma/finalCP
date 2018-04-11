@@ -53,7 +53,7 @@
                   <p class="card-text"><b>Role: </b><?= $experience['role']?></p>
                 </div>
                 <div class="card-footer">
-                  <a href="<?= base_url('functions/deleteWorkExperience?id='.$experience['workExperienceID'])?>" class="btn btn-danger" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
+                  <a href="<?= base_url('functions/deleteWorkExperience?id='.$experience['workExperienceID'])?>" class="btn btn-danger delete" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
                   <button class="btn btn-success editWorkEx" data = '<?= json_encode($experience);?>' style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></button>
                 </div>
               </div>
@@ -161,7 +161,7 @@
                           </div>
                         </div>
 
-                        
+
 
                         </div>
 
@@ -194,7 +194,7 @@
                         </div>
 
                          <div class = "hiddenInput">
-                          
+
                         </div>
 
 
@@ -223,6 +223,14 @@
     <?php echo $footer; ?>
 
     <?php echo $footerFiles; ?>
+
+    <script>
+    $(document).on('click','.delete',function(event){
+      if (!confirm("Are you sure you want to delete this work-experience profile?")) {
+        event.preventDefault();
+      }
+    });
+  </script>
 
     <script src="<?= base_url('assets/ckeditor/ckeditor.js')?>"></script>
     <script>
@@ -266,7 +274,7 @@
               $('.endDates').hide();
             }else{
               $('.endDates').show();
-             } 
+             }
           });
         });
       </script>
