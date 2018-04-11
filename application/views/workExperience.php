@@ -243,13 +243,13 @@
             $('#startMonth').val(data.startMonth)
             $('#startYear').val(data.startYear)
             if(!(data.currentlyWorking == 1)){
+              $('.endDates').show();
               $('#endMonth').val(data.endMonth)
               $('#endYear').val(data.endYear)
               $('#currentWorking').attr('checked', false)
             }else{
               $('#currentWorking').attr('checked', true)
-              $('#endMonth').hide()
-              $('#endYear').hide()
+              $('.endDates').hide()
             }
             CKEDITOR.instances['role'].setData("hello")
             $('.hiddenInput').append('<input type="hidden" name ="edit" value = "1"><input type = "hidden" name ="id" value = "'+data.workExperienceID+'">')

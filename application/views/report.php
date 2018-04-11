@@ -82,7 +82,10 @@
 
           <b>Work-Experience</b>
           <ul style="font-size: 15px; margin-top: 15px;">
-            <li><b>XYZ Private Limited</b><br>Junior Engineer Intern<br>May 2017 - <i>July 2017</i><br><br><b>Role: </b>Worked as Junior Engineer Intern for XYZ Private Limited, where my basic role was to manage A, B, and C projects.</li>
+            <?php if(!empty($workExperience)){?>
+            <?php foreach ($workExperience as $key => $experience) { ?>
+              <li><b><?= $experience['companyName']?></b><br><?= $experience['position'] ?><br><?= $experience['startMonth']?> <?= $experience['startYear']?> - <?php if($experience['currentlyWorking'] == 1){echo "Present";}else{?><?= $experience['endMonth']?> <?= $experience['endYear']?><?php } ?><br><br><b>Role: </b><?= $experience['role']?></li>
+            <?php }}?>
           </ul>
 
           <hr>

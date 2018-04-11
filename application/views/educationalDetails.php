@@ -58,7 +58,7 @@
                   <?php } ?>
                 </div>
                 <div class="card-footer">
-                  <a href="<?= base_url('functions/deleteEducationalDetail?id='.$education['educationID'])?>" class="btn btn-danger" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></a>
+                  <button class="btn btn-danger deleteEducation" data = "$education['educationID']" style="float: right; margin: 5px;"><i class="fa fa-trash"></i></button>
                   <button class="btn btn-success editWorkEx"  data = '<?= json_encode($education);?>' style="float: right; margin: 5px;"><i class="fa fa-pencil"></i></button>
                 </div>
               </div>

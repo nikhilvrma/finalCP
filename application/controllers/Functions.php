@@ -423,7 +423,7 @@ class Functions extends CI_Controller {
 		}
 
 		if($endYear == $startYear){
-			if($endMonth <= $startMonth){
+			if($endMonth < $startMonth){
 				$this->session->set_flashdata('message', array('content'=>'End date cannot be less than start date.','color'=>'red'));
 				redirect(base_url('work-experience'));
 			}
