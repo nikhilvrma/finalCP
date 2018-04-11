@@ -250,6 +250,7 @@
             $('#position').val(data.position)
             $('#startMonth').val(data.startMonth)
             $('#startYear').val(data.startYear)
+            value = data.currentlyWorking
             if(!(data.currentlyWorking == 1)){
               $('.endDates').show();
               $('#endMonth').val(data.endMonth)
@@ -269,7 +270,8 @@
             if(value != 1)
               value = $(this).val()
             else
-              value = ' ';
+              value = '';
+            console.log(value)
             if(value == 1){
               $('.endDates').hide();
             }else{
