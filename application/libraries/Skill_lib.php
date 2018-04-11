@@ -8,6 +8,12 @@ class Skill_lib {
 		return $CI->function->getPremiumSkills($userID);
 	}
 
+	public function getUserSkills($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getUserSkills($userID);
+	}
+
 	public function getOtherSkills($userID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -106,6 +112,30 @@ class Skill_lib {
 		$CI = &get_instance();
 		$CI->load->model('function_model', 'function');
 		return $CI->function->updateResponse($data);
+	}
+
+	public function getResponses($userID, $skillID){
+		$CI = &get_instance();
+		$CI->load->model('function_model', 'function');
+		return $CI->function->getResponses($userID, $skillID);
+	}
+
+	public function getCorrectResponses($userID, $skillID){
+		$CI = &get_instance();
+		$CI->load->model('function_model', 'function');
+		return $CI->function->getCorrectResponses($userID, $skillID);
+	}
+
+	public function getIncorrectResponses($userID, $skillID){
+		$CI = &get_instance();
+		$CI->load->model('function_model', 'function');
+		return $CI->function->getIncorrectResponses($userID, $skillID);
+	}
+
+	public function getSkillMax($skillID){
+		$CI = &get_instance();
+		$CI->load->model('function_model', 'function');
+		return $CI->function->getSkillMax($skillID);
 	}
 
 }

@@ -68,15 +68,15 @@
           </div>
 
           <hr>
-
+         
           <b>Skills</b>
+          <?php if(!empty($skills)){?>
           <ul style="font-size: 15px; margin-top: 15px;">
-            <li>General Aptitude <i class="fa fa-check-circle"></i></li>
-            <li>Solid Mechanics <i class="fa fa-check-circle"></i></li>
-            <li>Sales and Marketing</li>
-            <li>Microsoft Excel</li>
-            <li>Business Development</li>
+            <?php foreach($skills as $skill){if($skill['score'] > 10){?>
+            <li><?= $skill['skill_name'] ?> <?php if($skill['type'] == 2){?><i class="fa fa-check-circle"></i><?php }?></li>
+            <?php } }?>
           </ul>
+          <?php }else{ echo "<center><b>No Skill Found.</b></center>";} ?>
 
           <hr>
 
@@ -85,13 +85,15 @@
             <?php if(!empty($workExperience)){?>
             <?php foreach ($workExperience as $key => $experience) { ?>
               <li><b><?= $experience['companyName']?></b><br><?= $experience['position'] ?><br><?= $experience['startMonth']?> <?= $experience['startYear']?> - <?php if($experience['currentlyWorking'] == 1){echo "Present";}else{?><?= $experience['endMonth']?> <?= $experience['endYear']?><?php } ?><br><br><b>Role: </b><?= $experience['role']?></li>
-            <?php }}?>
+            <?php }}else{ echo "<center><b>No Work-Experience Found.</b></center>";}?>
           </ul>
 
           <hr>
           <div class="table-responsive">
           <b>Skill Assessment</b>
 
+          <?php if(!empty($premiumSkills)){
+                    $i = 1;?>
               <table class="table" style="width: 100%; margin-top: 20px; font-size: 15px;">
                 <thead>
                   <tr>
@@ -103,66 +105,51 @@
                   </tr>
                 </thead>
                 <tbody>
+                    
+                    <?php foreach($premiumSkills as $premiumSkill){?>
                   <tr>
                     <td>1.</td>
-                    <td>General Aptitude</td>
-                    <td>57.89</td>
+                    <td><?=$premiumSkill['skill_name']?></td>
+                    <td><?= $premiumSkill['score']?></td>
                     <td>
                       <table class="table" style="font-size: 14px;">
                         <tr>
                           <td><b>Number of Attempt(s)</b></td>
-                          <td>76</td>
+                          <td><?= $skillResponse[$premiumSkill['skillID']]['responses']?></td>
                         </tr>
                         <tr>
                           <td><b>Correct Attempt(s)</b></td>
-                          <td>51</td>
+                          <td><?= $skillCorrect[$premiumSkill['skillID']]['responses']?></td>
                         </tr>
                         <tr>
                           <td><b>Wrong Attempt(s)</b></td>
-                          <td>19</td>
+                          <td><?= $skillIncorrect[$premiumSkill['skillID']]['responses']?></td>
+                        </tr>
+                        <tr>
+                          <td><b>Skip(s)</b></td>
+                          <td><?= $skillResponse[$premiumSkill['skillID']]['responses'] - $skillIncorrect[$premiumSkill['skillID']]['responses'] - $skillCorrect[$premiumSkill['skillID']]['responses']?></td>
                         </tr>
                       </table>
                     </td>
                     <td>
                       <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 71%;" aria-valuenow="71" aria-valuemin="0" aria-valuemax="100">71%</div>
+                        <?php $percent = round($premiumSkill['score']/$skillMax[$premiumSkill['skillID']]['max']*100);?>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $percent?>%;" aria-valuenow="<?= $percent?>" aria-valuemin="0" aria-valuemax="100"><?= $percent?>%</div>
                       </div>
                     </td>
                   </tr>
-                  <tr>
-                    <td>2.</td>
-                    <td>Solid Mechanics</td>
-                    <td>61.89</td>
-                    <td>
-                      <table class="table" style="font-size: 14px;">
-                        <tr>
-                          <td><b>Number of Attempt(s)</b></td>
-                          <td>63</td>
-                        </tr>
-                        <tr>
-                          <td><b>Correct Attempt(s)</b></td>
-                          <td>48</td>
-                        </tr>
-                        <tr>
-                          <td><b>Wrong Attempt(s)</b></td>
-                          <td>13</td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td>
-                      <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 83%;" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100">83%</div>
-                      </div>
-                    </td>
-                  </tr>
+                  <?php $i++;} ?>
                 </tbody>
               </table>
+              <?php }else{
+                echo "No Skills Found.";
+              } ?>
            </div>
 
 
 
           <hr>
-          <div class="table-responsive">
+          <!-- <div class="table-responsive">
           <b>Behavioural Assessment</b>
 
               <table class="table" style="width: 100%; margin-top: 20px; font-size: 15px;">
@@ -213,7 +200,7 @@ which involves taking chances or risking interest of any department. You are ful
 
                 </tbody>
               </table>
-           </div>
+           </div> -->
 
        </div>
      </div>

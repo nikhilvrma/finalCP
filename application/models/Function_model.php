@@ -243,6 +243,7 @@ class Function_model extends CI_Model {
 	}
 
 	public function getUserSkills($userID){
+		$this->db->select('userSkills.skillID, skill_name, userSkills.type, userSkills.score');
 		$this->db->join('skills','skills.skillID = userSkills.skillID');
 		$result = $this->db->get_where('userSkills', array('userID' => $userID));
 		return $result->result_array();
@@ -302,6 +303,35 @@ class Function_model extends CI_Model {
 		$result = $this->db->get_where('skills', array('active'=>1));
 		return $result->result_array();
 	}
+
+	public function getResponses($userID, $skillID){
+		$this->db->select('count(*) as responses');
+		$this->db->join('skillQuestions', 'skillQuestions.question_id = responses.questionID');
+		$result = $this->db->get_where('responses', array('skillQuestions.skill_id'=> $skillID, 'responses.userID' => $userID))->result_array()[0];
+		return $result;
+	}
+
+	public function getCorrectResponses($userID, $skillID){
+		$this->db->select('count(*) as responses');
+		$this->db->join('skillQuestions', 'skillQuestions.question_id = responses.questionID');
+		$result = $this->db->get_where('responses', array('skillQuestions.skill_id'=> $skillID, 'responses.userID' => $userID, 'responses.correct' => 1))->result_array()[0];
+		return $result;
+	}
+
+	public function getIncorrectResponses($userID, $skillID){
+		$this->db->select('count(*) as responses');
+		$this->db->join('skillQuestions', 'skillQuestions.question_id = responses.questionID');
+		$result = $this->db->get_where('responses', array('skillQuestions.skill_id'=> $skillID, 'responses.userID' => $userID, 'responses.correct' => 0))->result_array()[0];
+		return $result;
+	}
+
+	public function getSkillMax($skillID){
+		$this->db->select('max(score) as max');
+		$result = $this->db->get_where('userSkills', array('skillID' => $skillID))->result_array()[0];
+		return $result;
+	}
+
+
 
 
 ////////////////////////////////////////////////////////////
