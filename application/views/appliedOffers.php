@@ -38,6 +38,28 @@
           <div class="clearfix"></div>
           <hr>
           <div class="row">
+            <div class="col-md-12 mb-4">
+              <div class="row">
+
+              <div class="col-sm-12 mb-4">
+                <form class="form-inline" style="float: right;">
+                  <label style="margin: 5px;"><b>Display Offers</b></label>
+                  <br>
+                  <select class="form-control mb-2 mr-sm-2">
+                    <option>All Applied Offers</option>
+                    <option>Offers, with Selected status</option>
+                    <option>Offers, with Short-Listed status</option>
+                    <option>Offers, with Rejected status</option>
+                  </select>
+
+                  <button type="submit" class="btn btn-primary mb-2">Display</button>
+                </form>
+              </div>
+            </div>
+            </div>
+          </div>
+
+          <div class="row">
 
             <div class="col-md-12 mb-4">
 

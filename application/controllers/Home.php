@@ -326,6 +326,30 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function availableOffers(){
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "Available Offers";
+				$this->data['activePage'] = "20";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->load->view('availableOffers', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
+	}
+
+	public function offer(){
+		$this->data['pageTitle'] = "Offer";
+		$this->data['activePage'] = "0";
+		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+		$this->load->view('offer', $this->data);
+	}
+
 	public function aboutUs(){
 		$this->data['pageTitle'] = "About Us";
 		$this->data['activePage'] = "0";

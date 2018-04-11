@@ -59,7 +59,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#filters">Filter Applicants</button>
               </div>
               <div class="col-sm-7 mb-4">
-                <form class="form-inline">
+                <form class="form-inline" style="float: right;">
                   <label style="margin: 5px;"><b>Display Applicants</b></label>
                   <br>
                   <select class="form-control mb-2 mr-sm-2">
