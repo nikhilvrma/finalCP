@@ -40,18 +40,21 @@
           <div class="row">
 
             <div class="col-md-12 mb-4">
-
+              <?php if(!empty($offers)){
+              foreach($offers as $offer){
+                var_dump($offer);
+                ?>
               <div class="card">
                 <h6 class="card-header cardheader">Good Morning, this is a Test Job Offer to count number of Characters, Good Morning, this is a Test Job Offer to count number of Characters</h6>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Offer Type: </b>Job Offer</p>
+                      <p class="card-text"><b>Offer Type: </b><?php if($offer['offerType'] == 1){echo "Job Type";}else{echo "Internship Offer";}?></p>
                       <p class="card-text"><b>Offer Location(s): </b>New Delhi, Gurgaon</p>
                     </div>
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Application Deadline: </b>1st April 2018</p>
-                      <p class="card-text"><b>Joining Date: </b>25th March 2018</p>
+                      <p class="card-text"><b>Application Deadline: </b><?= $offer['applicationDeadline']?></p>
+                      <p class="card-text"><b>Joining Date: </b><?= $offer['joiningDate']?></p>
                     </div>
                     <div class="col-md-12 mb-4">
                       <p class="card-text"><b>Skills Required: </b>General Aptitude, PHP, HTML, CSS</p>
@@ -66,7 +69,7 @@
                   </small>
                 </div>
               </div>
-
+              <?php }}else{ echo "<center>You have added no Offers Yet.</center>"; } ?>
             </div>
 
             <div class="col-md-12 mb-4">

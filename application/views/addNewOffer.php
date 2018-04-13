@@ -107,7 +107,7 @@
                 </div>
               </div>
             
-               <div class="col-md-6 control-group form-group compensation" <?php if(isset($redirect) && $redirect['compensationType'] == 1){ }else{ echo 'style ="display: none"';}?>>
+               <div class="col-md-6 control-group form-group compensation" <?php if(isset($redirect) && $redirect['compensationType'] != 1){ echo 'style ="display: none"'; }else{ }?>>
                 <div class="controls">
                   <label><b><span class ="reimburse">Compensation</span>:</b></label>
                   <input type="text" class="form-control" name="compensation" <?php if(isset($redirect)){ echo "value = ".$redirect['compensation'];}?>>

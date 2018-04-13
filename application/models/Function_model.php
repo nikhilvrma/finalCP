@@ -389,8 +389,21 @@ class Function_model extends CI_Model {
 
 	public function getAddedOffers($userID){
 		$this->db->select('offerID, offerTitle, applicationDeadline, joiningDate');
-		$result = $this->db->get_where('offers', array('userID'=>$userID))->result_array();
+		$result = $this->db->get_where('offers', array('addedBy'=>$userID))->result_array();
 	}
 
+	public function getOfferSkills($offerID){
+		$this->db->select('offerSkills.skillID, skills.skill_name');
+		$this->db->join('skills', 'offerSkills.skillID = skills.skill_id');
+		$result = $this->db->get_where('offerSkills', array('offerID' => $offerID))->result_array();
+		return $result;
+	}
+
+	public function getOfferLocations($offerID){
+		$this->db->select('offerLocation.cityID, indianCities.city, indianCities.state');
+		$this->db->join('skills', 'offerLocation.cityID = indianCities.cityID');
+		$result = $this->db->get_where('offerLocation', array('offerID' => $offerID))->result_array();
+		return $result;
+	}
 ///////////////////////////////////////////////////////////
 }

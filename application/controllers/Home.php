@@ -266,7 +266,16 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "My Added Offers";
 				$this->data['activePage'] = "8";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-				$this->data['offers'] = $this->function_lib->getAddedOffers($_SESSION['user_data']['userID']);
+				$offers = $this->function_lib->getAddedOffers($_SESSION['user_data']['userID']);
+				$this->data['offers'] = $offers;
+				if(!empty($offers))
+				foreach ($offers as $key => $offer) {
+					$this->data['offerSkills'][$offer['offerID']] = $this->function_lib->getOfferSkills($offer['offerID']);
+					$this->data['offerLocations'][$offer['offerID']] = $this->function_lib->getOfferLocations($offer['offerID']);
+				}else{
+					$this->data['offerSkills'] = array();
+					$this->data['offerLocations'] = array();
+				}
 				$this->load->view('myAddedOffers', $this->data);
 			}
 			else{

@@ -266,5 +266,16 @@ class Function_lib {
 		return $CI->function->getAddedOffers($userID);
 	}
 
+	public function getOfferSkills($offerID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getOfferSkills($offerID);
+	}
+
+	public function getOfferLocations($offerID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getOfferLocations($offerID);
+	}
 
 }
