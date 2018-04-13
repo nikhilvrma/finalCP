@@ -751,7 +751,7 @@ class Functions extends CI_Controller {
 		$minCompensation = '';
 		$maxCompensation = '';
 		$workHome = '';
-		$location = '';
+		$selectedLocations = '';
 		$partTime = '';
 		$duration = '';
 		$applicantType = '';
@@ -790,8 +790,8 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('workHome')){
 			$workHome = $x;
 		}
-		if($x = $this->input->post('location')){
-			$location = $x;
+		if($x = $this->input->post('selectedLocations')){
+			$selectedLocations = $x;
 		}
 		if($x = $this->input->post('partTime')){
 			$partTime = $x;
@@ -817,7 +817,7 @@ class Functions extends CI_Controller {
 			'minCompensation' => $minCompensation,
 			'maxCompensation' => $maxCompensation,
 			'workHome' => $workHome,
-			'location'=> $location,
+			'location'=> $selectedLocations,
 			'partTime' => $partTime,
 			'duration' => $duration,
 			'applicantType' => $applicantType,
@@ -877,9 +877,9 @@ class Functions extends CI_Controller {
 				$data['maxCompensation'] = $maxCompensation;
 
 			}
-
+			// var_dump($selectedLocations);die;
 			if($workHome == 2){
-				if($location == 0){
+				if($selectedLocations == ''){
 					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.1','color'=>'red'));
 					redirect(base_url('add-new-offer'));
 				}
@@ -934,20 +934,27 @@ class Functions extends CI_Controller {
 						$result1 = true;
 					}
 					if($workHome == 2){
-						$dats = array(
-							'offerID' => $offerID,
-							'cityID' => $location
-						);
-						$result2 = $this->function_lib->addOfferLocation($dats);
+						$locations = json_decode($selectedLocations);
+						// var_dump($locations);
+						$i = 0;
+						foreach ($locations as $key => $value) {
+							$dats[$i]['offerID'] = $offerID;
+							$dats[$i]['cityID'] = $value->locationID;
+							$i++;
+						}
+						$result2 = $this->function_lib->addOfferlocation($dats);
 					}else{
 						$result2 = true;
-					}	
+					}
 					if($result1 && $result2){
 						$this->session->set_flashdata('message', array('content'=>'Offer added Successfully.','color'=>'green'));
 						redirect(base_url('add-new-offer'));
+					}else{
+						$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.1','color'=>'red'));
+					redirect(base_url('add-new-offer'));
 					}
 				}else{
-					$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.2','color'=>'red'));
 					redirect(base_url('add-new-offer'));
 				}
 			}

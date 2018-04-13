@@ -355,7 +355,6 @@ class Function_model extends CI_Model {
 	public function addOfferSkills($data){
 		// var_dump($data);
 		foreach ($data as $key => $value) {
-			var_dump($value);
 			if($this->db->insert('offerSkills', $value)){
 				continue;
 			}else{
@@ -372,9 +371,14 @@ class Function_model extends CI_Model {
 	}
 
 	public function addOfferLocation($data){
-			if(!$this->db->insert('offerLocation', $data)){
+		foreach ($data as $key => $value) {
+			if($this->db->insert('offerLocation', $value)){
+				continue;
+			}else{
 				$c = 1;
+				break;
 			}
+		}
 		if(isset($c) && $c == 1){
 			return false;
 		}else{

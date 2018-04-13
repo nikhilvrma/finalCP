@@ -246,6 +246,9 @@ class Home extends CI_Controller {
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->data['skills'] = $this->function_lib->getSkills();
 				$this->data['locations'] = $this->function_lib->getAllLocations();
+				if(isset($_SESSION['redirect']))
+					$this->data['redirect'] = $_SESSION['redirect'];
+				unset($_SESSION['redirect']);
 				$this->load->view('addNewOffer', $this->data);
 			}
 			else{
