@@ -361,7 +361,7 @@ class Function_model extends CI_Model {
 		$this->db->order_by('offerID', 'DESC');
 		return $this->db->get_where('offers', array('addedBy'=> $userID), 1)->result_array()[0]['offerID'];
 	}
-	
+
 
 	public function addOfferSkills($data){
 		// var_dump($data);
@@ -401,7 +401,7 @@ class Function_model extends CI_Model {
 	public function getAddedOffers($userID, $offset, $limit){
 		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate');
 		$this->db->limit($limit, $offset);
-		$result = $this->db->get_where('offers', array('addedBy'=>$userID))->result_array();	
+		$result = $this->db->get_where('offers', array('addedBy'=>$userID))->result_array();
 		// var_dump($this->db->last_query()); die;,
 		return $result;
 	}
@@ -435,4 +435,10 @@ class Function_model extends CI_Model {
 		return $result;
 	}
 ///////////////////////////////////////////////////////////
+
+
+	public function contactUs($data){
+		return $this->db->insert('contactMessages', $data);
+	}
+
 }
