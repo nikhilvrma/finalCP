@@ -102,6 +102,8 @@ class Functions extends CI_Controller {
 							);
 							$this->function_lib->updateGeneralDetails($data, $userID);
 						}else{
+							$userID = $this->function_lib->getUserData($email);
+							$userID = $userID[0]['userID'];
 							$this->function_lib->insertCompanyData($userID);
 						}
 
@@ -950,6 +952,7 @@ class Functions extends CI_Controller {
 						$result2 = true;
 					}
 					if($result1 && $result2){
+						unset($_SESSION['redirect']);
 						$this->session->set_flashdata('message', array('content'=>'Offer added Successfully.','color'=>'green'));
 						redirect(base_url('add-new-offer'));
 					}else{

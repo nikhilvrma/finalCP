@@ -282,15 +282,20 @@ class Home extends CI_Controller {
 				$this->data['offers'] = $offers;
 				if(!empty($offers)){
 				foreach ($offers as $key => $offer) {
-					if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID']))
+					if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID'])){
 						$this->data['offerSkills'][$offer['offerID']] = $offerSkills;
-					else
-						$this->data['offerSkills'] = array();
-
-					if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID']))
-						$this->data['offerLocations'][$offer['offerID']] = $offerLocations;
+						
+					}
 					else{
-						$this->data['offerLocations'] = array();
+						$this->data['offerSkills'][$offer['offerID']] = array();
+					}
+
+					if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID'])){
+						$this->data['offerLocations'][$offer['offerID']] = $offerLocations;
+						
+					}
+					else{
+						$this->data['offerLocations'][$offer['offerID']] = array();
 					}
 				}	
 				}

@@ -19,7 +19,7 @@ class Function_model extends CI_Model {
 		return $this->db->get('indianCities')->result_array();
 	}
 
-	public function InsertCompanyData($userID){
+	public function insertCompanyData($userID){
 		$data = array(
 			'userID' => $userID
 		);

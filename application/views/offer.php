@@ -69,6 +69,12 @@
               </div>
               <br>
               <div class="col-md-12 mb-4" style="font-size: 14px;">
+
+                <p>
+                <h6><b>Offer Title</b></h6>
+                  <?= $offerDetails[0]['offerTitle' ]?>
+                </p>
+
                 <p>
                 <h6><b>Offer Description</b></h6>
                   <?= $offerDetails[0]['offerDescription']?>
@@ -77,24 +83,24 @@
                 <p>
                 <h6><b>Skill(s) Required</b></h6>
                   <ul>
-                    <?php foreach($offerSkills as $skills){ ?>
+                    <?php if(!empty($offerSkills))foreach($offerSkills as $skills){ ?>
                     <li><?= $skills['skill_name']?></li>
-                    <?php } ?>
+                    <?php }else echo "No Skills Required"; ?>
                   </ul>
                 </p>
 
                 <p>
                 <h6><b>Location(s)</b></h6>
                   <ul>
-                    <?php foreach($offerLocations as $locations){ ?>
+                    <?php if(!empty($offerLocations))foreach($offerLocations as $locations){ ?>
                     <li><?= $locations['city'].', '.$locations['state'] ?></li>
-                    <?php } ?>
+                    <?php }else echo "Work From Home"; ?>
                   </ul>
                 </p>
 
                 <p>
                 <h6><b>Compensation Offered</b></h6>
-                <?php if(isset($offerDetails[0]['compensationType'])){?>
+                <?php if(isset($offerDetails[0]['compensation'])){?>
                   INR <?= $offerDetails[0]['compensation'] ?>/- per month
                 <?php }else if(isset($offerDetails[0]['minCompensation']) && isset($offerDetails[0]['maxCompensation'])){?>
                   INR <?= $offerDetails[0]['minCompensation'].' - '. $offerDetails[0]['maxCompensation'] ?>/- per month
