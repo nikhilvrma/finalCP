@@ -70,7 +70,8 @@ class Home extends CI_Controller {
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->data['generalData'] = $this->function_lib->getUserData($_SESSION['user_data']['email']);
 				$this->data['generalData'] = $this->data['generalData'][0];
-				$this->data['companyData'] = $this->function_lib->getCompanyData($this->data['generalData']['userID']);
+				if($_SESSION['user_data']['accountType'] == 2)
+					$this->data['companyData'] = $this->function_lib->getCompanyData($this->data['generalData']['userID']);
 				$this->data['locations'] = $this->function_lib->getAllLocations();
 				$this->data['preferredLocation'] = $this->function_lib->getPreferredLocations($_SESSION['user_data']['userID']);
 				$this->load->view('generalDetails', $this->data);
