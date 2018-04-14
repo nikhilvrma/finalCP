@@ -29,6 +29,16 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function dextryx(){
+		if($this->function_lib->auth()){
+			redirect(base_url('general-details'));
+		}
+		else{
+			$this->data['pageTitle'] = "CampusPuppy";
+			$this->load->view('dextryx', $this->data);
+		}
+	}
+
 	public function emailer(){
 			$this->load->view('emailers/offers', $this->data);
 	}
@@ -434,7 +444,7 @@ class Home extends CI_Controller {
 			$this->data['skillIncorrect'][$value['skillID']] = $this->skill_lib->getIncorrectResponses($userID, $value['skillID']);
 			$this->data['skillMax'][$value['skillID']] = $this->skill_lib->getSkillMax($value['skillID']);
 		}
-		
+
 		$this->load->view('report', $this->data);
 	}
 

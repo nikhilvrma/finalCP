@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 
+$route['dextryx'] = 'home/dextryx';
 $route['about-us'] = 'home/aboutUs';
 $route['terms-and-conditions'] = 'home/termsAndConditions';
 $route['privacy-policy'] = 'home/privacyPolicy';
