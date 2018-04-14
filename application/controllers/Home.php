@@ -351,6 +351,25 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Applied Offers";
 				$this->data['activePage'] = "10";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$offers = $this->function_lib->getAllOffers(0,10);
+				$this->data['hasMore'] = $this->function_lib->hasMoreUserOffers(10,10);
+				$this->data['offers'] = $offers;
+				if(!empty($offers)){
+				foreach ($offers as $key => $offer) {
+					if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID'])){
+						$this->data['offerSkills'][$offer['offerID']] = $offerSkills;
+					}
+					else{
+						$this->data['offerSkills'][$offer['offerID']] = array();
+					}
+					if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID'])){
+						$this->data['offerLocations'][$offer['offerID']] = $offerLocations;
+					}
+					else{
+						$this->data['offerLocations'][$offer['offerID']] = array();
+					}
+				}	
+				}
 				$this->load->view('appliedOffers', $this->data);
 			}
 			else{
@@ -368,6 +387,25 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Available Offers";
 				$this->data['activePage'] = "20";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$offers = $this->function_lib->getAllOffers(0,10);
+				$this->data['hasMore'] = $this->function_lib->hasMoreUserOffers(10,10);
+				$this->data['offers'] = $offers;
+				if(!empty($offers)){
+				foreach ($offers as $key => $offer) {
+					if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID'])){
+						$this->data['offerSkills'][$offer['offerID']] = $offerSkills;
+					}
+					else{
+						$this->data['offerSkills'][$offer['offerID']] = array();
+					}
+					if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID'])){
+						$this->data['offerLocations'][$offer['offerID']] = $offerLocations;
+					}
+					else{
+						$this->data['offerLocations'][$offer['offerID']] = array();
+					}
+				}	
+				}
 				$this->load->view('availableOffers', $this->data);
 			}
 			else{
@@ -383,7 +421,7 @@ class Home extends CI_Controller {
 		$this->data['pageTitle'] = "Offer";
 		$this->data['activePage'] = "0";
 		$this->data['offerDetails'] = $this->function_lib->getOfferDetails($offerID);
-		$this->data['employerDetails'] = $this->function_lib->getCompanyData($_SESSION['user_data']['userID']);
+		$this->data['employerDetails'] = $this->function_lib->getCompanyData($this->data['offerDetails'][0]['addedBy']);
 		if(empty($this->function_lib->getOfferDetails($offerID))){
 			redirect(base_url('xyz'));
 		}

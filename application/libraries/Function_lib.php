@@ -285,6 +285,18 @@ class Function_lib {
 		return $CI->function->hasMoreOffers($userID, $limit, $offset);
 	}
 
+	public function getAllOffers($offset, $limit){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getAllOffers($offset, $limit);
+	}
+
+	public function hasMoreUserOffers($limit, $offset){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->hasMoreUserOffers($limit, $offset);
+	}
+
 	public function getOfferSkills($offerID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');

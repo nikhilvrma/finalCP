@@ -421,6 +421,25 @@ class Function_model extends CI_Model {
 		}
 	}
 
+	public function getAllOffers($offset, $limit){
+		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate');
+		$this->db->limit($limit, $offset);
+		$result = $this->db->get('offers')->result_array();	
+		// var_dump($this->db->last_query()); die;,
+		return $result;
+	}
+
+	public function hasMoreUserOffers($limit, $offset){
+		$this->db->limit($limit, $offset);
+		$result = $this->db->get_where('offers');
+		if($result->num_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
 	public function getOfferSkills($offerID){
 		$this->db->select('offerSkills.skillID, skills.skill_name');
 		$this->db->join('skills', 'offerSkills.skillID = skills.skillID');

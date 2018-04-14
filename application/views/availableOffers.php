@@ -37,7 +37,7 @@
           <h3 class="mt-4 mb-3" style="float: right;"><?php echo $pageTitle; ?></h3>
           <div class="clearfix"></div>
           <hr>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-12 mb-4">
               <div class="row">
 
@@ -58,42 +58,49 @@
               </div>
             </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="row">
 
             <div class="col-md-12 mb-4">
-
+              <?php if(!empty($offers)){
+              foreach($offers as $offer){
+                ?>
               <div class="card">
-                <h6 class="card-header cardheader">Good Morning, this is a Test Job Offer to count number of Characters, Good Morning, this is a Test Job Offer to count number of Characters</h6>
+                <h6 class="card-header cardheader"><?= $offer['offerTitle']?></h6>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Offer Type: </b>Job Offer</p>
-                      <p class="card-text"><b>Offer Location(s): </b>New Delhi, Gurgaon</p>
+                      <p class="card-text"><b>Offer Type: </b><?php if($offer['offerType'] == 1){echo "Job Offer";}else{echo "Internship Offer";}?></p>
+                      <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}?>
+                      <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
                     </div>
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Status: </b><label style="color: green;"><b>Selected</b></label></p>
-                      <p class="card-text"><b>Joining Date: </b>25th March 2018</p>
+                      <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
+                      <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                     </div>
                     <div class="col-md-12 mb-4">
-                      <p class="card-text"><b>Skills Required: </b>General Aptitude, PHP, HTML, CSS</p>
-                      <p class="card-text"><b>Message from the Employer: </b>None</p>
+                      <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}?>
+                      <p class="card-text"><b>Skills Required: </b><?= $skill?></p>
                     </div>
                   </div>
 
                 </div>
                 <div class="card-footer">
                   <small class="text-muted" style="float: right;">
-                    <a class="btn btn-primary" style="color: white; margin: 10px;">View Offer</a>
+                    <a class="btn btn-primary" href = "<?= base_url('editOffer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Edit Offers</a>
+                    <a class="btn btn-primary" href = "<?= base_url('accessApplicants/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Access Applicants</a>
+                    <a class="btn btn-primary" href = "<?= base_url('offer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">View Offer</a>
                   </small>
                 </div>
               </div>
 
+              <?php }}else{ echo "<center>You have added no Offers Yet.</center>"; } ?>
+              <div class ="offerCont"></div>
             </div>
 
             <div class="col-md-12 mb-4">
-              <center><a class="btn btn-primary btn-lg" style="color: white;">Load More</a></center>
+              <center><a class="btn btn-primary btn-lg loadMore" style="color: white;<?php if(!$hasMore){ echo 'display: none'; };?>">Load More</a></center>
             </div>
 
           </div>
