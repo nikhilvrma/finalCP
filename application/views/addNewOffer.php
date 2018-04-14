@@ -110,7 +110,7 @@
                <div class="col-md-6 control-group form-group compensation" <?php if(isset($redirect) && $redirect['compensationType'] != 1){ echo 'style ="display: none"'; }else{ }?>>
                 <div class="controls">
                   <label><b><span class ="reimburse">Compensation</span>:</b></label>
-                  <input type="text" class="form-control" name="compensation" <?php if(isset($redirect)){ echo "value = ".$redirect['compensation'];}?>>
+                  <input type="text" class="form-control" name="compensation" <?php if(isset($redirect)){ echo "value = ".$redirect['compensation'];}?> plcaeholder = "per Month">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -119,14 +119,14 @@
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
                   <label><b>Minimum <span class ="reimburse">Compensation:</span></b></label>
-                  <input type="text" class="form-control" name="minCompensation" <?php if(isset($redirect)){ echo "value = ".$redirect['minCompensation'];}?>>
+                  <input type="text" class="form-control" name="minCompensation" <?php if(isset($redirect)){ echo "value = ".$redirect['minCompensation'];}?> plcaeholder = "per Month">
                   <p class="help-block"></p>
                 </div>
               </div>
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
                   <label><b>Maximum <span class ="reimburse">Compensation:</span></b></label>
-                  <input type="text" class="form-control" name="maxCompensation" <?php if(isset($redirect)){ echo "value = ".$redirect['maxCompensation'];}?>>
+                  <input type="text" class="form-control" name="maxCompensation" <?php if(isset($redirect)){ echo "value = ".$redirect['maxCompensation'];}?> plcaeholder = "per Month">
                   <p class="help-block"></p>
                 </div>
               </div>

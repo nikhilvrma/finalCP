@@ -32,6 +32,18 @@ class Function_lib {
 			return 1;
 		}
 		return 0;
+	}	
+
+	public function insertCompanyData($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->insertCompanyData($userID);
+	}
+
+	public function getCompanyData($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getCompanyData($userID);
 	}
 
 	public function getPreferredLocations($userID){
@@ -40,6 +52,7 @@ class Function_lib {
 		return $CI->function->getPreferredLocations($userID);
 	}
 
+	
 	public function getUserGeneralData($userID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -260,16 +273,28 @@ class Function_lib {
 		return $CI->function->addOfferLocation($data);
 	}
 
-	public function getAddedOffers($userID){
+	public function getAddedOffers($userID, $offset, $limit){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getAddedOffers($userID);
+		return $CI->function->getAddedOffers($userID, $offset, $limit);
+	}
+
+	public function hasMoreOffers($userID, $limit, $offset){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->hasMoreOffers($userID, $limit, $offset);
 	}
 
 	public function getOfferSkills($offerID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->getOfferSkills($offerID);
+	}
+
+	public function getOfferDetails($offerID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getOfferDetails($offerID);
 	}
 
 	public function getOfferLocations($offerID){

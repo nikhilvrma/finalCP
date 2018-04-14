@@ -19,6 +19,17 @@ class Function_model extends CI_Model {
 		return $this->db->get('indianCities')->result_array();
 	}
 
+	public function InsertCompanyData($userID){
+		$data = array(
+			'userID' => $userID
+		);
+		return $this->db->insert('employers',$data);
+	}
+
+	public function getCompanyData($userID){
+		return $this->db->get_where('employers', array('userID' => $userID))->result_array()[0];
+	}
+
 	public function getColleges(){
 		$this->db->order_by('college', 'ASC');
 		return $this->db->get_where('colleges', array('active' => 1))->result_array();
@@ -109,21 +120,21 @@ class Function_model extends CI_Model {
 
 	public function updateCompanyDetails($data, $userID){
 		$this->db->where('userID', $userID);
-		return $this->db->update('employerUsers', $data);
+		return $this->db->update('employers', $data);
 	}
 
 	public function updateCompanyLogo($userId, $logo){
 		$CI =& get_instance();
 		$_SESSION['user_data']['companyLogo'] = $image['companyLogo'];
 		$this->db->where('userID', $userId);
-		return $this->db->update('employerUsers', $logo);
+		return $this->db->update('employers', $logo);
 	}
 
 	public function getFilename($type, $userId){
 		if($type == 'company'){
 			$this->db->select('companyName');
 			$this->db->where('userID', $userId);
-			$result = $this->db->get('employerUsers')->result_array();
+			$result = $this->db->get('employers')->result_array();
 			$result = $result[0]['companyName'];
 		}else{
 			$this->db->select('name');
@@ -387,21 +398,39 @@ class Function_model extends CI_Model {
 
 	}
 
-	public function getAddedOffers($userID){
-		$this->db->select('offerID, offerTitle, applicationDeadline, joiningDate');
-		$result = $this->db->get_where('offers', array('addedBy'=>$userID))->result_array();
+	public function getAddedOffers($userID, $offset, $limit){
+		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate');
+		$this->db->limit($limit, $offset);
+		$result = $this->db->get_where('offers', array('addedBy'=>$userID))->result_array();	
+		// var_dump($this->db->last_query()); die;,
+		return $result;
+	}
+
+	public function getOfferDetails($offerID){
+		$result = $this->db->get_where('offers', array('offerID'=>$offerID))->result_array();
+		return $result;
+	}
+
+	public function hasMoreOffers($userID, $limit, $offset){
+		$this->db->limit($limit, $offset);
+		$result = $this->db->get_where('offers', array('addedBy'=>$userID));
+		if($result->num_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public function getOfferSkills($offerID){
 		$this->db->select('offerSkills.skillID, skills.skill_name');
-		$this->db->join('skills', 'offerSkills.skillID = skills.skill_id');
+		$this->db->join('skills', 'offerSkills.skillID = skills.skillID');
 		$result = $this->db->get_where('offerSkills', array('offerID' => $offerID))->result_array();
 		return $result;
 	}
 
 	public function getOfferLocations($offerID){
 		$this->db->select('offerLocation.cityID, indianCities.city, indianCities.state');
-		$this->db->join('skills', 'offerLocation.cityID = indianCities.cityID');
+		$this->db->join('indianCities', 'offerLocation.cityID = indianCities.cityID');
 		$result = $this->db->get_where('offerLocation', array('offerID' => $offerID))->result_array();
 		return $result;
 	}

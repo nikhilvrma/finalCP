@@ -60,6 +60,7 @@ class Home extends CI_Controller {
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->data['generalData'] = $this->function_lib->getUserData($_SESSION['user_data']['email']);
 				$this->data['generalData'] = $this->data['generalData'][0];
+				$this->data['companyData'] = $this->function_lib->getCompanyData($this->data['generalData']['userID']);
 				$this->data['locations'] = $this->function_lib->getAllLocations();
 				$this->data['preferredLocation'] = $this->function_lib->getPreferredLocations($_SESSION['user_data']['userID']);
 				$this->load->view('generalDetails', $this->data);
@@ -266,15 +267,22 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "My Added Offers";
 				$this->data['activePage'] = "8";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-				$offers = $this->function_lib->getAddedOffers($_SESSION['user_data']['userID']);
+				$offers = $this->function_lib->getAddedOffers($_SESSION['user_data']['userID'],0,10);
+				$this->data['hasMore'] = $this->function_lib->hasMoreOffers($_SESSION['user_data']['userID'], 10,10);
 				$this->data['offers'] = $offers;
-				if(!empty($offers))
+				if(!empty($offers)){
 				foreach ($offers as $key => $offer) {
-					$this->data['offerSkills'][$offer['offerID']] = $this->function_lib->getOfferSkills($offer['offerID']);
-					$this->data['offerLocations'][$offer['offerID']] = $this->function_lib->getOfferLocations($offer['offerID']);
-				}else{
-					$this->data['offerSkills'] = array();
-					$this->data['offerLocations'] = array();
+					if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID']))
+						$this->data['offerSkills'][$offer['offerID']] = $offerSkills;
+					else
+						$this->data['offerSkills'] = array();
+
+					if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID']))
+						$this->data['offerLocations'][$offer['offerID']] = $offerLocations;
+					else{
+						$this->data['offerLocations'] = array();
+					}
+				}	
 				}
 				$this->load->view('myAddedOffers', $this->data);
 			}
@@ -355,9 +363,25 @@ class Home extends CI_Controller {
 		}
 	}
 
-	public function offer(){
+	public function offer($offerID){
 		$this->data['pageTitle'] = "Offer";
 		$this->data['activePage'] = "0";
+		$this->data['offerDetails'] = $this->function_lib->getOfferDetails($offerID);
+		$this->data['employerDetails'] = $this->function_lib->getCompanyData($_SESSION['user_data']['userID']);
+		if(empty($this->function_lib->getOfferDetails($offerID))){
+			redirect(base_url('xyz'));
+		}
+		if($offerSkills = $this->function_lib->getOfferSkills($offerID))
+			$this->data['offerSkills'] = $offerSkills;
+		else
+			$this->data['offerSkills'] = array();
+
+		if($offerLocations = $this->function_lib->getOfferLocations($offerID))
+			$this->data['offerLocations'] = $offerLocations;
+		else{
+			$this->data['offerLocations'] = array();
+		}
+
 		$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 		$this->load->view('offer', $this->data);
 	}
