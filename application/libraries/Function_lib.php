@@ -32,7 +32,7 @@ class Function_lib {
 			return 1;
 		}
 		return 0;
-	}	
+	}
 
 	public function insertCompanyData($userID){
 		$CI = &get_instance();
@@ -52,7 +52,7 @@ class Function_lib {
 		return $CI->function->getPreferredLocations($userID);
 	}
 
-	
+
 	public function getUserGeneralData($userID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -106,14 +106,14 @@ class Function_lib {
 		$CI->load->model('function_model','function');
 		return $CI->function->getColleges();
 	}
-	
+
 
 	public function getCourses(){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->getCourses();
 	}
-	
+
 
 	public function getAllLocations(){
 		$CI = &get_instance();
@@ -313,6 +313,12 @@ class Function_lib {
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->getOfferLocations($offerID);
+	}
+
+	public function contactUs($data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->contactUs($data);
 	}
 
 }

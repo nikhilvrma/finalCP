@@ -67,7 +67,7 @@
 
           <hr>
 
-          <form method="post" action="<?php echo base_url('functions/updateGeneralDetails'); ?>">
+          <form method="post" action="<?php echo base_url('functions/contactUs'); ?>">
 
             <div class="row">
 
@@ -76,7 +76,7 @@
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label><b>Full Name:</b></label>
-                  <input type="text" class="form-control" placeholder="Full Name">
+                  <input type="text" class="form-control" name="name" required placeholder="Full Name">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -84,7 +84,7 @@
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
                   <label><b>E-Mail Address:</b></label>
-                  <input type="email" class="form-control" placeholder="E-Mail Address">
+                  <input type="email" class="form-control" name="email" required placeholder="E-Mail Address">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -92,7 +92,7 @@
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
                   <label><b>Mobile Number:</b></label>
-                  <input type="text" maxlength="10" class="form-control" placeholder="Mobile Number">
+                  <input type="text" maxlength="10" class="form-control" required name="mobile" placeholder="Mobile Number">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -100,7 +100,7 @@
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label><b>Message:</b></label>
-                  <textarea class="form-control" id="message"></textarea>
+                  <textarea class="form-control" name="message" required id="message"></textarea>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -108,7 +108,7 @@
 
             </div>
 
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" style="float: right;">Drop Us a Message</button>
+            <button type="submit" class="btn btn-primary" style="float: right;">Drop Us a Message</button>
           </form>
 
 

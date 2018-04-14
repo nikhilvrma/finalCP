@@ -123,6 +123,44 @@ class Functions extends CI_Controller {
 		}
 	}
 
+	public function contactUs(){
+		$name = "";
+		$mobile = "";
+		$email = "";
+		$message = "";
+		if($x = $this->input->post('name')){
+			$name = $x;
+		}
+		if($x = $this->input->post('email')){
+			$email = $x;
+		}
+		if($x = $this->input->post('mobile')){
+			$mobile = $x;
+		}
+		if($x = $this->input->post('message')){
+			$message = $x;
+		}
+		if($name == "" || $email == "" || $mobile == "" || $message == ""){
+			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.1','color'=>'red'));
+			redirect(base_url('contact-us'));
+		}
+		$data = array(
+			'name' => $name,
+			'email' => $email,
+			'mobile' => $mobile,
+			'message' => $message
+		);
+		$result = $this->function_lib->contactUs($data);
+		if($result){
+			$this->session->set_flashdata('message', array('content'=>'Thank You for connecting with us. CampusPuppy Team will get back to you soon.','color'=>'green'));
+			redirect(base_url('contact-us'));
+		}
+		else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url('contact-us'));
+		}
+	}
+
 
 	public function addEducation(){
 		$type = "";
@@ -241,7 +279,7 @@ class Functions extends CI_Controller {
 				'instituteID' => $college,
 				'courseID' => $courseBach
 				);
-				}	
+				}
 			}
 			if($type == 4){
 				if($college == ''|| $courseMast == ''){
@@ -341,7 +379,7 @@ class Functions extends CI_Controller {
 				'instituteID' => $college,
 				'courseID' => $courseBach
 				);
-				}	
+				}
 			}
 			if($type == 4){
 				if($college == ''|| $courseMast == ''){
@@ -420,7 +458,7 @@ class Functions extends CI_Controller {
 		if($companyName == "" || $position == "" || $role == "" || $startYear == "" || $startMonth == ""){
 			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 			redirect(base_url('work-experience'));
-		} 
+		}
 
 		if($endYear != "" && $endYear < $startYear){
 			$this->session->set_flashdata('message', array('content'=>'End date cannot be less than start date.','color'=>'red'));
@@ -473,7 +511,7 @@ class Functions extends CI_Controller {
 				'endMonth' => $endMonth,
 				'currentlyWorking' => $currentWorking,
 			);
-			}		
+			}
 			if($this->function_lib->updateWorkExperience($data, $_POST['id'])){
 				$this->session->set_flashdata('message', array('content'=>'Work Experience Added Successfully.','color'=>'green'));
 				redirect(base_url('work-experience'));
@@ -504,7 +542,7 @@ class Functions extends CI_Controller {
 				'currentlyWorking' => $currentWorking,
 				'supportingDocument' => $fileName
 			);
-			
+
 			if($this->function_lib->addWorkExperience($data, $id)){
 				$this->session->set_flashdata('message', array('content'=>'Work Experience Added Successfully.','color'=>'green'));
 				redirect(base_url('work-experience'));
@@ -521,7 +559,7 @@ class Functions extends CI_Controller {
 		if($month == 'February')
 			return 2;
 		if($month == 'March')
-			return 3;	
+			return 3;
 		if($month == 'April')
 			return 4;
 		if($month == 'May')
@@ -534,7 +572,7 @@ class Functions extends CI_Controller {
 			return 8;
 		if($month == 'September')
 			return 9;
-		if($month == 'October')	
+		if($month == 'October')
 			return 10;
 		if($month == 'November')
 			return 11;
@@ -585,7 +623,7 @@ class Functions extends CI_Controller {
 			}
 
 		}
-		
+
 		if($result){
 			$this->session->set_flashdata('message', array('content'=>'General Details successfully Updated','color'=>'green'));
 			redirect(base_url('general-details'));
@@ -621,7 +659,7 @@ class Functions extends CI_Controller {
 		}else{
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url('general-details'));
-		}	
+		}
 	}
 
 	public function deletePreferredLocation(){
@@ -632,7 +670,7 @@ class Functions extends CI_Controller {
 		}else{
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url('general-details'));
-		}	
+		}
 	}
 
 	public function deleteEducationalDetail(){
@@ -643,7 +681,7 @@ class Functions extends CI_Controller {
 		}else{
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url('educational-details'));
-		}	
+		}
 	}
 
 	public function deleteWorkExperience(){
@@ -654,7 +692,7 @@ class Functions extends CI_Controller {
 		}else{
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url('work-experience'));
-		}	
+		}
 	}
 
 	public function updateProfileImage(){
@@ -663,7 +701,7 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('profilePic')){
 			$profilePic = $x;
 		}
-		
+
 		if($profilePic == '' || $profilePic == 'data:,'){
 			$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
 			redirect(base_url('general-details'));
@@ -888,7 +926,7 @@ class Functions extends CI_Controller {
 					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.1','color'=>'red'));
 					redirect(base_url('add-new-offer'));
 				}
-			}	
+			}
 
 			if($offerType == 2){
 				if($duration == ''){
@@ -911,7 +949,7 @@ class Functions extends CI_Controller {
 				redirect(base_url('add-new-offer'));
 			}
 			else{
-				
+
 					$data['offerType'] = $offerType;
 					$data['offerTitle'] = $offerTitle;
 					$data['offerDescription'] = $offerDescription;
@@ -922,7 +960,7 @@ class Functions extends CI_Controller {
 					$data['partTime'] = $partTime;
 					$data['addedBy'] = $_SESSION['user_data']['userID'];
 					$data['skillRequired'] = $applicantType;
-				
+
 				$result = $this->function_lib->addOffer($data);
 				if($result){
 					$offerID = $this->function_lib->getCurrentOfferID($_SESSION['user_data']['userID']);
@@ -1021,11 +1059,11 @@ class Functions extends CI_Controller {
 				else{
 					$data['offerLocations'] = array();
 				}
-			}	
+			}
 			echo json_encode($data);
 		}else{
 			echo "false";
 		}
-	} 
+	}
 
 }
