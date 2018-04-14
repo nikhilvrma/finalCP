@@ -101,7 +101,10 @@ class Functions extends CI_Controller {
 								'resumeReferenceNumber' => $resumeReferenceNumber
 							);
 							$this->function_lib->updateGeneralDetails($data, $userID);
+						}else{
+							$this->function_lib->insertCompanyData($userID);
 						}
+
 						$this->session->set_flashdata('message', array('content'=>'Thank You for registering on CampusPuppy. Login Now to Continue','color'=>'green'));
 						redirect(base_url());
 					}
@@ -582,7 +585,7 @@ class Functions extends CI_Controller {
 		}
 		
 		if($result){
-			$this->session->set_flashdata('message', array('content'=>'Career Objective successfully Updated','color'=>'green'));
+			$this->session->set_flashdata('message', array('content'=>'General Details successfully Updated','color'=>'green'));
 			redirect(base_url('general-details'));
 		}
 		else{
@@ -681,18 +684,18 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('companyLogo')){
 			$companyLogo = $x;
 		}
-		var_dump($companyLogo); die;
+		// var_dump($companyLogo); die;
 		if($companyLogo == '' || $companyLogo == 'data:,'){
-			$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','class'=>'error'));
+			$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
 			redirect(base_url('general-details'));
 		}else{
             $result = $this->function_lib->uploadImage($companyLogo, 'company', 'assets/uploads/CompanyLogo/');
 			if($result){
-				$this->session->set_flashdata('message', array('content'=>'Logo Successfully changed.','class'=>'success'));
+				$this->session->set_flashdata('message', array('content'=>'Logo Successfully changed.','color'=>'green'));
 				redirect(base_url('general-details'));
 			}
 			else{
-				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','class'=>'error'));
+				$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
 				redirect(base_url('general-details'));
 			}
         }
@@ -996,5 +999,30 @@ class Functions extends CI_Controller {
 			$resumeReferenceNumber = "CPR".$userID;
 			return $resumeReferenceNumber;
 		}
+
+	public function getMoreAddedOffers(){
+		$offset = $this->input->get('offset');
+		$offset = $offset * 10;
+		$data['offers'] = $this->function_lib->getAddedOffers($_SESSION['user_data']['userID'],$offset, 10);
+		$data['hasMore'] = $this->function_lib->hasMoreOffers($_SESSION['user_data']['userID'],10, $offset+10);
+		$offers = $data['offers'];
+		if(!empty($offers)){
+			foreach ($offers as $key => $offer) {
+				if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID']))
+					$data['offerSkills'][$offer['offerID']] = $offerSkills;
+				else
+					$data['offerSkills'] = array();
+
+				if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID']))
+					$data['offerLocations'][$offer['offerID']] = $offerLocations;
+				else{
+					$data['offerLocations'] = array();
+				}
+			}	
+			echo json_encode($data);
+		}else{
+			echo "false";
+		}
+	} 
 
 }

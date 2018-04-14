@@ -155,9 +155,9 @@ class Skill_functions extends CI_Controller {
 				$this->updateInfo();
 				redirect('skills');
 			}
-			$this->session->set_flashdata('message', array('content'=>'Congratulations your score was '.$score.' and skill was Successfully added to your Profile.','color'=>'green'));
+			$this->session->set_flashdata('message', array('content'=>'Congratulations, you cleared the skill Test and your skill was Successfully added to your Profile.','color'=>'green'));
 		}else{
-			$this->session->set_flashdata('message', array('content'=>'Your score was '.$score.' and were unable to Clear the Skill Test. Better Luck Next Time.','color'=>'red'));
+			$this->session->set_flashdata('message', array('content'=>'Sorry, you were unable to clear the skill Test. Better Luck Next Time.','color'=>'red'));
 		} 
 		$this->updateInfo();
 		redirect('skills');

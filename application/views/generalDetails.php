@@ -137,7 +137,7 @@
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label><b>Company Name:</b></label>
-                  <input type="text" class="form-control" placeholder="Company Name">
+                  <input type="text" class="form-control" placeholder="Company Name" name="companyName" value = " <?php echo $companyData['companyName']; ?>">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -145,7 +145,7 @@
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label><b>Company Description:</b></label>
-                  <textarea class="form-control" id="companyDescription"></textarea>
+                  <textarea class="form-control" id="companyDescription" name = "companyDescription"> <?php echo $companyData['companyDescription']; ?></textarea>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -196,7 +196,11 @@
 
         <div class="col-md-5 mb-4">
           <b>Current Uploaded Company Logo</b>
+          <?php if(isset($companyData['companyLogo'])){?>
+            <center><img src="<?php echo $companyData['companyLogo'] ?>" style="width: 100%;"></center>
+          <?php }else{?>
           <p style="margin-top: 20px; font-size: 14px;">No Logo Uploaded Yet</p>
+          <?php }?>
         </div>
 
         <div class="col-md-7 mb-4">
@@ -240,7 +244,7 @@
           <div class="form-group">
             <div class = "inputPic">
               <label>New Profile Image:</label>
-              <input type="file" class="form__input updatedUserPic" id="updatedUserPic" required accept="image/*" name = img[]>
+              <input type="file" class="form__input updatedUserPic" id="updatedUserPic" required accept="image/*" name = img[] required>
               <input type="hidden" name="profilePic">
               <p class="help-block" style="font-size: 14px;">Formats allowed include .jpg, .jpeg, and .png<br>Maximum file size allowed in 4 MB</p>
             </div>
@@ -277,7 +281,7 @@
           <div class="form-group">
             <div class = "inputLogo">
               <label>New Company Logo:</label>
-             <input type="file" class="form__input logo" id="logo" required accept="image/*" name = img[]>
+             <input type="file" class="form__input logo" id="logo" required accept="image/*" name = img[] required>
               <input type="hidden" name="companyLogo">
               <p class="help-block" style="font-size: 14px;">Formats allowed include .jpg, .jpeg, and .png<br>Maximum file size allowed in 4 MB</p>
             </div>

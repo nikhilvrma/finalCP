@@ -77,7 +77,7 @@ $route['my-added-offers'] = 'home/myAddedOffers';
 $route['applied-offers'] = 'home/appliedOffers';
 $route['available-offers'] = 'home/availableOffers';
 
-$route['offer'] = 'home/offer';
+$route['offer/(:num)'] = 'home/offer/$1';
 
 $route['hiring-nucleus/applicants'] = 'home/applicants';
 $route['hiring-nucleus/compare-applicants'] = 'home/compareApplicants';

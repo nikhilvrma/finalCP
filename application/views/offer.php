@@ -33,7 +33,6 @@
         <?php echo $sidebar; ?>
 
         <div class="col-lg-9 mb-4">
-
           <h3 class="mt-4 mb-3" style="float: right;"><?php echo $pageTitle; ?></h3>
           <div class="clearfix"></div>
           <hr>
@@ -46,8 +45,8 @@
                   <div class="row">
                     <div class="col-md-6 mb-4">
                       <p class="card-text"><b>Company Name: </b></p>
-                      <p class="card-text">Campus Puppy Private Limited</p>
-                      <p class="card-text"><b>Website: </b>http://www.campuspuppy.com/</p>
+                      <p class="card-text"><?= $employerDetails['companyName']?></p>
+                      <!-- <p class="card-text"><b>Website: </b>http://www.campuspuppy.com/</p> -->
                     </div>
                     <div class="col-md-3 mb-4">
                       <p class="card-text"><b>Share: </b></p>
@@ -58,8 +57,10 @@
                       </p>
                     </div>
                     <div class="col-md-3 mb-4">
-                      <p class="card-text"><b>Application Deadline: </b>25th September 2018</p>
+                      <p class="card-text"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
+                      <?php if($_SESSION['user_data']['accountType'] == 1 ){?>
                       <p class="card-text"><a class="btn btn-primary" style="color: white;">Apply Now</a></p>
+                      <?php }?>
                     </div>
                   </div>
 
@@ -70,42 +71,44 @@
               <div class="col-md-12 mb-4" style="font-size: 14px;">
                 <p>
                 <h6><b>Offer Description</b></h6>
-                  <ul>
-                  	<li>Candidate should have very strong technical background in Core Java, Spring (MVC, IOC), struts Hibernate/JPA, Agile (scrum), Web services and Design Patterns</li>
-                  	<li>Expertise in J2EE technologies: Spring, Java, JSP, JSF, JDBC, Struts.</li>
-                  	<li>Experience in designing database schemas and writing fine-tuned queries.</li>
-                  	<li>Sound knowledge of Messaging tools like MQ/JMS/TIBCO/Mule ESB.&nbsp;</li>
-                  	<li>Exception handling, Collections API, Multithreading with latest concurrency package, Best practices&nbsp;(such as avoiding code duplication, avoiding hard coded values etc.), Design patterns</li>
-                  	<li>Good knowledge of OOPS concepts, Hibernate and Spring version 3.x 1, Spring Dependency Injection (IOC, MVC, JDBC, JMS, etc)</li>
-                  	<li>Good knowledge of Application Servers like Tomcat and Weblogic.&nbsp;</li>
-                  	<li>Good knowledge of Restful services and JDBC</li>
-                  	<li>Good knowledge of XML Parsers, XML Schema, JAXB</li>
-                  	<li>Experience in implementing JMS messaging services</li>
-                  </ul>
+                  <?= $offerDetails[0]['offerDescription']?>
                 </p>
+
                 <p>
                 <h6><b>Skill(s) Required</b></h6>
                   <ul>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                  	<li>General Aptitude</li>
+                    <?php foreach($offerSkills as $skills){ ?>
+                    <li><?= $skills['skill_name']?></li>
+                    <?php } ?>
                   </ul>
                 </p>
+
                 <p>
                 <h6><b>Location(s)</b></h6>
                   <ul>
-                    <li>Lucknow, Uttar Pradesh</li>
-                    <li>New Delhi</li>
+                    <?php foreach($offerLocations as $locations){ ?>
+                    <li><?= $locations['city'].', '.$locations['state'] ?></li>
+                    <?php } ?>
                   </ul>
                 </p>
+
                 <p>
                 <h6><b>Compensation Offered</b></h6>
-                  INR 3,00,000/- per annum
+                <?php if(isset($offerDetails[0]['compensationType'])){?>
+                  INR <?= $offerDetails[0]['compensation'] ?>/- per month
+                <?php }else if(isset($offerDetails[0]['minCompensation']) && isset($offerDetails[0]['maxCompensation'])){?>
+                  INR <?= $offerDetails[0]['minCompensation'].' - '. $offerDetails[0]['maxCompensation'] ?>/- per month
+                <?php }else{?>
+                  <?php echo("No Compensation Will be awarded.")?>
+                <?php } ?>
                 </p>
+
                 <p>
-                <h6><b>Internship Duration</b></h6>
-                  6 Months
-                </p>
+                <?php if($offerDetails[0]['offerType'] == 2){?>
+                  <h6><b>Internship Duration</b></h6>
+                    <?= $offerDetails[0]['duration'] ?> Months
+                  </p>
+                <?php } ?>
               </div>
 
             </div>
@@ -114,19 +117,19 @@
               <div class="col-md-4 mb-4" style="font-size: 14px;">
                 <p>
                 <h6><b>Joining Date</b></h6>
-                  1st November 2018
+                  <?= date_format(date_create($offerDetails[0]['joiningDate']), 'd-F-Y')?>
                 </p>
               </div>
               <div class="col-md-4 mb-4" style="font-size: 14px;">
                 <p>
                 <h6><b>Number of Opening(s)</b></h6>
-                  10
+                  <?= $offerDetails[0]['openings']?>
                 </p>
               </div>
               <div class="col-md-4 mb-4" style="font-size: 14px;">
                 <p>
                 <h6><b>Part Time Allowed</b></h6>
-                  No
+                  <?php if($offerDetails[0]['partTime'] == 1){echo "Yes";}else{echo "No";}?>
                 </p>
               </div>
 
