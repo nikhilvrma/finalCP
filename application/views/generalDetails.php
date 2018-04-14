@@ -165,7 +165,7 @@
 
           <div class="col-md-4 mb-4">
             <b>Current Profile Image</b>
-            <center><img src="<?php echo $_SESSION['user_data']['profileImage']; ?>" style="width: 100%;"></center>
+            <center><img src="<?php echo $_SESSION['user_data']['profileImage']; ?>" style="width: 100%; border-radius: 50%;"></center>
           </div>
 
           <div class="col-md-8 mb-4">
@@ -174,7 +174,7 @@
 
                 <br>
 
-                <div class="col-md-12 control-group form-group">
+                <div class="col-md-12 control-group form-group" style="margin-top: 35px;">
                   <div class="controls">
                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Update Profile Image</button>
                   </div>
@@ -318,7 +318,7 @@
             <div class="col-md-12 control-group form-group">
               <div class="controls">
                 <label>Location:</label>
-                <select name = "preferredLocation">
+                <select name = "preferredLocation" class="form-control">
                     <option value = "0"> </option>
                     <?php foreach($locations as $location){?>
                     <option value="<?= $location['cityID']?>"><?=$location['city']?>, <?=$location['state']?></option>
