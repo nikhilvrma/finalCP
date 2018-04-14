@@ -49,8 +49,23 @@
           <h3 class="mt-4 mb-3" style="float: right;"><?php echo $pageTitle; ?></h3>
           <div class="clearfix"></div>
           <hr>
-
-          <p style="font-size: 15px;">About Us, good Morning India</p>
+          <iframe width="100%" height="500px" src="https://www.youtube.com/embed/RWQysw51ktU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <p style="font-size: 15px; margin-top: 15px;">
+            CampusPuppy helps in eradicating the gap between employers and potential candidates, we, consider it a need in this era to connect an individual with a company, based on the individual’s specific skill set and expertise in it. Linking together a social community, we intend to provide a hassle free experience of recruitment to both students and employers, at the same time. The professionally socialized environment created by CampusPuppy allows candidates to take various tests to validate individualistic skills. Our sole intention is to bring out a genuine and relaxed recruitment environment and we believe that is what gives us our special place in the market.
+          </p>
+          <p><b>What do we do?</b></p>
+          <p>
+            <ul>
+              <li>Bridge the gap between companies and potential candidates.</li>
+              <li>Platform to test individualistic skill sets.</li>
+              <li>Help in providing dream jobs/internship.</li>
+              <li>Employers can post skill based jobs/internships.</li>
+              <li>Employers can save on time and resources, as only skilled candidates are provided.</li>
+              <li>Candidates can verify skill possessed by them and apply for internship/job according to the skills verified.</li>
+              <li>Candidates get a chance for self improvement and get recognised among their colleagues.</li>
+              <li>Hassle free and relaxed recruitment process.</li>
+            </ul>
+          </p>
 
 
         </div>
