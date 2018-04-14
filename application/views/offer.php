@@ -33,7 +33,6 @@
         <?php echo $sidebar; ?>
 
         <div class="col-lg-9 mb-4">
-          <?php var_dump($offerDetails);?>
           <h3 class="mt-4 mb-3" style="float: right;"><?php echo $pageTitle; ?></h3>
           <div class="clearfix"></div>
           <hr>
@@ -58,7 +57,7 @@
                       </p>
                     </div>
                     <div class="col-md-3 mb-4">
-                      <p class="card-text"><b>Application Deadline: </b><?php echo $offerDetails[0]['applicationDeadline']?></p>
+                      <p class="card-text"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
                       <?php if($_SESSION['user_data']['accountType'] == 1 ){?>
                       <p class="card-text"><a class="btn btn-primary" style="color: white;">Apply Now</a></p>
                       <?php }?>
@@ -118,7 +117,7 @@
               <div class="col-md-4 mb-4" style="font-size: 14px;">
                 <p>
                 <h6><b>Joining Date</b></h6>
-                  <?= $offerDetails[0]['joiningDate']?>
+                  <?= date_format(date_create($offerDetails[0]['joiningDate']), 'd-F-Y')?>
                 </p>
               </div>
               <div class="col-md-4 mb-4" style="font-size: 14px;">

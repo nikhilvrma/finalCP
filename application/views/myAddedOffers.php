@@ -53,8 +53,8 @@
                       <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
                     </div>
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Application Deadline: </b><?= $offer['applicationDeadline']?></p>
-                      <p class="card-text"><b>Joining Date: </b><?= $offer['joiningDate']?></p>
+                      <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
+                      <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                     </div>
                     <div class="col-md-12 mb-4">
                       <?php $skill = ""; $i = 1; foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}?>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="card-footer">
                   <small class="text-muted" style="float: right;">
-                    <a class="btn btn-primary" href = "<?= base_url('editOffer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Edit Applicants</a>
+                    <a class="btn btn-primary" href = "<?= base_url('editOffer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Edit Offers</a>
                     <a class="btn btn-primary" href = "<?= base_url('accessApplicants/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Access Applicants</a>
                     <a class="btn btn-primary" href = "<?= base_url('offer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">View Offer</a>
                   </small>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="card-footer">
                   <small class="text-muted" style="float: right;">
-                    <a class="btn btn-primary editOffer" href = "" target = "_blank" style="color: white; margin: 10px;">Edit Applicants</a>
+                    <a class="btn btn-primary editOffer" href = "" target = "_blank" style="color: white; margin: 10px;">Edit Offers</a>
                     <a class="btn btn-primary accessApplicants" href = "" target = "_blank" style="color: white; margin: 10px;">Access Applicants</a>
                     <a class="btn btn-primary viewOffer" href = "" target = "_blank" style="color: white; margin: 10px;">View Offer</a>
                   </small>
@@ -157,8 +157,20 @@
             container.find('.offerLocation').html(locations)
             container.find('.skillsReq').html(skills)
             container.find('.offerType').html(offerType)
-            container.find('.applicationDeadline').html(res.offers[i].applicationDeadline)
-            container.find('.joiningDate').html(res.offers[i].joiningDate)
+            date = new Date(res.offers[i].applicationDeadline)
+            month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            month = month[date.getMonth()];
+            day = date.getDate();
+            year = date.getFullYear();
+            date  = day+'-'+month+'-'+year; 
+            container.find('.applicationDeadline').html(date)
+            date = new Date(res.offers[i].joiningDate)
+            month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            month = month[date.getMonth()];
+            day = date.getDate();
+            year = date.getFullYear();
+            date  = day+'-'+month+'-'+year; 
+            container.find('.joiningDate').html(date)
             view = '<?= base_url('offer/')?>'
             edit = '<?= base_url('editOffer/')?>'
             access = '<?= base_url('accessApplicants/')?>'
