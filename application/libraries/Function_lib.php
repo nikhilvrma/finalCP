@@ -285,6 +285,30 @@ class Function_lib {
 		return $CI->function->hasMoreOffers($userID, $limit, $offset);
 	}
 
+	public function getAppliedOffers($userID, $offset, $limit){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getAppliedOffers($userID, $offset, $limit);
+	}
+
+	public function hasMoreAppliedOffers($userID, $limit, $offset){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->hasMoreAppliedOffers($userID, $limit, $offset);
+	}
+
+	public function getAllOffers($offset, $limit){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getAllOffers($offset, $limit);
+	}
+
+	public function hasMoreUserOffers($limit, $offset){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->hasMoreUserOffers($limit, $offset);
+	}
+
 	public function getOfferSkills($offerID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -309,4 +333,15 @@ class Function_lib {
 		return $CI->function->contactUs($data);
 	}
 
+	public function checkAlreadyApplied($offerID, $userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->checkAlreadyApplied($offerID, $userID);
+	}
+
+	public function insertApplicationData($data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->insertApplicationData($data);
+	}
 }

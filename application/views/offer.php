@@ -59,7 +59,7 @@
                     <div class="col-md-3 mb-4">
                       <p class="card-text"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
                       <?php if($_SESSION['user_data']['accountType'] == 1 ){?>
-                      <p class="card-text"><a class="btn btn-primary" style="color: white;">Apply Now</a></p>
+                      <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p>
                       <?php }?>
                     </div>
                   </div>
