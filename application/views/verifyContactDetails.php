@@ -46,7 +46,7 @@
                 <h6 class="card-header"><b>E-Mail Address</b></h6>
                 <div class="card-body">
                   <p class="card-text"><b>Registered E-Mail: </b>vrmanikhil@gmail.com</p>
-                  <p class="card-text"><b>Status: </b><label style="color: green;">Verified</label></p>
+                  <p class="card-text"><b>Status: </b><label style="color: <?php if($_SESSION['user_data']['emailVerified']) { echo 'green'; } else { echo 'red'; } ?>"><?php if($_SESSION['user_data']['emailVerified']) { echo 'Verified'; } else { echo 'Not-Verified'; } ?></label></p>
                   <p class="card-text" style="float: right;"><a data-toggle="modal" data-target="#email">Entered Wrong E-Mail?</a></p>
                   <div class="clearfix"></div>
                   <p class="card-text">
@@ -65,7 +65,7 @@
                 <h6 class="card-header"><b>Mobile Number</b></h6>
                 <div class="card-body">
                   <p class="card-text"><b>Registered Mobile Number: </b>+91-7503705892</p>
-                  <p class="card-text"><b>Status: </b><label style="color: red;">Not-Verified</label></p>
+                  <p class="card-text"><b>Status: </b><label style="color: <?php if($_SESSION['user_data']['mobileVerified']) { echo 'green'; } else { echo 'red'; } ?>"><?php if($_SESSION['user_data']['emailVerified']) { echo 'Verified'; } else { echo 'Not-Verified'; } ?></label></p>
                   <p class="card-text" style="float: right;"><a data-toggle="modal" data-target="#mobile">Entered Wrong Mobile Number?</a></p>
                   <div class="clearfix"></div>
                   <p class="card-text">

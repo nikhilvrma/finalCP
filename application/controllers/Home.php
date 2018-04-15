@@ -19,6 +19,10 @@ class Home extends CI_Controller {
 		// $this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
 	}
 
+	public function pageNotFound(){
+		$this->load->view('404', $this->data);
+	}
+
 	public function index(){
 		if($this->function_lib->auth()){
 			redirect(base_url('general-details'));
@@ -53,6 +57,8 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Verify Contact Details";
 				$this->data['activePage'] = "0";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->generateVerificationCode(1);
+				$this->generateVerificationCode(2);
 				$this->load->view('verifyContactDetails', $this->data);
 			}
 		}
@@ -286,7 +292,7 @@ class Home extends CI_Controller {
 						$this->data['redirect']['compensationType'] = 1;
 					}else if(isset($this->data['redirect']['minCompensation']) || isset($this->data['redirect']['maxCompensation'])){
 						$this->data['redirect']['compensationType'] = 2;
-					}else{	
+					}else{
 						$this->data['redirect']['compensationType'] = 3;
 					}
 					$this->data['redirect']['workHome'] = $this->data['redirect']['workFromHome'];
@@ -308,7 +314,7 @@ class Home extends CI_Controller {
 					}else{
 						$this->data['redirect']['location'] = array();
 					}
-				$this->data['edit'] = 1;	
+				$this->data['edit'] = 1;
 				}else{
 					redirect(base_url('add-new-offer'));
 				}
@@ -336,7 +342,7 @@ class Home extends CI_Controller {
 				foreach ($offers as $key => $offer) {
 					if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID'])){
 						$this->data['offerSkills'][$offer['offerID']] = $offerSkills;
-						
+
 					}
 					else{
 						$this->data['offerSkills'][$offer['offerID']] = array();
@@ -344,12 +350,12 @@ class Home extends CI_Controller {
 
 					if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID'])){
 						$this->data['offerLocations'][$offer['offerID']] = $offerLocations;
-						
+
 					}
 					else{
 						$this->data['offerLocations'][$offer['offerID']] = array();
 					}
-				}	
+				}
 				}
 				$this->load->view('myAddedOffers', $this->data);
 			}
@@ -419,7 +425,7 @@ class Home extends CI_Controller {
 					else{
 						$this->data['offerLocations'][$offer['offerID']] = array();
 					}
-				}	
+				}
 				}
 				$this->load->view('appliedOffers', $this->data);
 			}
@@ -455,7 +461,7 @@ class Home extends CI_Controller {
 					else{
 						$this->data['offerLocations'][$offer['offerID']] = array();
 					}
-				}	
+				}
 				}
 				$this->load->view('availableOffers', $this->data);
 			}
@@ -543,54 +549,51 @@ class Home extends CI_Controller {
 		$this->load->view('report', $this->data);
 	}
 
-	// public function sendEMail(){
-	// 	$this->load->helper('mail_helper');
-	// 	$email = 'vrmanikhil@gmail.com';
-	// 	$message =  $this->load->view('emailers/offers', $this->data, true);
-	// 	$data = array(
-	// 			'sendToEmail' => $email,
-	// 			'fromName' => 'Campus Puppy Private Limited',
-	// 			'fromEmail' => 'no-reply@campuspuppy.com',
-	// 			'subject' => 'Offers|Campus Puppy Private Limited',
-	// 			'message' => $message,
-	// 			'using' =>'pepipost'
-	// 			);
-	// 	sendEmail($data);
-	// }
+	private function sendEMail($email){
+		$this->load->helper('mail_helper');
+		$message =  $this->load->view('emailers/offers', $this->data, true);
+		$data = array(
+				'sendToEmail' => $email,
+				'fromName' => 'Campus Puppy Private Limited',
+				'fromEmail' => 'no-reply@campuspuppy.com',
+				'subject' => 'Offers|Campus Puppy Private Limited',
+				'message' => $message,
+				'using' =>'pepipost'
+				);
+		sendEmail($data);
+	}
 
-	// public function sendSMS(){
-	// 	$mobile = "7503705892";
-	// 	$msg = "Test Message";
-	// 	$authKey = "163538ADD0UybtU59590664";
-	// 	$mobileNumber = $mobile;
-	// 	$senderId = "CPUPPY";
-	// 	$message = urlencode($msg);
-	// 	$route = "4";
-	// 	$postData = array(
-	// 	    'authkey' => $authKey,
-	// 	    'mobiles' => $mobileNumber,
-	// 	    'message' => $message,
-	// 	    'sender' => $senderId,
-	// 	    'route' => $route
-	// 	);
-	// 	$url="http://api.msg91.com/api/sendhttp.php";
-	// 	$ch = curl_init();
-	// 	curl_setopt_array($ch, array(
-	// 	    CURLOPT_URL => $url,
-	// 	    CURLOPT_RETURNTRANSFER => true,
-	// 	    CURLOPT_POST => true,
-	// 	    CURLOPT_POSTFIELDS => $postData
-	// 	    //,CURLOPT_FOLLOWLOCATION => true
-	// 	));
-	// 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-	// 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-	// 	$output = curl_exec($ch);
-	// 	if(curl_errno($ch)){
-	//   // echo 'error:' . curl_error($ch);
-	// 	}
-	// 	curl_close($ch);
-	// 	// echo $output;
-	// }
+	private function sendSMS($mobile, $msg){
+		$authKey = "163538ADD0UybtU59590664";
+		$mobileNumber = $mobile;
+		$senderId = "CPUPPY";
+		$message = urlencode($msg);
+		$route = "4";
+		$postData = array(
+		    'authkey' => $authKey,
+		    'mobiles' => $mobileNumber,
+		    'message' => $message,
+		    'sender' => $senderId,
+		    'route' => $route
+		);
+		$url="http://api.msg91.com/api/sendhttp.php";
+		$ch = curl_init();
+		curl_setopt_array($ch, array(
+		    CURLOPT_URL => $url,
+		    CURLOPT_RETURNTRANSFER => true,
+		    CURLOPT_POST => true,
+		    CURLOPT_POSTFIELDS => $postData
+		    //,CURLOPT_FOLLOWLOCATION => true
+		));
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		$output = curl_exec($ch);
+		if(curl_errno($ch)){
+	  // echo 'error:' . curl_error($ch);
+		}
+		curl_close($ch);
+		// echo $output;
+	}
 
 	public function generateVerificationCode($type){
 		$this->load->library(array('contact_lib'));
@@ -607,8 +610,8 @@ class Home extends CI_Controller {
 				$timeDifference = $expiry-$currentTime;
 				if($timeDifference>0 && $timeDifference<7200){
 					$msg = "Your Mobile Number Verification Token is: ".$checkCode[0]['code'].". The token is valid for only next 2 hours.";
-					echo $msg."1";
-					// $this->sendSMS($mobile, $msg);
+					// echo $msg."1";
+					$this->sendSMS($mobile, $msg);
 				}
 				else{
 					$code = rand(1000,9999);
@@ -624,8 +627,7 @@ class Home extends CI_Controller {
 					);
 					$this->contact_lib->insertVerificationCode($codeData);
 					$msg =  "Your Mobile Number Verification Token is: ".$code.". The token is valid for only next 2 hours.";
-					echo $msg."2";
-					// $this->sendSMS($mobile, $msg);
+					$this->sendSMS($mobile, $msg);
 				}
 			}
 			else {
@@ -642,8 +644,7 @@ class Home extends CI_Controller {
 				);
 				$this->contact_lib->insertVerificationCode($codeData);
 				$msg =  "Your Mobile Number Verification Token is: ".$code.". The token is valid for only next 2 hours.";
-				echo $msg."3";
-				// $this->sendSMS($mobile, $msg);
+				$this->sendSMS($mobile, $msg);
 			}
 		}
 
@@ -657,8 +658,7 @@ class Home extends CI_Controller {
 				$timeDifference = $expiry-$currentTime;
 				if($timeDifference>0 && $timeDifference<7200){
 					$msg = "Your E-Mail Verification Token is: ".$checkCode[0]['code'].". The token is valid for only next 2 hours.";
-					echo $msg."1";
-					// $this->sendSMS($mobile, $msg);
+					$this->sendEMail($email);
 				}
 				else{
 					$code = rand(1000,9999);
@@ -674,8 +674,7 @@ class Home extends CI_Controller {
 					);
 					$this->contact_lib->insertVerificationCode($codeData);
 					$msg =  "Your E-Mail Verification Token is: ".$code.". The token is valid for only next 2 hours.";
-					echo $msg."2";
-					// $this->sendSMS($mobile, $msg);
+					$this->sendEMail($email);
 				}
 			}
 			else {
@@ -692,8 +691,7 @@ class Home extends CI_Controller {
 				);
 				$this->contact_lib->insertVerificationCode($codeData);
 				$msg =  "Your E-Mail Verification Token is: ".$code.". The token is valid for only next 2 hours.";
-				echo $msg."3";
-				// $this->sendSMS($mobile, $msg);
+				$this->sendEMail($email);
 			}
 		}
 
