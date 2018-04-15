@@ -184,7 +184,7 @@
                 <label><b>Selected Locations:</b></label>
                 <div class="row">
                   <div class="col-12 col-sm-12">
-                    <input type="hidden" name="selectedLocations" value = "<?php if(isset($redirect['location'])){echo $redirect['location'];}?>" >
+                    <input type="hidden" name="selectedLocations" value = "<?php if(isset($redirect['location']) && !empty($redirect['location'])){echo $redirect['location'];}?>" >
                   </div>
 
                 </div>
@@ -202,7 +202,7 @@
                     <label><b>Selected Locations:</b></label>
                     <div class="row">
                       <div class="col-12 col-sm-12">
-                        <input type="hidden" name="selectedLocations" value = "<?php if(isset($redirect['location'])){echo $redirect['location'];}?>" >
+                        <input type="hidden" name="selectedLocations" value = "<?php if(isset($redirect['location']) && !empty($redirect['location'])){echo $redirect['location'];}?>" >
                       </div>
 
                     </div>
@@ -261,7 +261,7 @@
                 <label><b>Selected Skills:</b></label>
                 <div class="row">
                   <div class="col-12 col-sm-12">
-                    <input type="hidden" name="selectedSkills" value = "<?php if(isset($redirect['selectedSkills'])){echo $redirect['selectedSkills'];}?>" >
+                    <input type="hidden" name="selectedSkills" value = "<?php if(isset($redirect['selectedSkills']) && !empty($redirect['selectedSkills'])){echo $redirect['selectedSkills'];}?>" >
                   </div>
 
                 </div>
@@ -277,7 +277,7 @@
                   <label><b>Selected Skills:</b></label>
                   <div class="row">
                     <div class="col-12 col-sm-12">
-                      <input type="hidden" name="selectedSkills" value = "<?php if(isset($redirect['selectedSkills'])){echo $redirect['selectedSkills'];}?>" >
+                      <input type="hidden" name="selectedSkills" value = "<?php if(isset($redirect['selectedSkills']) && !empty($redirect['selectedSkills'])){echo $redirect['selectedSkills'];}?>" >
                     </div>
 
                   </div>

@@ -1005,6 +1005,8 @@ class Functions extends CI_Controller {
 						$skills = json_decode($selectedSkills);
 						$i = 0;
 						foreach ($skills as $key => $value) {
+							if($value == NULL)
+								continue;
 							$dat[$i]['offerID'] = $offerID;
 							$dat[$i]['skillID'] = $value->skillID;
 							$i++;
@@ -1018,6 +1020,8 @@ class Functions extends CI_Controller {
 						// var_dump($locations);
 						$i = 0;
 						foreach ($locations as $key => $value) {
+							if($value == NULL)
+								continue;
 							$dats[$i]['offerID'] = $offerID;
 							$dats[$i]['cityID'] = $value->locationID;
 							$i++;
@@ -1051,11 +1055,14 @@ class Functions extends CI_Controller {
 					$result = $this->function_lib->updateOffer($_POST['edit'], $data);
 				if($result){
 					 $this->function_lib->deleteSkillsLocations($_POST['edit']);
+					 $offerID = $_POST['edit'];
 					if($applicantType == 2){
 						$skills = json_decode($selectedSkills);
-						var_dump($skills);die;
+						// var_dump($skills);die;
 						$i = 0;
 						foreach ($skills as $key => $value) {
+							if($value == NULL)
+								continue;
 							$dat[$i]['offerID'] = $offerID;
 							$dat[$i]['skillID'] = $value->skillID;
 							$i++;
@@ -1066,9 +1073,11 @@ class Functions extends CI_Controller {
 					}
 					if($workHome == 2){
 						$locations = json_decode($selectedLocations);
-						// var_dump($locations);
+						var_dump($locations);
 						$i = 0;
 						foreach ($locations as $key => $value) {
+							if($value == NULL)
+								continue;
 							$dats[$i]['offerID'] = $offerID;
 							$dats[$i]['cityID'] = $value->locationID;
 							$i++;
