@@ -1181,9 +1181,8 @@ class Functions extends CI_Controller {
 	public function getMoreAppliedOffers(){
 		$offset = $this->input->get('offset');
 		$offset = $offset * 10;
-		$data['offers'] = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],$offset, 10);
-		$data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10, $offset+10);
-		// var_dump($data['hasMore']);die;
+		$data['offers'] = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],$offset, 10, 0);
+		$data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10, $offset+10, 0);
 		$offers = $data['offers'];
 		if(!empty($offers)){
 			foreach ($offers as $key => $offer) {
@@ -1201,6 +1200,37 @@ class Functions extends CI_Controller {
 			echo json_encode($data);
 		}else{
 			echo "false";
+		}
+	}
+
+	public function filterAppliedOffers(){
+		$status = $this->input->post('status');
+		$data['offers'] = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0, 10, $status);
+		$data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10, 10, $status);
+		$data['status'] = $status;
+		$offers = $data['offers'];
+		// var_dump($offers);die;
+		if(!empty($offers)){
+			foreach ($offers as $key => $offer) {
+				if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID']))
+					$data['offerSkills'][$offer['offerID']] = $offerSkills;
+				else
+					$data['offerSkills'] = array();
+
+				if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID']))
+					$data['offerLocations'][$offer['offerID']] = $offerLocations;
+				else{
+					$data['offerLocations'] = array();
+				}
+			}
+			// var_dump($data); die;
+			$_SESSION['filter'] = 1;
+			$_SESSION['data'] = $data;	
+			redirect(base_url('applied-offers'));
+		}else{
+			$_SESSION['filter'] = 1;
+			$_SESSION['data'] = $data;
+			redirect(base_url('applied-offers'));
 		}
 	}
 

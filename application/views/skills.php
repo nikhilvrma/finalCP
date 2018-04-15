@@ -46,7 +46,7 @@
               </div>
 
             <?php if($premiumSkills){
-             foreach($premiumSkills as $value){?>
+             foreach($premiumSkills as $value){if($value['score'] > 10){?>
               <div class="col-lg-6 mb-4">
                 <div class="card h-100">
                   <h5 class="card-header cardheader"><?= $value['skill_name']?><sup style="color: red;"> Premium</sup></h5>
@@ -55,7 +55,7 @@
                   </div>
                 </div>
               </div>
-            <?php }}else{?>
+            <?php }}}else{?>
               <div class="col-lg-12">
                 <p><center>No Premium Skills Found.</center></p>
               </div>

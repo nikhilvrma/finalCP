@@ -408,8 +408,18 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Applied Offers";
 				$this->data['activePage'] = "10";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-				$offers = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0,10);
-				$this->data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10,10);
+				if(isset($_SESSION['filter']) && $_SESSION['filter'] == 1){
+					$this->data['offers'] = $_SESSION['data']['offers'];
+					$this->data['hasMore'] = $_SESSION['data']['hasMore'];
+					if(!empty($_SESSION['data']['offers'])){
+						$this->data['offerSkills'] = $_SESSION['data']['offerSkills'];
+						$this->data['offerLocations'] = $_SESSION['data']['offerLocations'];
+					}
+					$this->data['status'] = $_SESSION['data']['status'];
+					$this->load->view('appliedOffers', $this->data);
+				}
+				$offers = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0,10,0);
+				$this->data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10,10,0);
 				$this->data['offers'] = $offers;
 				if(!empty($offers)){
 				foreach ($offers as $key => $offer) {
