@@ -178,6 +178,7 @@
 
 
               <?php if(isset($edit) && $edit == 1){?>
+
               <div class="col-md-12 selectedLocations" <?php if(isset($redirect) && $redirect['workHome'] == 2){ }else{ echo 'style ="display: none"';}?>>
                 <br>
                 <label><b>Selected Locations:</b></label>
@@ -190,10 +191,12 @@
                 <?php $i = 0;
                if(isset($redirect['location'])){
                 foreach(json_decode($redirect['location']) as $location){ ?>
-                  <p class="selectedLocation"><?=$location->city.', '.$location->state?><a href="javascript:" data-location="<?=$location->city.', '.$location->state?>" index="<?= $i?>" location-id="<?php $location->cityID ?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
+                  <p class="selectedLocation"><?=$location->city.', '.$location->state?><a href="javascript:" data-location="<?=$location->city.', '.$location->state?>" index="<?= $i?>" location-id="<?= $location->cityID ?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
                 <?php $i++; } }?>
               </div>
+
               <?php }else{?>
+
                   <div class="col-md-12 selectedLocations" <?php if(isset($redirect) && $redirect['workHome'] == 2){ }else{ echo 'style ="display: none"';}?>>
                     <br>
                     <label><b>Selected Locations:</b></label>
@@ -204,11 +207,12 @@
 
                     </div>
                     <?php $i = 0;
-                   if(isset($redirect['location'])){
+                   if(isset($redirect['location']) && !empty($redirect['location'])){
                     foreach(json_decode($redirect['location']) as $location){?>
                       <p class="selectedLocation"><?=$location->location_name?><a href="javascript:" data-location="<?php $location->location_name?>" index="<?= $i?>" location-id="<?php $location->locationID ?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
                     <?php $i++; } }?>
                   </div>
+
               <?php } ?>
 
 
@@ -251,7 +255,7 @@
                 </div>
 
               </div>
-
+             <?php if(isset($edit) && $edit == 1){?>
               <div class="col-md-12 selectedSkills" <?php if(isset($redirect) && $redirect['applicantType'] == 2){ }else{ echo 'style ="display: none"';}?>>
                 <br>
                 <label><b>Selected Skills:</b></label>
@@ -262,11 +266,27 @@
 
                 </div>
                <?php $i = 0;
-               if(isset($redirect['selectedSkills'])){
-                foreach(json_decode($redirect['selectedSkills']) as $skill){?>
-                  <p class="skill"><?= $skill->skill_name?><a href="javascript:" data-skill="<?php $skill->skill_name?>" index="<?= $i?>" skill-id="<?php $skill->skillID?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
+               if(isset($redirect['selectedSkills']) && !empty($redirect['selectedSkills'])){
+                foreach(json_decode($redirect['selectedSkills']) as $skill){ ?>
+                  <p class="skill"><?= $skill->skill_name?><a href="javascript:" data-skill="<?= $skill->skill_name?>" index="<?= $i?>" skill-id="<?= $skill->skillID?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
                 <?php $i++; } }?>
               </div>
+              <?php }else{?>
+                  <div class="col-md-12 selectedSkills" <?php if(isset($redirect) && $redirect['applicantType'] == 2){ }else{ echo 'style ="display: none"';}?>>
+                  <br>
+                  <label><b>Selected Skills:</b></label>
+                  <div class="row">
+                    <div class="col-12 col-sm-12">
+                      <input type="hidden" name="selectedSkills" value = "<?php if(isset($redirect['selectedSkills'])){echo $redirect['selectedSkills'];}?>" >
+                    </div>
+
+                  </div>
+                 <?php $i = 0;
+                 if(isset($redirect['selectedSkills'])){
+                  foreach(json_decode($redirect['selectedSkills']) as $skill){ ?>
+                    <p class="skill"><?= $skill->skill_name?><a href="javascript:" data-skill="<?= $skill->skill_name?>" index="<?= $i?>" skill-id="<?= $skill->skillID?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
+                  <?php $i++; } }?>
+              <?php } ?>
             </div>
 
             <div class="row">
@@ -301,8 +321,16 @@
 
 
     <script>
-  	var skills_arr =[]
-  	var selectedSkills = [];
+
+    <?php if(!empty($redirect['selectedSkills'])){?>  
+      var skills_arr =[]
+      var selectedSkills = '<?= $redirect['selectedSkills']?>';
+      selectedSkills = JSON.parse(selectedSkills)
+    <?php }else{?> 
+      var skills_arr =[]
+      var selectedSkills = [];
+    <?php }?>
+  	
 
   	$(document).on('click','.addSkill',function(){
   	  var skill ={}
@@ -347,9 +375,15 @@
   	</script>
 
     <script>
-    var locations_arr =[]
-    var selectedLocations = [];
-
+    
+    <?php if(!empty($redirect['location'])){?>
+      var locations_arr =[]
+      var selectedLocations = <?= $redirect['location']?>;
+      selectedLocation = JSON.parse(selectedLocation)
+    <?php }else{?>
+      var locations_arr =[]
+      var selectedLocations = [];
+    <?php }?>
     $(document).on('click','.addLocation',function(){
       var location ={}
       location.location_name = $('#location').find(":selected").val();
