@@ -89,4 +89,7 @@ $route['report/(:num)'] = 'home/report/$1';
 
 $route['employer/job-offers'] = 'home/jobOffers';
 
+
+$route['404'] = 'home/pageNotFound';
+
 $route['translate_uri_dashes'] = FALSE;
