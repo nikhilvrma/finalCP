@@ -1066,4 +1066,76 @@ class Functions extends CI_Controller {
 		}
 	}
 
+	public function getMoreAppliedOffers(){
+		$offset = $this->input->get('offset');
+		$offset = $offset * 10;
+		$data['offers'] = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],$offset, 10);
+		$data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10, $offset+10);
+		// var_dump($data['hasMore']);die;
+		$offers = $data['offers'];
+		if(!empty($offers)){
+			foreach ($offers as $key => $offer) {
+				if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID']))
+					$data['offerSkills'][$offer['offerID']] = $offerSkills;
+				else
+					$data['offerSkills'] = array();
+
+				if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID']))
+					$data['offerLocations'][$offer['offerID']] = $offerLocations;
+				else{
+					$data['offerLocations'] = array();
+				}
+			}
+			echo json_encode($data);
+		}else{
+			echo "false";
+		}
+	}
+
+	public function getMoreOffers(){
+		$offset = $this->input->get('offset');
+		$offset = $offset * 10;
+		$data['offers'] = $this->function_lib->getAllOffers($offset, 10);
+		$data['hasMore'] = $this->function_lib->hasMoreUserOffers(10, $offset+10);
+		$offers = $data['offers'];
+		if(!empty($offers)){
+			foreach ($offers as $key => $offer) {
+				if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID']))
+					$data['offerSkills'][$offer['offerID']] = $offerSkills;
+				else
+					$data['offerSkills'] = array();
+
+				if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID']))
+					$data['offerLocations'][$offer['offerID']] = $offerLocations;
+				else{
+					$data['offerLocations'] = array();
+				}
+			}
+			echo json_encode($data);
+		}else{
+			echo "false";
+		}
+	}
+
+	public function apply($offerID){
+		if($this->function_lib->checkAlreadyApplied($offerID, $_SESSION['user_data']['userID'])){
+			$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'offerID' => $offerID,
+				'status' => 1
+			);
+			if($this->function_lib->insertApplicationData($data)){
+				$this->session->set_flashdata('message', array('content'=>'Application Successful.','color'=>'green'));
+				redirect(base_url('applied-offers'));
+			}else{
+				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+				redirect(base_url('available-offers'));
+			}
+
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'You Have Already Applied for the offer.','color'=>'red'));
+				redirect(base_url('available-offers'));
+		}
+	}
+
 }

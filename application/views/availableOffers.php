@@ -72,7 +72,7 @@
                   <div class="row">
                     <div class="col-md-6 mb-4">
                       <p class="card-text"><b>Offer Type: </b><?php if($offer['offerType'] == 1){echo "Job Offer";}else{echo "Internship Offer";}?></p>
-                      <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}?>
+                      <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}else $location = "Work From Home";?>
                       <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
                     </div>
                     <div class="col-md-6 mb-4">
@@ -80,7 +80,7 @@
                       <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                     </div>
                     <div class="col-md-12 mb-4">
-                      <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}?>
+                      <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}else $skill = "None";?>
                       <p class="card-text"><b>Skills Required: </b><?= $skill?></p>
                     </div>
                   </div>
@@ -88,14 +88,12 @@
                 </div>
                 <div class="card-footer">
                   <small class="text-muted" style="float: right;">
-                    <a class="btn btn-primary" href = "<?= base_url('editOffer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Edit Offers</a>
-                    <a class="btn btn-primary" href = "<?= base_url('accessApplicants/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Access Applicants</a>
                     <a class="btn btn-primary" href = "<?= base_url('offer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">View Offer</a>
                   </small>
                 </div>
               </div>
 
-              <?php }}else{ echo "<center>You have added no Offers Yet.</center>"; } ?>
+              <?php }}else{ echo "<center>There are no Offers Available Yet.</center>"; } ?>
               <div class ="offerCont"></div>
             </div>
 
@@ -111,7 +109,7 @@
 
     </div>
 
-    <div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -169,14 +167,112 @@
         </form>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <?php echo $footer; ?>
 
     <?php echo $footerFiles; ?>
 
-    <script src="<?= base_url('assets/ckeditor/ckeditor.js')?>"></script>
+     <div class="card containerWrap" style = "display: none">
+      <h6 class="card-header cardheader offerTitle"></h6>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <p class="card-text"><b>Offer Type: </b><span class = "offerType"></span></p>
+            <p class="card-text"><b>Offer Location(s): </b><span class = "offerLocation"></span></p>
+          </div>
+          <div class="col-md-6 mb-4">
+            <p class="card-text"><b>Application Deadline: </b><span class = "applicationDeadline"></span></p>
+            <p class="card-text"><b>Joining Date: </b><span class = "joiningDate"></span></p>
+          </div>
+          <div class="col-md-12 mb-4">
+            <p class="card-text"><b>Skills Required: </b><span class = "skillsReq"></span></p>
+          </div>
+        </div>
 
+      </div>
+      <div class="card-footer">
+        <small class="text-muted" style="float: right;">
+          <a class="btn btn-primary viewOffer" href = "" target = "_blank" style="color: white; margin: 10px;">View Offer</a>
+        </small>
+      </div>
+    </div>
+
+    <script src="<?= base_url('assets/ckeditor/ckeditor.js')?>"></script>
+        <script type="text/javascript">
+      var j = 1;
+      $(document).ready(function(){
+        $('.loadMore').on('click', function(){
+          url = '<?= base_url('functions/getMoreOffers')?>'
+          data = {offset: j }
+          $.get(url,data).done(function(res){
+            res = JSON.parse(res)
+            for(var i = 0; i<res.offers.length; i++){
+            container = $('.containerWrap').clone()
+            container.find('.offerTitle').html(res.offers[i].offerTitle)
+            if(res.offers[i].offerType == 1){
+              offerType = 'Job Offer'
+            }else{
+              offerType = 'Internship Offer'
+            }
+            
+            locations = '';
+            skills = '';
+            if(res.offerLocations[res.offers[i].offerID]){
+            for(var k = 0; k < res.offerLocations[res.offers[i].offerID].length; k++){
+              if(k==0){
+                locations = locations + res.offerLocations[res.offers[i].offerID][k].city
+              }else{
+                locations = locations+ ' ' +res.offerLocations[res.offers[i].offerID][k].city
+              }
+            }
+            }else{
+              locations = 'Work From Home'
+            }
+            if(res.offerSkills[res.offers[i].offerID]){
+            for(var k = 0; k < res.offerSkills[res.offers[i].offerID].length; k++){
+              if(k==0){
+                skills = skills + res.offerSkills[res.offers[i].offerID][k].skill_name
+              }else{
+                skills = skills+ ' ' +res.offerSkills[res.offers[i].offerID][k].skill_name
+              }
+            }
+          }else{
+            skills = 'None'
+          }
+            container.find('.offerLocation').html(locations)
+            container.find('.skillsReq').html(skills)
+            container.find('.offerType').html(offerType)
+            date = new Date(res.offers[i].applicationDeadline)
+            month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            month = month[date.getMonth()];
+            day = date.getDate();
+            year = date.getFullYear();
+            date  = day+'-'+month+'-'+year; 
+            container.find('.applicationDeadline').html(date)
+            date = new Date(res.offers[i].joiningDate)
+            month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            month = month[date.getMonth()];
+            day = date.getDate();
+            year = date.getFullYear();
+            date  = day+'-'+month+'-'+year; 
+            container.find('.joiningDate').html(date)
+            view = '<?= base_url('offer/')?>'
+            edit = '<?= base_url('editOffer/')?>'
+            access = '<?= base_url('accessApplicants/')?>'
+            container.find('.viewOffer').attr('href', view + res.offers[i].offerID)
+            $('.offerCont').append(container[0])
+            container.show()
+            }
+            j++
+            if(!res.hasMore){
+              $('.loadMore').hide();
+            }
+            
+          })
+        })
+      })
+    </script>
 
   </body>
 

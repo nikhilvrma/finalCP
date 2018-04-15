@@ -421,6 +421,25 @@ class Function_model extends CI_Model {
 		}
 	}
 
+	public function getAppliedOffers($userID, $offset, $limit){
+		$this->db->select('applicants.offerID, offerType, offerTitle, applicationDeadline, joiningDate');
+		$this->db->limit($limit, $offset);
+		$this->db->join('offers','applicants.offerID = offers.offerID');
+		$result = $this->db->get_where('applicants', array('userID'=>$userID))->result_array();
+		// var_dump($this->db->last_query()); die;
+		return $result;
+	}
+
+	public function hasMoreAppliedOffers($userID, $limit, $offset){
+		$this->db->limit($limit, $offset);
+		$result = $this->db->get_where('applicants', array('userID'=>$userID));
+		if($result->num_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function getAllOffers($offset, $limit){
 		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate');
 		$this->db->limit($limit, $offset);
@@ -452,6 +471,19 @@ class Function_model extends CI_Model {
 		$this->db->join('indianCities', 'offerLocation.cityID = indianCities.cityID');
 		$result = $this->db->get_where('offerLocation', array('offerID' => $offerID))->result_array();
 		return $result;
+	}
+
+	public function checkAlreadyApplied($offerID, $userID){
+		$result = $this->db->get_where('applicants', array('offerID' => $offerID, 'userID' => $userID));
+		if($result->num_rows()>0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	public function insertApplicationData($data){
+		return $this->db->insert('applicants', $data);
 	}
 ///////////////////////////////////////////////////////////
 

@@ -272,6 +272,50 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function editOffer($offerID){
+		if($this->function_lib->auth()){
+			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+				$this->data['pageTitle'] = "Add New Offer";
+				$this->data['activePage'] = "9";
+				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				$this->data['skills'] = $this->function_lib->getSkills();
+				$this->data['locations'] = $this->function_lib->getAllLocations();
+				if(!empty($this->function_lib->getOfferDetails($offerID))){
+					$this->data['redirect'] = $this->function_lib->getOfferDetails($offerID)[0];
+					if(isset($this->data['redirect']['compensation'])){
+						$this->data['redirect']['compensationType'] = 1;
+					}else if(isset($this->data['redirect']['minCompensation']) || isset($this->data['redirect']['maxCompensation'])){
+						$this->data['redirect']['compensationType'] = 2;
+					}else{	
+						$this->data['redirect']['compensationType'] = 3;
+					}
+					$this->data['redirect']['workHome'] = $this->data['redirect']['workFromHome'];
+					$this->data['redirect']['applicantType'] = $this->data['redirect']['skillRequired'];
+					if($offerSkills = $this->function_lib->getOfferSkills($offerID))
+						$this->data['redirect']['selectedSkills'] = json_encode($offerSkills);
+					else
+						$this->data['redirect']['selectedSkills'] = array();
+
+					if($offerLocations = $this->function_lib->getOfferLocations($offerID))
+						$this->data['redirect']['location'] = json_encode($offerLocations);
+					else{
+						$this->data['redirect']['location'] = array();
+					}
+				$this->data['edit'] = 1;	
+				}else{
+					redirect(base_url('add-new-offer'));
+				}
+				$this->load->view('addNewOffer', $this->data);
+			}
+			else{
+				redirect(base_url('verify-contact-details'));
+			}
+		}
+		else{
+			redirect(base_url());
+		}
+	}
+
 	public function myAddedOffers(){
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
@@ -351,8 +395,8 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Applied Offers";
 				$this->data['activePage'] = "10";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-				$offers = $this->function_lib->getAllOffers(0,10);
-				$this->data['hasMore'] = $this->function_lib->hasMoreUserOffers(10,10);
+				$offers = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0,10);
+				$this->data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10,10);
 				$this->data['offers'] = $offers;
 				if(!empty($offers)){
 				foreach ($offers as $key => $offer) {

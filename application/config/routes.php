@@ -73,6 +73,8 @@ $route['change-password'] = 'home/changePassword';
 
 $route['add-new-offer'] = 'home/addNewOffer';
 $route['my-added-offers'] = 'home/myAddedOffers';
+$route['edit-offer/(:num)'] = 'home/editOffer/$1';
+
 
 $route['applied-offers'] = 'home/appliedOffers';
 $route['available-offers'] = 'home/availableOffers';

@@ -177,7 +177,7 @@
               </div>
 
 
-
+              <?php if(isset($edit) && $edit == 1){?>
               <div class="col-md-12 selectedLocations" <?php if(isset($redirect) && $redirect['workHome'] == 2){ }else{ echo 'style ="display: none"';}?>>
                 <br>
                 <label><b>Selected Locations:</b></label>
@@ -189,11 +189,27 @@
                 </div>
                 <?php $i = 0;
                if(isset($redirect['location'])){
-
-                foreach(json_decode($redirect['location']) as $location){?>
-                  <p class="selectedLocation"><?=$location->location_name?><a href="javascript:" data-location="<?php $location->location_name?>" index="<?= $i?>" location-id="<?php $location->locationID ?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
+                foreach(json_decode($redirect['location']) as $location){ ?>
+                  <p class="selectedLocation"><?=$location->city.', '.$location->state?><a href="javascript:" data-location="<?=$location->city.', '.$location->state?>" index="<?= $i?>" location-id="<?php $location->cityID ?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
                 <?php $i++; } }?>
               </div>
+              <?php }else{?>
+                  <div class="col-md-12 selectedLocations" <?php if(isset($redirect) && $redirect['workHome'] == 2){ }else{ echo 'style ="display: none"';}?>>
+                    <br>
+                    <label><b>Selected Locations:</b></label>
+                    <div class="row">
+                      <div class="col-12 col-sm-12">
+                        <input type="hidden" name="selectedLocations" value = "<?php if(isset($redirect['location'])){echo $redirect['location'];}?>" >
+                      </div>
+
+                    </div>
+                    <?php $i = 0;
+                   if(isset($redirect['location'])){
+                    foreach(json_decode($redirect['location']) as $location){?>
+                      <p class="selectedLocation"><?=$location->location_name?><a href="javascript:" data-location="<?php $location->location_name?>" index="<?= $i?>" location-id="<?php $location->locationID ?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
+                    <?php $i++; } }?>
+                  </div>
+              <?php } ?>
 
 
               <div class = "row col-md-12">

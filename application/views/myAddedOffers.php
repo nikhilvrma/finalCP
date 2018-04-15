@@ -49,7 +49,7 @@
                   <div class="row">
                     <div class="col-md-6 mb-4">
                       <p class="card-text"><b>Offer Type: </b><?php if($offer['offerType'] == 1){echo "Job Offer";}else{echo "Internship Offer";}?></p>
-                      <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}?>
+                      <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}else echo "Work From Home"; ?>
                       <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
                     </div>
                     <div class="col-md-6 mb-4">
@@ -57,7 +57,7 @@
                       <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                     </div>
                     <div class="col-md-12 mb-4">
-                      <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}?>
+                      <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}else echo "None";?>
                       <p class="card-text"><b>Skills Required: </b><?= $skill?></p>
                     </div>
                   </div>
@@ -65,8 +65,8 @@
                 </div>
                 <div class="card-footer">
                   <small class="text-muted" style="float: right;">
-                    <a class="btn btn-primary" href = "<?= base_url('editOffer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Edit Offers</a>
-                    <a class="btn btn-primary" href = "<?= base_url('accessApplicants/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Access Applicants</a>
+                    <a class="btn btn-primary" href = "<?= base_url('edit-offer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Edit Offers</a>
+                    <a class="btn btn-primary" href = "<?= base_url('access-applicants/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Access Applicants</a>
                     <a class="btn btn-primary" href = "<?= base_url('offer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">View Offer</a>
                   </small>
                 </div>
@@ -139,6 +139,7 @@
             
             locations = '';
             skills = '';
+            if(res.offerLocations[res.offers[i].offerID]){
             for(var k = 0; k < res.offerLocations[res.offers[i].offerID].length; k++){
               if(k==0){
                 locations = locations + res.offerLocations[res.offers[i].offerID][k].city
@@ -146,6 +147,10 @@
                 locations = locations+ ' ' +res.offerLocations[res.offers[i].offerID][k].city
               }
             }
+             }else{
+              locations = 'Work From Home'
+            }
+            if(res.offerSkills[res.offers[i].offerID]){
             for(var k = 0; k < res.offerSkills[res.offers[i].offerID].length; k++){
               if(k==0){
                 skills = skills + res.offerSkills[res.offers[i].offerID][k].skill_name
@@ -153,7 +158,9 @@
                 skills = skills+ ' ' +res.offerSkills[res.offers[i].offerID][k].skill_name
               }
             }
-
+             }else{
+            skills = 'None'
+          }
             container.find('.offerLocation').html(locations)
             container.find('.skillsReq').html(skills)
             container.find('.offerType').html(offerType)
@@ -172,8 +179,8 @@
             date  = day+'-'+month+'-'+year; 
             container.find('.joiningDate').html(date)
             view = '<?= base_url('offer/')?>'
-            edit = '<?= base_url('editOffer/')?>'
-            access = '<?= base_url('accessApplicants/')?>'
+            edit = '<?= base_url('edit-offer/')?>'
+            access = '<?= base_url('access-applicants/')?>'
             container.find('.viewOffer').attr('href', view + res.offers[i].offerID)
             container.find('.editOffer').attr('href', edit + res.offers[i].offerID)
             container.find('.accessApplicants').attr('href', access + res.offers[i].offerID)
