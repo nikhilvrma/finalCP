@@ -706,7 +706,7 @@ class Functions extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
 			redirect(base_url('general-details'));
 		}else{
-            $result = $this->function_lib->uploadImage($profilePic, 'profile', 'assets/uploads/ProfileImages/');
+            $result = $this->function_lib->uploadImage($profilePic, 'profile', 'assets/images/profile-images/');
 			if($result){
 				$this->session->set_flashdata('message', array('content'=>'Profile Image Successfully changed.','color'=>'green'));
 				redirect(base_url('general-details'));
@@ -729,7 +729,7 @@ class Functions extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again','color'=>'red'));
 			redirect(base_url('general-details'));
 		}else{
-            $result = $this->function_lib->uploadImage($companyLogo, 'company', 'assets/uploads/CompanyLogo/');
+            $result = $this->function_lib->uploadImage($companyLogo, 'company', 'assets/images/company-logos/');
 			if($result){
 				$this->session->set_flashdata('message', array('content'=>'Logo Successfully changed.','color'=>'green'));
 				redirect(base_url('general-details'));

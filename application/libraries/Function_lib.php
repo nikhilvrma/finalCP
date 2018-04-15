@@ -133,7 +133,7 @@ class Function_lib {
 		return $CI->function->updateCompanyDetails($data, $userID);
 	}
 
-	public function uploadImage($image, $type ,$path = 'assets/uploads/'){
+	public function uploadImage($image, $type ,$path = 'assets/images/'){
 		if(empty($image)){
 			return false;
 		}
