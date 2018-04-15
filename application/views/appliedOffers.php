@@ -41,20 +41,20 @@
             <div class="col-md-12 mb-4">
               <div class="row">
 
-              <!-- <div class="col-sm-12 mb-4">
-                <form class="form-inline" style="float: right;">
+              <div class="col-sm-12 mb-4">
+                <form class="form-inline" style="float: right;" method = "POST" action = "<?= base_url('functions/filterAppliedOffers')?>">
                   <label style="margin: 5px;"><b>Display Offers</b></label>
                   <br>
-                  <select class="form-control mb-2 mr-sm-2">
-                    <option>All Applied Offers</option>
-                    <option>Offers, with Selected status</option>
-                    <option>Offers, with Short-Listed status</option>
-                    <option>Offers, with Rejected status</option>
+                  <select class="form-control mb-2 mr-sm-2" name="status">
+                    <option value = "1" >All Applied Offers</option>
+                    <option value = "2" <?php if($status == 2){echo "selected";}?>>Offers with Selected status</option>
+                    <option value = "3" <?php if($status == 3){echo "selected";}?>>Offers with Short-Listed status</option>
+                    <option value = "4" <?php if($status == 4){echo "selected";}?>>Offers with Rejected status</option>
                   </select>
 
                   <button type="submit" class="btn btn-primary mb-2">Display</button>
                 </form>
-              </div> -->
+              </div>
             </div>
             </div>
           </div>
@@ -71,15 +71,16 @@
                   <div class="row">
                     <div class="col-md-6 mb-4">
                       <p class="card-text"><b>Offer Type: </b><?php if($offer['offerType'] == 1){echo "Job Offer";}else{echo "Internship Offer";}?></p>
-                      <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}else echo "Work From Home"; ?>
+                      <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}else $location = "Work From Home"; ?>
                       <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
                     </div>
                     <div class="col-md-6 mb-4">
+                      <p class="card-text"><b>Status: </b><?php if($offer['status'] == 1){echo "<b>Applied</b>";}else if($offer['status'] == 2){echo "<b style = 'color:green'>Selected</b>";}else if($offer['status'] == 3){echo "<b style = 'color:yellow'>Shortlisted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></p>
                       <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
                       <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                     </div>
                     <div class="col-md-12 mb-4">
-                      <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}else echo "None";?>
+                      <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}else $skill = "None";?>
                       <p class="card-text"><b>Skills Required: </b><?= $skill?></p>
                     </div>
                   </div>
@@ -92,7 +93,7 @@
                 </div>
               </div>
 
-              <?php }}else{ echo "<center>You have added no Offers Yet.</center>"; } ?>
+              <?php }}else{ echo "<center>You have applied For no Offers Yet.</center>"; } ?>
               <div class ="offerCont"></div>
             </div>
 

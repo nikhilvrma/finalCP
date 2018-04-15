@@ -291,16 +291,16 @@ class Function_lib {
 		return $CI->function->hasMoreOffers($userID, $limit, $offset);
 	}
 
-	public function getAppliedOffers($userID, $offset, $limit){
+	public function getAppliedOffers($userID, $offset, $limit, $status){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getAppliedOffers($userID, $offset, $limit);
+		return $CI->function->getAppliedOffers($userID, $offset, $limit, $status);
 	}
 
-	public function hasMoreAppliedOffers($userID, $limit, $offset){
+	public function hasMoreAppliedOffers($userID, $limit, $offset, $status){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->hasMoreAppliedOffers($userID, $limit, $offset);
+		return $CI->function->hasMoreAppliedOffers($userID, $limit, $offset, $status);
 	}
 
 	public function getAllOffers($offset, $limit){

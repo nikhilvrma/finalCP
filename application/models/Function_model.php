@@ -426,17 +426,21 @@ class Function_model extends CI_Model {
 		}
 	}
 
-	public function getAppliedOffers($userID, $offset, $limit){
-		$this->db->select('applicants.offerID, offerType, offerTitle, applicationDeadline, joiningDate');
+	public function getAppliedOffers($userID, $offset, $limit, $status = 0){
+		$this->db->select('applicants.offerID, offerType, offerTitle, applicationDeadline, joiningDate, status');
 		$this->db->limit($limit, $offset);
 		$this->db->join('offers','applicants.offerID = offers.offerID');
+		if($status != 0)
+			$this->db->where('status', $status);
 		$result = $this->db->get_where('applicants', array('userID'=>$userID))->result_array();
 		// var_dump($this->db->last_query()); die;
 		return $result;
 	}
 
-	public function hasMoreAppliedOffers($userID, $limit, $offset){
+	public function hasMoreAppliedOffers($userID, $limit, $offset, $status = 0){
 		$this->db->limit($limit, $offset);
+		if($status != 0)
+			$this->db->where('status', $status);
 		$result = $this->db->get_where('applicants', array('userID'=>$userID));
 		if($result->num_rows()>0){
 			return true;

@@ -866,6 +866,7 @@ class Functions extends CI_Controller {
 			'applicantType' => $applicantType,
 			'selectedSkills' => $selectedSkills
 		);
+		// var_dump($redirect); die;
 		$_SESSION['redirect'] = $redirect;
 
 		if($offerType == '1' || $offerType == '2'){
@@ -913,7 +914,7 @@ class Functions extends CI_Controller {
 
 			if($compensationType == 1){
 				if($compensation == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.1','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
 					if(isset($_POST['edit'])){
 						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
@@ -922,7 +923,7 @@ class Functions extends CI_Controller {
 				$data['compensation'] = $compensation;
 			}else if($compensationType == 2){
 				if($maxCompensation == '' || $minCompensation == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.2','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
 					if(isset($_POST['edit'])){
 						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
@@ -946,8 +947,8 @@ class Functions extends CI_Controller {
 			}
 			// var_dump($selectedLocations);die;
 			if($workHome == 2){
-				if($selectedLocations == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.3','color'=>'red'));
+				if($selectedLocations == '[null]' || $selectedLocations == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
 					if(isset($_POST['edit'])){
 						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
@@ -957,7 +958,7 @@ class Functions extends CI_Controller {
 
 			if($offerType == 2){
 				if($duration == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.4','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
 					if(isset($_POST['edit'])){
 						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
@@ -968,8 +969,8 @@ class Functions extends CI_Controller {
 			}
 
 			if($applicantType == 2){
-				if($selectedSkills == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.5','color'=>'red'));
+				if($selectedSkills == '[null]' || $selectedSkills == ''){
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
 					if(isset($_POST['edit'])){
 						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
@@ -978,7 +979,7 @@ class Functions extends CI_Controller {
 			}
 
 			if($offerType == '' || $offerTitle == '' || $offerDescription == '' || $openings == '' || $joiningDate == '' || $applicationDeadline == ''){
-				$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.6','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
 				if(isset($_POST['edit'])){
 					redirect(base_url('edit-offer/'.$_POST['edit']));
 				}
@@ -1180,9 +1181,8 @@ class Functions extends CI_Controller {
 	public function getMoreAppliedOffers(){
 		$offset = $this->input->get('offset');
 		$offset = $offset * 10;
-		$data['offers'] = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],$offset, 10);
-		$data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10, $offset+10);
-		// var_dump($data['hasMore']);die;
+		$data['offers'] = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],$offset, 10, 0);
+		$data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10, $offset+10, 0);
 		$offers = $data['offers'];
 		if(!empty($offers)){
 			foreach ($offers as $key => $offer) {
@@ -1200,6 +1200,37 @@ class Functions extends CI_Controller {
 			echo json_encode($data);
 		}else{
 			echo "false";
+		}
+	}
+
+	public function filterAppliedOffers(){
+		$status = $this->input->post('status');
+		$data['offers'] = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0, 10, $status);
+		$data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10, 10, $status);
+		$data['status'] = $status;
+		$offers = $data['offers'];
+		// var_dump($offers);die;
+		if(!empty($offers)){
+			foreach ($offers as $key => $offer) {
+				if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID']))
+					$data['offerSkills'][$offer['offerID']] = $offerSkills;
+				else
+					$data['offerSkills'] = array();
+
+				if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID']))
+					$data['offerLocations'][$offer['offerID']] = $offerLocations;
+				else{
+					$data['offerLocations'] = array();
+				}
+			}
+			// var_dump($data); die;
+			$_SESSION['filter'] = 1;
+			$_SESSION['data'] = $data;	
+			redirect(base_url('applied-offers'));
+		}else{
+			$_SESSION['filter'] = 1;
+			$_SESSION['data'] = $data;
+			redirect(base_url('applied-offers'));
 		}
 	}
 
@@ -1230,6 +1261,20 @@ class Functions extends CI_Controller {
 
 	public function apply($offerID){
 		if($this->function_lib->checkAlreadyApplied($offerID, $_SESSION['user_data']['userID'])){
+			$offer = $this->function_lib->getOfferDetails($offerID);
+			$offerSkills = $this->function_lib->getOfferSkills($offerID);
+			$userSkills =  $this->skill_lib->getUserSkills($_SESSION['user_data']['userID']);
+			$i = 0; 
+			foreach ($offerSkills as $key => $value) {
+				$skills[$i] = $value['skillID'];
+				$i++;
+			}
+			$i=0;
+			foreach ($userSkills as $key => $value) {
+				$users[$i] = $value['skillID'];
+				$i++;
+			}
+			if($offer[0]['skillRequired'] == 1){
 			$data = array(
 				'userID' => $_SESSION['user_data']['userID'],
 				'offerID' => $offerID,
@@ -1242,10 +1287,28 @@ class Functions extends CI_Controller {
 				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 				redirect(base_url('available-offers'));
 			}
-
+		}else{
+			if(!empty(array_intersect($skills, $users))){
+			$data = array(
+				'userID' => $_SESSION['user_data']['userID'],
+				'offerID' => $offerID,
+				'status' => 1
+			);
+			if($this->function_lib->insertApplicationData($data)){
+				$this->session->set_flashdata('message', array('content'=>'Application Successful.','color'=>'green'));
+				redirect(base_url('applied-offers'));
+			}else{
+				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+				redirect(base_url('available-offers'));
+			}
+			}else{	
+			$this->session->set_flashdata('message', array('content'=>'Your Skills Do Not Match the Required Skills.','color'=>'red'));
+				redirect(base_url('available-offers'));
+			}
+		}
 		}else{
 			$this->session->set_flashdata('message', array('content'=>'You Have Already Applied for the offer.','color'=>'red'));
-				redirect(base_url('available-offers'));
+				redirect(base_url('offer/'.$offerID));
 		}
 	}
 

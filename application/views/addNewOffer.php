@@ -372,7 +372,7 @@
   	    console.log();
   	    $(this).parent().remove();
   	  }
-  	  $("input[name=\"selected_skills\"]").val(JSON.stringify(selectedSkills));
+  	  $("input[name=\"selectedSkills\"]").val(JSON.stringify(selectedSkills));
   	});
 
   	</script>
@@ -421,10 +421,9 @@
       if(selectedLocations.length > 0)
       {
         delete selectedLocations[$(this).attr('index')]
-        console.log();
         $(this).parent().remove();
       }
-      $("input[name=\"selected_locations\"]").val(JSON.stringify(selectedLocations));
+      $("input[name=\"selectedLocations\"]").val(JSON.stringify(selectedLocations));
     });
 
     </script>
