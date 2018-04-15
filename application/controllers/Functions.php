@@ -876,22 +876,37 @@ class Functions extends CI_Controller {
 
 			if (!($d1 && $d1->format('Y-m-d') === $joiningDate)){
 				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
 				redirect(base_url('add-new-offer'));
 			}
 			if ($joiningDate < $today){
 				$this->session->set_flashdata('message', array('content'=>'Offer Joining Date has already Passed. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
 				redirect(base_url('add-new-offer'));
 			}
 			if (!($d2 && $d2->format('Y-m-d') === $applicationDeadline)){
 				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
 				redirect(base_url('add-new-offer'));
 			}
 			if ($applicationDeadline < $today){
 				$this->session->set_flashdata('message', array('content'=>'Application Deadline already Passed. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
 				redirect(base_url('add-new-offer'));
 			}
 			if ($applicationDeadline > $joiningDate){
 				$this->session->set_flashdata('message', array('content'=>'Offer Joining Date cannot be before the Offer Application Deadline. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
 				redirect(base_url('add-new-offer'));
 			}
 
@@ -899,12 +914,18 @@ class Functions extends CI_Controller {
 			if($compensationType == 1){
 				if($compensation == ''){
 					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					if(isset($_POST['edit'])){
+						redirect(base_url('edit-offer/'.$_POST['edit']));
+					}
 					redirect(base_url('add-new-offer'));
 				}
 				$data['compensation'] = $compensation;
 			}else if($compensationType == 2){
 				if($maxCompensation == '' || $minCompensation == ''){
 					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					if(isset($_POST['edit'])){
+						redirect(base_url('edit-offer/'.$_POST['edit']));
+					}
 					redirect(base_url('add-new-offer'));
 				}
 				if($maxCompensation < $minCompensation){
@@ -912,6 +933,9 @@ class Functions extends CI_Controller {
 						$this->session->set_flashdata('message', array('content'=>'Maximum Stipend Cannot be less than Minimum Stipend. Please Try Again.','color'=>'red'));
 					}else{
 						$this->session->set_flashdata('message', array('content'=>'Maximum Compensation Cannot be less than Minimum Compensation. Please Try Again.','color'=>'red'));
+					}
+					if(isset($_POST['edit'])){
+						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
 					redirect(base_url('add-new-offer'));
 				}
@@ -923,14 +947,20 @@ class Functions extends CI_Controller {
 			// var_dump($selectedLocations);die;
 			if($workHome == 2){
 				if($selectedLocations == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.1','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					if(isset($_POST['edit'])){
+						redirect(base_url('edit-offer/'.$_POST['edit']));
+					}
 					redirect(base_url('add-new-offer'));
 				}
 			}
 
 			if($offerType == 2){
 				if($duration == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.2','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					if(isset($_POST['edit'])){
+						redirect(base_url('edit-offer/'.$_POST['edit']));
+					}
 					redirect(base_url('add-new-offer'));
 				}else{
 					$data['duration'] = $duration;
@@ -939,13 +969,19 @@ class Functions extends CI_Controller {
 
 			if($applicantType == 2){
 				if($selectedSkills == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.3','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					if(isset($_POST['edit'])){
+						redirect(base_url('edit-offer/'.$_POST['edit']));
+					}
 					redirect(base_url('add-new-offer'));
 				}
 			}
 
 			if($offerType == '' || $offerTitle == '' || $offerDescription == '' || $openings == '' || $joiningDate == '' || $applicationDeadline == ''){
-				$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.4','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
 				redirect(base_url('add-new-offer'));
 			}
 			else{
@@ -961,6 +997,7 @@ class Functions extends CI_Controller {
 					$data['addedBy'] = $_SESSION['user_data']['userID'];
 					$data['skillRequired'] = $applicantType;
 
+				if(!isset($_POST['edit'])){
 				$result = $this->function_lib->addOffer($data);
 				if($result){
 					$offerID = $this->function_lib->getCurrentOfferID($_SESSION['user_data']['userID']);
@@ -992,19 +1029,83 @@ class Functions extends CI_Controller {
 					if($result1 && $result2){
 						unset($_SESSION['redirect']);
 						$this->session->set_flashdata('message', array('content'=>'Offer added Successfully.','color'=>'green'));
+						if(isset($_POST['edit'])){
+							redirect(base_url('my-added-offers'));
+					}
 						redirect(base_url('add-new-offer'));
 					}else{
-						$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.1','color'=>'red'));
-					redirect(base_url('add-new-offer'));
+						$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+						if(isset($_POST['edit'])){
+							redirect(base_url('edit-offer/'.$_POST['edit']));
+						}
+						redirect(base_url('add-new-offer'));
 					}
 				}else{
-					$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.2','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+					if(isset($_POST['edit'])){
+						redirect(base_url('edit-offer/'.$_POST['edit']));
+					}
 					redirect(base_url('add-new-offer'));
 				}
+			}else{
+					$result = $this->function_lib->updateOffer($_POST['edit'], $data);
+				if($result){
+					 $this->function_lib->deleteSkillsLocations($_POST['edit']);
+					if($applicantType == 2){
+						$skills = json_decode($selectedSkills);
+						var_dump($skills);die;
+						$i = 0;
+						foreach ($skills as $key => $value) {
+							$dat[$i]['offerID'] = $offerID;
+							$dat[$i]['skillID'] = $value->skillID;
+							$i++;
+						}
+						$result1 = $this->function_lib->addOfferSkills($dat);
+					}else{
+						$result1 = true;
+					}
+					if($workHome == 2){
+						$locations = json_decode($selectedLocations);
+						// var_dump($locations);
+						$i = 0;
+						foreach ($locations as $key => $value) {
+							$dats[$i]['offerID'] = $offerID;
+							$dats[$i]['cityID'] = $value->locationID;
+							$i++;
+						}
+						$result2 = $this->function_lib->addOfferlocation($dats);
+					}else{
+						$result2 = true;
+					}
+					if($result1 && $result2){
+						unset($_SESSION['redirect']);
+						$this->session->set_flashdata('message', array('content'=>'Offer added Successfully.','color'=>'green'));
+						if(isset($_POST['edit'])){
+							redirect(base_url('my-added-offers'));
+					}
+						redirect(base_url('add-new-offer'));
+					}else{
+						$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+						if(isset($_POST['edit'])){
+							redirect(base_url('edit-offer/'.$_POST['edit']));
+						}
+						redirect(base_url('add-new-offer'));
+					}
+				}else{
+					$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+					if(isset($_POST['edit'])){
+						redirect(base_url('edit-offer/'.$_POST['edit']));
+					}
+					redirect(base_url('add-new-offer'));
+				}
+			}
 			}
 		}
 		else{
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			if(isset($_POST['edit'])){
+				redirect(base_url('edit-offer/'.$_POST['edit']));
+			}
 			redirect(base_url('add-new-offer'));
 		}
 

@@ -275,7 +275,7 @@ class Home extends CI_Controller {
 	public function editOffer($offerID){
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
-				$this->data['pageTitle'] = "Add New Offer";
+				$this->data['pageTitle'] = "Edit Offer";
 				$this->data['activePage'] = "9";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->data['skills'] = $this->function_lib->getSkills();
@@ -296,9 +296,16 @@ class Home extends CI_Controller {
 					else
 						$this->data['redirect']['selectedSkills'] = array();
 
-					if($offerLocations = $this->function_lib->getOfferLocations($offerID))
+					if($offerLocations = $this->function_lib->getOfferLocations($offerID)){
+						$i=0; 
+						foreach ($offerLocations as $key => $locations) {
+							$offers[$i]['locationID'] = $locations['cityID'];
+							$offers[$i]['location_name'] = $locations['city'].', '.$locations['state'];
+							$i++; 
+						}
+						$offerLocations = $offers;
 						$this->data['redirect']['location'] = json_encode($offerLocations);
-					else{
+					}else{
 						$this->data['redirect']['location'] = array();
 					}
 				$this->data['edit'] = 1;	

@@ -356,6 +356,11 @@ class Function_model extends CI_Model {
 		return $this->db->insert('offers', $data);
 	}
 
+	public function updateOffer($offerID, $data){
+		$this->db->where('offerID', $offerID);
+		return $this->db->update('offers', $data);
+	}
+
 	public function getCurrentofferID($userID){
 		$this->db->select('offerID');
 		$this->db->order_by('offerID', 'DESC');
@@ -484,6 +489,18 @@ class Function_model extends CI_Model {
 
 	public function insertApplicationData($data){
 		return $this->db->insert('applicants', $data);
+	}
+
+	public function deleteSkillsLocations($offerID){
+		$this->db->where('offerID', $offerID);
+		$result1 = $this->db->delete('offerLocation');
+		$this->db->where('offerID', $offerID);
+		$result2 = $this->db->delete('offerSkills');
+		if($result1 && $result2){
+			return true;
+		}else{
+			return false;
+		}
 	}
 ///////////////////////////////////////////////////////////
 

@@ -437,13 +437,13 @@
   }
   $uploadCrop = $('#cropped-img').croppie({
     viewport: {
-      width: 400,
-      height: 400,
+      width: 300,
+      height: 300,
       type: 'square'
     },
     boundary: {
-      width: 450,
-      height: 450,
+      width: 350,
+      height: 350,
     },
     exif: false
   });

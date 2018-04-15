@@ -206,6 +206,12 @@ class Function_lib {
 		return $CI->function->addOffer($data);
 	}
 
+	public function updateOffer($offerID, $data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->updateOffer($offerID, $data);
+	}
+
 	public function checkPasswordMatch($email, $password){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -343,5 +349,11 @@ class Function_lib {
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->insertApplicationData($data);
+	}
+
+	public function deleteSkillsLocations($offerID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->deleteSkillsLocations($offerID);
 	}
 }

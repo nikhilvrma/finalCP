@@ -188,10 +188,10 @@
                   </div>
 
                 </div>
-                <?php $i = 0;
-               if(isset($redirect['location'])){
+                <?php $i = 0; 
+               if(isset($redirect['location']) && !empty($redirect['location'])){
                 foreach(json_decode($redirect['location']) as $location){ ?>
-                  <p class="selectedLocation"><?=$location->city.', '.$location->state?><a href="javascript:" data-location="<?=$location->city.', '.$location->state?>" index="<?= $i?>" location-id="<?= $location->cityID ?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
+                  <p class="selectedLocation"><?=$location->location_name?><a href="javascript:" data-location="<?=$location->location_name?>" index="<?= $i?>" location-id="<?= $location->locationID ?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
                 <?php $i++; } }?>
               </div>
 
@@ -282,12 +282,15 @@
 
                   </div>
                  <?php $i = 0;
-                 if(isset($redirect['selectedSkills'])){
+                 if(isset($redirect['selectedSkills']) && !empty($redirect['selectedSkills'])){
                   foreach(json_decode($redirect['selectedSkills']) as $skill){ ?>
                     <p class="skill"><?= $skill->skill_name?><a href="javascript:" data-skill="<?= $skill->skill_name?>" index="<?= $i?>" skill-id="<?= $skill->skillID?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
                   <?php $i++; } }?>
               <?php } ?>
             </div>
+             <?php if(isset($edit) && $edit == 1){?>
+             <input type = "hidden" name = "edit" value = "<?= $redirect['offerID']?>">
+             <?php } ?>
 
             <div class="row">
               <div class="col-md-12">
@@ -378,8 +381,8 @@
     
     <?php if(!empty($redirect['location'])){?>
       var locations_arr =[]
-      var selectedLocations = <?= $redirect['location']?>;
-      selectedLocation = JSON.parse(selectedLocation)
+      var selectedLocations = '<?= $redirect['location']?>';
+      selectedLocations = JSON.parse(selectedLocations)
     <?php }else{?>
       var locations_arr =[]
       var selectedLocations = [];
