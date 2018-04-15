@@ -913,7 +913,7 @@ class Functions extends CI_Controller {
 
 			if($compensationType == 1){
 				if($compensation == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.1','color'=>'red'));
 					if(isset($_POST['edit'])){
 						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
@@ -922,7 +922,7 @@ class Functions extends CI_Controller {
 				$data['compensation'] = $compensation;
 			}else if($compensationType == 2){
 				if($maxCompensation == '' || $minCompensation == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.2','color'=>'red'));
 					if(isset($_POST['edit'])){
 						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
@@ -947,7 +947,7 @@ class Functions extends CI_Controller {
 			// var_dump($selectedLocations);die;
 			if($workHome == 2){
 				if($selectedLocations == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.3','color'=>'red'));
 					if(isset($_POST['edit'])){
 						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
@@ -957,7 +957,7 @@ class Functions extends CI_Controller {
 
 			if($offerType == 2){
 				if($duration == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.4','color'=>'red'));
 					if(isset($_POST['edit'])){
 						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
@@ -969,7 +969,7 @@ class Functions extends CI_Controller {
 
 			if($applicantType == 2){
 				if($selectedSkills == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.5','color'=>'red'));
 					if(isset($_POST['edit'])){
 						redirect(base_url('edit-offer/'.$_POST['edit']));
 					}
@@ -978,7 +978,7 @@ class Functions extends CI_Controller {
 			}
 
 			if($offerType == '' || $offerTitle == '' || $offerDescription == '' || $openings == '' || $joiningDate == '' || $applicationDeadline == ''){
-				$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Incomplete Data. Please Try Again.6','color'=>'red'));
 				if(isset($_POST['edit'])){
 					redirect(base_url('edit-offer/'.$_POST['edit']));
 				}
@@ -1058,6 +1058,7 @@ class Functions extends CI_Controller {
 					 $offerID = $_POST['edit'];
 					if($applicantType == 2){
 						$skills = json_decode($selectedSkills);
+						var_dump($selectedSkills);
 						// var_dump($skills);die;
 						$i = 0;
 						foreach ($skills as $key => $value) {
@@ -1073,7 +1074,7 @@ class Functions extends CI_Controller {
 					}
 					if($workHome == 2){
 						$locations = json_decode($selectedLocations);
-						var_dump($locations);
+						// var_dump($locations);
 						$i = 0;
 						foreach ($locations as $key => $value) {
 							if($value == NULL)
