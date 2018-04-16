@@ -453,7 +453,7 @@ class Function_model extends CI_Model {
 	public function getAllOffers($offset, $limit){
 		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate');
 		$this->db->limit($limit, $offset);
-		$result = $this->db->get('offers')->result_array();	
+		$result = $this->db->get('offers')->result_array();
 		// var_dump($this->db->last_query()); die;,
 		return $result;
 	}
@@ -535,7 +535,7 @@ class Function_model extends CI_Model {
 			$this->db->where_in('cityID',$offerLocations);
 			$this->db->join('offerLocation','offers.offerID = offerLocation.offerID');
 		}
-		$result = $this->db->get('offers')->result_array();	
+		$result = $this->db->get('offers')->result_array();
 		// var_dump($this->db->last_query());die;
 		return $result;
 	}
@@ -569,6 +569,27 @@ class Function_model extends CI_Model {
 
 	public function contactUs($data){
 		return $this->db->insert('contactMessages', $data);
+	}
+
+	public function checkResetPasswordToken($email){
+			$this->db->order_by('passwordTokenID', 'DESC');
+			$result = $this->db->get_where('resetPasswordTokens', array('email' => $email, 'active'=>'1'), '1');
+			return $result->result_array();
+	}
+
+	public function checkResetToken($email, $token){
+			$this->db->order_by('passwordTokenID', 'DESC');
+			$result = $this->db->get_where('resetPasswordTokens', array('email' => $email, 'token' => $token, 'active'=>'1'), '1');
+			return $result->result_array();
+	}
+
+	public function insertResetPasswordToken($data){
+		return $this->db->insert('resetPasswordTokens', $data);
+	}
+
+	public function resetActivePasswordResetToken($email, $token){
+		$query = "UPDATE resetPasswordTokens SET active= 0 WHERE email='$email' AND token='$token'";
+		return $this->db->query($query);
 	}
 
 }

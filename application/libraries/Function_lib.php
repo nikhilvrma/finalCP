@@ -386,4 +386,29 @@ class Function_lib {
 		$CI->load->model('function_model','function');
 		return $CI->function->hasMoreFilteredOffers($limit, $offset, $offerType, $offerSkills, $offerLocations);
 	}
+
+	public function checkResetPasswordToken($email){
+		$CI = &get_instance();
+		$CI->load->model('function_model','functionModel');
+		return $CI->functionModel->checkResetPasswordToken($email);
+	}
+
+	public function checkResetToken($email, $token){
+		$CI = &get_instance();
+		$CI->load->model('function_model','functionModel');
+		return $CI->functionModel->checkResetToken($email, $token);
+	}
+
+	public function insertResetPasswordToken($data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','functionModel');
+		return $CI->functionModel->insertResetPasswordToken($data);
+	}
+
+	public function resetActivePasswordResetToken($email, $token){
+		$CI = &get_instance();
+		$CI->load->model('function_model','functionModel');
+		return $CI->functionModel->resetActivePasswordResetToken($email, $token);
+	}
+
 }

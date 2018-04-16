@@ -174,6 +174,7 @@
 
           </div>
           <div class="modal-footer">
+            <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
             <button type="button" class="btn btn-secondary" id = "clearModal" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary submitButton">Recover Password</button>
           </div>

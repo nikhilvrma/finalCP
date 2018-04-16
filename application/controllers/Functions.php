@@ -1549,12 +1549,131 @@ class Functions extends CI_Controller {
 			$registeredEMail = $x;
 		}
 		if($this->function_lib->checkEMailExist($registeredEMail)){
-			echo "aage";
+			$this->generateResetPasswordToken($registeredEMail);
+			$this->session->set_flashdata('message', array('content'=>'Password Reset Token has been sent to the requested E-Mail Address','color'=>'green'));
+			redirect(base_url('reset-password?email='.$registeredEMail));
 		}
 		else{
 			$this->session->set_flashdata('message', array('content'=>'You are not registered with CampusPuppy. Register a Account today.','color'=>'red'));
 			redirect(base_url());
 		}
+	}
+
+	public function resendPasswordToken(){
+		$email = "";
+		if($x = $this->input->get('email')){
+			$email = $x;
+		}
+		if($this->function_lib->checkEMailExist($email)){
+			$this->generateResetPasswordToken($email);
+			$this->session->set_flashdata('message', array('content'=>'Password Reset Token has been sent to the requested E-Mail Address','color'=>'green'));
+			redirect(base_url('reset-password?email='.$email));
+		}
+		else{
+			$this->session->set_flashdata('message', array('content'=>'You are not registered with CampusPuppy. Register a Account today.','color'=>'red'));
+			redirect(base_url());
+		}
+	}
+
+	public function resetUserPassword(){
+		$token = "";
+		$password = "";
+		$confirmPassword = "";
+		$email = "";
+		if($x = $this->input->post('token')){
+			$token = $x;
+		}
+		if($x = $this->input->post('password')){
+			$password = $x;
+		}
+		if($x = $this->input->post('confirmPassword')){
+			$confirmPassword = $x;
+		}
+		if($x = $this->input->post('email')){
+			$email = $x;
+		}
+		$check = $this->function_lib->checkResetToken($email, $token);
+		if(empty($check)){
+			$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again.','color'=>'red'));
+			redirect(base_url('reset-password?email='.$email));
+		}
+		else{
+			if($password === $confirmPassword){
+				$password = md5($password);
+				$result = $this->function_lib->changePassword($email, $password);
+				if($result){
+					$this->function_lib->resetActivePasswordResetToken($email, $token);
+					$this->session->set_flashdata('message', array('content'=>'Your Password is now Successfully Reset.','color'=>'green'));
+					redirect(base_url('reset-password?email='.$email));
+				}
+				else{
+					$this->session->set_flashdata('message', array('content'=>'Some Error Occured, Please Try Again.','color'=>'red'));
+					redirect(base_url('reset-password?email='.$email));
+
+				}
+			}
+			else{
+				$this->session->set_flashdata('message', array('content'=>'Your Password and Confirm Password do not Match. Please Try Again.','color'=>'red'));
+				redirect(base_url('reset-password?email='.$email));
+			}
+		}
+	}
+
+	public function generateResetPasswordToken($email){
+		date_default_timezone_set("Asia/Kolkata");
+		$checkCode = $this->function_lib->checkResetPasswordToken($email);
+		$currentTime = strtotime(date("d M Y H:i:s"));
+		if($checkCode){
+			$expiry = $checkCode[0]['expiry'];
+			$timeDifference = $expiry-$currentTime;
+			if($timeDifference>0 && $timeDifference<7200){
+				$msg = "Your Reset Password Token is: ".$checkCode[0]['token'].". The token is valid for only next 2 hours.";
+				$this->sendResetPasswordEMail($email, $msg);
+			}
+			else{
+				$token = rand(100000,999999);
+				$expiry = $currentTime + 7200;
+				$tokenData = array(
+					'token' => $token,
+					'email' => $email,
+					'generatedAt' => $currentTime,
+					'expiry' => $expiry,
+					'active' => '1'
+				);
+				$this->function_lib->insertResetPasswordToken($tokenData);
+				$msg =  "Your Reset Password Token is: ".$token.". The token is valid for only next 2 hours.";
+				$this->sendResetPasswordEMail($email, $msg);
+			}
+		}
+		else {
+			$token = rand(100000,999999);
+			$expiry = $currentTime + 7200;
+			$tokenData = array(
+				'token' => $token,
+				'email' => $email,
+				'generatedAt' => $currentTime,
+				'expiry' => $expiry,
+				'active' => '1'
+			);
+			$this->function_lib->insertResetPasswordToken($tokenData);
+			$msg =  "Your Reset Password Token is: ".$code.". The token is valid for only next 2 hours.";
+			$this->sendResetPasswordEMail($email, $msg);
+		}
+	}
+
+	private function sendResetPasswordEMail($email, $msg){
+		$this->load->helper('mail_helper');
+		$this->data['msg'] = $msg;
+		$message =  $this->load->view('emailers/resetPassword', $this->data, true);
+		$data = array(
+				'sendToEmail' => $email,
+				'fromName' => 'Campus Puppy Private Limited',
+				'fromEmail' => 'no-reply@campuspuppy.com',
+				'subject' => 'Reset Password|Campus Puppy Private Limited',
+				'message' => $message,
+				'using' =>'pepipost'
+				);
+		sendEmail($data);
 	}
 
 }
