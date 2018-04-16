@@ -195,7 +195,6 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('college')){
 			$college = $x;
 		}
-
 		if($type == "" || $year == "" || $scoreType == "" || $score == ""){
 			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.1','color'=>'red'));
 			redirect(base_url('educational-details'));
@@ -1262,6 +1261,7 @@ class Functions extends CI_Controller {
 	}
 
 	public function apply($offerID){
+		if($this->function_lib->auth()){
 		if($this->function_lib->checkAlreadyApplied($offerID, $_SESSION['user_data']['userID'])){
 			$offer = $this->function_lib->getOfferDetails($offerID);
 			$offerSkills = $this->function_lib->getOfferSkills($offerID);
@@ -1312,7 +1312,10 @@ class Functions extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'You Have Already Applied for the offer.','color'=>'red'));
 				redirect(base_url('offer/'.$offerID));
 		}
-	}
+	}else{
+			redirect(base_url());
+		}
+}
 
 	public function filterAvailableOffers(){
 		unset($_SESSION['filter']);

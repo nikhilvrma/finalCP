@@ -404,12 +404,13 @@ class Function_model extends CI_Model {
 	}
 
 	public function getAddedOffers($userID, $offset, $limit){
-		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate');
+		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate, approved');
 		$this->db->limit($limit, $offset);
 		$result = $this->db->get_where('offers', array('addedBy'=>$userID))->result_array();
 		// var_dump($this->db->last_query()); die;,
 		return $result;
 	}
+
 
 	public function getOfferDetails($offerID){
 		$result = $this->db->get_where('offers', array('offerID'=>$offerID))->result_array();
@@ -557,6 +558,11 @@ class Function_model extends CI_Model {
 		}else{
 			return false;
 		}
+	}
+
+	public function checkOfferStatus($offerID){
+		$this->db->select('approved');
+		return $this->db->get_where('offers', array('offerID'=>$offerID))->result_array()[0]['approved'];
 	}
 ///////////////////////////////////////////////////////////
 

@@ -24,6 +24,12 @@ class Function_lib {
 		return 0;
 	}
 
+	public function checkOfferStatus($offerID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->checkOfferStatus($offerID);
+	}
+
 	public function auth(){
 		$CI = & get_instance();
 		$CI->load->library('session');

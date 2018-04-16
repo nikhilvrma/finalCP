@@ -280,6 +280,7 @@ class Home extends CI_Controller {
 
 	public function editOffer($offerID){
 		if($this->function_lib->auth()){
+			if($this->function_lib->checkOfferStatus($offerID) == 0){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Edit Offer";
 				$this->data['activePage'] = "9";
@@ -323,8 +324,11 @@ class Home extends CI_Controller {
 			else{
 				redirect(base_url('verify-contact-details'));
 			}
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Approved and Rejected offers cannot be edited.','color'=>'red'));
+			redirect(base_url('my-added-offers'));
 		}
-		else{
+	}else{
 			redirect(base_url());
 		}
 	}
