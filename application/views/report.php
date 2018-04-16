@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Job Application and Assessment Report- Prashant Mishra</title>
+  <title>Job Application and Assessment Report- <?= $generalData['name']?></title>
 
   <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
   <link href="<?php echo base_url('assets/css/backoffice.css'); ?>" rel="stylesheet">

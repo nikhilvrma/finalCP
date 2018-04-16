@@ -254,6 +254,7 @@ class Home extends CI_Controller {
 				$this->data['activePage'] = "6";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->data['resumeReferenceNumber'] = $this->function_lib->getUserData($_SESSION['user_data']['email']);
+				$this->data['userID'] = $this->data['resumeReferenceNumber'][0]['userID'];
 				$this->data['resumeReferenceNumber'] = $this->data['resumeReferenceNumber'][0]['resumeReferenceNumber'];
 				$this->load->view('resume', $this->data);
 			}
