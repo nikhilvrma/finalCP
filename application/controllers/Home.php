@@ -416,6 +416,7 @@ class Home extends CI_Controller {
 						$this->data['offerSkills'] = $_SESSION['data']['offerSkills'];
 						$this->data['offerLocations'] = $_SESSION['data']['offerLocations'];
 					}
+					$this->data['appliedFilters'] = $_SESSION['appliedFilters'];
 					$this->data['status'] = $_SESSION['data']['status'];
 					$this->load->view('appliedOffers', $this->data);
 				}
@@ -464,7 +465,10 @@ class Home extends CI_Controller {
 					}
 					$this->data['allOfferLocations'] = $this->function_lib->getAllOfferLocations();
 					$this->data['allOfferSkills'] = $this->function_lib->getAllOfferSkills();
-					$this->data['status'] = $_SESSION['data']['status'];
+					if(isset($_SESSION['data']['status'])){
+						$this->data['status'] = $_SESSION['data']['status'];
+						$this->data['userSkills'] = $_SESSION['data']['userSkills'];
+					}
 					$this->load->view('availableOffers', $this->data);
 				}
 				$offers = $this->function_lib->getAllOffers(0,10);

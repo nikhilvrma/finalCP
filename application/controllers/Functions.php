@@ -1325,35 +1325,94 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('offerSkills')){
 			$offerSkills = $x;
 		}
-		$data['offers'] = $this->function_lib->getFilteredOffers(0,10, $offerType, $offerSkills, $offerLocations);
-		$data['hasMore'] = $this->function_lib->hasMoreFilteredOffers(10, 10, $offerType, $offerSkills, $offerLocations);
-		// var_dump($data);die;
-		// if($status == 1){
-		// 	redirect(base_url('available-offers'));
-		// }else{
-		// 	$userSkills =  $this->skill_lib->getUserSkills($_SESSION['user_data']['userID']);
-		// 	$data['userSkills'] = $userSkills;
-		// 	$i=0;
-		// 	foreach ($userSkills as $key => $value) {
-		// 		$skills[$i] = $value['skillID'];
-		// 		$i++;
-		// 	}
-		// 	$j = 0;
-		// 	foreach ($data['offers'] as $key => $offer) {
-		// 		$offerSkills = $this->function_lib->getOfferSkills($offer['offerID']);
-		// 		$i = 0; 
-		// 		foreach ($offerSkills as $key => $value) {
-		// 			$offerSkill[$i] = $value['skillID'];
-		// 			$i++;
-		// 		}
-		// 		if(empty(array_intersect($offerSkill, $skills))){
-		// 			if(!empty($offerSkills))
-		// 			unset($data['offers'][$j]);
-		// 		}
-		// 		$j++;
-		// 	}
-		// }
-		$data['status'] = $status;
+		// var_dump($offerLocations); die;
+		$data['offers'] = $this->function_lib->getAllOffers(0,10);
+		$data['hasMore'] = $this->function_lib->hasMoreUserOffers(10, 10);
+
+		if(!empty($offerType)){
+		$typeOffers = array_column($data['offers'], 'offerID');
+		$j = 0;
+		foreach ($data['offers'] as $key => $offer) {
+			if(!in_array($offer['offerType'], $offerType)){
+				unset($typeOffers[$j]);
+			}
+			$j++;
+		}
+		}else{
+			$typeOffers = array();
+		}
+
+		if(!empty($offerSkills)){
+		$skillOffers = array_column($data['offers'], 'offerID');
+		$j = 0;
+		foreach ($data['offers'] as $key => $offer) {
+			$offerSkill = $this->function_lib->getOfferSkills($offer['offerID']);
+			$i = 0; 
+			foreach ($offerSkill as $key => $value) {
+				$skills[$i] = $value['skillID'];
+				$i++;
+			}
+
+			if(empty(array_intersect($offerSkills, $skills))){
+				if(in_array('0', $offerSkills)){
+					if(!empty($offerSkill))
+						unset($skillOffers[$j]);
+				}else{
+					unset($skillOffers[$j]);
+				}
+			}
+			$j++;
+		}
+		}else{
+			$skillOffers = array();
+		}
+	
+
+		if(!empty($offerLocations)){
+		$locationOffers = array_column($data['offers'], 'offerID');
+		$j = 0;
+		foreach ($data['offers'] as $key => $offer) {
+			$offerLocation = $this->function_lib->getOfferLocations($offer['offerID']);
+			$i = 0; 
+			
+			foreach ($offerLocation as $key => $value) {
+				$locations[$i] = $value['cityID'];
+				$i++;
+			}
+			
+			if(empty(array_intersect($offerLocations, $locations))){
+				if(in_array('0', $offerLocations)){
+					if(!empty($offerLocation))
+						unset($locationOffers[$j]);
+				}else{
+					unset($locationOffers[$j]);
+				}
+			}
+			$j++;
+		} 
+		}else{
+			$locationOffers = array();
+		}
+		
+		$skillLocationFiltered = array_unique(array_merge($locationOffers, $skillOffers));
+		if(!empty($skillLocationFiltered) && !empty($typeOffers))
+			$filteredOffer =  array_intersect($skillLocationFiltered, $typeOffers);
+		else if(empty($skillLocationFiltered) && empty($typeOffers)){
+			$filteredOffer = array();
+		}else if(empty($skillLocationFiltered)){
+			$filteredOffer = $typeOffers;
+		}
+		else if(empty($typeOffers)){
+			$filteredOffer = $skillLocationFiltered;
+		}
+
+		$j=0;
+		foreach ($data['offers'] as $key => $offer) {
+			if(!in_array($offer['offerID'], $filteredOffer)){
+				unset($data['offers'][$j]);
+			}
+			$j++;
+		}	
 		$offers = $data['offers'];
 		if(!empty($offers)){
 			foreach ($offers as $key => $offer) {
@@ -1368,7 +1427,10 @@ class Functions extends CI_Controller {
 					$data['offerLocations'][$offer['offerID']] = array();
 				}
 			}
-	
+			$_SESSION['appliedFilter'] = array(
+				'offerType' => $offerType,
+				'offerSkills' => $offerSkills,
+				'offerLocations' => $offerLocations); 
 			$_SESSION['filter'] = 1;
 			$_SESSION['data'] = $data;	
 			redirect(base_url('available-offers'));
