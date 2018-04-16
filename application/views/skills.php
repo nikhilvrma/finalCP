@@ -99,6 +99,7 @@
               <option value="<?= $value['skillID']?>"><?= $value['skill_name']?></option>
             <?php }?>
           </select>
+          <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
           <button type="submit" class="btn btn-primary mb-2" style="width: 18%;">Add Skill</button>
         </form>
 </div>
@@ -120,12 +121,6 @@
 
     <?php echo $footerFiles; ?>
 
-    <script src="<?= base_url('assets/ckeditor/ckeditor.js')?>"></script>
-    <script>
-      $(document).ready(function(){
-        editor = CKEDITOR.replace('careerObjective');
-      });
-      </script>
 
   </body>
 

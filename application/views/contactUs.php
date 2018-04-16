@@ -107,7 +107,7 @@
 
 
             </div>
-
+            <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
             <button type="submit" class="btn btn-primary" style="float: right;">Drop Us a Message</button>
           </form>
 

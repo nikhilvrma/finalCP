@@ -12,11 +12,28 @@
 
     <?php echo $headerFiles; ?>
 
-    <meta property="og:url"                content="Offer Link" />
+    <meta property="og:url"                content="<?= base_url('offers/'.$offerDetails[0]['offerID'])?>" />
     <meta property="og:type"               content="article" />
-    <meta property="og:title"              content="Offer Title" />
-    <meta property="og:description"        content="Internship/Job Opportunity with CampusPuppy at Lucknow" />
-    <meta property="og:image"              content="Company ka Logo" />
+    <meta property="og:title"              content="<?= $offerDetails[0]['offerTitle']?>" />
+    <?php 
+    if($offerDetails[0]['offerType'] == 1 ){
+      $type = 'Job';
+    }else{
+      $type = 'Internship';
+    } 
+    $employer = $employerDetails['companyName']; 
+    if(!empty($offerLocations)){
+      $i = 0;
+      foreach($offerLocations as $locations){
+        if($i == 0) 
+          $loc = 'at '.$locations['city']; 
+        else 
+          $loc = ', '.$locations['city']; 
+        $i++;
+      }
+    }else{ $loc = "Work From Home";} ?>
+    <meta property="og:description"        content="<?= $type?> Opportunity with <?= $employer?> <?= $loc?>"/>
+    <meta property="og:image"              content="<?= $employerDetails['companyLogo']?>" />
 
   </head>
 
@@ -36,9 +53,15 @@
 
       <div class="row">
 
+      <?php if(isset($_SESSION['user_data']['loggedIn']) && $_SESSION['user_data']['loggedIn']){ ?>
         <?php echo $sidebar; ?>
-
+      <?php } ?>
+      <?php if(isset($_SESSION['user_data']['loggedIn']) && $_SESSION['user_data']['loggedIn']){ ?>
         <div class="col-lg-9 mb-4">
+      <?php } ?>
+      <?php if(!(isset($_SESSION['user_data']['loggedIn']) && !($_SESSION['user_data']['loggedIn']))) { ?>
+        <div class="col-lg-12 mb-4">
+      <?php } ?>
           <h3 class="mt-4 mb-3" style="float: right;"><?php echo $pageTitle; ?></h3>
           <div class="clearfix"></div>
           <hr>
@@ -57,13 +80,13 @@
                     <div class="col-md-3 mb-4">
                       <p class="card-text"><b>Share: </b></p>
                       <p class="card-text">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="btn" style="color: white; background: #3b5998;"><i class="fa fa-facebook"></i></a>
-                        <a href="https://twitter.com/intent/tweet?url=" class="btn" style="color: white; background: #1DA1F2;"><i class="fa fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('offers/'.$offerDetails[0]['offerID'])?>" target="_blank" class="btn" style="color: white; background: #3b5998;"><i class="fa fa-facebook"></i></a>
+                        <a href="https://twitter.com/intent/tweet?url=<?= base_url('offers/'.$offerDetails[0]['offerID'])?>" class="btn" style="color: white; background: #1DA1F2;"><i class="fa fa-twitter"></i></a>
                       </p>
                     </div>
                     <div class="col-md-3 mb-4">
                       <p class="card-text"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
-                      <?php if($_SESSION['user_data']['accountType'] == 1 ){?>
+                      <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] == 1 ){?>
                       <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p>
                       <?php }?>
                     </div>
