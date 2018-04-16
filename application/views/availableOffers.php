@@ -45,7 +45,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#filters">Filter Offers</button>
               </div>
               <div class="col-sm-7 mb-4">
-                <form class="form-inline" style="float: right;" method="POST" action = "<?= base_url('functions/filterRelevantAvailable')?>">
+                <form class="form-inline" style="float: right;" method="GET" action = "<?= base_url('functions/filterRelevantAvailable')?>">
                   <label style="margin: 5px;"><b>Display Offers</b></label>
                   <br>
                   <select class="form-control mb-2 mr-sm-2" name="status">
@@ -117,7 +117,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form method = "POST" action = "<?=base_url('functions/filterAvailableOffers')?>">
+          <form method = "GET" action = "<?=base_url('functions/filterAvailableOffers')?>">
           <div class="modal-body">
               <div class="row">
               <div class="col-md-12 control-group form-group">

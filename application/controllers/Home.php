@@ -411,12 +411,10 @@ class Home extends CI_Controller {
 				if(isset($_SESSION['filter']) && $_SESSION['filter'] == 1){
 					$this->data['offers'] = $_SESSION['data']['offers'];
 					$this->data['hasMore'] = $_SESSION['data']['hasMore'];
-					$this->data['userSkills'] = $_SESSION['data']['userSkills'];
 					if(!empty($_SESSION['data']['offers'])){
 						$this->data['offerSkills'] = $_SESSION['data']['offerSkills'];
 						$this->data['offerLocations'] = $_SESSION['data']['offerLocations'];
 					}
-					$this->data['appliedFilters'] = $_SESSION['appliedFilters'];
 					$this->data['status'] = $_SESSION['data']['status'];
 					
 				}else{

@@ -1206,7 +1206,7 @@ class Functions extends CI_Controller {
 	public function filterAppliedOffers(){
 		unset($_SESSION['filter']);
 		unset($_SESSION['data']);
-		$status = $this->input->post('status');
+		$status = $this->input->get('status');
 		$data['offers'] = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0, 10, $status);
 		$data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10, 10, $status);
 		$data['status'] = $status;
@@ -1321,13 +1321,13 @@ class Functions extends CI_Controller {
 		$offerType = '';
 		$offerLocations = '';
 		$offerSkills = '';
-		if($x = $this->input->post('offerType')){
+		if($x = $this->input->get('offerType')){
 			$offerType = $x;
 		}
-		if($x = $this->input->post('offerLocations')){
+		if($x = $this->input->get('offerLocations')){
 			$offerLocations = $x;
 		}
-		if($x = $this->input->post('offerSkills')){
+		if($x = $this->input->get('offerSkills')){
 			$offerSkills = $x;
 		}
 			$_SESSION['appliedFilters'] = array(
@@ -1451,7 +1451,7 @@ class Functions extends CI_Controller {
 	public function filterRelevantAvailable(){
 		unset($_SESSION['filter']);
 		unset($_SESSION['data']);
-		$status = $this->input->post('status');
+		$status = $this->input->get('status');
 		$data['offers'] = $this->function_lib->getAllOffers(0, 10);
 		$data['hasMore'] = $this->function_lib->hasMoreUserOffers(10, 10);
 		if($status == 1){
