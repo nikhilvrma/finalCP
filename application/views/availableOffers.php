@@ -45,7 +45,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#filters">Filter Offers</button>
               </div>
               <div class="col-sm-7 mb-4">
-                <form class="form-inline" style="float: right;" method="POST" action = "<?= base_url('functions/filterRelevantAvailable')?>">
+                <form class="form-inline" style="float: right;" method="GET" action = "<?= base_url('functions/filterRelevantAvailable')?>">
                   <label style="margin: 5px;"><b>Display Offers</b></label>
                   <br>
                   <select class="form-control mb-2 mr-sm-2" name="status">
@@ -117,17 +117,15 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form method = "POST" action = "<?=base_url('functions/filterAvailableOffers')?>">
+          <form method = "GET" action = "<?=base_url('functions/filterAvailableOffers')?>">
           <div class="modal-body">
-
               <div class="row">
-
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <b>Offer Type</b>
                   <div style="margin-top: 10px;">
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerType[]" value = "1" ><label style="margin-left: 5px;">Job Offers</label></div>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerType[]" value = "2" ><label style="margin-left: 5px;">Internship Offers</label></div>
+                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerType[]" value = "1" <?php if(isset($appliedFilters['offerType']) && $appliedFilters['offerType'] != '' && in_array('1',$appliedFilters['offerType'])){echo "checked";}?>><label style="margin-left: 5px;">Job Offers</label></div>
+                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerType[]" value = "2" <?php if(isset($appliedFilters['offerType']) && $appliedFilters['offerType'] != '' && in_array('2',$appliedFilters['offerType'])){echo "checked";}?>><label style="margin-left: 5px;">Internship Offers</label></div>
                   </div>
                 </div>
               </div>
@@ -137,24 +135,25 @@
                   <b>Skills</b>
                   <div style="margin-top: 10px;">
                     <?php if(isset($allOfferSkills)){?>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerSkills[]" value = "0" ><label style="margin-left: 5px;">No Skill Required.</label></div>
+                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerSkills[]" value = "0" <?php if(isset($appliedFilters['offerSkills']) && $appliedFilters['offerSkills'] != '' && in_array('0',$appliedFilters['offerSkills'])){echo "checked";} if(isset($status)){ echo "checked";}?>><label style="margin-left: 5px;" >No Skill Required.</label></div>
+
                       <?php foreach($allOfferSkills as $offerSkill){?>
-                        <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerSkills[]" value = "<?= $offerSkill['skillID']?>" ><label style="margin-left: 5px;"><?= $offerSkill['skill_name']?></label></div>
+                        <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerSkills[]" value = "<?= $offerSkill['skillID']?>" <?php if(isset($appliedFilters['offerSkills']) && $appliedFilters['offerSkills'] != '' && in_array($offerSkill['skillID'] ,$appliedFilters['offerSkills'])){echo "checked";} if(isset($status) && $userSkills!= '' && in_array($offerSkill['skillID'] ,$userSkills)){ echo "checked";}?>><label style="margin-left: 5px;"><?= $offerSkill['skill_name']?></label></div>
                     <?php }}else{
                       echo "No Added offer Has any Skill Requirement.";
                     }?>
                   </div>
                 </div>
               </div>
-
+              
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <b>Location</b>
                   <div style="margin-top: 10px;">
-                    <?php if(isset($allOfferSkills)){?>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name = "offerLocations[]" value="0" ><label style="margin-left: 5px;">Work From Home</label></div>
+                    <?php if(isset($allOfferLocations)){?>
+                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name = "offerLocations[]" value="0" <?php if(isset($appliedFilters['offerLocations']) && $appliedFilters['offerLocations'] != '' && in_array('0',$appliedFilters['offerLocations'])){echo "checked";}?>><label style="margin-left: 5px;" >Work From Home</label></div>
                       <?php foreach($allOfferLocations as $offerLocation){?>
-                        <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name = "offerLocations[]" value="<?= $offerLocation['cityID']?>" ><label style="margin-left: 5px;"><?= $offerLocation['city'].', '. $offerLocation['state'] ?></label></div>
+                        <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name = "offerLocations[]" value="<?= $offerLocation['cityID']?>" <?php if(isset($appliedFilters['offerLocations']) && $appliedFilters['offerLocations'] != '' && in_array($offerLocation['cityID'] ,$appliedFilters['offerLocations'])){echo "checked";} ?>><label style="margin-left: 5px;" ><?= $offerLocation['city'].', '. $offerLocation['state'] ?></label></div>
                       <?php }}else{
                       echo "All The offers Added are Work From Home.";
                     }?>

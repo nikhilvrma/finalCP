@@ -1090,7 +1090,7 @@ class Functions extends CI_Controller {
 					}
 					if($result1 && $result2){
 						unset($_SESSION['redirect']);
-						$this->session->set_flashdata('message', array('content'=>'Offer added Successfully.','color'=>'green'));
+						$this->session->set_flashdata('message', array('content'=>'Offer added Successfully. Offer Will approved By CampusPuppy team within 24 hrs.','color'=>'green'));
 						if(isset($_POST['edit'])){
 							redirect(base_url('my-added-offers'));
 					}
@@ -1204,7 +1204,9 @@ class Functions extends CI_Controller {
 	}
 
 	public function filterAppliedOffers(){
-		$status = $this->input->post('status');
+		unset($_SESSION['filter']);
+		unset($_SESSION['data']);
+		$status = $this->input->get('status');
 		$data['offers'] = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0, 10, $status);
 		$data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10, 10, $status);
 		$data['status'] = $status;
@@ -1313,18 +1315,25 @@ class Functions extends CI_Controller {
 	}
 
 	public function filterAvailableOffers(){
+		unset($_SESSION['filter']);
+		unset($_SESSION['data']);
+		unset($_SESSION['appliedFilters']);
 		$offerType = '';
 		$offerLocations = '';
 		$offerSkills = '';
-		if($x = $this->input->post('offerType')){
+		if($x = $this->input->get('offerType')){
 			$offerType = $x;
 		}
-		if($x = $this->input->post('offerLocations')){
+		if($x = $this->input->get('offerLocations')){
 			$offerLocations = $x;
 		}
-		if($x = $this->input->post('offerSkills')){
+		if($x = $this->input->get('offerSkills')){
 			$offerSkills = $x;
 		}
+			$_SESSION['appliedFilters'] = array(
+				'offerType' => $offerType,
+				'offerSkills' => $offerSkills,
+				'offerLocations' => $offerLocations); 
 		// var_dump($offerLocations); die;
 		$data['offers'] = $this->function_lib->getAllOffers(0,10);
 		$data['hasMore'] = $this->function_lib->hasMoreUserOffers(10, 10);
@@ -1427,10 +1436,7 @@ class Functions extends CI_Controller {
 					$data['offerLocations'][$offer['offerID']] = array();
 				}
 			}
-			$_SESSION['appliedFilter'] = array(
-				'offerType' => $offerType,
-				'offerSkills' => $offerSkills,
-				'offerLocations' => $offerLocations); 
+			// var_dump($_SESSION['appliedFilters']);die;
 			$_SESSION['filter'] = 1;
 			$_SESSION['data'] = $data;	
 			redirect(base_url('available-offers'));
@@ -1443,20 +1449,22 @@ class Functions extends CI_Controller {
 	}
 
 	public function filterRelevantAvailable(){
-		$status = $this->input->post('status');
+		unset($_SESSION['filter']);
+		unset($_SESSION['data']);
+		$status = $this->input->get('status');
 		$data['offers'] = $this->function_lib->getAllOffers(0, 10);
 		$data['hasMore'] = $this->function_lib->hasMoreUserOffers(10, 10);
 		if($status == 1){
 			redirect(base_url('available-offers'));
 		}else{
 			$userSkills =  $this->skill_lib->getUserSkills($_SESSION['user_data']['userID']);
-			$data['userSkills'] = $userSkills;
 			$i=0;
 			foreach ($userSkills as $key => $value) {
 				$skills[$i] = $value['skillID'];
 				$i++;
 			}
 			$j = 0;
+			$data['userSkills'] = $skills;
 			foreach ($data['offers'] as $key => $offer) {
 				$offerSkills = $this->function_lib->getOfferSkills($offer['offerID']);
 				$i = 0; 
@@ -1475,14 +1483,14 @@ class Functions extends CI_Controller {
 		$offers = $data['offers'];
 		if(!empty($offers)){
 			foreach ($offers as $key => $offer) {
-				if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID'])){
-					$data['offerSkills'][$offer['offerID']] = $offerSkills;
+				if($offergetSkills = $this->function_lib->getOfferSkills($offer['offerID'])){
+					$data['offerSkills'][$offer['offerID']] = $offergetSkills;
 				}
 				else
 					$data['offerSkills'][$offer['offerID']] = array();
 
-				if($offerLocations = $this->function_lib->getOfferLocations($offer['offerID']))
-					$data['offerLocations'][$offer['offerID']] = $offerLocations;
+				if($offergetLocations = $this->function_lib->getOfferLocations($offer['offerID']))
+					$data['offerLocations'][$offer['offerID']] = $offergetLocations;
 				else{
 					$data['offerLocations'][$offer['offerID']] = array();
 				}

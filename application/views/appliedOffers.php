@@ -42,7 +42,7 @@
               <div class="row">
 
               <div class="col-sm-12 mb-4">
-                <form class="form-inline" style="float: right;" method = "POST" action = "<?= base_url('functions/filterAppliedOffers')?>">
+                <form class="form-inline" style="float: right;" method = "get" action = "<?= base_url('functions/filterAppliedOffers')?>">
                   <label style="margin: 5px;"><b>Display Offers</b></label>
                   <br>
                   <select class="form-control mb-2 mr-sm-2" name="status">

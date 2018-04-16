@@ -411,15 +411,15 @@ class Home extends CI_Controller {
 				if(isset($_SESSION['filter']) && $_SESSION['filter'] == 1){
 					$this->data['offers'] = $_SESSION['data']['offers'];
 					$this->data['hasMore'] = $_SESSION['data']['hasMore'];
-					$this->data['userSkills'] = $_SESSION['data']['userSkills'];
 					if(!empty($_SESSION['data']['offers'])){
 						$this->data['offerSkills'] = $_SESSION['data']['offerSkills'];
 						$this->data['offerLocations'] = $_SESSION['data']['offerLocations'];
 					}
-					$this->data['appliedFilters'] = $_SESSION['appliedFilters'];
 					$this->data['status'] = $_SESSION['data']['status'];
-					$this->load->view('appliedOffers', $this->data);
-				}
+					
+				}else{
+					unset($_SESSION['filter']);
+					unset($_SESSION['data']);
 				$offers = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0,10,0);
 				$this->data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10,10,0);
 				$this->data['offers'] = $offers;
@@ -439,6 +439,7 @@ class Home extends CI_Controller {
 					}
 				}
 				}
+			}
 				$this->load->view('appliedOffers', $this->data);
 			}
 			else{
@@ -469,8 +470,13 @@ class Home extends CI_Controller {
 						$this->data['status'] = $_SESSION['data']['status'];
 						$this->data['userSkills'] = $_SESSION['data']['userSkills'];
 					}
-					$this->load->view('availableOffers', $this->data);
-				}
+					if(isset($_SESSION['appliedFilters'])){
+						$this->data['appliedFilters'] = $_SESSION['appliedFilters'];
+					}
+				}else{
+					unset($_SESSION['appliedFilters']);
+					unset($_SESSION['filter']);
+					unset($_SESSION['data']);
 				$offers = $this->function_lib->getAllOffers(0,10);
 				$this->data['hasMore'] = $this->function_lib->hasMoreUserOffers(10,10);
 				$this->data['offers'] = $offers;
@@ -492,6 +498,7 @@ class Home extends CI_Controller {
 					}
 				}
 				}
+			}
 				$this->load->view('availableOffers', $this->data);
 			}
 			else{

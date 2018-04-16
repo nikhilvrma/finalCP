@@ -436,7 +436,9 @@
           if(value == 2){
             $('.reimburse').html('Stipend');
             $('.duration').show();
+            $('#duration').attr('required', 'true')
           }else{
+            $('#duration').attr('required', 'false')
             $('.reimburse').html('Compensation');
           }
         });
@@ -479,12 +481,21 @@
           console.log(value);
           if(value == 1){
             $('.compensation').show();
+            $('#compensation').attr('required', 'true')
+            $('#minCompensation').attr('required', 'false')
+            $('#maxCompensation').attr('required', 'false')
             $('.rangeCompensation').hide();
           }else if(value == 2){
             $('.compensation').hide();
+            $('#compensation').attr('required', 'false')
+            $('#minCompensation').attr('required', 'true')
+            $('#maxCompensation').attr('required', 'true')
             $('.rangeCompensation').show();
           }else if(value == 3){
             $('.compensation').hide();
+            $('#compensation').attr('required', 'false')
+            $('#minCompensation').attr('required', 'false')
+            $('#maxCompensation').attr('required', 'false')
             $('.rangeCompensation').hide();
           }
         });

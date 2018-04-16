@@ -110,7 +110,7 @@
                <div class="col-md-6 control-group form-group compensation" <?php if(isset($redirect) && $redirect['compensationType'] != 1){ echo 'style ="display: none"'; }else{ }?>>
                 <div class="controls">
                   <label><b><span class ="reimburse">Compensation</span>:</b></label>
-                  <input type="text" class="form-control" name="compensation" <?php if(isset($redirect)){ echo "value = ".$redirect['compensation'];}?>>
+                  <input type="text" class="form-control" id = "compensation" name="compensation" <?php if(isset($redirect)){ echo "value = ".$redirect['compensation'];}?>>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -119,14 +119,14 @@
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
                   <label><b>Minimum <span class ="reimburse">Compensation:</span></b></label>
-                  <input type="text" class="form-control" name="minCompensation" <?php if(isset($redirect)){ echo "value = ".$redirect['minCompensation'];}?>>
+                  <input type="text" class="form-control" id = "minCompensation" name="minCompensation" <?php if(isset($redirect)){ echo "value = ".$redirect['minCompensation'];}?>>
                   <p class="help-block"></p>
                 </div>
               </div>
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
                   <label><b>Maximum <span class ="reimburse">Compensation:</span></b></label>
-                  <input type="text" class="form-control" name="maxCompensation" <?php if(isset($redirect)){ echo "value = ".$redirect['maxCompensation'];}?>>
+                  <input type="text" class="form-control" id = "maxCompensation" name="maxCompensation" <?php if(isset($redirect)){ echo "value = ".$redirect['maxCompensation'];}?>>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -196,7 +196,7 @@
               <div class="col-md-6 control-group form-group duration" style="display: none">
                 <div class="controls">
                   <label><b>Duration:</b></label>
-                  <input type="text" class="form-control" name="duration" placeholder="in months">
+                  <input type="text" class="form-control" id = "duration" name="duration" placeholder="in months">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -377,7 +377,9 @@
           if(value == 2){
             $('.reimburse').html('Stipend');
             $('.duration').show();
+            $('#duration').attr('required', 'true')
           }else{
+            $('#duration').attr('required', 'false')
             $('.reimburse').html('Compensation');
           }
         });
@@ -420,12 +422,21 @@
           console.log(value);
           if(value == 1){
             $('.compensation').show();
+            $('#compensation').attr('required', 'true')
+            $('#minCompensation').attr('required', 'false')
+            $('#maxCompensation').attr('required', 'false')
             $('.rangeCompensation').hide();
           }else if(value == 2){
             $('.compensation').hide();
+            $('#compensation').attr('required', 'false')
+            $('#minCompensation').attr('required', 'true')
+            $('#maxCompensation').attr('required', 'true')
             $('.rangeCompensation').show();
           }else if(value == 3){
             $('.compensation').hide();
+            $('#compensation').attr('required', 'false')
+            $('#minCompensation').attr('required', 'false')
+            $('#maxCompensation').attr('required', 'false')
             $('.rangeCompensation').hide();
           }
         });
