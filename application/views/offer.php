@@ -12,6 +12,12 @@
 
     <?php echo $headerFiles; ?>
 
+    <meta property="og:url"                content="Offer Link" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="Offer Title" />
+    <meta property="og:description"        content="Internship/Job Opportunity with CampusPuppy at Lucknow" />
+    <meta property="og:image"              content="Company ka Logo" />
+
   </head>
 
   <body>
@@ -51,9 +57,8 @@
                     <div class="col-md-3 mb-4">
                       <p class="card-text"><b>Share: </b></p>
                       <p class="card-text">
-                        <a class="btn" style="color: white; background: #3b5998;"><i class="fa fa-facebook"></i></a>
-                        <a class="btn" style="color: white; background: #1DA1F2;"><i class="fa fa-twitter"></i></a>
-                        <a class="btn" style="color: white; background: #0077B5;"><i class="fa fa-linkedin"></i></a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="btn" style="color: white; background: #3b5998;"><i class="fa fa-facebook"></i></a>
+                        <a href="https://twitter.com/intent/tweet?url=" class="btn" style="color: white; background: #1DA1F2;"><i class="fa fa-twitter"></i></a>
                       </p>
                     </div>
                     <div class="col-md-3 mb-4">
