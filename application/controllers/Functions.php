@@ -1227,7 +1227,7 @@ class Functions extends CI_Controller {
 			}
 			// var_dump($data); die;
 			$_SESSION['filter'] = 1;
-			$_SESSION['data'] = $data;	
+			$_SESSION['data'] = $data;
 			redirect(base_url('applied-offers'));
 		}else{
 			$_SESSION['filter'] = 1;
@@ -1266,7 +1266,7 @@ class Functions extends CI_Controller {
 			$offer = $this->function_lib->getOfferDetails($offerID);
 			$offerSkills = $this->function_lib->getOfferSkills($offerID);
 			$userSkills =  $this->skill_lib->getUserSkills($_SESSION['user_data']['userID']);
-			$i = 0; 
+			$i = 0;
 			foreach ($offerSkills as $key => $value) {
 				$skills[$i] = $value['skillID'];
 				$i++;
@@ -1303,7 +1303,7 @@ class Functions extends CI_Controller {
 				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 				redirect(base_url('available-offers'));
 			}
-			}else{	
+			}else{
 			$this->session->set_flashdata('message', array('content'=>'Your Skills Do Not Match the Required Skills.','color'=>'red'));
 				redirect(base_url('available-offers'));
 			}
@@ -1333,7 +1333,7 @@ class Functions extends CI_Controller {
 			$_SESSION['appliedFilters'] = array(
 				'offerType' => $offerType,
 				'offerSkills' => $offerSkills,
-				'offerLocations' => $offerLocations); 
+				'offerLocations' => $offerLocations);
 		// var_dump($offerLocations); die;
 		$data['offers'] = $this->function_lib->getAllOffers(0,10);
 		$data['hasMore'] = $this->function_lib->hasMoreUserOffers(10, 10);
@@ -1356,7 +1356,7 @@ class Functions extends CI_Controller {
 		$j = 0;
 		foreach ($data['offers'] as $key => $offer) {
 			$offerSkill = $this->function_lib->getOfferSkills($offer['offerID']);
-			$i = 0; 
+			$i = 0;
 			foreach ($offerSkill as $key => $value) {
 				$skills[$i] = $value['skillID'];
 				$i++;
@@ -1375,20 +1375,20 @@ class Functions extends CI_Controller {
 		}else{
 			$skillOffers = array();
 		}
-	
+
 
 		if(!empty($offerLocations)){
 		$locationOffers = array_column($data['offers'], 'offerID');
 		$j = 0;
 		foreach ($data['offers'] as $key => $offer) {
 			$offerLocation = $this->function_lib->getOfferLocations($offer['offerID']);
-			$i = 0; 
-			
+			$i = 0;
+
 			foreach ($offerLocation as $key => $value) {
 				$locations[$i] = $value['cityID'];
 				$i++;
 			}
-			
+
 			if(empty(array_intersect($offerLocations, $locations))){
 				if(in_array('0', $offerLocations)){
 					if(!empty($offerLocation))
@@ -1398,11 +1398,11 @@ class Functions extends CI_Controller {
 				}
 			}
 			$j++;
-		} 
+		}
 		}else{
 			$locationOffers = array();
 		}
-		
+
 		$skillLocationFiltered = array_unique(array_merge($locationOffers, $skillOffers));
 		if(!empty($skillLocationFiltered) && !empty($typeOffers))
 			$filteredOffer =  array_intersect($skillLocationFiltered, $typeOffers);
@@ -1421,7 +1421,7 @@ class Functions extends CI_Controller {
 				unset($data['offers'][$j]);
 			}
 			$j++;
-		}	
+		}
 		$offers = $data['offers'];
 		if(!empty($offers)){
 			foreach ($offers as $key => $offer) {
@@ -1438,7 +1438,7 @@ class Functions extends CI_Controller {
 			}
 			// var_dump($_SESSION['appliedFilters']);die;
 			$_SESSION['filter'] = 1;
-			$_SESSION['data'] = $data;	
+			$_SESSION['data'] = $data;
 			redirect(base_url('available-offers'));
 		}else{
 			$_SESSION['filter'] = 1;
@@ -1467,7 +1467,7 @@ class Functions extends CI_Controller {
 			$data['userSkills'] = $skills;
 			foreach ($data['offers'] as $key => $offer) {
 				$offerSkills = $this->function_lib->getOfferSkills($offer['offerID']);
-				$i = 0; 
+				$i = 0;
 				foreach ($offerSkills as $key => $value) {
 					$offerSkill[$i] = $value['skillID'];
 					$i++;
@@ -1495,14 +1495,28 @@ class Functions extends CI_Controller {
 					$data['offerLocations'][$offer['offerID']] = array();
 				}
 			}
-			
+
 			$_SESSION['filter'] = 1;
-			$_SESSION['data'] = $data;	
+			$_SESSION['data'] = $data;
 			redirect(base_url('available-offers'));
 		}else{
 			$_SESSION['filter'] = 1;
 			$_SESSION['data'] = $data;
 			redirect(base_url('available-offers'));
+		}
+	}
+
+	public function resetPassword(){
+		$registeredEMail = "";
+		if($x = $this->input->post('registeredEMail')){
+			$registeredEMail = $x;
+		}
+		if($this->function_lib->checkEMailExist($registeredEMail)){
+			echo "aage";
+		}
+		else{
+			$this->session->set_flashdata('message', array('content'=>'You are not registered with CampusPuppy. Register a Account today.','color'=>'red'));
+			redirect(base_url());
 		}
 	}
 

@@ -32,7 +32,7 @@
           <li class="nav-item" style="margin-right: 10px;">
             <label style="color: white;"><b>Password</b></label>
             <input type="password" name="password" placeholder="Password" style="padding: 5px;">
-            <a style="color: white; font-size: 12px;">Forgot Password?</a>
+            <a style="color: white; font-size: 12px;" data-toggle="modal" data-target="#forgotPassword">Forgot Password?</a>
           </li>
           <li class="nav-item">
             <button type="submit" class="btn btn-primary" style="margin: auto; border-color: white !important; margin-top: 30px;">Sign In</button>
@@ -146,6 +146,38 @@
 
       </div>
 
+    </div>
+
+    <div class="modal fade" id="forgotPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Forgot Password? We are here to Help You!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form method = "POST" action = "<?= base_url('functions/resetPassword');?>" enctype ="multipart/form-data">
+          <div class="modal-body workEx">
+
+              <div class="row">
+              <div class="col-md-12 control-group form-group">
+                <div class="controls">
+                  <label><b>Registered E-Mail Address</b>:</label>
+                  <input type="text" class="form-control" name="registeredEMail" required placeholder="Registered E-Mail Address">
+                </div>
+              </div>
+              </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id = "clearModal" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary submitButton">Recover Password</button>
+          </div>
+        </form>
+        </div>
+      </div>
     </div>
 
     <?php echo $footer; ?>

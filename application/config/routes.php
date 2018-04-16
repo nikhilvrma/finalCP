@@ -89,6 +89,8 @@ $route['report/(:num)'] = 'home/report/$1';
 
 $route['employer/job-offers'] = 'home/jobOffers';
 
+$route['reset-password'] = 'home/resetPassword';
+
 
 $route['404'] = 'home/pageNotFound';
 

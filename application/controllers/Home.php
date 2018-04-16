@@ -33,6 +33,16 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function resetPassword(){
+		if($this->function_lib->auth()){
+			redirect(base_url('general-details'));
+		}
+		else{
+			$this->data['pageTitle'] = "Reset Password";
+			$this->load->view('resetPassword', $this->data);
+		}
+	}
+
 	public function dextryx(){
 		if($this->function_lib->auth()){
 			redirect(base_url('general-details'));
@@ -57,8 +67,12 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Verify Contact Details";
 				$this->data['activePage'] = "0";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-				$this->generateVerificationCode(1);
-				$this->generateVerificationCode(2);
+				if($_SESSION['user_data']['emailVerified'] == '0'){
+					$this->generateVerificationCode(2);
+				}
+				if($_SESSION['user_data']['mobileVerified'] == '0'){
+					$this->generateVerificationCode(1);
+				}
 				$this->load->view('verifyContactDetails', $this->data);
 			}
 		}
@@ -303,11 +317,11 @@ class Home extends CI_Controller {
 						$this->data['redirect']['selectedSkills'] = array();
 
 					if($offerLocations = $this->function_lib->getOfferLocations($offerID)){
-						$i=0; 
+						$i=0;
 						foreach ($offerLocations as $key => $locations) {
 							$offers[$i]['locationID'] = $locations['cityID'];
 							$offers[$i]['location_name'] = $locations['city'].', '.$locations['state'];
-							$i++; 
+							$i++;
 						}
 						$offerLocations = $offers;
 						$this->data['redirect']['location'] = json_encode($offerLocations);
@@ -416,7 +430,7 @@ class Home extends CI_Controller {
 						$this->data['offerLocations'] = $_SESSION['data']['offerLocations'];
 					}
 					$this->data['status'] = $_SESSION['data']['status'];
-					
+
 				}else{
 					unset($_SESSION['filter']);
 					unset($_SESSION['data']);
