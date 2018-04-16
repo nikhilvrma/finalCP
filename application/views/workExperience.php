@@ -201,6 +201,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" id = "clearModal" data-dismiss="modal">Close</button>
+                      <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
                       <button type="submit" class="btn btn-primary submitButton">Add Work Experience</button>
                     </div>
                   </form>

@@ -51,11 +51,11 @@ class Skill_functions extends CI_Controller {
 				$this->session->set_flashdata('message', array('content'=>'You Need to Start or Resume a test to Answer.','color'=>'red'));
 				redirect(base_url('skill-tests'));
 			}
-			$answer = $this->input->post('answer');
-			$timeConsumed = $this->input->post('timeConsumed');
+			$answer = $this->input->get('answer');
+			$timeConsumed = $this->input->get('timeConsumed');
 			$correct = $this->skill_lib->checkAnswer($_SESSION['questionData'][0]['question_id'], $answer);
 			$skill_id = $_SESSION['userData']['currentSkill'];
-			$_SESSION['userData'][$skill_id]['totalTime'] = $this->input->post('totalTime');
+			$_SESSION['userData'][$skill_id]['totalTime'] = $this->input->get('totalTime');
 			$score = $this->calculateScore(1, $_SESSION['questionData'][0]['expert_time'], $timeConsumed, $correct);
 			if($correct == 1){
 				$correct = '1';
@@ -104,12 +104,12 @@ class Skill_functions extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'Sorry, Some Error Occured. You May resume the Test to Continue.','color'=>'red'));
 			redirect(base_url('skill-tests'));
 		}
-		if(!$timeConsumed = $this->input->post('timeConsumed')){
+		if(!$timeConsumed = $this->input->get('timeConsumed')){
 			$timeConsumed = 0;
 		}
-		$answer = $this->input->post('answer');
+		$answer = $this->input->get('answer');
 		$skill_id = $_SESSION['userData']['currentSkill'];
-		$_SESSION['userData'][$skill_id]['totalTime'] = $this->input->post('totalTime');
+		$_SESSION['userData'][$skill_id]['totalTime'] = $this->input->get('totalTime');
 		if($_SESSION['userData'][$skill_id]['skips'] > 0){
 			$_SESSION['userData'][$skill_id]['skips']--;
 			$data = array(

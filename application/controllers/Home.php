@@ -13,6 +13,8 @@ class Home extends CI_Controller {
 		$this->data['footerFiles'] =  $this->load->view('commonCode/footerFiles',$this->data,true);
 		$this->data['nav'] =  $this->load->view('commonCode/nav',$this->data,true);
 		$this->data['footer'] =  $this->load->view('commonCode/footer',$this->data,true);
+		$this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
+		$this->data['csrf_token'] = $this->security->get_csrf_hash();
 
 		$this->data['message'] = ($v = $this->session->flashdata('message'))?$v:array('content'=>'','color'=>'');
 

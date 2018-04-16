@@ -68,7 +68,7 @@
               </div>
 
             </div>
-
+            <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
             <button type="submit" class="btn btn-lg btn-primary" style="float: right;">Change Password</button>
           </form>
 

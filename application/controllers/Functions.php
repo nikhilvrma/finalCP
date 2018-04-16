@@ -873,7 +873,41 @@ class Functions extends CI_Controller {
 			$today = date('Y-m-d');
 			$d1 = DateTime::createFromFormat('Y-m-d', $joiningDate);
 			$d2 = DateTime::createFromFormat('Y-m-d', $applicationDeadline);
-
+			if(!is_numeric($openings)){
+				$this->session->set_flashdata('message', array('content'=>'Number of Openings Must be entered as Integer. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
+				redirect(base_url('add-new-offer'));
+			}
+			if(!is_numeric($duration) && $offerType == 2){
+				$this->session->set_flashdata('message', array('content'=>'Duration Must be entered as Integer. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
+				redirect(base_url('add-new-offer'));
+			}
+			if(!is_numeric($compensation) && $compensationType == 1){
+				$this->session->set_flashdata('message', array('content'=>'Compensation Must be entered as Integer. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
+				redirect(base_url('add-new-offer'));
+			}
+			if(!is_numeric($minCompensation) && $compensationType == 2){
+				$this->session->set_flashdata('message', array('content'=>'Compensation Must be entered as Integer. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
+				redirect(base_url('add-new-offer'));
+			}
+			if(!is_numeric($maxCompensation) && $compensationType == 2){
+				$this->session->set_flashdata('message', array('content'=>'Compensation Must be entered as Integer. Please Try Again.','color'=>'red'));
+				if(isset($_POST['edit'])){
+					redirect(base_url('edit-offer/'.$_POST['edit']));
+				}
+				redirect(base_url('add-new-offer'));
+			}
 			if (!($d1 && $d1->format('Y-m-d') === $joiningDate)){
 				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 				if(isset($_POST['edit'])){
@@ -1032,7 +1066,7 @@ class Functions extends CI_Controller {
 					}
 					if($result1 && $result2){
 						unset($_SESSION['redirect']);
-						$this->session->set_flashdata('message', array('content'=>'Offer added Successfully.','color'=>'green'));
+						$this->session->set_flashdata('message', array('content'=>'Offer added Successfully. Offer Will be approved By CampusPuppy team within 24 hrs.','color'=>'green'));
 						if(isset($_POST['edit'])){
 							redirect(base_url('my-added-offers'));
 					}
@@ -1089,7 +1123,7 @@ class Functions extends CI_Controller {
 					}
 					if($result1 && $result2){
 						unset($_SESSION['redirect']);
-						$this->session->set_flashdata('message', array('content'=>'Offer added Successfully. Offer Will approved By CampusPuppy team within 24 hrs.','color'=>'green'));
+						$this->session->set_flashdata('message', array('content'=>'Offer Edited Successfully. Offer Will be approved By CampusPuppy team within 24 hrs.','color'=>'green'));
 						if(isset($_POST['edit'])){
 							redirect(base_url('my-added-offers'));
 					}

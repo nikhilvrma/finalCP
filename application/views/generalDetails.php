@@ -152,7 +152,7 @@
               <?php } ?>
 
             </div>
-
+            <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
             <button type="submit" class="btn btn-lg btn-primary" id="sendMessageButton" style="float: right;">Update General Details</button>
           </form>
 
@@ -257,6 +257,7 @@
         </div>
         <div class="form-group action-bar" style="float: right">
            <button type="button" class="btn btn-default close-save_pic" data-dismiss="modal" style="display: none">Close</button>
+         <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
           <input type = 'submit'  class="btn btn--primary save_pic" value="Save Changes" style="display: none">
         </div>
       </form>
@@ -294,6 +295,7 @@
         </div>
         <div class="form-group action-bar" style="float: right">
            <button type="button" class="btn btn-default close-submit-changes" data-dismiss="modal" style="display: none">Close</button>
+           <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
           <input type = 'submit'  class="btn btn--primary submit-changes" value="Save Changes" style="display: none">
         </div>
       </form>
@@ -335,6 +337,7 @@
 
         </div>
         <div class="modal-footer">
+          <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Add Location</button>
         </div>

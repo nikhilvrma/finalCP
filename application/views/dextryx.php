@@ -36,9 +36,11 @@
             <a style="color: white; font-size: 12px;">Forgot Password?</a>
           </li>
           <li class="nav-item">
+            <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
             <button type="submit" class="btn btn-primary" style="margin: auto; border-color: white !important; margin-top: 30px;">Sign In</button>
           </li>
         </ul>
+
         </form>
     </div>
 
@@ -146,7 +148,7 @@
                   <div class="form-group col-md-10 offset-md-1">
                     <p class="help-text" style="font-size: 14px;">By clicking register button you agree to our <b>Terms and Condition</b> and <b>Privacy Policy</b>.</p>
                   </div>
-                </div>
+                </div><input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
                 <center><button type="submit" class="btn btn-lg btn-primary">Register</button></center>
 
               </form>

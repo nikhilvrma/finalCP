@@ -56,7 +56,7 @@
               <div class="col-md-4 control-group form-group openings">
                 <div class="controls">
                   <label><b>Number of Openings:</b></label>
-                  <input type="text" placeholder="Number of Opening(s)" class="form-control" required name="openings" <?php if(isset($redirect)){ echo "value = ".$redirect['openings'];}?>>
+                  <input type="number" placeholder="Number of Opening(s)" class="form-control" required name="openings" <?php if(isset($redirect)){ echo "value = ".$redirect['openings'];}?>>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -132,7 +132,7 @@
                <div class="col-md-7 control-group form-group compensation" <?php if(isset($redirect) && $redirect['compensation'] == NULL){ echo 'style ="display: none"'; }else{ }?>>
                 <div class="controls">
                   <label><b><span class ="reimburse">Compensation</span>:</b></label>
-                  <input type="text" class="form-control" name="compensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['compensation'].'"';}?> placeholder = "Compensation Offered per Month">
+                  <input type="number" class="form-control" name="compensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['compensation'].'"';}?> placeholder = "Compensation Offered per Month">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -142,7 +142,7 @@
               <div class="col-sm-12 control-group form-group">
                 <div class="controls">
                   <label><b>Minimum <span class ="reimburse">Compensation:</span></b></label>
-                  <input type="text" class="form-control" name="minCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['minCompensation'].'"';}?> placeholder = "Minimum Compensation Offered per Month">
+                  <input type="number" class="form-control" name="minCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['minCompensation'].'"';}?> placeholder = "Minimum Compensation Offered per Month">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -150,7 +150,7 @@
               <div class="col-sm-12 control-group form-group">
                 <div class="controls">
                   <label><b>Maximum <span class ="reimburse">Compensation:</span></b></label>
-                  <input type="text" class="form-control" name="maxCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['maxCompensation'].'"';}?> placeholder = "Maximum Compensation Offered per Month">
+                  <input type="number" class="form-control" name="maxCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['maxCompensation'].'"';}?> placeholder = "Maximum Compensation Offered per Month">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -216,12 +216,12 @@
               <?php } ?>
 
 
-              <div class = "row col-md-12" <?php if(isset($redirect) && $redirect['offerType'] == 2){}else{echo 'style ="display: none"';}?>>
+              <div class = "row col-md-12 duration" <?php if(isset($redirect) && $redirect['offerType'] == 2){}else{echo 'style ="display: none"';}?>>
 
-              <div class="col-md-6 control-group form-group duration">
+              <div class="col-md-6 control-group form-group ">
                 <div class="controls">
                   <label><b>Duration:</b></label>
-                  <input type="text" class="form-control" name="duration" placeholder="in months">
+                  <input type="number" class="form-control" name="duration" placeholder="in months">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -294,6 +294,7 @@
 
             <div class="row">
               <div class="col-md-12">
+                <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
                 <button type="submit" class="btn btn-lg btn-primary" style="float: right; margin-top: 15px;"><?php if(!isset($edit)){echo "Add Offer";}else{echo "Edit Offer";}?></button>
               </div>
             </div>
@@ -438,6 +439,7 @@
             $('.duration').show();
             $('#duration').attr('required', 'true')
           }else{
+            $('.duration').hide();
             $('#duration').attr('required', 'false')
             $('.reimburse').html('Compensation');
           }

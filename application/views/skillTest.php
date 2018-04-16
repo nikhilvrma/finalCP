@@ -147,8 +147,6 @@ var interval = null;
           var qtime = questionTime,r=document.getElementById('questionTimer'),temp=qtime;
             interval = setInterval(function () {
                 var tt = temp--,hr = (tt/3600)>>0,min=((tt-hr*3600)/60)>>0,sec=(tt-min*60-hr*3600)+'';
-                console.log('tt'+tt);
-                console.log('sec'+sec);
                 if(min>0){
                     questionTimer.textContent= min+' : '+(sec.length>1?'':'0')+sec
                 }else{
@@ -192,10 +190,9 @@ $('.option').on('click', function(){
     selected = $(this).find("input[name = answer]").attr('id');
     ans = $("#"+selected).val();
 });    
-
 $('.skipQuestion').on('click', function(){
     data = {answer: '0', timeConsumed: totalTime-tmp, totalTime:tmp};
-   $.post('<?= base_url('skill_functions/skipQuestion')?>', data).done(function(res){
+   $.get('<?= base_url('skill_functions/skipQuestion')?>', data).done(function(res){
         res = JSON.parse(res);
         if(res.skips!=false)
             populate(res);
@@ -223,11 +220,10 @@ $('.finishTest').on('click', function(){
 });
 function submitAnswers(ans, timePassed, tmp){   
    data = {answer: ans, timeConsumed: timePassed, totalTime:tmp};
-   $.post('<?= base_url('skill_functions/nextQuestion')?>', data).done(function(res){
+   $.get('<?= base_url('skill_functions/nextQuestion')?>', data).done(function(res){
         if(res == 'false'){
             window.location = "<?= base_url('skill-tests')?>";
         }
-        console.log(res);
         res = JSON.parse(res);
         if(res.skips!=false){
             populate(res);
