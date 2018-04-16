@@ -47,9 +47,9 @@
                   <br>
                   <select class="form-control mb-2 mr-sm-2" name="status">
                     <option value = "1" >All Applied Offers</option>
-                    <option value = "2" <?php if($status == 2){echo "selected";}?>>Offers with Selected status</option>
-                    <option value = "3" <?php if($status == 3){echo "selected";}?>>Offers with Short-Listed status</option>
-                    <option value = "4" <?php if($status == 4){echo "selected";}?>>Offers with Rejected status</option>
+                    <option value = "2" <?php if(isset($status) && $status == 2){echo "selected";}?>>Offers with Selected status</option>
+                    <option value = "3" <?php if(isset($status) && $status == 3){echo "selected";}?>>Offers with Short-Listed status</option>
+                    <option value = "4" <?php if(isset($status) && $status == 4){echo "selected";} unset($_SESSION['filter']);?>>Offers with Rejected status</option>
                   </select>
 
                   <button type="submit" class="btn btn-primary mb-2">Display</button>

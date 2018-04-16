@@ -37,7 +37,7 @@
           <h3 class="mt-4 mb-3" style="float: right;"><?php echo $pageTitle; ?></h3>
           <div class="clearfix"></div>
           <hr>
-          <!-- <div class="row">
+          <div class="row">
             <div class="col-md-12 mb-4">
               <div class="row">
 
@@ -45,12 +45,12 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#filters">Filter Offers</button>
               </div>
               <div class="col-sm-7 mb-4">
-                <form class="form-inline" style="float: right;">
+                <form class="form-inline" style="float: right;" method="POST" action = "<?= base_url('functions/filterRelevantAvailable')?>">
                   <label style="margin: 5px;"><b>Display Offers</b></label>
                   <br>
-                  <select class="form-control mb-2 mr-sm-2">
-                    <option>All Available Offers</option>
-                    <option>My Relevant Offers</option>
+                  <select class="form-control mb-2 mr-sm-2" name="status">
+                    <option value = "1">All Available Offers</option>
+                    <option value = "2"  <?php if(isset($status) && $status == 2){echo "selected";} unset($_SESSION['filter']);?>>My Relevant Offers</option>
                   </select>
 
                   <button type="submit" class="btn btn-primary mb-2">Display</button>
@@ -58,10 +58,9 @@
               </div>
             </div>
             </div>
-          </div> -->
+          </div>
 
           <div class="row">
-
             <div class="col-md-12 mb-4">
               <?php if(!empty($offers)){
               foreach($offers as $offer){
@@ -109,7 +108,7 @@
 
     </div>
 
-    <!-- <div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -118,7 +117,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form>
+          <form method = "POST" action = "<?=base_url('functions/filterAvailableOffers')?>">
           <div class="modal-body">
 
               <div class="row">
@@ -127,8 +126,8 @@
                 <div class="controls">
                   <b>Offer Type</b>
                   <div style="margin-top: 10px;">
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="" required><label style="margin-left: 5px;">Job Offers</label></div>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="" required><label style="margin-left: 5px;">Internship Offers</label></div>
+                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerType" value = "1" ><label style="margin-left: 5px;">Job Offers</label></div>
+                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerType" value = "2" ><label style="margin-left: 5px;">Internship Offers</label></div>
                   </div>
                 </div>
               </div>
@@ -137,10 +136,12 @@
                 <div class="controls">
                   <b>Skills</b>
                   <div style="margin-top: 10px;">
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="" required><label style="margin-left: 5px;">HTML</label></div>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="" required><label style="margin-left: 5px;">CSS</label></div>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="" required><label style="margin-left: 5px;">PHP</label></div>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="" required><label style="margin-left: 5px;">General Aptitude</label></div>
+                    <?php if(isset($allOfferSkills)){
+                      foreach($allOfferSkills as $offerSkill){?>
+                        <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerSkills" value = "<?= $offerSkill['skillID']?>" ><label style="margin-left: 5px;"><?= $offerSkill['skill_name']?></label></div>
+                    <?php }}else{
+                      echo "No Added offer Has any Skill Requirement.";
+                    }?>
                   </div>
                 </div>
               </div>
@@ -149,10 +150,12 @@
                 <div class="controls">
                   <b>Location</b>
                   <div style="margin-top: 10px;">
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="" required><label style="margin-left: 5px;">New Delhi, Delhi</label></div>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="" required><label style="margin-left: 5px;">Gurgaon, Haryana</label></div>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="" required><label style="margin-left: 5px;">Noida, Uttar Pradesh</label></div>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="" required><label style="margin-left: 5px;">Ghaziabad, Uttar Pradesh</label></div>
+                    <?php if(isset($allOfferSkills)){
+                      foreach($allOfferLocations as $offerLocation){?>
+                        <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name = "offerLocations" value="<?= $offerLocation['cityID']?>" ><label style="margin-left: 5px;"><?= $offerLocation['city'].', '. $offerLocation['state'] ?></label></div>
+                      <?php }}else{
+                      echo "All The offers Added are Work From Home.";
+                    }?>
                   </div>
                 </div>
               </div>
@@ -162,12 +165,13 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Apply</button>
+            <a href = "<?=base_url('available-offers')?>" class="btn btn-primary">Reset</a>
+            <input type="submit" class="btn btn-primary" value = "Apply">
           </div>
         </form>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <?php echo $footer; ?>
 

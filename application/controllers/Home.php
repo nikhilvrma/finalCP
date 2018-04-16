@@ -411,6 +411,7 @@ class Home extends CI_Controller {
 				if(isset($_SESSION['filter']) && $_SESSION['filter'] == 1){
 					$this->data['offers'] = $_SESSION['data']['offers'];
 					$this->data['hasMore'] = $_SESSION['data']['hasMore'];
+					$this->data['userSkills'] = $_SESSION['data']['userSkills'];
 					if(!empty($_SESSION['data']['offers'])){
 						$this->data['offerSkills'] = $_SESSION['data']['offerSkills'];
 						$this->data['offerLocations'] = $_SESSION['data']['offerLocations'];
@@ -454,9 +455,23 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Available Offers";
 				$this->data['activePage'] = "20";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+				if(isset($_SESSION['filter']) && $_SESSION['filter'] == 1){
+					$this->data['offers'] = $_SESSION['data']['offers'];
+					$this->data['hasMore'] = $_SESSION['data']['hasMore'];
+					if(!empty($_SESSION['data']['offers'])){
+						$this->data['offerSkills'] = $_SESSION['data']['offerSkills'];
+						$this->data['offerLocations'] = $_SESSION['data']['offerLocations'];
+					}
+					$this->data['allOfferLocations'] = $this->function_lib->getAllOfferLocations();
+					$this->data['allOfferSkills'] = $this->function_lib->getAllOfferSkills();
+					$this->data['status'] = $_SESSION['data']['status'];
+					$this->load->view('availableOffers', $this->data);
+				}
 				$offers = $this->function_lib->getAllOffers(0,10);
 				$this->data['hasMore'] = $this->function_lib->hasMoreUserOffers(10,10);
 				$this->data['offers'] = $offers;
+				$this->data['allOfferLocations'] = $this->function_lib->getAllOfferLocations();
+				$this->data['allOfferSkills'] = $this->function_lib->getAllOfferSkills();
 				if(!empty($offers)){
 				foreach ($offers as $key => $offer) {
 					if($offerSkills = $this->function_lib->getOfferSkills($offer['offerID'])){

@@ -356,4 +356,28 @@ class Function_lib {
 		$CI->load->model('function_model','function');
 		return $CI->function->deleteSkillsLocations($offerID);
 	}
+
+	public function getAllOfferLocations(){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getAllOfferLocations();
+	}
+
+	public function getAllOfferSkills(){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getAllOfferSkills();
+	}
+
+	public function getFilteredOffers($offset, $limit, $offerType, $offerSkills, $offerLocations){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getFilteredOffers($offset, $limit, $offerType, $offerSkills, $offerLocations);
+	}
+
+	public function hasMoreFilteredOffers($limit, $offset, $offerType, $offerSkills, $offerLocations){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->hasMoreFilteredOffers($limit, $offset, $offerType, $offerSkills, $offerLocations);
+	}
 }

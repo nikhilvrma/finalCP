@@ -506,6 +506,58 @@ class Function_model extends CI_Model {
 			return false;
 		}
 	}
+
+	public function getAllOfferLocations(){
+		$this->db->select('DISTINCT(offerLocation.cityID),city,state');
+		$this->db->join('indianCities','offerLocation.cityID = indianCities.cityID');
+		$result = $this->db->get('offerLocation');
+		return $result->result_array();
+	}
+
+	public function getAllOfferSkills(){
+		$this->db->select('DISTINCT(offerSkills.skillID), skill_name');
+		$this->db->join('skills','offerSkills.skillID = skills.skillID');
+		$result = $this->db->get('offerSkills');
+		return $result->result_array();
+	}
+
+	public function getFilteredOffers($offset, $limit, $offerType, $offerSkills, $offerLocations){
+		$this->db->select('offers.offerID, offerType, offerTitle, applicationDeadline, joiningDate');
+		$this->db->limit($limit, $offset);
+		if(!empty($offerType))
+			$this->db->where_in('offerType',$offerType);
+		if(!empty($offerSkills)){
+			$this->db->where_in('skillID',$offerSkills);
+			$this->db->join('offerSkills','offers.offerID = offerSkills.offerID');
+		}
+		if(!empty($offerLocations)){
+			$this->db->where_in('cityID',$offerLocations);
+			$this->db->join('offerLocation','offers.offerID = offerLocation.offerID');
+		}
+		$result = $this->db->get('offers')->result_array();	
+		// var_dump($this->db->last_query());die;
+		return $result;
+	}
+
+	public function hasMoreFilteredOffers($limit, $offset, $offerType, $offerSkills, $offerLocations){
+		$this->db->limit($limit, $offset);
+		if(!empty($offerType))
+			$this->db->where_in('offerType',$offerType);
+		if(!empty($offerSkills)){
+			$this->db->where_in('skillID',$offerSkills);
+			$this->db->join('offerSkills','offers.offerID = offerSkills.offerID');
+		}
+		if(!empty($offerLocations)){
+			$this->db->where_in('cityID',$offerLocations);
+			$this->db->join('offerLocation','offers.offerID = offerLocation.offerID');
+		}
+		$result = $this->db->get_where('offers');
+		if($result->num_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 ///////////////////////////////////////////////////////////
 
 
