@@ -90,6 +90,11 @@ class Home extends CI_Controller {
 
 	}
 
+	public function resendCode($type){
+		$this->generateVerificationCode($type);
+		redirect(base_url('verify-contact-details'));
+	}
+
 	public function generalDetails(){
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
