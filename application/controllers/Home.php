@@ -72,13 +72,13 @@ class Home extends CI_Controller {
 				if($_SESSION['user_data']['emailVerified'] == '0'){
 					if(!(isset($_SESSION['sentVerificationEmail']) && $_SESSION['sentVerificationEmail'] == 1)){
 						$this->generateVerificationCode(2);
-						$_SESSION['sentVerificationEmail'] = 1; 
+						$_SESSION['sentVerificationEmail'] = 1;
 					}
 				}
 				if($_SESSION['user_data']['mobileVerified'] == '0'){
 					if(!(isset($_SESSION['sentVerificationSMS']) && $_SESSION['sentVerificationSMS'] == 1)){
 						$this->generateVerificationCode(1);
-						$_SESSION['sentVerificationSMS'] = 1; 
+						$_SESSION['sentVerificationSMS'] = 1;
 					}
 				}
 				$this->load->view('verifyContactDetails', $this->data);
