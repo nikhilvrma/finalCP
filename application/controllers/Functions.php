@@ -40,6 +40,34 @@ class Functions extends CI_Controller {
 		}
 	}
 
+	public function changeEmail(){
+		$email = $this->input->post('email');
+		if($this->function_lib->checkEMailExist($email)){
+			$this->session->set_flashdata('message', array('content'=>'This E-Mail Address already exists. Please Try Again.','color'=>'red'));
+			redirect(base_url('verify-contact-details'));
+		}
+		if($this->function_lib->updateEmail($email)){
+				
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url());
+		}
+	}
+
+	public function changeMobile(){
+		$mobile = $this->input->post('mobile');
+		if($this->function_lib->checkMobileExist($mobile)){
+			$this->session->set_flashdata('message', array('content'=>'This Mobile Number already exists. Please Try Again.','color'=>'red'));
+			redirect(base_url('verify-contact-details'));
+		}
+		if($this->function_lib->updateMobile($mobile)){
+
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url());
+		}
+	} 
+
 	public function signout(){
 		$this->session->set_userdata('user_data', false);
 		$this->session->set_userdata('user_data', []);
