@@ -45,7 +45,7 @@
               <div class="col-md-5 control-group form-group offerType">
                 <div class="controls">
                   <label><b>Offer Type:</b></label>
-                  <select class="form-control" name="offerType" id ="offerType">
+                  <select class="form-control" name="offerType" id ="offerType" required>
                     <option value="1" <?php if(isset($redirect) && $redirect['offerType'] == 1){ echo "selected";}?>>Job Offer</option>
                     <option value="2" <?php if(isset($redirect) && $redirect['offerType'] == 2){ echo "selected";}?>>Internship Offer</option>
                   </select>
@@ -56,7 +56,7 @@
               <div class="col-md-4 control-group form-group openings">
                 <div class="controls">
                   <label><b>Number of Openings:</b></label>
-                  <input type="text" placeholder="Number of Opening(s)" class="form-control" name="openings" <?php if(isset($redirect)){ echo "value = ".$redirect['openings'];}?>>
+                  <input type="text" placeholder="Number of Opening(s)" class="form-control" required name="openings" <?php if(isset($redirect)){ echo "value = ".$redirect['openings'];}?>>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -64,7 +64,7 @@
               <div class="col-md-3 control-group form-group">
                <div class="controls">
                  <label><b>Part Time:</b></label>
-                 <select class="form-control" name="partTime" id="partTime">
+                 <select class="form-control" required name="partTime" id="partTime">
                    <option value="1" <?php if(isset($redirect) && $redirect['partTime'] == 1){ echo "selected";}?>>Yes</option>
                    <option value="2" <?php if(isset($redirect) && $redirect['partTime'] == 2){ echo "selected";}?>>No</option>
                  </select>
@@ -75,7 +75,7 @@
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label><b>Offer Title:</b></label>
-                  <input type="text" maxlength="255" class="form-control" name="offerTitle" placeholder="Offer Title" <?php if(isset($redirect)){ echo "value = ".$redirect['offerTitle'];}?>>
+                  <input type="text" maxlength="255" required class="form-control" name="offerTitle" placeholder="Offer Title" <?php if(isset($redirect)){ echo "value = ".$redirect['offerTitle'];}?>>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -83,7 +83,7 @@
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label><b>Offer Description:</b></label>
-                  <textarea class="form-control" id="offerDescription" name="offerDescription" required>
+                  <textarea class="form-control" required id="offerDescription" name="offerDescription" required>
                     <?php if(isset($redirect)){ echo $redirect['offerDescription'];}?>
                   </textarea>
                   <p class="help-block"></p>
@@ -93,7 +93,7 @@
               <div class="col-md-4 control-group form-group">
                 <div class="controls">
                   <label><b>Joining Date:</b></label>
-                  <input type="date" class="form-control" name="joiningDate" <?php if(isset($redirect)){ echo "value = ".$redirect['joiningDate'];}?>>
+                  <input type="date" class="form-control" required name="joiningDate" <?php if(isset($redirect)){ echo "value = ".$redirect['joiningDate'];}?>>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -101,7 +101,7 @@
               <div class="col-md-4 control-group form-group">
                 <div class="controls">
                   <label><b>Application Deadline:</b></label>
-                  <input type="date" class="form-control" name="applicationDeadline" <?php if(isset($redirect)){ echo "value = ".$redirect['applicationDeadline'];}?>>
+                  <input type="date" class="form-control" required name="applicationDeadline" <?php if(isset($redirect)){ echo "value = ".$redirect['applicationDeadline'];}?>>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -109,7 +109,7 @@
               <div class="col-md-4 control-group form-group">
                <div class="controls">
                  <label><b>Work From Home:</b></label>
-                 <select class="form-control" name="workHome" id="workHome">
+                 <select class="form-control" name="workHome" id="workHome" required>
                    <option value="1" <?php if(isset($redirect) && $redirect['workHome'] == 1){ echo "selected";}?> >Yes</option>
                    <option value="2" <?php if(isset($redirect) && $redirect['workHome'] == 2){ echo "selected";}?>>No</option>
                  </select>
@@ -120,7 +120,7 @@
             <div class="col-md-5 control-group form-group">
                 <div class="controls">
                   <label><b><span class ="reimburse">Compensation</span> Type:</b></label>
-                  <select class="form-control" name="compensationType" id = "compensationType">
+                  <select class="form-control" name="compensationType" id = "compensationType" required>
                     <option value="1" <?php if(isset($redirect) && $redirect['compensationType'] == 1){ echo "selected";}?>>Fixed Compensation</option>
                     <option value="2" <?php if(isset($redirect) && $redirect['compensationType'] == 2){ echo "selected";}?>>Compensation Offered In Range</option>
                     <option value ="3" <?php if(isset($redirect) && $redirect['compensationType'] == 3){ echo "selected";}?>>No Compensation/Expenses Covered</option>
@@ -132,7 +132,7 @@
                <div class="col-md-7 control-group form-group compensation" <?php if(isset($redirect) && $redirect['compensation'] == NULL){ echo 'style ="display: none"'; }else{ }?>>
                 <div class="controls">
                   <label><b><span class ="reimburse">Compensation</span>:</b></label>
-                  <input type="text" class="form-control" name="compensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['compensation'].'"';}?> placeholder = "per Month">
+                  <input type="text" class="form-control" name="compensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['compensation'].'"';}?> placeholder = "Compensation Offered per Month">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -142,7 +142,7 @@
               <div class="col-sm-12 control-group form-group">
                 <div class="controls">
                   <label><b>Minimum <span class ="reimburse">Compensation:</span></b></label>
-                  <input type="text" class="form-control" name="minCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['minCompensation'].'"';}?> placeholder = "per Month">
+                  <input type="text" class="form-control" name="minCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['minCompensation'].'"';}?> placeholder = "Minimum Compensation Offered per Month">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -150,7 +150,7 @@
               <div class="col-sm-12 control-group form-group">
                 <div class="controls">
                   <label><b>Maximum <span class ="reimburse">Compensation:</span></b></label>
-                  <input type="text" class="form-control" name="maxCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['maxCompensation'].'"';}?> placeholder = "per Month">
+                  <input type="text" class="form-control" name="maxCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['maxCompensation'].'"';}?> placeholder = "Maximum Compensation Offered per Month">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -188,7 +188,7 @@
                   </div>
 
                 </div>
-                <?php $i = 0; 
+                <?php $i = 0;
                if(isset($redirect['location']) && !empty($redirect['location'])){
                 foreach(json_decode($redirect['location']) as $location){ ?>
                   <p class="selectedLocation"><?=$location->location_name?><a href="javascript:" data-location="<?=$location->location_name?>" index="<?= $i?>" location-id="<?= $location->locationID ?>"><i class="fa fa-times red" aria-hidden="true"></i></a></p>
@@ -231,7 +231,7 @@
               <div class="col-md-6 control-group form-group">
                 <div class="controls">
                   <label><b>Type of Applicants:</b></label>
-                  <select class="form-control" name="applicantType" id="applicantType">
+                  <select class="form-control" name="applicantType" id="applicantType" required>
                     <option value="1" <?php if(isset($redirect) && $redirect['applicantType'] == 1){ echo "selected";}?>>Anyone can Apply</option>
                     <option value="2" <?php if(isset($redirect) && $redirect['applicantType'] == 2){ echo "selected";}?>>Applicants with specific Skills</option>
                   </select>
@@ -325,15 +325,15 @@
 
     <script>
 
-    <?php if(!empty($redirect['selectedSkills'])){?>  
+    <?php if(!empty($redirect['selectedSkills'])){?>
       var skills_arr =[]
       var selectedSkills = '<?= $redirect['selectedSkills']?>';
       selectedSkills = JSON.parse(selectedSkills)
-    <?php }else{?> 
+    <?php }else{?>
       var skills_arr =[]
       var selectedSkills = [];
     <?php }?>
-  	
+
 
   	$(document).on('click','.addSkill',function(){
   	  var skill ={}
@@ -378,7 +378,7 @@
   	</script>
 
     <script>
-    
+
     <?php if(!empty($redirect['location'])){?>
       var locations_arr =[]
       var selectedLocations = '<?= $redirect['location']?>';
