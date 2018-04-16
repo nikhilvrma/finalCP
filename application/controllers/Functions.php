@@ -47,7 +47,7 @@ class Functions extends CI_Controller {
 			redirect(base_url('verify-contact-details'));
 		}
 		if($this->function_lib->updateEmail($email)){
-				
+				$_SESSION['sentVerificationEmail'];
 		}else{
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url());
@@ -61,7 +61,7 @@ class Functions extends CI_Controller {
 			redirect(base_url('verify-contact-details'));
 		}
 		if($this->function_lib->updateMobile($mobile)){
-
+			$_SESSION['sentVerificationSMS'];
 		}else{
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url());
