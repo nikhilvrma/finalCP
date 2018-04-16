@@ -119,7 +119,6 @@
           </div>
           <form method = "POST" action = "<?=base_url('functions/filterAvailableOffers')?>">
           <div class="modal-body">
-
               <div class="row">
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
@@ -136,10 +135,10 @@
                   <b>Skills</b>
                   <div style="margin-top: 10px;">
                     <?php if(isset($allOfferSkills)){?>
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerSkills[]" value = "0" <?php if(isset($appliedFilters['offerSkills']) && $appliedFilters['offerSkills'] != '' && in_array('0',$appliedFilters['offerSkills'])){echo "checked";}?>><label style="margin-left: 5px;" >No Skill Required.</label></div>
+                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerSkills[]" value = "0" <?php if(isset($appliedFilters['offerSkills']) && $appliedFilters['offerSkills'] != '' && in_array('0',$appliedFilters['offerSkills'])){echo "checked";} if(isset($status)){ echo "checked";}?>><label style="margin-left: 5px;" >No Skill Required.</label></div>
 
                       <?php foreach($allOfferSkills as $offerSkill){?>
-                        <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerSkills[]" value = "<?= $offerSkill['skillID']?>" <?php if(isset($appliedFilters['offerSkills']) && $appliedFilters['offerSkills'] != '' && in_array($offerSkill['skillID'] ,$appliedFilters['offerSkills'])){echo "checked";}?>><label style="margin-left: 5px;"><?= $offerSkill['skill_name']?></label></div>
+                        <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="offerSkills[]" value = "<?= $offerSkill['skillID']?>" <?php if(isset($appliedFilters['offerSkills']) && $appliedFilters['offerSkills'] != '' && in_array($offerSkill['skillID'] ,$appliedFilters['offerSkills'])){echo "checked";} if(isset($status) && $userSkills!= '' && in_array($offerSkill['skillID'] ,$userSkills)){ echo "checked";}?>><label style="margin-left: 5px;"><?= $offerSkill['skill_name']?></label></div>
                     <?php }}else{
                       echo "No Added offer Has any Skill Requirement.";
                     }?>

@@ -1204,6 +1204,8 @@ class Functions extends CI_Controller {
 	}
 
 	public function filterAppliedOffers(){
+		unset($_SESSION['filter']);
+		unset($_SESSION['data']);
 		$status = $this->input->post('status');
 		$data['offers'] = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0, 10, $status);
 		$data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10, 10, $status);
@@ -1313,6 +1315,9 @@ class Functions extends CI_Controller {
 	}
 
 	public function filterAvailableOffers(){
+		unset($_SESSION['filter']);
+		unset($_SESSION['data']);
+		unset($_SESSION['appliedFilters']);
 		$offerType = '';
 		$offerLocations = '';
 		$offerSkills = '';
@@ -1444,6 +1449,8 @@ class Functions extends CI_Controller {
 	}
 
 	public function filterRelevantAvailable(){
+		unset($_SESSION['filter']);
+		unset($_SESSION['data']);
 		$status = $this->input->post('status');
 		$data['offers'] = $this->function_lib->getAllOffers(0, 10);
 		$data['hasMore'] = $this->function_lib->hasMoreUserOffers(10, 10);
@@ -1451,13 +1458,13 @@ class Functions extends CI_Controller {
 			redirect(base_url('available-offers'));
 		}else{
 			$userSkills =  $this->skill_lib->getUserSkills($_SESSION['user_data']['userID']);
-			$data['userSkills'] = $userSkills;
 			$i=0;
 			foreach ($userSkills as $key => $value) {
 				$skills[$i] = $value['skillID'];
 				$i++;
 			}
 			$j = 0;
+			$data['userSkills'] = $skills;
 			foreach ($data['offers'] as $key => $offer) {
 				$offerSkills = $this->function_lib->getOfferSkills($offer['offerID']);
 				$i = 0; 

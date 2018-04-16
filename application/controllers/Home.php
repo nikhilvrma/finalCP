@@ -420,6 +420,8 @@ class Home extends CI_Controller {
 					$this->data['status'] = $_SESSION['data']['status'];
 					
 				}else{
+					unset($_SESSION['filter']);
+					unset($_SESSION['data']);
 				$offers = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0,10,0);
 				$this->data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10,10,0);
 				$this->data['offers'] = $offers;
@@ -473,9 +475,10 @@ class Home extends CI_Controller {
 					if(isset($_SESSION['appliedFilters'])){
 						$this->data['appliedFilters'] = $_SESSION['appliedFilters'];
 					}
-					
-					
 				}else{
+					unset($_SESSION['appliedFilters']);
+					unset($_SESSION['filter']);
+					unset($_SESSION['data']);
 				$offers = $this->function_lib->getAllOffers(0,10);
 				$this->data['hasMore'] = $this->function_lib->hasMoreUserOffers(10,10);
 				$this->data['offers'] = $offers;
