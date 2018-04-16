@@ -45,13 +45,14 @@
               <div class="card">
                 <h6 class="card-header"><b>E-Mail Address</b></h6>
                 <div class="card-body">
-                  <p class="card-text"><b>Registered E-Mail: </b>vrmanikhil@gmail.com</p>
+                  <p class="card-text"><b>Registered E-Mail: </b><?= $_SESSION['user_data']['email']?></p>
                   <p class="card-text"><b>Status: </b><label style="color: <?php if($_SESSION['user_data']['emailVerified']) { echo 'green'; } else { echo 'red'; } ?>"><?php if($_SESSION['user_data']['emailVerified']) { echo 'Verified'; } else { echo 'Not-Verified'; } ?></label></p>
                   <p class="card-text" style="float: right;"><a data-toggle="modal" data-target="#email">Entered Wrong E-Mail?</a></p>
                   <div class="clearfix"></div>
                   <p class="card-text">
                     <form class="form-inline">
                     <label class="sr-only" for="verificationCode">Verification Code</label>
+                    <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
                     <input type="text" class="form-control mb-2 mr-sm-2" id="verificationCode" placeholder="Verification Code">
                     <button type="submit" class="btn btn-primary mb-2">Verify</button>
                   </form>
@@ -64,13 +65,14 @@
               <div class="card">
                 <h6 class="card-header"><b>Mobile Number</b></h6>
                 <div class="card-body">
-                  <p class="card-text"><b>Registered Mobile Number: </b>+91-7503705892</p>
+                  <p class="card-text"><b>Registered Mobile Number: </b>+91-<?= $_SESSION['user_data']['mobile']?></p>
                   <p class="card-text"><b>Status: </b><label style="color: <?php if($_SESSION['user_data']['mobileVerified']) { echo 'green'; } else { echo 'red'; } ?>"><?php if($_SESSION['user_data']['emailVerified']) { echo 'Verified'; } else { echo 'Not-Verified'; } ?></label></p>
                   <p class="card-text" style="float: right;"><a data-toggle="modal" data-target="#mobile">Entered Wrong Mobile Number?</a></p>
                   <div class="clearfix"></div>
                   <p class="card-text">
                     <form class="form-inline">
                     <label class="sr-only" for="verificationCode">Verification Code</label>
+                    <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
                     <input type="text" class="form-control mb-2 mr-sm-2" id="verificationCode" placeholder="Verification Code">
                     <button type="submit" class="btn btn-primary mb-2">Verify</button>
                   </form>
@@ -92,20 +94,21 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <form>
+                    <form action = "<?base_url('functions/changeEmail')?>" method = "POST">
                     <div class="modal-body">
 
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>New E-Mail Address:</label>
-                            <input type="email" class="form-control" name="" required>
+                            <input type="email" class="form-control" name="email" required>
                           </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Change E-Mail Address</button>
+                      <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
+                      <button type="submit" class="btn btn-primary">Change E-Mail Address</button>
                     </div>
                   </form>
                   </div>
@@ -122,20 +125,21 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <form>
+                    <form action = "<?base_url('functions/changeMobile')?>" method = "POST">
                     <div class="modal-body">
 
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>New Mobile Number:</label>
-                            <input type="text" maxlength="10" max="9999999999" class="form-control" name="" required>
+                            <input type="text" maxlength="10" max="9999999999" class="form-control" name="mobile" required>
                           </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Change Mobile Number</button>
+                      <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
+                      <button type="submit" class="btn btn-primary">Change Mobile Number</button>
                     </div>
                   </form>
                   </div>

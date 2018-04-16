@@ -12,6 +12,7 @@ class Function_lib {
 				'loggedIn' => true,
 				'userID' => $userData[0]['userID'],
 				'email' => $email,
+				'mobile' => $userData[0]['mobile'], 
 				'name' => $userData[0]['name'],
 				'profileImage'	=>	$userData[0]['profileImage'],
 				'accountType' => $userData[0]['accountType'],

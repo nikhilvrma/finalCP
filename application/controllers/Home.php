@@ -70,10 +70,16 @@ class Home extends CI_Controller {
 				$this->data['activePage'] = "0";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				if($_SESSION['user_data']['emailVerified'] == '0'){
-					$this->generateVerificationCode(2);
+					if(!(isset($_SESSION['sentVerificationEmail']) && $_SESSION['sentVerificationEmail'] == 1)){
+						$this->generateVerificationCode(2);
+						$_SESSION['sentVerificationEmail'] = 1; 
+					}
 				}
 				if($_SESSION['user_data']['mobileVerified'] == '0'){
-					$this->generateVerificationCode(1);
+					if(!(isset($_SESSION['sentVerificationSMS']) && $_SESSION['sentVerificationSMS'] == 1)){
+						$this->generateVerificationCode(1);
+						$_SESSION['sentVerificationSMS'] = 1; 
+					}
 				}
 				$this->load->view('verifyContactDetails', $this->data);
 			}
