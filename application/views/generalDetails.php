@@ -252,10 +252,10 @@
         </div>
         <div class = "form-group">
           <div class = "crop" style = "display:none">
-            <img src="" alt="" id="cropped-pic" hidden style ="padding-left: 25%">
+            <img src="" alt="" id="cropped-pic" style ="padding-left: 7%">
           </div>
         </div>
-        <div class="form-group action-bar">
+        <div class="form-group action-bar" style="float: right">
            <button type="button" class="btn btn-default close-save_pic" data-dismiss="modal" style="display: none">Close</button>
           <input type = 'submit'  class="btn btn--primary save_pic" value="Save Changes" style="display: none">
         </div>
@@ -289,10 +289,10 @@
         </div>
        <div class = "form-group">
           <div class = "demo" style = "display:none">
-            <img src="" alt="" id="cropped-img" hidden style ="padding-left: 25%">
+            <img src="" alt="" id="cropped-img" style ="padding-left: 18%">
           </div>
         </div>
-        <div class="form-group action-bar">
+        <div class="form-group action-bar" style="float: right">
            <button type="button" class="btn btn-default close-submit-changes" data-dismiss="modal" style="display: none">Close</button>
           <input type = 'submit'  class="btn btn--primary submit-changes" value="Save Changes" style="display: none">
         </div>
@@ -410,6 +410,7 @@
         $('.inputPic').hide();
         $('#cropped-pic').attr('src', resp)
         $('#cropped-pic').show()
+        $('.crop').show()
         $('input[name="profilePic"]').val(resp)
         $('#userProfilePic').hide()
       });
@@ -465,6 +466,7 @@
         $('.inputLogo').hide();
         $('#cropped-img').attr('src', resp)
         $('#cropped-img').show()
+        $('.demo').show()
         $('input[name="companyLogo"]').val(resp)
       });
     });
