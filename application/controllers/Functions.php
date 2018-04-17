@@ -47,7 +47,10 @@ class Functions extends CI_Controller {
 			redirect(base_url('verify-contact-details'));
 		}
 		if($this->function_lib->updateEmail($email)){
-				
+			unset($_SESSION['sentVerificationEmail']);
+			$_SESSION['user_data']['email'] = $email;	
+			$this->session->set_flashdata('message', array('content'=>'Your E-mail Address has been successfully changed.','color'=>'green'));
+			redirect(base_url('verify-contact-details'));
 		}else{
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url());
@@ -61,12 +64,61 @@ class Functions extends CI_Controller {
 			redirect(base_url('verify-contact-details'));
 		}
 		if($this->function_lib->updateMobile($mobile)){
-
+			unset($_SESSION['sentVerificationSMS']);
+			$_SESSION['user_data']['mobile'] = $mobile;
+			$this->session->set_flashdata('message', array('content'=>'Your Mobile Number has been successfully changed.','color'=>'green'));
+			redirect(base_url('verify-contact-details'));
 		}else{
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url());
 		}
 	} 
+
+	public function checkMobileVerificationCode(){
+		$code = $this->input->post('code');
+		$data = $this->function_lib->getMobileVerificationCode()[0];
+		date_default_timezone_set("Asia/Kolkata");
+		$currentTime = strtotime(date("d M Y H:i:s"));
+		if($currentTime<$data['expiry']){
+			if($code == $data['code']){
+				$_SESSION['user_data']['mobileVerified'] = 1;
+				$this->function_lib->updateMobileVerified();
+				$this->session->set_flashdata('message', array('content'=>'Your Mobile Number has been successfully verified.','color'=>'green'));
+				redirect(base_url('verify-contact-details'));
+			}else{
+				$this->session->set_flashdata('message', array('content'=>'The Verification Code Entered is Wrong..','color'=>'red'));
+				redirect(base_url('verify-contact-details'));
+			}
+		}else{
+			unset($_SESSION['sentVerificationSMS']);
+			$this->session->set_flashdata('message', array('content'=>'The Verification Code Entered has Expired. Please Enter new Verification Code.','color'=>'red'));
+			redirect(base_url('verify-contact-details'));
+		}
+			
+	}
+
+	public function checkEmailVerificationCode(){
+		$code = $this->input->post('code');
+		$data = $this->function_lib->getEmailVerificationCode()[0];
+		date_default_timezone_set("Asia/Kolkata");
+		$currentTime = strtotime(date("d M Y H:i:s"));
+		// var_dump($data); var_dump($currentTime);die;
+		if($currentTime<$data['expiry']){
+			if($code == $data['code']){
+				$_SESSION['user_data']['emailVerified'] = 1;
+				$this->function_lib->updateEmailVerified();
+				$this->session->set_flashdata('message', array('content'=>'Your Email Address has been successfully verified.','color'=>'green'));
+				redirect(base_url('verify-contact-details'));
+			}else{
+				$this->session->set_flashdata('message', array('content'=>'The Verification Code Entered is Wrong..','color'=>'red'));
+				redirect(base_url('verify-contact-details'));
+			}
+		}else{
+			unset($_SESSION['sentVerificationEmail']);
+			$this->session->set_flashdata('message', array('content'=>'The Verification Code Entered has Expired. Please Enter new Verification Code.','color'=>'red'));
+			redirect(base_url('verify-contact-details'));
+		}
+	}
 
 	public function signout(){
 		$this->session->set_userdata('user_data', false);

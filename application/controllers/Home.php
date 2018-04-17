@@ -90,6 +90,11 @@ class Home extends CI_Controller {
 
 	}
 
+	public function resendCode($type){
+		$this->generateVerificationCode($type);
+		redirect(base_url('verify-contact-details'));
+	}
+
 	public function generalDetails(){
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
@@ -249,6 +254,7 @@ class Home extends CI_Controller {
 				$this->data['activePage'] = "6";
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->data['resumeReferenceNumber'] = $this->function_lib->getUserData($_SESSION['user_data']['email']);
+				$this->data['userID'] = $this->data['resumeReferenceNumber'][0]['userID'];
 				$this->data['resumeReferenceNumber'] = $this->data['resumeReferenceNumber'][0]['resumeReferenceNumber'];
 				$this->load->view('resume', $this->data);
 			}

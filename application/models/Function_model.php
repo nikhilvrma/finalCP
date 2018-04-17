@@ -15,6 +15,54 @@ class Function_model extends CI_Model {
 		return false;
 	}
 
+	public function updateEmail($email){
+		$data = array(
+			'email' => $email
+		);
+		$this->db->where('email', $_SESSION['user_data']['email']);
+		return $this->db->update('users', $data);
+	}
+
+	public function updateMobile($mobile){
+		$data = array(
+			'mobile' => $mobile
+		);
+		$this->db->where('mobile', $_SESSION['user_data']['mobile']);
+		return $this->db->update('users', $data);
+	}
+
+	public function getMobileVerificationCode(){
+		$this->db->select('code,expiry');
+		$this->db->order_by('generatedAt', 'Desc');
+		$this->db->limit(1);
+		$result = $this->db->get_where('verificationCodes', array('mobile' => $_SESSION['user_data']['mobile']))->result_array();
+		return $result;
+	}
+
+	public function getEmailVerificationCode(){
+		$this->db->select('code,expiry');
+		$this->db->order_by('generatedAt', 'Desc');
+		$this->db->limit(1);
+		$result = $this->db->get_where('verificationCodes', array('email' => $_SESSION['user_data']['email']))->result_array();
+		return $result;
+	}
+
+	public function updateEmailVerified(){
+		$data = array(
+			'emailVerified' => 1
+		);
+		$this->db->where('email', $_SESSION['user_data']['email']);
+		return $this->db->update('users', $data);
+	}
+
+	public function updateMobileVerified(){
+		$data = array(
+			'mobileVerified' => 1
+		);
+		$this->db->where('mobile', $_SESSION['user_data']['mobile']);
+		return $this->db->update('users', $data);
+	}
+
 	public function getAllLocations(){
 		return $this->db->get('indianCities')->result_array();
 	}
@@ -317,22 +365,22 @@ class Function_model extends CI_Model {
 
 	public function getResponses($userID, $skillID){
 		$this->db->select('count(*) as responses');
-		$this->db->join('skillQuestions', 'skillQuestions.question_id = responses.questionID');
-		$result = $this->db->get_where('responses', array('skillQuestions.skill_id'=> $skillID, 'responses.userID' => $userID))->result_array()[0];
+		$this->db->join('skillQuestions', 'skillQuestions.question_id = skillResponses.questionID');
+		$result = $this->db->get_where('skillResponses', array('skillQuestions.skill_id'=> $skillID, 'skillResponses.userID' => $userID))->result_array()[0];
 		return $result;
 	}
 
 	public function getCorrectResponses($userID, $skillID){
 		$this->db->select('count(*) as responses');
-		$this->db->join('skillQuestions', 'skillQuestions.question_id = responses.questionID');
-		$result = $this->db->get_where('responses', array('skillQuestions.skill_id'=> $skillID, 'responses.userID' => $userID, 'responses.correct' => 1))->result_array()[0];
+		$this->db->join('skillQuestions', 'skillQuestions.question_id = skillResponses.questionID');
+		$result = $this->db->get_where('skillResponses', array('skillQuestions.skill_id'=> $skillID, 'skillResponses.userID' => $userID, 'skillResponses.correct' => 1))->result_array()[0];
 		return $result;
 	}
 
 	public function getIncorrectResponses($userID, $skillID){
 		$this->db->select('count(*) as responses');
-		$this->db->join('skillQuestions', 'skillQuestions.question_id = responses.questionID');
-		$result = $this->db->get_where('responses', array('skillQuestions.skill_id'=> $skillID, 'responses.userID' => $userID, 'responses.correct' => 0))->result_array()[0];
+		$this->db->join('skillQuestions', 'skillQuestions.question_id = skillResponses.questionID');
+		$result = $this->db->get_where('skillResponses', array('skillQuestions.skill_id'=> $skillID, 'skillResponses.userID' => $userID, 'skillResponses.correct' => 0))->result_array()[0];
 		return $result;
 	}
 

@@ -49,7 +49,7 @@
                   <h1><?php echo $resumeReferenceNumber; ?></h1>
                 </div>
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary" id="sendMessageButton" style="float: right;"><i class="fa fa-download"></i> Download Resume</button>
+                  <a href = "<?= base_url('report/'.$userID)?>" class="btn btn-primary" id="sendMessageButton" target= "_blank" style="float: right;"><i class="fa fa-download"></i> Download Resume</a>
                 </div>
               </div>
               </div>

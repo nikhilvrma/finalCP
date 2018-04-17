@@ -23,12 +23,48 @@ class Function_lib {
 			return 1;
 		}
 		return 0;
+	}	
+
+	public function updateEmailVerified(){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->updateEmailVerified();
+	}
+
+	public function updateMobileVerified(){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->updateMobileVerified();
 	}
 
 	public function checkOfferStatus($offerID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->checkOfferStatus($offerID);
+	}
+
+	public function getEmailVerificationCode(){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getEmailVerificationCode();
+	}
+
+	public function getMobileVerificationCode(){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getMobileVerificationCode();
+	}
+
+	public function updateEmail($email){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->updateEmail($email);
+	}
+
+	public function updateMobile($mobile){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->updateMobile($mobile);
 	}
 
 	public function auth(){
