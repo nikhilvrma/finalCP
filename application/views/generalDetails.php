@@ -96,42 +96,7 @@
                 </div>
               </div>
 
-              <div class="col-md-12 control-group form-group">
-                <div class="controls">
-                  <label><b>Preferred Location(s):</b></label>
-                  <table class="table">
-                    <?php if(!empty($preferredLocation)){
-                      $i = 1;
 
-                      ?>
-
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">City</th>
-                      <th scope="col" style="width: 20%">Remove</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php  foreach($preferredLocation as $location){?>
-                    <tr>
-                      <th scope="row"><?= $i?></th>
-                      <td><?= $location['city']?>, <?= $location['state']?></td>
-                      <td><a class="btn btn-danger" href = "<?= base_url('functions/deletePreferredLocation?location='.$location['cityID'])?>" style="color: white; font-size: 14px;"><i class="fa fa-trash"></i> Remove</a></td>
-                    </tr>
-                    <?php $i++;}}else{?>
-                     <tbody>
-                    <tr>No Preferred Location Added.</tr>
-                    <?php }if(sizeof($preferredLocation) < 5){ ?>
-
-                    <tr>
-                      <td colspan="3"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLocation" style="color: white; float: right;">Add Location</button></td>
-                    </tr>
-                    <?php } ?>
-                  </tbody>
-                </table>
-                </div>
-              </div>
               <?php } ?>
               <?php if($_SESSION['user_data']['accountType'] == 2){?>
               <div class="col-md-12 control-group form-group">
@@ -153,8 +118,52 @@
 
             </div>
             <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
-            <button type="submit" class="btn btn-lg btn-primary" id="sendMessageButton" style="float: right;">Update General Details</button>
+            <button type="submit" class="btn btn-primary" id="sendMessageButton" style="float: right;">Update General Details</button>
           </form>
+
+          <div class="clearfix"></div>
+
+
+          <?php if($_SESSION['user_data']['accountType'] == 1){?>
+
+          <div class="col-md-12 control-group form-group">
+            <div class="controls">
+              <label><b>Preferred Location(s):</b></label>
+              <table class="table">
+                <?php if(!empty($preferredLocation)){
+                  $i = 1;
+
+                  ?>
+
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">City</th>
+                  <th scope="col" style="width: 20%">Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php  foreach($preferredLocation as $location){?>
+                <tr>
+                  <th scope="row"><?= $i?></th>
+                  <td><?= $location['city']?>, <?= $location['state']?></td>
+                  <td><a class="btn btn-danger" href = "<?= base_url('functions/deletePreferredLocation?location='.$location['cityID'])?>" style="color: white; font-size: 14px;"><i class="fa fa-trash"></i> Remove</a></td>
+                </tr>
+                <?php $i++;}}else{?>
+                 <tbody>
+                <tr>No Preferred Location Added.</tr>
+                <?php }if(sizeof($preferredLocation) < 5){ ?>
+
+                <tr>
+                  <td colspan="3"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLocation" style="color: white; float: right;">Add Preferred Location</button></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+            </div>
+          </div>
+
+          <?php } ?>
 
           <div class="clearfix"></div>
 

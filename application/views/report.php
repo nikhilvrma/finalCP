@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Job Application and Assessment Report- <?= $generalData['name']?></title>
+  <title><?= $generalData['name']?></title>
 
   <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
   <link href="<?php echo base_url('assets/css/backoffice.css'); ?>" rel="stylesheet">
@@ -21,7 +21,7 @@
 
        <div class="col-lg-12 mb-4">
 
-         <h4 class="mt-4 mb-3" style="float: right;"><b>JOB APPLICATION and ASSESSMENT REPORT</b></h4>
+         <h4 class="mt-4 mb-3" style="float: right;"><b>Job/Internship Application and Assessment Report</b></h4>
 
          <p class="mt-4 mb-3" style="float: right; font-size: 14px;"></p>
          <div class="clearfix"></div>
@@ -68,7 +68,7 @@
           </div>
 
           <hr>
-         
+
           <b>Skills</b>
           <?php if(!empty($skills)){?>
           <ul style="font-size: 15px; margin-top: 15px;">
@@ -105,7 +105,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                    
+
                     <?php foreach($premiumSkills as $premiumSkill){?>
                   <tr>
                     <td><?= $i?>.</td>
