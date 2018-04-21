@@ -640,4 +640,13 @@ class Function_model extends CI_Model {
 		return $this->db->query($query);
 	}
 
+	public function insertCollege($data){
+		return $this->db->insert('colleges', $data);
+	}
+
+	public function getCollegeID($college){
+		$result = $this->db->get_where('colleges', array('college'=>$college))->result_array();
+		return $result[0]['college_id'];
+	}
+
 }

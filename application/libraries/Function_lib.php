@@ -448,4 +448,16 @@ class Function_lib {
 		return $CI->functionModel->resetActivePasswordResetToken($email, $token);
 	}
 
+	public function insertCollege($data){
+		$CI = &get_instance();
+		$CI->load->model('function_model','functionModel');
+		return $CI->functionModel->insertCollege($data);
+	}
+
+	public function getCollegeID($college){
+		$CI = &get_instance();
+		$CI->load->model('function_model','functionModel');
+		return $CI->functionModel->getCollegeID($college);
+	}
+
 }

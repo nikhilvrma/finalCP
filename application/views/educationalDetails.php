@@ -155,6 +155,18 @@
                             </select>
                           </div>
                         </div>
+                        <div class="col-md-12 control-group form-group other" style = "display: none;">
+                          <div class="controls">
+                            <input type="checkbox" name="other" id = "other" value="1">
+                            <label> College Not Listed</label>
+                          </div>
+                        </div>
+                        <div class="col-md-12 control-group form-group newCollege" style = "display: none;">
+                          <div class="controls">
+                            <input type="text" class="form-control" name = "newCollege" id = "newCollege" placeholder="College">
+                          </div>
+                        </div>
+                         
 
                         <div class="col-md-12 control-group form-group courses" id = "courseBach" style = "display: none;">
                           <div class="controls">
@@ -221,6 +233,7 @@
   </script>
 
     <script type="text/javascript">
+      var value = null;
         $(document).ready(function(){
           $('.editWorkEx').on('click', function(res){
             data = $(this).attr('data');
@@ -234,6 +247,7 @@
             }
             if(data.educationType == 3 || data.educationType == 4){
               $('.colleges').show();
+              $('.other').show();
               $('#college').val(data.instituteID);
               $('#board').hide();
               if(data.educationType == 3){
@@ -255,8 +269,9 @@
           $('#type').on('change', function(){
             value = $(this).val();
             if(value == 3 || value == 4){
+              $('.other').show();
               $('.colleges').show();
-               $('.schoolData').hide();
+              $('.schoolData').hide();
               if(value == 3){
                 $('#courseMast').hide();
                 $('#courseBach').show();
@@ -267,12 +282,26 @@
               }
 
             }else if(value == 1 || value == 2){
+              $('.other').hide();
               $('.colleges').hide();
               $('.courses').hide();
               $('.schoolData').show();
             }
           })
-          $('#')
+         $('#other').on('change', function(){
+            if(value != 1)
+              value = $(this).val()
+            else
+              value = '';
+            console.log(value)
+            if(value != 1){
+              $('.colleges').show();
+              $('.newCollege').hide();
+            }else{
+              $('.colleges').hide();
+              $('.newCollege').show();
+             }
+          });
         });
       </script>
 

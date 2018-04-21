@@ -251,6 +251,8 @@ class Functions extends CI_Controller {
 		$courseBach = '';
 		$courseMast = '';
 		$college = '';
+		$other = '';
+		$newCollege = ''; 
 		if($x = $this->input->post('type')){
 			$type = $x;
 		}
@@ -275,8 +277,14 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('college')){
 			$college = $x;
 		}
+		if($x = $this->input->post('other')){
+			$other = $x;
+		}
+		if($x = $this->input->post('newCollege')){
+			$newCollege = $x;
+		}
 		if($type == "" || $year == "" || $scoreType == "" || $score == ""){
-			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.1','color'=>'red'));
+			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 			redirect(base_url('educational-details'));
 		}
 		if($scoreType == 1){
@@ -290,6 +298,15 @@ class Functions extends CI_Controller {
 				redirect(base_url('educational-details'));
 			}
 		}
+
+		if($other == 1){
+			if($newCollege == ''){
+				$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
+				redirect(base_url('educational-details'));
+			}
+		}
+
+
 
 		if($this->function_lib->checkEducationUnique($_SESSION['user_data']['userID'], $type) && !(isset($_POST['edit']) && $_POST['edit'] == 1)){
 			$this->session->set_flashdata('message', array('content'=>'This Educational Detail is already added. Please Remove the Previous added Detail to add the new data.','color'=>'red'));
@@ -331,12 +348,28 @@ class Functions extends CI_Controller {
 					);
 				}
 			}
-
+			// var_dump($other);die;
 			if($type == 3){
-				if($college == ''|| $courseBach == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.3','color'=>'red'));
-					redirect(base_url('educational-details'));
+				if($other != 1){
+					if($college == ''){
+						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.3','color'=>'red'));
+						redirect(base_url('educational-details'));
+					}
 				}
+					if($courseBach == ''){
+						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.4','color'=>'red'));
+						redirect(base_url('educational-details'));
+					}
+
+					if($other == 1){
+						$data = array(
+							'college' => $newCollege,
+							'active' => 1
+						);
+						$this->function_lib->insertCollege($data);
+						$college = $this->function_lib->getCollegeID($newCollege);
+					}
+				
 				if($error == ''){
 				$data = array(
 				'userID' => $_SESSION['user_data']['userID'],
@@ -361,10 +394,26 @@ class Functions extends CI_Controller {
 				}
 			}
 			if($type == 4){
-				if($college == ''|| $courseMast == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.4','color'=>'red'));
-					redirect(base_url('educational-details'));
+				if($other != 1){
+					if($college == ''){
+						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
+						redirect(base_url('educational-details'));
+					}
 				}
+					if($courseBach == ''){
+						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
+						redirect(base_url('educational-details'));
+					}
+					
+					if($other == 1){
+						$data = array(
+							'college' => $newCollege,
+							'active' => 1
+						);
+						$this->function_lib->insertCollege($data);
+						$college = $this->function_lib->getCollegeID($newCollege);
+					}
+
 				if($error == ''){
 				$data = array(
 				'userID' => $_SESSION['user_data']['userID'],
@@ -433,10 +482,25 @@ class Functions extends CI_Controller {
 			}
 
 			if($type == 3){
-				if($college == ''|| $courseBach == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.3','color'=>'red'));
-					redirect(base_url('educational-details'));
+				if($other != 1){
+					if($college == ''){
+						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
+						redirect(base_url('educational-details'));
+					}
 				}
+					if($courseBach == ''){
+						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
+						redirect(base_url('educational-details'));
+					}
+					
+					if($other == 1){
+						$data = array(
+							'college' => $newCollege,
+							'active' => 1
+						);
+						$this->function_lib->insertCollege($data);
+						$college = $this->function_lib->getCollegeID($newCollege);
+					}
 				if($error == ''){
 				$data = array(
 				'userID' => $_SESSION['user_data']['userID'],
@@ -461,10 +525,25 @@ class Functions extends CI_Controller {
 				}
 			}
 			if($type == 4){
-				if($college == ''|| $courseMast == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.4','color'=>'red'));
-					redirect(base_url('educational-details'));
+				if($other != 1){
+					if($college == ''){
+						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
+						redirect(base_url('educational-details'));
+					}
 				}
+					if($courseBach == ''){
+						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
+						redirect(base_url('educational-details'));
+					}
+					
+					if($other == 1){
+						$data = array(
+							'college' => $newCollege,
+							'active' => 1
+						);
+						$this->function_lib->insertCollege($data);
+						$college = $this->function_lib->getCollegeID($newCollege);
+					}
 				if($error == ''){
 				$data = array(
 				'userID' => $_SESSION['user_data']['userID'],

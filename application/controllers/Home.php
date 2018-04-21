@@ -21,6 +21,7 @@ class Home extends CI_Controller {
 		// $this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
 	}
 
+	
 	public function pageNotFound(){
 		$this->load->view('404', $this->data);
 	}
@@ -121,6 +122,7 @@ class Home extends CI_Controller {
 
 
 	public function skills(){
+		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Skills";
@@ -152,6 +154,7 @@ class Home extends CI_Controller {
 	}
 
 	public function skillTest(){
+		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				if($_SESSION['userData']['intest']){
@@ -191,6 +194,7 @@ class Home extends CI_Controller {
 	}
 
 	public function skillTestGuidelines(){
+		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Skill Test Guidelines";
@@ -210,6 +214,7 @@ class Home extends CI_Controller {
 	}
 
 	public function educationalDetails(){
+		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Educational Details";
@@ -230,6 +235,7 @@ class Home extends CI_Controller {
 	}
 
 	public function workExperience(){
+		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Work Experience";
@@ -285,6 +291,7 @@ class Home extends CI_Controller {
 	}
 
 	public function addNewOffer(){
+		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Add New Offer";
@@ -307,6 +314,7 @@ class Home extends CI_Controller {
 	}
 
 	public function editOffer($offerID){
+		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($this->function_lib->checkOfferStatus($offerID) == 0){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
@@ -362,6 +370,7 @@ class Home extends CI_Controller {
 	}
 
 	public function myAddedOffers(){
+		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "My Added Offers";
@@ -401,6 +410,7 @@ class Home extends CI_Controller {
 	}
 
 	public function applicants(){
+		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Applicants";
@@ -418,6 +428,7 @@ class Home extends CI_Controller {
 	}
 
 	public function compareApplicants(){
+		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Compare Applicants";
@@ -435,6 +446,7 @@ class Home extends CI_Controller {
 	}
 
 	public function appliedOffers(){
+		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Applied Offers";
@@ -484,6 +496,7 @@ class Home extends CI_Controller {
 	}
 
 	public function availableOffers(){
+		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Available Offers";
