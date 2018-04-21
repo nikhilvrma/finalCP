@@ -291,6 +291,11 @@ class Home extends CI_Controller {
 	}
 
 	public function addNewOffer(){
+		$companyData = $this->function_lib->getCompanyData($_SESSION['user_data']['userID']);
+		if($companyData['companyName'] == NULL || $companyData['companyName'] == ''){
+			$this->session->set_flashdata('message', array('content'=>'Please Enter Company Details to add offers.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
