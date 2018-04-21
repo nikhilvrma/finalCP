@@ -21,7 +21,7 @@ class Home extends CI_Controller {
 		// $this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
 	}
 
-	
+
 	public function pageNotFound(){
 		$this->load->view('404', $this->data);
 	}
@@ -46,15 +46,6 @@ class Home extends CI_Controller {
 		}
 	}
 
-	public function dextryx(){
-		if($this->function_lib->auth()){
-			redirect(base_url('general-details'));
-		}
-		else{
-			$this->data['pageTitle'] = "CampusPuppy";
-			$this->load->view('dextryx', $this->data);
-		}
-	}
 
 	public function emailer(){
 			$this->load->view('emailers/offers', $this->data);

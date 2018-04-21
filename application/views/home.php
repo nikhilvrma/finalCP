@@ -11,6 +11,7 @@
     <title><?php echo $pageTitle; ?></title>
 
     <?php echo $headerFiles; ?>
+    <link href='https://fonts.googleapis.com/css?family=Kaushan Script' rel='stylesheet'>
 
   </head>
 
@@ -39,6 +40,7 @@
             <button type="submit" class="btn btn-primary" style="margin: auto; border-color: white !important; margin-top: 30px;">Sign In</button>
           </li>
         </ul>
+
         </form>
     </div>
 
@@ -67,9 +69,37 @@
 
             <div class="row">
 
+              <div class="col-lg-7 mb-4">
+              <div class="card h-100" style="opacity: 0.9">
+
+                <div class="card-body">
 
 
-              <div class="col-lg-5 mb-4 offset-md-7">
+                  <img src="<?php echo base_url('assets/images/dextryx/campuspuppy.jpg'); ?>" style="width: 30%;">
+                  <label style="color: black;"><b>and</b></label>
+                  <img src="<?php echo base_url('assets/images/dextryx/hcl.jpg'); ?>" style="width: 30%;">
+                  <br><br>
+                  <center><label style="color: black;"><b>presents</b></label></center>
+                  <br>
+                  <center><img src="<?php echo base_url('assets/images/dextryx/dextryx.jpg'); ?>" style="width: 70%;"></center>
+                  <br>
+                  <center><label style="color: black; font-size: 13px;"><b>Co-Powered by</b></label></center>
+                  <center><label style="color: #E91E63; font-family: 'Kaushan Script'; font-size: 26px;">The Pink Feeds</label></center>
+                  <br>
+                  <center><p style="font-size: 13px;"><b>26th April 2018 - 28th April 2018</b></p></center>
+                  <p style="font-size: 13px;"><b>Registrations Open: </b>16th April 2018</p>
+                  <p style="font-size: 13px;">Tired of hunting for your dream internship? Organized by ​CampusPuppy ​in association with HCL​, Dextryx​, is a Virtual Internship Fest, for all the budding professionals to come on board and try their hands on securing internships in their definitive fields of interests. Dextryx is aiming to be an extravagant Virtual Internship Fest to be ever held in the country.</p>
+
+
+
+
+                </div>
+
+
+              </div>
+            </div>
+
+          <div class="col-lg-5 mb-4">
           <div class="card h-100" style="opacity: 0.9">
             <h5 class="card-header cardheader"><center>REGISTER</center></h5>
 
@@ -109,7 +139,7 @@
                   <div class="form-group col-md-12">
                     <label for="type"><b>You are a _____?</b></label>
                     <select class="form-control" name="accountType" id="type">
-                      <option value="1">Job/Internship Opportunity Seeker</option>
+                      <option value="1">Internship Opportunity Seeker</option>
                       <option value="2">Employer</option>
                     </select>
                   </div>
@@ -118,8 +148,7 @@
                   <div class="form-group col-md-10 offset-md-1">
                     <p class="help-text" style="font-size: 14px;">By clicking register button you agree to our <b>Terms and Condition</b> and <b>Privacy Policy</b>.</p>
                   </div>
-                </div>
-                <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
+                </div><input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
                 <center><button type="submit" class="btn btn-lg btn-primary">Register</button></center>
 
               </form>
@@ -182,6 +211,7 @@
         </div>
       </div>
     </div>
+
 
     <?php echo $footer; ?>
 

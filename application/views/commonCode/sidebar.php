@@ -1,5 +1,5 @@
 <div class="col-lg-3 mb-4">
-  <center><img class="img-responsive" src="<?php echo $_SESSION['user_data']['profileImage']; ?>" style="width: 70%; margin: 10px; border-radius: 50%;"></center>
+  <center><img class="img-responsive" src="<?php echo base_url().$_SESSION['user_data']['profileImage']; ?>" style="width: 70%; margin: 10px; border-radius: 50%;"></center>
   <center><b><?php echo $_SESSION['user_data']['name']; ?></b></center>
   <center><a href="<?php echo base_url('functions/signout'); ?>" style="font-size: 14px;">Sign Out</a></center>
   <div class="list-group" style="margin-top: 15px;">

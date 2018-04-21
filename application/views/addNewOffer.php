@@ -132,7 +132,7 @@
                <div class="col-md-7 control-group form-group compensation" <?php if(isset($redirect) && $redirect['compensation'] == NULL){ echo 'style ="display: none"'; }else{ }?>>
                 <div class="controls">
                   <label><b><span class ="reimburse">Compensation</span>:</b></label>
-                  <input type="number" class="form-control" name="compensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['compensation'].'"';}?> placeholder = "Compensation Offered per Month">
+                  <input type="number" class="form-control" name="compensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['compensation'].'"';}?> placeholder = "Compensation Offered per Month (in INR)">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -142,7 +142,7 @@
               <div class="col-sm-12 control-group form-group">
                 <div class="controls">
                   <label><b>Minimum <span class ="reimburse">Compensation:</span></b></label>
-                  <input type="number" class="form-control" name="minCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['minCompensation'].'"';}?> placeholder = "Minimum Compensation Offered per Month">
+                  <input type="number" class="form-control" name="minCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['minCompensation'].'"';}?> placeholder = "Minimum Compensation Offered per Month (in INR)">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -150,7 +150,7 @@
               <div class="col-sm-12 control-group form-group">
                 <div class="controls">
                   <label><b>Maximum <span class ="reimburse">Compensation:</span></b></label>
-                  <input type="number" class="form-control" name="maxCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['maxCompensation'].'"';}?> placeholder = "Maximum Compensation Offered per Month">
+                  <input type="number" class="form-control" name="maxCompensation" <?php if(isset($redirect)){ echo 'value = "'.$redirect['maxCompensation'].'"';}?> placeholder = "Maximum Compensation Offered per Month (in INR)">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -218,7 +218,7 @@
 
               <div class = "row col-md-12 duration" <?php if(isset($redirect) && $redirect['offerType'] == 2){}else{echo 'style ="display: none"';}?>>
 
-              <div class="col-md-6 control-group form-group ">
+              <div class="col-md-12 control-group form-group ">
                 <div class="controls">
                   <label><b>Duration:</b></label>
                   <input type="number" class="form-control" name="duration" placeholder="in months">
@@ -228,7 +228,7 @@
               </div>
 
 
-              <div class="col-md-6 control-group form-group">
+              <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label><b>Type of Applicants:</b></label>
                   <select class="form-control" name="applicantType" id="applicantType" required>
@@ -292,12 +292,15 @@
              <input type = "hidden" name = "edit" value = "<?= $redirect['offerID']?>">
              <?php } ?>
 
+            <div class="clearfix"></div>
+            <div class="col-md-12">
             <div class="row">
               <div class="col-md-12">
                 <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
                 <button type="submit" class="btn btn-lg btn-primary" style="float: right; margin-top: 15px;"><?php if(!isset($edit)){echo "Add Offer";}else{echo "Edit Offer";}?></button>
               </div>
             </div>
+          </div>
 
 
             </div>
