@@ -47,11 +47,11 @@
                 <div class="card-body">
                   <p class="card-text"><b>Registered E-Mail: </b><?= $_SESSION['user_data']['email']?></p>
                   <p class="card-text"><b>Status: </b><label style="color: <?php if($_SESSION['user_data']['emailVerified']) { echo 'green'; } else { echo 'red'; } ?>"><?php if($_SESSION['user_data']['emailVerified'] == 1) { echo 'Verified'; } else { echo 'Not-Verified'; } ?></label></p>
+                    <?php if($_SESSION['user_data']['emailVerified'] != 1){?>
                   <p class="card-text" style="float: left;"><a href = "<?= base_url('home/resendCode/2')?>">Resend Code</a></p>
                   <p class="card-text" style="float: right;"><a data-toggle="modal" data-target="#email">Entered Wrong E-Mail?</a></p>
                   <div class="clearfix"></div>
                   <p class="card-text">
-                    <?php if($_SESSION['user_data']['emailVerified'] != 1){?>
                     <form class="form-inline" action = "<?= base_url('functions/checkEmailVerificationCode')?>" method = "POST">
                       <label class="sr-only" for="verificationCode">Verification Code</label>
                       <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
@@ -70,11 +70,11 @@
                 <div class="card-body">
                   <p class="card-text"><b>Registered Mobile Number: </b>+91-<?= $_SESSION['user_data']['mobile']?></p>
                   <p class="card-text"><b>Status: </b><label style="color: <?php if($_SESSION['user_data']['mobileVerified']) { echo 'green'; } else { echo 'red'; } ?>"><?php if($_SESSION['user_data']['mobileVerified'] == 1) { echo 'Verified'; } else { echo 'Not-Verified'; } ?></label></p>
+                    <?php if($_SESSION['user_data']['mobileVerified'] != 1){?>
                   <p class="card-text" style="float: left;"><a href = "<?= base_url('home/resendCode/1')?>">Resend Code</a></p>
                   <p class="card-text" style="float: right;"><a data-toggle="modal" data-target="#mobile">Entered Wrong Mobile Number?</a></p>
                   <div class="clearfix"></div>
                   <p class="card-text">
-                    <?php if($_SESSION['user_data']['mobileVerified'] != 1){?>
                     <form class="form-inline" action = "<?= base_url('functions/checkMobileVerificationCode')?>" method = "POST">
                       <label class="sr-only" for="verificationCode">Verification Code</label>
                       <input type="hidden" name="<?php echo $csrf_token_name; ?>" value="<?php echo $csrf_token; ?>">
