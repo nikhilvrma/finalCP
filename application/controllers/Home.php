@@ -412,14 +412,14 @@ class Home extends CI_Controller {
 	public function accessApplicants(){
 		if(true){
 			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
-			redirect(base_url());
+			redirect(base_url('my-added-offers'));
 		}
 	}
 
 	public function applicants(){
 		if(true){
 			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
-			redirect(base_url());
+			redirect(base_url('my-added-offers'));
 		}
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
@@ -441,7 +441,7 @@ class Home extends CI_Controller {
 	public function compareApplicants(){
 		if(true){
 			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
-			redirect(base_url());
+			redirect(base_url('my-added-offers'));
 		}
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
