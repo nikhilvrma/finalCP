@@ -123,7 +123,7 @@
 					<tr>
 						<td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
 							<p style="margin: 0;">We're excited to have you get started. First, you need to verify your e-mail address.</p><br>
-							<p style="margin: 0;">Your E-Mail Verification Code is: <b>M9hvsdbh8</b></p>
+							<p style="margin: 0;"><?php echo $msg; ?></p>
 							<p style="margin: 0;">Please remember that the token is valid only for next <b>2 hours</b></p>
 						</td>
 					</tr>

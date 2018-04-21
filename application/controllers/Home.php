@@ -617,9 +617,10 @@ class Home extends CI_Controller {
 		$this->load->view('report', $this->data);
 	}
 
-	private function sendEMail($email){
+	private function sendEMail($email, $msg){
 		$this->load->helper('mail_helper');
-		$message =  $this->load->view('emailers/offers', $this->data, true);
+		$this->data['msg'] = $msg;
+		$message =  $this->load->view('emailers/verifyEMail', $this->data, true);
 		$data = array(
 				'sendToEmail' => $email,
 				'fromName' => 'Campus Puppy Private Limited',
@@ -726,7 +727,7 @@ class Home extends CI_Controller {
 				$timeDifference = $expiry-$currentTime;
 				if($timeDifference>0 && $timeDifference<7200){
 					$msg = "Your E-Mail Verification Token is: ".$checkCode[0]['code'].". The token is valid for only next 2 hours.";
-					$this->sendEMail($email);
+					$this->sendEMail($email, $msg);
 				}
 				else{
 					$code = rand(1000,9999);
@@ -742,7 +743,7 @@ class Home extends CI_Controller {
 					);
 					$this->contact_lib->insertVerificationCode($codeData);
 					$msg =  "Your E-Mail Verification Token is: ".$code.". The token is valid for only next 2 hours.";
-					$this->sendEMail($email);
+					$this->sendEMail($email, $msg);
 				}
 			}
 			else {
@@ -759,7 +760,7 @@ class Home extends CI_Controller {
 				);
 				$this->contact_lib->insertVerificationCode($codeData);
 				$msg =  "Your E-Mail Verification Token is: ".$code.". The token is valid for only next 2 hours.";
-				$this->sendEMail($email);
+				$this->sendEMail($email, $msg);
 			}
 		}
 
