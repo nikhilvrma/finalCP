@@ -360,7 +360,7 @@ class Functions extends CI_Controller {
 						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.4','color'=>'red'));
 						redirect(base_url('educational-details'));
 					}
-
+					// $newCollege = str_replace(' ', '', $newCollege);
 					if($other == 1){
 						$data = array(
 							'college' => $newCollege,
@@ -404,7 +404,7 @@ class Functions extends CI_Controller {
 						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 						redirect(base_url('educational-details'));
 					}
-					
+					// $newCollege = str_replace(' ', '', $newCollege);
 					if($other == 1){
 						$data = array(
 							'college' => $newCollege,
@@ -492,7 +492,7 @@ class Functions extends CI_Controller {
 						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 						redirect(base_url('educational-details'));
 					}
-					
+					// $newCollege = str_replace(' ', '', $newCollege);
 					if($other == 1){
 						$data = array(
 							'college' => $newCollege,
@@ -535,7 +535,7 @@ class Functions extends CI_Controller {
 						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 						redirect(base_url('educational-details'));
 					}
-					
+					// $newCollege = str_replace(' ', '', $newCollege);
 					if($other == 1){
 						$data = array(
 							'college' => $newCollege,

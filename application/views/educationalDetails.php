@@ -221,7 +221,7 @@
     </div>
 
     <?php echo $footer; ?>
-
+    <?php var_dump($colleges);?>
     <?php echo $footerFiles; ?>
 
     <script>
@@ -233,7 +233,10 @@
   </script>
 
     <script type="text/javascript">
+      
+      // var colleges = JSON.parse('<?= json_encode($colleges)?>')
       var value = null;
+      // console.log(colleges);
         $(document).ready(function(){
           $('.editWorkEx').on('click', function(res){
             data = $(this).attr('data');
