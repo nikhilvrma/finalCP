@@ -93,7 +93,7 @@
                 </div>
               </div>
 
-              <?php }}else{ echo "<center>You have applied For no Offers Yet.</center>"; } ?>
+            <?php }}else{ echo "<center>You have applied For any Offers Yet.</center>"; } ?>
               <div class ="offerCont"></div>
             </div>
 
@@ -154,7 +154,7 @@
             }else{
               offerType = 'Internship Offer'
             }
-            
+
             locations = '';
             skills = '';
             if(res.offerLocations[res.offers[i].offerID]){
@@ -187,14 +187,14 @@
             month = month[date.getMonth()];
             day = date.getDate();
             year = date.getFullYear();
-            date  = day+'-'+month+'-'+year; 
+            date  = day+'-'+month+'-'+year;
             container.find('.applicationDeadline').html(date)
             date = new Date(res.offers[i].joiningDate)
             month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
             month = month[date.getMonth()];
             day = date.getDate();
             year = date.getFullYear();
-            date  = day+'-'+month+'-'+year; 
+            date  = day+'-'+month+'-'+year;
             container.find('.joiningDate').html(date)
             view = '<?= base_url('offer/')?>'
             edit = '<?= base_url('editOffer/')?>'
@@ -207,7 +207,7 @@
             if(!res.hasMore){
               $('.loadMore').hide();
             }
-            
+
           })
         })
       })
