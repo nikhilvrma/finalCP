@@ -1026,7 +1026,11 @@ class Functions extends CI_Controller {
 		);
 		// var_dump($redirect); die;
 		$_SESSION['redirect'] = $redirect;
-
+		$companyData = $this->function_lib->getCompanyData($_SESSION['user_data']['userID']);
+		if($companyData['companyName'] == NULL || $companyData['companyName'] == ''){
+			$this->session->set_flashdata('message', array('content'=>'Please Enter Company Details to add offers.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}
 		if($offerType == '1' || $offerType == '2'){
 			date_default_timezone_set("Asia/Kolkata");
 			$today = date('Y-m-d');
