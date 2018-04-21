@@ -409,7 +409,18 @@ class Home extends CI_Controller {
 		}
 	}
 
+	public function accessApplicants(){
+		if(true){
+			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
+			redirect(base_url());
+		}
+	}
+
 	public function applicants(){
+		if(true){
+			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
+			redirect(base_url());
+		}
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
@@ -428,6 +439,10 @@ class Home extends CI_Controller {
 	}
 
 	public function compareApplicants(){
+		if(true){
+			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
+			redirect(base_url());
+		}
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
