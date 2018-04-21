@@ -649,4 +649,21 @@ class Function_model extends CI_Model {
 		return $result[0]['college_id'];
 	}
 
+	public function getUserIDForEducation($id){
+		$result = $this->db->get_where('educationalDetails', array('educationID' => $id))->result_array();
+		// var_dump($result); die;
+		return $result[0]['userID'];
+	}
+
+	public function getUserIDForExperience($id){
+		$result = $this->db->get_where('workExperience', array('workExperienceID' => $id))->result_array();
+		return $result[0]['userID'];
+	}
+
+	public function getUserIDForPreferredLocation($id){
+		$result = $this->db->get_where('preferredLocations', array('preferredLocationID' => $id))->result_array();
+		var_dump($result); die;
+		return $result[0]['userID'];
+	}
+
 }

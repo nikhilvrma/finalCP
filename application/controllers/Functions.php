@@ -820,6 +820,7 @@ class Functions extends CI_Controller {
 		}
 	}
 
+
 	public function deletePreferredLocation(){
 		$location = $this->input->get('location');
 		if($this->function_lib->deletePreferredLocation($location, $_SESSION['user_data']['userID'])){
@@ -833,6 +834,10 @@ class Functions extends CI_Controller {
 
 	public function deleteEducationalDetail(){
 		$education = $this->input->get('id');
+		// var_dump($this->function_lib->getUserIDForEducation($education)); die;
+		if($this->function_lib->getUserIDForEducation($education) != $_SESSION['user_data']['userID']){
+			redirect(base_url('404'));
+		}
 		if($this->function_lib->deleteEducationalDetail($education)){
 			$this->session->set_flashdata('message', array('content'=>'Education Deleted.','color'=>'green'));
 			redirect(base_url('educational-details'));
@@ -844,6 +849,9 @@ class Functions extends CI_Controller {
 
 	public function deleteWorkExperience(){
 		$experience = $this->input->get('id');
+		if($this->function_lib->getUserIDForExperience($experience) != $_SESSION['user_data']['userID']){
+			redirect(base_url('404'));
+		}
 		if($this->function_lib->deleteWorkExperience($experience)){
 			$this->session->set_flashdata('message', array('content'=>'Experience Deleted.','color'=>'green'));
 			redirect(base_url('work-experience'));

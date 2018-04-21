@@ -25,6 +25,7 @@ class Function_lib {
 		return 0;
 	}	
 
+
 	public function updateEmailVerified(){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -190,13 +191,12 @@ class Function_lib {
 		$data = explode(',', $image);
 		fwrite($ifp, base64_decode($data[1]));
 		fclose($ifp);
-		var_dump($upload_path);
 		if($this->validateImage($upload_path)){
 			if($type == 'company' ){
-				$logo['companyLogo'] = base_url($upload_path);
+				$logo['companyLogo'] = $upload_path;
 				return $CI->function->updateCompanyLogo($_SESSION['user_data']['userID'], $logo);
 			}else{
-				$picture['profileImage'] = base_url($upload_path);
+				$picture['profileImage'] = $upload_path;
 				return $CI->function->updateProfileImage($_SESSION['user_data']['userID'], $picture);
 			}
 		}else{
@@ -460,4 +460,16 @@ class Function_lib {
 		return $CI->functionModel->getCollegeID($college);
 	}
 
+	public function getUserIDForEducation($id){
+		$CI = &get_instance();
+		$CI->load->model('function_model','functionModel');
+		return $CI->functionModel->getUserIDForEducation($id);
+	}
+
+	public function getUserIDForExperience($id){
+		$CI = &get_instance();
+		$CI->load->model('function_model','functionModel');
+		return $CI->functionModel->getUserIDForExperience($id);
+	}
+	
 }
