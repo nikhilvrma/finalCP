@@ -145,6 +145,10 @@ class Home extends CI_Controller {
 	}
 
 	public function skillTest(){
+		if($this->function_lib->skillAdded($_SESSION['user_data']['userID'], $_SESSION['userData']['currentSkill'])){
+			$this->session->set_flashdata('message', array('content'=>'This Skill has already been added to your profile.','color'=>'red'));
+			redirect(base_url('skills'));
+		}
 		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){

@@ -390,7 +390,14 @@ class Function_model extends CI_Model {
 		return $result;
 	}
 
-
+	public function skillAdded($userID, $skillID){
+		$result = $this->db->get_where('userSkills', array('userID' => $userID, 'skillID' => $skillID));
+		if($result->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 
 ////////////////////////////////////////////////////////////

@@ -477,5 +477,11 @@ class Function_lib {
 		$CI->load->model('function_model','functionModel');
 		return $CI->functionModel->getUserIDForOffer($id);
 	}
+
+	public function skillAdded($userID, $skillID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','functionModel');
+		return $CI->functionModel->skillAdded($userID, $skillID);
+	}
 	
 }
