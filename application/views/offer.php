@@ -33,7 +33,7 @@
       }
     }else{ $loc = "Work From Home";} ?>
     <meta property="og:description"        content="<?= $type?> Opportunity with <?= $employer?> <?= $loc?>"/>
-    <meta property="og:image"              content="<?= $employerDetails['companyLogo']?>" />
+    <meta property="og:image"              content="<?= base_url('/')?><?= $employerDetails['companyLogo']?>" />
 
   </head>
 
