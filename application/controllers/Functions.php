@@ -1095,7 +1095,7 @@ class Functions extends CI_Controller {
 				}
 				redirect(base_url('add-new-offer'));
 			}
-			if ($applicationDeadline > $joiningDate){
+			if ($applicationDeadline >= $joiningDate){
 				$this->session->set_flashdata('message', array('content'=>'Offer Joining Date cannot be before the Offer Application Deadline. Please Try Again.','color'=>'red'));
 				if(isset($_POST['edit'])){
 					redirect(base_url('edit-offer/'.$_POST['edit']));
