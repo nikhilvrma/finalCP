@@ -561,7 +561,7 @@ class Home extends CI_Controller {
 		$this->data['offerDetails'] = $this->function_lib->getOfferDetails($offerID);
 		$this->data['employerDetails'] = $this->function_lib->getCompanyData($this->data['offerDetails'][0]['addedBy']);
 		if(empty($this->function_lib->getOfferDetails($offerID))){
-			redirect(base_url('xyz'));
+			redirect(base_url('404'));
 		}
 		if($offerSkills = $this->function_lib->getOfferSkills($offerID))
 			$this->data['offerSkills'] = $offerSkills;
@@ -614,6 +614,9 @@ class Home extends CI_Controller {
 	}
 
 	public function report($userID){
+		if($_SESSION['user_data']['userID'] != $userID){
+			redirect(base_url('404'));
+		}
 		$this->data['generalData'] = $this->function_lib->getUserGeneralData($userID)[0];
 		$this->data['educationalDetails'] = $this->function_lib->getUserEducationalDetails($userID);
 		$this->data['workExperience'] = $this->function_lib->getUserWorkExperience($userID);

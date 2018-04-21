@@ -501,14 +501,14 @@ class Function_model extends CI_Model {
 	public function getAllOffers($offset, $limit){
 		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate');
 		$this->db->limit($limit, $offset);
-		$result = $this->db->get('offers')->result_array();
+		$result = $this->db->get_where('offers', array('active' => 1, 'approved' => 1))->result_array();
 		// var_dump($this->db->last_query()); die;,
 		return $result;
 	}
 
 	public function hasMoreUserOffers($limit, $offset){
 		$this->db->limit($limit, $offset);
-		$result = $this->db->get_where('offers');
+		$result = $this->db->get_where('offers', array('active' => 1, 'approved' => 1));
 		if($result->num_rows()>0){
 			return true;
 		}else{
