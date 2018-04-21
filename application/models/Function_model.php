@@ -660,9 +660,8 @@ class Function_model extends CI_Model {
 		return $result[0]['userID'];
 	}
 
-	public function getUserIDForPreferredLocation($id){
-		$result = $this->db->get_where('preferredLocations', array('preferredLocationID' => $id))->result_array();
-		var_dump($result); die;
+	public function getUserIDForOffer($id){
+		$result = $this->db->get_where('offers', array('offerID' => $id))->result_array();
 		return $result[0]['userID'];
 	}
 

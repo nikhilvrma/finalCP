@@ -471,5 +471,11 @@ class Function_lib {
 		$CI->load->model('function_model','functionModel');
 		return $CI->functionModel->getUserIDForExperience($id);
 	}
+
+	public function getUserIDForOffer($id){
+		$CI = &get_instance();
+		$CI->load->model('function_model','functionModel');
+		return $CI->functionModel->getUserIDForOffer($id);
+	}
 	
 }

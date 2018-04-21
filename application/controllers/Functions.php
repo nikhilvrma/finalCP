@@ -305,8 +305,11 @@ class Functions extends CI_Controller {
 				redirect(base_url('educational-details'));
 			}
 		}
-
-
+		if(isset($_POST['edit']) && $_POST['edit'] == 1){
+			if($this->function_lib->getUserIDForEducation($_POST['id']) != $_SESSION['user_data']['userID']){
+				redirect(base_url('404'));
+			}
+		}
 
 		if($this->function_lib->checkEducationUnique($_SESSION['user_data']['userID'], $type) && !(isset($_POST['edit']) && $_POST['edit'] == 1)){
 			$this->session->set_flashdata('message', array('content'=>'This Educational Detail is already added. Please Remove the Previous added Detail to add the new data.','color'=>'red'));
@@ -634,6 +637,13 @@ class Functions extends CI_Controller {
 				redirect(base_url('work-experience'));
 			}
 		}
+
+		if(isset($_POST['edit']) && $_POST['edit'] == 1){
+			if($this->function_lib->getUserIDForExperience($_POST['id']) != $_SESSION['user_data']['userID']){
+				redirect(base_url('404'));
+			}
+		}
+
 		if(isset($_POST['edit']) && $_POST['edit'] == 1){
 			$config['upload_path'] = 'assets/uploads/WorkExperience';
 		 	$config['allowed_types'] = 'pdf';
@@ -1035,6 +1045,12 @@ class Functions extends CI_Controller {
 		// var_dump($redirect); die;
 		$_SESSION['redirect'] = $redirect;
 		$companyData = $this->function_lib->getCompanyData($_SESSION['user_data']['userID']);
+		
+		if(isset($_POST['edit']) && $_POST['edit'] == 1){
+			if($this->function_lib->getUserIDForOffer($_POST['id']) != $_SESSION['user_data']['userID']){
+				redirect(base_url('404'));
+			}
+		}
 		if($companyData['companyName'] == NULL || $companyData['companyName'] == ''){
 			$this->session->set_flashdata('message', array('content'=>'Please Enter Company Details to add offers.','color'=>'red'));
 			redirect(base_url('general-details'));
