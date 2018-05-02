@@ -15,20 +15,20 @@
     <meta property="og:url"                content="<?= base_url('offers/'.$offerDetails[0]['offerID'])?>" />
     <meta property="og:type"               content="article" />
     <meta property="og:title"              content="<?= $offerDetails[0]['offerTitle']?>" />
-    <?php 
+    <?php
     if($offerDetails[0]['offerType'] == 1 ){
       $type = 'Job';
     }else{
       $type = 'Internship';
-    } 
-    $employer = $employerDetails['companyName']; 
+    }
+    $employer = $employerDetails['companyName'];
     if(!empty($offerLocations)){
       $i = 0;
       foreach($offerLocations as $locations){
-        if($i == 0) 
-          $loc = 'at '.$locations['city']; 
-        else 
-          $loc = ', '.$locations['city']; 
+        if($i == 0)
+          $loc = 'at '.$locations['city'];
+        else
+          $loc = ', '.$locations['city'];
         $i++;
       }
     }else{ $loc = "Work From Home";} ?>
@@ -176,6 +176,7 @@
         </div>
       </div>
 
+</div>
     </div>
 
     <?php echo $footer; ?>
