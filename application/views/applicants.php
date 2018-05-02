@@ -53,7 +53,7 @@
             <div class="col-md-12 mb-4">
               <div class="row">
               <div class="col-sm-3 mb-4">
-                <p style="font-size: 14px;">Hiring Credits Remaining<br><label style="font-size: 18px;"><b>25</b></label></p>
+                <p style="font-size: 14px;">Hiring Credits Remaining<br><label style="font-size: 18px;"><b><span class = "credits">25</span></b></label></p>
               </div>
               <div class="col-sm-2 mb-4">
                 <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#filters">Filter Applicants</button>
@@ -79,48 +79,79 @@
 
           <div class="row">
 
-            <div class="col-md-12 mb-4">
-
-              <div class="card">
-                <h6 class="card-header cardheader">NIKHIL VERMA<br><br><label style="font-size: 14px;">View Profile</label></h6>
+            <div class="col-md-12 mb-4" id = "candidateList">
+              <?php foreach($applicants as $applicant){ ?>
+              <div class="card" id = "candidate<?= $applicant['userID']?>">
+                <h6 class="card-header cardheader"><?= $applicant['name']?><br><br><a href = "<?= base_url('report/'.$applicant['userID'])?>"><label style="font-size: 14px;">View Profile</label></a></h6>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-6 mb-4">
                       <p class="card-text" style="font-size: 14px;"><b>Skills: </b><br>
                         <ul style="font-size: 14px;">
-                          <li>General Aptitude <sup style="color: red;">Premium</sup></li>
-                          <li>PHP</li>
-                          <li>HTML</li>
+                          <?php $skills = explode(',', $applicant['skillName']);
+                                $skillScore = explode(',', $applicant['score']);
+                                $skillType = explode(',', $applicant['type']);
+                                $i=0;
+                                $k = 0;
+                          if($applicant['skillName'] == Null){
+                            echo "No Skill Found";  
+                          }else{
+                          foreach ($skills as $key => $skill) {
+                            if(($skillType[$i] == 2 && $skillScore[$i] >= 10) || $skillType[$i] == 1){ $k++;?>
+                            <li><?= $skill?> <?php if($skillType[$i] == 2){echo '<sup style="color: red;">Premium</sup>';}?></li>
+                          <?php }$i++;} if($k == 0){echo "No Skill Found";}} ?>
+                         <!--<sup style="color: red;">Premium</sup>  -->
                         </ul>
                       </p>
                     </div>
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Status: </b><label style="color: green;">Selected</label></p>
-                      <p class="card-text"><b>Gender: </b>Male</p>
-                      <p class="card-text"><b>Location: </b>New Delhi, Delhi</p>
+                      <p class="card-text"><b>Status: </b><label><?php if($applicant['status'] == 1){echo "<b>Applied</b>";}else if($applicant['status'] == 2){echo "<b style = 'color:green'>Selected</b>";}else if($applicant['status'] == 3){echo "<b style = 'color:yellow'>Shortlisted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></label></p>
+                      <p class="card-text"><b>Gender: </b><?php if($applicant['gender'] == 'M'){echo "Male";}else{echo "Female";}?></p>
+                      <p class="card-text"><b>Location: </b><?= $applicant['city'].', '. $applicant['state']?></p>
                     </div>
                     <div class="col-md-12 mb-4">
-                      <p class="card-text"><b>E-Mail Address: </b><i>Short-List Applicant to unlock E-Mail Address</i></p>
-                      <p class="card-text"><b>Mobile Number: </b><i>Short-List Applicant to unlock Mobile Number</i></p>
+                      <p class="card-text"><b>E-Mail Address: </b><label class = "email" id = "email<?= $applicant['userID']?>"><?php if($applicant['status'] == 3 || $applicant['status'] == 2){echo $applicant['email'];}else{?><i>Short-List Applicant to unlock E-Mail Address</i><?php } ?></label></p>
+                      <p class="card-text"><b>Mobile Number: </b><label class="mobile" id = "mobile<?= $applicant['userID']?>"><?php if($applicant['status'] == 3 || $applicant['status'] == 2){echo $applicant['mobile'];}else{?><i>Short-List Applicant to unlock Mobile Number</i><?php } ?></label></p>
                     </div>
                   </div>
 
                 </div>
-                <div class="card-footer">
-                  <small class="text-muted" style="float: right;">
-                    <button  type="button"  data-toggle="modal" data-target="#message" class="btn btn-success" style="color: white; margin: 10px;">Select Applicant</button>
-                    <a class="btn btn-warning" style="color: white; margin: 10px;">Short-List Applicant</a>
-                    <a class="btn btn-danger" style="color: white; margin: 10px;">Reject Applicant</a>
-                    <a class="btn btn-primary" style="color: white; margin: 10px;">Compare Applicant</a>
+                <div class="card-footer ">
+                  <small class="text-muted buttonContainer<?= $applicant['userID']?>" style="float: right;">
+                    <?php if($applicant['status'] != '2' && $applicant['status'] != '4'){?>
+                      <a class="btn btn-success selectCandidate" id = "selectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Select Applicant</a>
+                    <?php }else if($applicant['status'] == '2') {?>
+                      <a class="btn btn-success" style="color: white; margin: 10px;">Selected</a>
+                    <?php }
+                    ?>
+
+                    <?php if($applicant['status'] != '3' && $applicant['status'] != '2'&& $applicant['status'] != '4'){?>
+                      <a class="btn btn-warning shortlistCandidate" id = "shortlistCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Short-list Applicant</a>
+                    <?php }else if($applicant['status'] == '3'){ ?> 
+                      <a class="btn btn-warning" id = 'shortlistCandidate<?= $applicant['userID']?>' style="color: white; margin: 10px;">Shortlisted</a>
+                    <?php } ?>
+
+                    <?php if($applicant['status'] != '4' && $applicant['status'] != '2'){?>
+                      <a class="btn btn-danger rejectCandidate" id = "rejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Reject Applicant</a>
+                    <?php }else if($applicant['status'] == '4') { ?> 
+                      <a class="btn btn-danger" id = "rejectCandidate<?= $applicant['userID']?>" style="color: white; margin: 10px;">Rejected</a>
+                      <a class="btn btn-primary unrejectCandidate" id = "unrejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
+                    <?php }?>
+
+                    <?php if($applicant['status'] != '2' && $applicant['status'] != '4'){?>
+                    <a class="btn btn-primary addToCompare" id = "addToCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Compare Applicant</a>
+                    <?php }?>
                   </small>
                 </div>
               </div>
-
+              <?php } ?>
             </div>
 
+            <?php if($hasMore){?>
             <div class="col-md-12 mb-4">
-              <center><a class="btn btn-primary btn-lg" style="color: white;">Load More</a></center>
+              <center><a class="btn btn-primary btn-lg" id = "loadMore" style="color: white;">Load More</a></center>
             </div>
+            <?php } ?>
 
           </div>
 
@@ -249,6 +280,49 @@
       </div>
     </div>
 
+
+    <div class="card containerWrap" style = "display:none">
+                <h6 class="card-header cardheader"><span class = "title"></span><br><br><a href = "" id = "profileLink"><label style="font-size: 14px;">View Profile</label></a></h6>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-4">
+                      <p class="card-text" style="font-size: 14px;"><b>Skills: </b><br>
+                        <ul style="font-size: 14px;" class = "skillList">   
+                            
+                         <!--<sup style="color: red;">Premium</sup>  -->
+                        </ul>
+                      </p>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <p class="card-text"><b>Status: </b><label class = "status"></label></p>
+                      <p class="card-text"><b>Gender: </b><label class = "gender"></label></p>
+                      <p class="card-text"><b>Location: </b><label class = "location"></label></p>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                      <p class="card-text"><b>E-Mail Address: </b><label class = "email"></label></p>
+                      <p class="card-text"><b>Mobile Number: </b><label class = "mobile"></label></p>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted buttonContainer" style="float: right;">
+                    <a class="btn btn-success selectCandidate" style="color: white; margin: 10px;">Select Applicant</a>
+                    <a class="btn btn-warning shortlistCandidate" style="color: white; margin: 10px;">Short-List Applicant</a>
+                    <a class="btn btn-danger rejectCandidate" style="color: white; margin: 10px;">Reject Applicant</a>
+                    <a class="btn btn-info unrejectCandidate" style="display: none">Remove From Reject</a>
+                    <a class="btn btn-primary addToCompare" style="color: white; margin: 10px;">Compare Applicant</a>
+                  </small>
+                </div>
+              </div>
+
+             
+              <a class="btn btn-success selectClone" style="color: white; margin: 10px;display: none">Select Applicant</a>
+              <a class="btn btn-warning shortlistClone" style="color: white; margin: 10px;display: none">Short-list Applicant</a>
+              <a class="btn btn-danger rejectClone" style="color: white; margin: 10px;display: none">Reject Applicant</a>
+              <a class="btn btn-info unrejectClone" style="color: white; margin: 10px;display: none">Remove From Reject</a>
+              <a class="btn btn-info addToClone" style="color: white; margin: 10px;display: none">Compare Applicant</a>
+
     <?php echo $footer; ?>
 
     <?php echo $footerFiles; ?>
@@ -257,5 +331,255 @@
 
 
   </body>
+
+  <script type="text/javascript">
+  var page = 1;
+  var slug = '<?= $offer?>';
+    $(document).ready(function(){
+      $('#loadMore'). click(function(){
+        page++;
+        url = '<?= base_url('functions/loadMoreApplicants')?>';
+        data = {
+                  slug : slug,
+                  page : page
+                };
+        $.get(url,data).done(function(res){
+          console.log(res);
+          res = JSON.parse(res);
+          data = res.data
+          more = res.more
+          res = data
+          if(res != false){
+            for(var i = 0; i < res.length; i++){
+              var container = $('.containerWrap').clone()
+              container.attr('id', 'candidate'+res[i].userID)
+              container.removeClass('candidateWrap');
+              container.find('.title').html(res[i].name);
+              container.find('.location').html(res[i].city+' '+res[i].state)
+              if(res[i].status == 2){
+                container.find('.email').html(res[i].email).attr('id', 'email'+res[i].userID)
+                container.find('.mobile').html(res[i].mobile).attr('id', 'mobile'+res[i].userID)
+              }else{
+                container.find('.email').html('<i>Select Candidate to view E-Mail Address</i>').attr('id', 'email'+res[i].userID)
+                container.find('.mobile').html('<i>Select Candidate to view Mobile Number</i>').attr('id', 'mobile'+res[i].userID)
+              }
+              if(res[i].gender == 'M'){
+                container.find('.gender').html('Male');
+              }else{
+                container.find('.gender').html('Female');
+              }
+              if(res[i].status == 1){
+                container.find('.status').html('<b>Applied</b>');
+              }else if(res[i].status == 2){
+                container.find('.status').html('<b>Selected</b>').css('color', 'green');
+              }else if(res[i].status == 3){
+                container.find('.status').html('<b>Shortlisted</b>').css('color', 'yellow');
+              }else{
+                container.find('.status').html('<b>Rejected</b>').css('color', 'red');
+              }
+              if(res[i].skillName == null){
+                 container.find('.skillList').html('No Skills Found')
+              }else{
+                var skillName = (res[i].skillName).split(',')
+                var skilltype = (res[i].type).split(',')
+                var skillScore = (res[i].score).split(',')
+                var k = 0;
+                if(skilltype[0] == 2 && skillScore[0] >=10){ 
+                  var skill = '<li>'+ skillName[0] +'</li><sup style="color: red;">Premium</sup>';
+                  k++;
+                }
+                if(skilltype[0] == 1){
+                  var skill = '<li>'+ skillName[0] +'</li>';
+                  k++;
+                }
+
+                for(var j = 1; j < skillName.length; j++){
+                   if(skilltype[j] == 2 && skillScore[j] >=10){ 
+                  var skill = '<li>'+ skillName[j] +'</li><sup style="color: red;">Premium</sup>';
+                  k++;
+                }
+                if(skilltype[j] == 1){
+                  var skill = '<li>'+ skillName[j] +'</li>';
+                  k++;
+                }
+                }
+                if(k = 0){
+                  skill = "No Skill Found";
+                }
+                container.find('.skillList').html(skill)
+              }
+              container.find('.buttonContainer').addClass('buttonContainer'+res[i].userID).removeClass('buttonContainer')
+              container.find('.shortlistCandidate').attr({id:'shortlistCandidate'+res[i].userID, data:res[i].userID})
+              container.find('.selectCandidate').attr({id:'selectCandidate'+res[i].userID, data:res[i].userID})
+              container.find('.rejectCandidate').attr({id:'rejectCandidate'+res[i].userID, data:res[i].userID})
+              container.find('.addToCompare').attr({id:'addToCompare'+res[i].userID, data:res[i].userID})
+              if(res[i].status == 1){
+                container.find('.unrejectCandidate').remove();
+              }
+              
+              if(res[i].status == 2){
+                container.find('.shortlistCandidate').remove();
+                container.find('.selectCandidate').html('Selected').removeClass('selectCandidate').attr('id','');
+                container.find('.unrejectCandidate').remove();
+                container.find('.rejectCandidate').remove();
+                container.find('.addToCompare').remove();
+              }
+              if(res[i].status == 4){
+                container.find('.shortlistCandidate').remove();
+                container.find('.selectCandidate').remove();
+                container.find('.unrejectCandidate').attr({id:'unrejectCandidate'+res[i].userID, data:res[i].userID});
+                container.find('.rejectCandidate').html('Rejected').removeClass('rejectCandidate');
+                container.find('.addToCompare').remove();
+              }
+              if(res[i].status == 3){
+                 container.find('.unrejectCandidate').remove();
+                  container.find('.shortlistCandidate').html('Shortlisted').removeClass('shortlistCandidate');
+              }
+              $('#candidateList').append(container[0]);
+              container.show()
+            }
+          }
+          if(more == false){
+            $('#loadMore').hide();
+          }
+        })
+      })
+    })
+
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('body').on('click', '.shortlistCandidate', function(){
+      id = $(this).attr('id')
+      data = $('#'+id).attr('data')
+      url = '<?=base_url('functions/shortlist')?>';
+      postData = {
+        data: data
+      }
+
+      $.get(url,postData).done(function(res){
+        console.log(res)
+         res = JSON.parse(res);
+        candidateDetail = res.data[0];
+        if(res.res == 'true'){
+          $('#email'+data).html(candidateDetail.email)
+          $('#mobile'+data).html(candidateDetail.mobile)
+          $('#shortlistCandidate'+data).html('Shortlisted').removeClass('shortlistCandidate')  
+          alert('The candidate has been shortlisted');       
+        }
+      })
+    })
+  })
+
+  $(document).ready(function(){
+    $('body').on('click', '.selectCandidate', function(){
+      id = $(this).attr('id')
+      data = $('#'+id).attr('data')
+      url = "<?= base_url('functions/select')?>"
+      postData = {
+        data: data
+      }
+      $.get(url,postData).done(function(res){
+        res = JSON.parse(res);
+        candidateDetail = res.data[0];
+        if(res.res == 'true'){
+          $('#email'+data).html(candidateDetail.email)
+          $('#mobile'+data).html(candidateDetail.mobile)
+          $('#shortlistCandidate'+data).remove();
+          $('#selectCandidate'+data).html('Selected').removeClass('selectCandidate').attr('id','');
+          $('#unrejectCandidate'+data).remove();
+          $('#rejectCandidate'+data).remove();
+          $('#addToCompare'+data).remove();
+          alert('The candidate has been selected');  
+        }
+      })
+    })
+  })
+
+  $(document).ready(function(){
+    $('body').on('click', '.rejectCandidate', function(){
+      id = $(this).attr('id')
+      data = $('#'+id).attr('data')
+      url = '<?=base_url('functions/reject')?>'
+      postData = {
+        data: data
+      }
+      $.get(url,postData).done(function(res){
+        if(res == 'true'){
+          $('#shortlistCandidate'+data).remove();
+          $('#selectCandidate'+data).remove();
+          var clone = $('.unrejectClone').clone();
+          clone.addClass('unrejectCandidate');
+          clone.attr({id:'unrejectCandidate'+data, data:data});
+          $('.buttonContainer'+data).append(clone[0]);
+          clone.show();
+          $('#rejectCandidate'+data).html('Rejected').removeClass('rejectCandidate');
+          $('#addToCompare'+data).remove();
+          alert('The candidate has been rejected');  
+        }
+      })
+    })
+  })
+
+  $(document).ready(function(){
+    $('body').on('click', '.addToCompare', function(){
+      id = $(this).attr('id')
+      data = $('#'+id).attr('data')
+      url = '<?=base_url('functions/addToCompare')?>'
+      postData = {
+        data: data
+      }
+      $.get(url,postData).done(function(res){
+        if(res == 'true'){
+          alert('Added to Compare');
+        }
+        if(res == 'false'){
+          alert('3 candidate limit has been reached.');
+        }
+        if(res == 'false1'){
+          alert('This candidate has already been added');
+        }
+      })
+    })
+  })
+
+  $(document).ready(function(){
+    $('body').on('click', '.unrejectCandidate', function(){
+      id = $(this).attr('id')
+      data = $('#'+id).attr('data')
+      url = '<?=base_url('functions/removeFromReject')?>'
+      postData = {
+        data: data
+      }
+      $.get(url,postData).done(function(res){
+        if(res == 'true'){
+          $("#unrejectCandidate"+data).remove();
+          $('#rejectCandidate'+data).remove();
+          var selectClone = $('.selectClone').clone();
+          selectClone.addClass('selectCandidate');
+          selectClone.attr({id:'selectCandidate'+data, data:data});
+          $('.buttonContainer'+data).append(selectClone[0]);
+          selectClone.show();
+          var shortlistClone = $('.shortlistClone').clone();
+          shortlistClone.addClass('shortlistCandidate');
+          shortlistClone.attr({id:'shortlistCandidate'+data, data:data});
+          $('.buttonContainer'+data).append(shortlistClone[0]);
+          shortlistClone.show();
+          var rejectClone = $('.rejectClone').clone();
+          rejectClone.addClass('rejectCandidate');
+          rejectClone.attr({id:'rejectCandidate'+data, data:data});
+          $('.buttonContainer'+data).append(rejectClone[0]);
+          rejectClone.show();
+          var addToClone = $('.addToClone').clone();
+          addToClone.addClass('addToCompare');
+          addToClone.attr({id:'addToCompare'+data, data:data});
+          $('.buttonContainer'+data).append(addToClone[0]);
+          addToClone.show();
+        }
+      })
+    })
+  })
+
+</script>
 
 </html>

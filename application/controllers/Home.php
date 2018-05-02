@@ -409,15 +409,8 @@ class Home extends CI_Controller {
 		}
 	}
 
-	public function accessApplicants(){
-		if(true){
-			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
-			redirect(base_url('my-added-offers'));
-		}
-	}
-
-	public function applicants(){
-		if(true){
+	public function applicants($offerID){
+		if(false){
 			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
 			redirect(base_url('my-added-offers'));
 		}
@@ -426,6 +419,13 @@ class Home extends CI_Controller {
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Applicants";
 				$this->data['activePage'] = "8";
+				$this->data['offer'] = $offerID;
+				$this->data['allOfferLocations'] = $this->function_lib->getAllUserOfferLocations($_SESSION['user_data']['userID']);
+				$this->data['allOfferSkills'] = $this->function_lib->getAllUserOfferSkills($_SESSION['user_data']['userID']);
+				$this->data['colleges'] = $this->function_lib->getAllColleges();
+				$this->data['courses'] = $this->function_lib->getAllCourses();
+				$this->data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10);
+				$this->data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10);
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->load->view('applicants', $this->data);
 			}
@@ -459,6 +459,8 @@ class Home extends CI_Controller {
 			redirect(base_url());
 		}
 	}
+
+
 
 	public function appliedOffers(){
 		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
@@ -629,7 +631,7 @@ class Home extends CI_Controller {
 	}
 
 	public function report($userID){
-		if($_SESSION['user_data']['userID'] != $userID){
+		if($_SESSION['user_data']['userID'] != $userID && $_SESSION['user_data']['accountType'] == 1){
 			redirect(base_url('404'));
 		}
 		$this->data['generalData'] = $this->function_lib->getUserGeneralData($userID)[0];

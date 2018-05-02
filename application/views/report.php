@@ -106,7 +106,7 @@
                 </thead>
                 <tbody>
 
-                    <?php foreach($premiumSkills as $premiumSkill){?>
+                    <?php foreach($premiumSkills as $premiumSkill){if($premiumSkill['score'] > 10){?>
                   <tr>
                     <td><?= $i?>.</td>
                     <td><?=$premiumSkill['skill_name']?></td>
@@ -138,7 +138,7 @@
                       </div>
                     </td>
                   </tr>
-                  <?php $i++;} ?>
+                  <?php $i++;}} ?>
                 </tbody>
               </table>
               <?php }else{
