@@ -22,6 +22,15 @@
           <img class="img-responsive" src="<?php echo base_url('assets/images/cp_logo_white.png'); ?>" style="width: 14%; margin: 10px;">
         </a>
 
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="about.html" style="color: white;">Dashboard</a>
+          </li>
+        </ul>
+    </div>
+
+
       </div>
     </nav>
 
@@ -36,6 +45,7 @@
           </div>
 
         </div>
+
 
       </div>
     </header>
@@ -54,48 +64,48 @@
 
         <div class="col-lg-8 mb-4">
 
-        <div class="col-lg-12 mb-4">
-
-
-          <a href="#" class="btn btn-primary" style="float: right; margin: 10px;">Filter Job Offer(s)</a>
-
-          <h5 style="margin: 20px;"><b>Job Offer(s)</b></h5>
-          <div class="clearfix"></div>
+          <h6><b>Current Job Opening(s)</b></h6>
           <div class="col-lg-12 mb-4">
           <div class="card">
-            <h6 class="card-header" style="font-size: 15px;"><b>PHP Developer Required</b></h6>
-
+            <h6 class="card-header"><b>PHP Developer Required</b></h6>
             <div class="card-body">
-                <p class="card-text" style="font-size: 13px;"><b>Skill(s) Required: </b>General Aptitude, PHP, HTML</p>
-                <p class="card-text" style="font-size: 13px;"><b>Compensation: </b>INR 18000 per month</p>
-                <p class="card-text" style="font-size: 13px;"><b>Joining Date: </b>18th May 2018</p>
-                <p class="card-text" style="font-size: 13px;"><b>Application Deadline: </b>30th April 2018 <label style="color: green"><b>Application(s) Open</b><label></p>
+              <p class="card-text"><b>Skill(s) Required: </b>General Aptitude, PHP, HTML</p>
+              <p class="card-text"><b>Compensation: </b>INR 18000 per month</p>
             </div>
-
             <div class="card-footer">
-              <a href="#" class="btn btn-primary" style="float: right;">View Offer</a>
+              <a href="#" class="btn btn-primary" style="float: right;">Apply</a>
             </div>
           </div>
           </div>
 
           <div class="col-lg-12 mb-4">
           <div class="card">
-            <h6 class="card-header" style="font-size: 15px;"><b>PHP Developer Required</b></h6>
-
+            <h6 class="card-header"><b>Web Developer Required</b></h6>
             <div class="card-body">
-                <p class="card-text" style="font-size: 13px;"><b>Skill(s) Required: </b>General Aptitude, PHP, HTML</p>
-                <p class="card-text" style="font-size: 13px;"><b>Compensation: </b>INR 18000 per month</p>
-                <p class="card-text" style="font-size: 13px;"><b>Joining Date: </b>18th May 2018</p>
-                <p class="card-text" style="font-size: 13px;"><b>Application Deadline: </b>30th April 2018 <label style="color: red"><b>Application(s) Closed</b><label></p>
+              <p class="card-text"><b>Skill(s) Required: </b>General Aptitude, HTML, CSS, JavaScript</p>
+              <p class="card-text"><b>Compensation: </b>INR 18000 per month</p>
             </div>
-
             <div class="card-footer">
-              <a href="#" class="btn btn-primary" style="float: right;">View Offer</a>
+              <a href="#" class="btn btn-primary" style="float: right;">Apply</a>
             </div>
           </div>
           </div>
 
-        </div>
+
+          <h6><b>Current Internship Opening(s)</b></h6>
+
+          <div class="col-lg-12 mb-4">
+          <div class="card">
+            <h6 class="card-header"><b>Operation Intern Required</b></h6>
+            <div class="card-body">
+              <p class="card-text"><b>Skill(s) Required: </b>General Aptitude</p>
+              <p class="card-text"><b>Compensation: </b>INR 2000 per month</p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-danger" style="float: right;">Application(s) Closed</a>
+            </div>
+          </div>
+          </div>
 
         </div>
 
