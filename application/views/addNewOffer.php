@@ -221,7 +221,7 @@
               <div class="col-md-12 control-group form-group ">
                 <div class="controls">
                   <label><b>Duration:</b></label>
-                  <input type="number" class="form-control" name="duration" placeholder="in months">
+                  <input type="number" class="form-control" name="duration" placeholder="in weeks">
                   <p class="help-block"></p>
                 </div>
               </div>

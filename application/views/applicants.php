@@ -59,15 +59,15 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#filters">Filter Applicants</button>
               </div>
               <div class="col-sm-7 mb-4">
-                <form class="form-inline" style="float: right;">
+                <form class="form-inline" style="float: right;" method = "get" action = "<?= base_url('functions/filterApplicantsByStatus')?>">
                   <label style="margin: 5px;"><b>Display Applicants</b></label>
                   <br>
-                  <select class="form-control mb-2 mr-sm-2">
+                  <select class="form-control mb-2 mr-sm-2" name = "type">
                     <option>All Applicants</option>
                     <option>Selected Applicants</option>
                     <option>Short-Listed Applicants</option>
                     <option>Rejected Applicants</option>
-                    <option>Applicants to Compare</option>
+                    <option value = "5">Applicants to Compare</option>
                   </select>
 
                   <button type="submit" class="btn btn-primary mb-2">Display</button>
