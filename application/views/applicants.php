@@ -78,7 +78,7 @@
           </div>
 
           <div class="row">
-
+            
             <div class="col-md-12 mb-4" id = "candidateList">
               <?php foreach($applicants as $applicant){ ?>
               <div class="card" id = "candidate<?= $applicant['userID']?>">
@@ -530,11 +530,14 @@
         data: data
       }
       $.get(url,postData).done(function(res){
+        console.log(res);
         if(res == 'true'){
+          console.log('yo');
           alert('Added to Compare');
         }
         if(res == 'false'){
-          alert('3 candidate limit has been reached.');
+          console.log('hoe');
+          alert('2 candidate limit has been reached.');
         }
         if(res == 'false1'){
           alert('This candidate has already been added');

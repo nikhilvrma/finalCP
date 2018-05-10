@@ -11,6 +11,13 @@ class Functions extends CI_Controller {
 
 		$this->data['message'] = ($v = $this->session->flashdata('message'))?$v:array('content'=>'','color'=>'');
 
+		if(!isset($_SESSION['compare'][0])){
+			$_SESSION['compare'][0] = null;
+		}
+		if(!isset($_SESSION['compare'][1])){
+			$_SESSION['compare'][1] = null;
+		}
+		
 		// $this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
 	}
 
@@ -1926,6 +1933,10 @@ class Functions extends CI_Controller {
 		if(isset($_SESSION['compare'][0]) && isset($_SESSION['compare'][1]) && isset($_SESSION['compare'][2])) {
 			echo 'false';
 		}else{
+			if(in_array($userID, $_SESSION['compare'])){
+				echo "false1";
+				die;
+			}
 			if(!isset($_SESSION['compare'][0])){
 				if($_SESSION['compare'][0] != $userID){
 					$_SESSION['compare'][0] = $userID;
@@ -1940,15 +1951,8 @@ class Functions extends CI_Controller {
 				}else{
 					echo "false1";
 				}
-			}elseif (!isset($_SESSION['compare'][2])) {
-				if($_SESSION['compare'][2] != $userID){
-					$_SESSION['compare'][2] = $userID;
-					echo "true";
-				}else{
-					echo "false1";
-				}
 			}else{
-				echo "chod ho gya";
+				echo "false2";
 			}
 		}
 	}
