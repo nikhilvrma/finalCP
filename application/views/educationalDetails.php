@@ -166,7 +166,7 @@
                             <input type="text" class="form-control" name = "newCollege" id = "newCollege" placeholder="College">
                           </div>
                         </div>
-                         
+
 
                         <div class="col-md-12 control-group form-group courses" id = "courseBach" style = "display: none;">
                           <div class="controls">
@@ -221,7 +221,6 @@
     </div>
 
     <?php echo $footer; ?>
-    <?php var_dump($colleges);?>
     <?php echo $footerFiles; ?>
 
     <script>
@@ -233,7 +232,7 @@
   </script>
 
     <script type="text/javascript">
-      
+
       // var colleges = JSON.parse('<?= json_encode($colleges)?>')
       var value = null;
       // console.log(colleges);

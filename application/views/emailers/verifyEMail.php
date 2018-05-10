@@ -97,7 +97,7 @@
 					<tr>
 						<td align="center" valign="top" style="padding: 40px 10px 40px 10px;">
 							<a href="http://www.campuspuppy.com/" target="_blank">
-								<img alt="Logo" src="http://www.campuspuppy.com/assets/img/logo-white.png" style="display: block; font-family: 'Lato', Helvetica, Arial, sans-serif; color: #ffffff; font-size: 18px;" border="0">
+								<img alt="Logo" src="http://www.campuspuppy.com/assets/images/cp_logo_white.png" style="display: block; font-family: 'Lato', Helvetica, Arial, sans-serif; color: #ffffff; font-size: 18px; width: 50%;" border="0">
 							</a>
 						</td>
 					</tr>

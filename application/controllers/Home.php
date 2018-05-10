@@ -8,17 +8,13 @@ class Home extends CI_Controller {
 		$this->load->library(array('session', 'function_lib', 'skill_lib'));
 		$this->load->helper(array('url'));
 		$this->data = array();
-
 		$this->data['headerFiles'] =  $this->load->view('commonCode/headerFiles',$this->data,true);
 		$this->data['footerFiles'] =  $this->load->view('commonCode/footerFiles',$this->data,true);
 		$this->data['nav'] =  $this->load->view('commonCode/nav',$this->data,true);
 		$this->data['footer'] =  $this->load->view('commonCode/footer',$this->data,true);
 		$this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
 		$this->data['csrf_token'] = $this->security->get_csrf_hash();
-
 		$this->data['message'] = ($v = $this->session->flashdata('message'))?$v:array('content'=>'','color'=>'');
-
-		// $this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
 	}
 
 
@@ -409,6 +405,7 @@ class Home extends CI_Controller {
 		}
 	}
 
+
 	public function applicants($offerID){
 		// if(false){
 		// 	$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
@@ -419,13 +416,6 @@ class Home extends CI_Controller {
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Applicants";
 				$this->data['activePage'] = "8";
-				$this->data['offer'] = $offerID;
-				$this->data['allOfferLocations'] = $this->function_lib->getAllUserOfferLocations($_SESSION['user_data']['userID']);
-				$this->data['allOfferSkills'] = $this->function_lib->getAllUserOfferSkills($_SESSION['user_data']['userID']);
-				$this->data['colleges'] = $this->function_lib->getAllColleges();
-				$this->data['courses'] = $this->function_lib->getAllCourses();
-				$this->data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10);
-				$this->data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10);
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->load->view('applicants', $this->data);
 			}
@@ -474,8 +464,6 @@ class Home extends CI_Controller {
 			redirect(base_url());
 		}
 	}
-
-
 
 	public function appliedOffers(){
 		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
@@ -646,7 +634,7 @@ class Home extends CI_Controller {
 	}
 
 	public function report($userID){
-		if($_SESSION['user_data']['userID'] != $userID && $_SESSION['user_data']['accountType'] == 1){
+		if($_SESSION['user_data']['userID'] != $userID){
 			redirect(base_url('404'));
 		}
 		$this->data['generalData'] = $this->function_lib->getUserGeneralData($userID)[0];

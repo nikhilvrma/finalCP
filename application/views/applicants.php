@@ -53,7 +53,7 @@
             <div class="col-md-12 mb-4">
               <div class="row">
               <div class="col-sm-3 mb-4">
-                <p style="font-size: 14px;">Hiring Credits Remaining<br><label style="font-size: 18px;"><b><span class = "credits">25</span></b></label></p>
+                <p style="font-size: 14px;">Hiring Credits Remaining<br><label style="font-size: 18px;"><b>25</b></label></p>
               </div>
               <div class="col-sm-2 mb-4">
                 <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#filters">Filter Applicants</button>
@@ -78,7 +78,7 @@
           </div>
 
           <div class="row">
-            
+
             <div class="col-md-12 mb-4" id = "candidateList">
               <?php foreach($applicants as $applicant){ ?>
               <div class="card" id = "candidate<?= $applicant['userID']?>">
@@ -88,70 +88,39 @@
                     <div class="col-md-6 mb-4">
                       <p class="card-text" style="font-size: 14px;"><b>Skills: </b><br>
                         <ul style="font-size: 14px;">
-                          <?php $skills = explode(',', $applicant['skillName']);
-                                $skillScore = explode(',', $applicant['score']);
-                                $skillType = explode(',', $applicant['type']);
-                                $i=0;
-                                $k = 0;
-                          if($applicant['skillName'] == Null){
-                            echo "No Skill Found";  
-                          }else{
-                          foreach ($skills as $key => $skill) {
-                            if(($skillType[$i] == 2 && $skillScore[$i] >= 10) || $skillType[$i] == 1){ $k++;?>
-                            <li><?= $skill?> <?php if($skillType[$i] == 2){echo '<sup style="color: red;">Premium</sup>';}?></li>
-                          <?php }$i++;} if($k == 0){echo "No Skill Found";}} ?>
-                         <!--<sup style="color: red;">Premium</sup>  -->
+                          <li>General Aptitude <sup style="color: red;">Premium</sup></li>
+                          <li>PHP</li>
+                          <li>HTML</li>
                         </ul>
                       </p>
                     </div>
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Status: </b><label><?php if($applicant['status'] == 1){echo "<b>Applied</b>";}else if($applicant['status'] == 2){echo "<b style = 'color:green'>Selected</b>";}else if($applicant['status'] == 3){echo "<b style = 'color:yellow'>Shortlisted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></label></p>
-                      <p class="card-text"><b>Gender: </b><?php if($applicant['gender'] == 'M'){echo "Male";}else{echo "Female";}?></p>
-                      <p class="card-text"><b>Location: </b><?= $applicant['city'].', '. $applicant['state']?></p>
+                      <p class="card-text"><b>Status: </b><label style="color: green;">Selected</label></p>
+                      <p class="card-text"><b>Gender: </b>Male</p>
+                      <p class="card-text"><b>Location: </b>New Delhi, Delhi</p>
                     </div>
                     <div class="col-md-12 mb-4">
-                      <p class="card-text"><b>E-Mail Address: </b><label class = "email" id = "email<?= $applicant['userID']?>"><?php if($applicant['status'] == 3 || $applicant['status'] == 2){echo $applicant['email'];}else{?><i>Short-List Applicant to unlock E-Mail Address</i><?php } ?></label></p>
-                      <p class="card-text"><b>Mobile Number: </b><label class="mobile" id = "mobile<?= $applicant['userID']?>"><?php if($applicant['status'] == 3 || $applicant['status'] == 2){echo $applicant['mobile'];}else{?><i>Short-List Applicant to unlock Mobile Number</i><?php } ?></label></p>
+                      <p class="card-text"><b>E-Mail Address: </b><i>Short-List Applicant to unlock E-Mail Address</i></p>
+                      <p class="card-text"><b>Mobile Number: </b><i>Short-List Applicant to unlock Mobile Number</i></p>
                     </div>
                   </div>
 
                 </div>
-                <div class="card-footer ">
-                  <small class="text-muted buttonContainer<?= $applicant['userID']?>" style="float: right;">
-                    <?php if($applicant['status'] != '2' && $applicant['status'] != '4'){?>
-                      <a class="btn btn-success selectCandidate" id = "selectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Select Applicant</a>
-                    <?php }else if($applicant['status'] == '2') {?>
-                      <a class="btn btn-success" style="color: white; margin: 10px;">Selected</a>
-                    <?php }
-                    ?>
-
-                    <?php if($applicant['status'] != '3' && $applicant['status'] != '2'&& $applicant['status'] != '4'){?>
-                      <a class="btn btn-warning shortlistCandidate" id = "shortlistCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Short-list Applicant</a>
-                    <?php }else if($applicant['status'] == '3'){ ?> 
-                      <a class="btn btn-warning" id = 'shortlistCandidate<?= $applicant['userID']?>' style="color: white; margin: 10px;">Shortlisted</a>
-                    <?php } ?>
-
-                    <?php if($applicant['status'] != '4' && $applicant['status'] != '2'){?>
-                      <a class="btn btn-danger rejectCandidate" id = "rejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Reject Applicant</a>
-                    <?php }else if($applicant['status'] == '4') { ?> 
-                      <a class="btn btn-danger" id = "rejectCandidate<?= $applicant['userID']?>" style="color: white; margin: 10px;">Rejected</a>
-                      <a class="btn btn-primary unrejectCandidate" id = "unrejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
-                    <?php }?>
-
-                    <?php if($applicant['status'] != '2' && $applicant['status'] != '4'){?>
-                    <a class="btn btn-primary addToCompare" id = "addToCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Compare Applicant</a>
-                    <?php }?>
+                <div class="card-footer">
+                  <small class="text-muted" style="float: right;">
+                    <button  type="button"  data-toggle="modal" data-target="#message" class="btn btn-success" style="color: white; margin: 10px;">Select Applicant</button>
+                    <a class="btn btn-warning" style="color: white; margin: 10px;">Short-List Applicant</a>
+                    <a class="btn btn-danger" style="color: white; margin: 10px;">Reject Applicant</a>
+                    <a class="btn btn-primary" style="color: white; margin: 10px;">Compare Applicant</a>
                   </small>
                 </div>
               </div>
-              <?php } ?>
+
             </div>
 
-            <?php if($hasMore){?>
             <div class="col-md-12 mb-4">
-              <center><a class="btn btn-primary btn-lg" id = "loadMore" style="color: white;">Load More</a></center>
+              <center><a class="btn btn-primary btn-lg" style="color: white;">Load More</a></center>
             </div>
-            <?php } ?>
 
           </div>
 
@@ -280,49 +249,6 @@
       </div>
     </div>
 
-
-    <div class="card containerWrap" style = "display:none">
-                <h6 class="card-header cardheader"><span class = "title"></span><br><br><a href = "" id = "profileLink"><label style="font-size: 14px;">View Profile</label></a></h6>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-6 mb-4">
-                      <p class="card-text" style="font-size: 14px;"><b>Skills: </b><br>
-                        <ul style="font-size: 14px;" class = "skillList">   
-                            
-                         <!--<sup style="color: red;">Premium</sup>  -->
-                        </ul>
-                      </p>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Status: </b><label class = "status"></label></p>
-                      <p class="card-text"><b>Gender: </b><label class = "gender"></label></p>
-                      <p class="card-text"><b>Location: </b><label class = "location"></label></p>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                      <p class="card-text"><b>E-Mail Address: </b><label class = "email"></label></p>
-                      <p class="card-text"><b>Mobile Number: </b><label class = "mobile"></label></p>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted buttonContainer" style="float: right;">
-                    <a class="btn btn-success selectCandidate" style="color: white; margin: 10px;">Select Applicant</a>
-                    <a class="btn btn-warning shortlistCandidate" style="color: white; margin: 10px;">Short-List Applicant</a>
-                    <a class="btn btn-danger rejectCandidate" style="color: white; margin: 10px;">Reject Applicant</a>
-                    <a class="btn btn-info unrejectCandidate" style="display: none">Remove From Reject</a>
-                    <a class="btn btn-primary addToCompare" style="color: white; margin: 10px;">Compare Applicant</a>
-                  </small>
-                </div>
-              </div>
-
-             
-              <a class="btn btn-success selectClone" style="color: white; margin: 10px;display: none">Select Applicant</a>
-              <a class="btn btn-warning shortlistClone" style="color: white; margin: 10px;display: none">Short-list Applicant</a>
-              <a class="btn btn-danger rejectClone" style="color: white; margin: 10px;display: none">Reject Applicant</a>
-              <a class="btn btn-info unrejectClone" style="color: white; margin: 10px;display: none">Remove From Reject</a>
-              <a class="btn btn-info addToClone" style="color: white; margin: 10px;display: none">Compare Applicant</a>
-
     <?php echo $footer; ?>
 
     <?php echo $footerFiles; ?>
@@ -384,7 +310,7 @@
                 var skilltype = (res[i].type).split(',')
                 var skillScore = (res[i].score).split(',')
                 var k = 0;
-                if(skilltype[0] == 2 && skillScore[0] >=10){ 
+                if(skilltype[0] == 2 && skillScore[0] >=10){
                   var skill = '<li>'+ skillName[0] +'</li><sup style="color: red;">Premium</sup>';
                   k++;
                 }
@@ -394,7 +320,7 @@
                 }
 
                 for(var j = 1; j < skillName.length; j++){
-                   if(skilltype[j] == 2 && skillScore[j] >=10){ 
+                   if(skilltype[j] == 2 && skillScore[j] >=10){
                   var skill = '<li>'+ skillName[j] +'</li><sup style="color: red;">Premium</sup>';
                   k++;
                 }
@@ -416,7 +342,7 @@
               if(res[i].status == 1){
                 container.find('.unrejectCandidate').remove();
               }
-              
+
               if(res[i].status == 2){
                 container.find('.shortlistCandidate').remove();
                 container.find('.selectCandidate').html('Selected').removeClass('selectCandidate').attr('id','');
@@ -464,8 +390,8 @@
         if(res.res == 'true'){
           $('#email'+data).html(candidateDetail.email)
           $('#mobile'+data).html(candidateDetail.mobile)
-          $('#shortlistCandidate'+data).html('Shortlisted').removeClass('shortlistCandidate')  
-          alert('The candidate has been shortlisted');       
+          $('#shortlistCandidate'+data).html('Shortlisted').removeClass('shortlistCandidate')
+          alert('The candidate has been shortlisted');
         }
       })
     })
@@ -490,7 +416,7 @@
           $('#unrejectCandidate'+data).remove();
           $('#rejectCandidate'+data).remove();
           $('#addToCompare'+data).remove();
-          alert('The candidate has been selected');  
+          alert('The candidate has been selected');
         }
       })
     })
@@ -515,7 +441,7 @@
           clone.show();
           $('#rejectCandidate'+data).html('Rejected').removeClass('rejectCandidate');
           $('#addToCompare'+data).remove();
-          alert('The candidate has been rejected');  
+          alert('The candidate has been rejected');
         }
       })
     })

@@ -17,7 +17,7 @@ class Functions extends CI_Controller {
 		if(!isset($_SESSION['compare'][1])){
 			$_SESSION['compare'][1] = null;
 		}
-		
+
 		// $this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
 	}
 
@@ -1135,7 +1135,7 @@ class Functions extends CI_Controller {
 				redirect(base_url('add-new-offer'));
 			}
 			if ($applicationDeadline >= $joiningDate){
-				$this->session->set_flashdata('message', array('content'=>'Offer Joining Date cannot be before/equal the Offer Application Deadline. Please Try Again.','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Offer Joining Date cannot be before/equal to the Offer Application Deadline. Please Try Again.','color'=>'red'));
 				if(isset($_POST['edit'])){
 					redirect(base_url('edit-offer/'.$_POST['edit']));
 				}
