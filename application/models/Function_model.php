@@ -63,6 +63,22 @@ class Function_model extends CI_Model {
 		return $this->db->update('users', $data);
 	}
 
+	public function getOfferApplicants($offerID, $offset = 0, $limit = 10){
+		$result = $this->db->query('SELECT `applicants`.`applicantID`, `applicants`.`userID`, `applicants`.`userID`, `applicants`.`status`, `users`.`name`, `users`.`email`, `users`.`mobile`, `users`.`gender`, `users`.`cityID`, GROUP_CONCAT(DISTINCT `userSkills`.`skillID`) as `skillID`, GROUP_CONCAT(`userSkills`.`type`) as `type`, GROUP_CONCAT(DISTINCT `userSkills`.`score`) as `score`, GROUP_CONCAT(DISTINCT `skills`.`skill_name`) as `skillName`, `indianCities`.`city`, `indianCities`.`state` FROM `applicants` JOIN `users` ON `applicants`.`userID` = `users`.`userID` LEFT JOIN `userSkills` ON `users`.`userID` = `userSkills`.`userID` LEFT JOIN `indianCities` ON `users`.`cityID` = `indianCities`.`cityID` LEFT JOIN `skills` ON `userSkills`.`skillID` = `skills`.`skillID` WHERE `applicants`.`offerID` ='. $offerID .' GROUP BY `applicants`.`applicantID` LIMIT '.$limit.' OFFSET '. $offset);
+		// var_dump($result->result_array()); die;
+		return $result->result_array();
+	}
+
+	public function hasMoreOfferApplicants($offerID, $offset, $limit){
+		$this->db->limit($limit, $offset);
+		$result = $this->db->get_where('applicants', array('offerID' => $offerID));
+		if($result->num_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function getAllLocations(){
 		return $this->db->get('indianCities')->result_array();
 	}
@@ -89,6 +105,11 @@ class Function_model extends CI_Model {
 
 	public function getUserData($email){
 		$result = $this->db->get_where('users', array('email' => $email));
+		return $result->result_array();
+	}
+
+	public function getUserDataFromID($userID){
+		$result = $this->db->get_where('users', array('userID' => $userID));
 		return $result->result_array();
 	}
 
@@ -570,10 +591,36 @@ class Function_model extends CI_Model {
 		return $result->result_array();
 	}
 
+	public function getAllColleges(){
+		$result = $this->db->get_where('colleges', array('active' => 1));
+		return $result->result_array();
+	}
+
+	public function getAllCourses(){
+		$result = $this->db->get_where('courses', array('active' => 1));
+		return $result->result_array();
+	}
+
 	public function getAllOfferSkills(){
 		$this->db->select('DISTINCT(offerSkills.skillID), skill_name');
 		$this->db->join('skills','offerSkills.skillID = skills.skillID');
 		$result = $this->db->get('offerSkills');
+		return $result->result_array();
+	}
+
+	public function getAllUserOfferLocations($userID){
+		$this->db->select('DISTINCT(offerLocation.cityID), city, state');
+		$this->db->join('offers','offerLocation.offerID = offers.offerID');
+		$this->db->join('indianCities','offerLocation.cityID = indianCities.cityID');
+		$result = $this->db->get_where('offerLocation', array('offers.addedBy' => $userID));
+		return $result->result_array();
+	}
+
+	public function getAllUserOfferSkills($userID){
+		$this->db->select('DISTINCT(offerSkills.skillID), skill_name');
+		$this->db->join('offers','offerSkills.offerID = offers.offerID');
+		$this->db->join('skills','offerSkills.skillID = skills.skillID');
+		$result = $this->db->get_where('offerSkills', array('offers.addedBy' => $userID));
 		return $result->result_array();
 	}
 
@@ -670,6 +717,48 @@ class Function_model extends CI_Model {
 	public function getUserIDForOffer($id){
 		$result = $this->db->get_where('offers', array('offerID' => $id))->result_array();
 		return $result[0]['userID'];
+	}
+
+	public function shortlistCandidate($userID){
+		$this->db->set('status', '3');
+		$this->db->where('userID', $userID);
+		$result = $this->db->update('applicants');
+		return $result;
+	}
+
+	public function rejectCandidate($userID){
+		$this->db->set('status', '4');
+		$this->db->where('userID', $userID);
+		$result = $this->db->update('applicants');
+		return $result;
+	}
+
+	public function removeFromReject($userID){
+		$this->db->set('status', '1');
+		$this->db->where('userID', $userID);
+		$result = $this->db->update('applicants');
+		return $result;
+	}
+
+	public function selectCandidate($userID){
+		$this->db->set('status', '2');
+		$this->db->where('userID', $userID);
+		$result = $this->db->update('applicants');
+		return $result;
+	}
+
+	public function getCandidateDetails($userID){
+		$result = $this->db->get_where('users', array('userID' => $userID));
+		return $result->result_array();
+	}
+
+	public function isOfferAcceptedAndActive($offerID){
+		$result = $this->db->get_where('offers', array('offerID' => $offerID, 'active' => 1, 'approved'=>1));
+		if($result->num_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 }
