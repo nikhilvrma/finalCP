@@ -405,18 +405,12 @@ class Home extends CI_Controller {
 		}
 	}
 
-	public function accessApplicants(){
-		if(true){
-			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
-			redirect(base_url('my-added-offers'));
-		}
-	}
 
-	public function applicants(){
-		if(true){
-			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
-			redirect(base_url('my-added-offers'));
-		}
+	public function applicants($offerID){
+		// if(false){
+		// 	$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
+		// 	redirect(base_url('my-added-offers'));
+		// }
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
@@ -444,6 +438,21 @@ class Home extends CI_Controller {
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Compare Applicants";
 				$this->data['activePage'] = "8";
+
+				if(isset($_SESSION['compare'][0])){
+				$this->data['candidates']['userDetails'][0] = $this->function_lib->getUserGeneralData($_SESSION['compare'][0]);
+				$this->data['candidates']['educationalDetails'][0] = $this->function_lib->getUserEducationalDetails($_SESSION['compare'][0]);
+				$this->data['candidates']['skills'][0] = $this->skill_lib->getUserSkills($_SESSION['compare'][0]);
+				}else{
+					$this->data['candidates'][0] = null;
+				}
+				if(isset($_SESSION['compare'][1])){
+				$this->data['candidates']['userDetails'][1] = $this->function_lib->getUserGeneralData($_SESSION['compare'][1]);
+				$this->data['candidates']['educationalDetails'][1] = $this->function_lib->getUserEducationalDetails($_SESSION['compare'][1]);
+				$this->data['candidates']['skills'][1] = $this->skill_lib->getUserSkills($_SESSION['compare'][1]);
+				}else{
+					$this->data['candidates'][1] = null;
+				}
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->load->view('compareApplicants', $this->data);
 			}

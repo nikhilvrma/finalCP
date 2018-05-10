@@ -1961,4 +1961,11 @@ class Functions extends CI_Controller {
 		}
 	}
 
+	public function filterApplicantsByStatus(){
+		$type = $this->input->get('type');
+		if ($type == 5) {
+			redirect(base_url('hiring-nucleus/compare-applicants'));
+		}
+	}
+
 }

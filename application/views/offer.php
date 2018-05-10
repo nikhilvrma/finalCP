@@ -140,7 +140,7 @@
                 <p>
                 <?php if($offerDetails[0]['offerType'] == 2){?>
                   <h6><b>Internship Duration</b></h6>
-                    <?= $offerDetails[0]['duration'] ?> Months
+                    <?= $offerDetails[0]['duration'] ?> Weeks
                   </p>
                 <?php } ?>
               </div>

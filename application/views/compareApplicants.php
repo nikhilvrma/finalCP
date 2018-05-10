@@ -51,7 +51,7 @@
           <div class="clearfix"></div>
           <p>Comparing Applicants for the Offer: <b>This is a Test Offer Title</b></p>
           <hr>
-
+          <?php var_dump($candidates);?>
           <div class="row">
 
             <div class="col-md-12 mb-4">
@@ -60,8 +60,11 @@
                 <thead>
                   <tr>
                     <th scope="col" style="width: 28%;">Name</th>
-                    <th scope="col" style="background: #2c3e50; color: white; width: 36%;">Nikhil Verma<br><p style="font-size: 14px; float: right; color: red;">Remove from Compare</p></th>
-                    <th scope="col" style="background: #2c3e50; color: white; width: 36%;">Itishri Singh<br><p style="font-size: 14px; float: right; color: red;">Remove from Compare</p></th>
+                    <?php if(isset($candidates['userDetails'][0])){?>
+                    <th scope="col" style="background: #2c3e50; color: white; width: 36%;"><?= $candidates['userDetails'][0][0]['name']?><br><p style="font-size: 14px; float: right; color: red;">Remove from Compare</p></th>
+                    <?php }if(isset($candidates['userDetails'][1])){?>
+                    <th scope="col" style="background: #2c3e50; color: white; width: 36%;"><?= $candidates['userDetails'][1][0]['name']?><br><p style="font-size: 14px; float: right; color: red;">Remove from Compare</p></th>
+                    <?php } ?>
                   </tr>
                 </thead>
                 <tbody>
