@@ -174,7 +174,7 @@
 
           <div class="col-md-4 mb-4">
             <b>Current Profile Image</b>
-            <center><img src="<?php echo $_SESSION['user_data']['profileImage']; ?>" style="width: 100%; border-radius: 50%;"></center>
+            <center><img src="<?php echo base_url().$_SESSION['user_data']['profileImage']; ?>" style="width: 100%; border-radius: 50%;"></center>
           </div>
 
           <div class="col-md-8 mb-4">

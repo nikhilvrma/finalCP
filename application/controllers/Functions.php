@@ -55,7 +55,7 @@ class Functions extends CI_Controller {
 		}
 		if($this->function_lib->updateEmail($email)){
 			unset($_SESSION['sentVerificationEmail']);
-			$_SESSION['user_data']['email'] = $email;	
+			$_SESSION['user_data']['email'] = $email;
 			$this->session->set_flashdata('message', array('content'=>'Your E-mail Address has been successfully changed.','color'=>'green'));
 			redirect(base_url('verify-contact-details'));
 		}else{
@@ -79,7 +79,7 @@ class Functions extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url());
 		}
-	} 
+	}
 
 	public function checkMobileVerificationCode(){
 		$code = $this->input->post('code');
@@ -101,7 +101,7 @@ class Functions extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'The Verification Code Entered has Expired. Please Enter new Verification Code.','color'=>'red'));
 			redirect(base_url('verify-contact-details'));
 		}
-			
+
 	}
 
 	public function checkEmailVerificationCode(){
@@ -171,6 +171,10 @@ class Functions extends CI_Controller {
 				}
 				else{
 					$password = md5($password);
+					if($name==''||$email==''||$mobile==''||$password==''||$accountType==''){
+						$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+						redirect(base_url());
+					}
 					$data = array(
 						'name' => $name,
 						'email' => $email,
@@ -259,7 +263,7 @@ class Functions extends CI_Controller {
 		$courseMast = '';
 		$college = '';
 		$other = '';
-		$newCollege = ''; 
+		$newCollege = '';
 		if($x = $this->input->post('type')){
 			$type = $x;
 		}
@@ -379,7 +383,7 @@ class Functions extends CI_Controller {
 						$this->function_lib->insertCollege($data);
 						$college = $this->function_lib->getCollegeID($newCollege);
 					}
-				
+
 				if($error == ''){
 				$data = array(
 				'userID' => $_SESSION['user_data']['userID'],
