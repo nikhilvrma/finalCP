@@ -11,6 +11,13 @@ class Functions extends CI_Controller {
 
 		$this->data['message'] = ($v = $this->session->flashdata('message'))?$v:array('content'=>'','color'=>'');
 
+		if(!isset($_SESSION['compare'][0])){
+			$_SESSION['compare'][0] = null;
+		}
+		if(!isset($_SESSION['compare'][1])){
+			$_SESSION['compare'][1] = null;
+		}
+
 		// $this->data['csrf_token_name'] = $this->security->get_csrf_token_name();
 	}
 
@@ -1865,6 +1872,93 @@ class Functions extends CI_Controller {
 				'using' =>'pepipost'
 				);
 		sendEmail($data);
+	}
+
+
+
+
+	public function loadMoreApplicants(){
+		$slug = $_GET['slug'];
+		$page = $_GET['page'];
+		$offset = ($page-1) * 10;
+		$candidates['data'] = $this->function_lib->getOfferApplicants($slug, $offset , 10);
+		$candidates['more'] = $this->function_lib->hasMoreOfferApplicants($slug, $offset+10, 10);
+		echo json_encode($candidates);
+	}
+
+	public function shortlist(){
+		$userID = $_GET['data'];
+		$result = $this->function_lib->shortlistCandidate($userID);
+		$data['data'] = $this->function_lib->getUserDataFromID($userID);
+		if($result){
+			$data['res'] = 'true';
+			echo json_encode($data);
+		}else{
+			$data['res'] = 'false';
+			echo json_encode($data);
+		}
+	}
+
+	public function reject(){
+		$userID = $_GET['data'];
+		$result = $this->function_lib->rejectCandidate($userID);
+		if($result){
+			echo "true";
+		}else{
+			echo 'false';
+		}
+	}
+
+	public function removeFromReject(){
+		$userID = $_GET['data'];
+		$result = $this->function_lib->removeFromReject($userID);
+		if($result){
+			echo "true";
+		}else{
+			echo 'false';
+		}
+	}
+
+	public function select(){
+		$userID = $_GET['data'];
+		$result = $this->function_lib->selectCandidate($userID);
+		$data['data'] = $this->function_lib->getUserDataFromID($userID);
+		if($result){
+			$data['res'] = 'true';
+			echo json_encode($data);
+		}else{
+			$data['res'] = 'false';
+			echo json_encode($data);
+		}
+	}
+
+	public function addToCompare(){
+		$userID = $_GET['data'];
+		if(isset($_SESSION['compare'][0]) && isset($_SESSION['compare'][1]) && isset($_SESSION['compare'][2])) {
+			echo 'false';
+		}else{
+			if(in_array($userID, $_SESSION['compare'])){
+				echo "false1";
+				die;
+			}
+			if(!isset($_SESSION['compare'][0])){
+				if($_SESSION['compare'][0] != $userID){
+					$_SESSION['compare'][0] = $userID;
+					echo "true";
+				}else{
+					echo "false1";
+				}
+			}elseif (!isset($_SESSION['compare'][1])) {
+				if($_SESSION['compare'][1] != $userID){
+					$_SESSION['compare'][1] = $userID;
+					echo "true";
+				}else{
+					echo "false1";
+				}
+			}else{
+				echo "false2";
+			}
+		}
 	}
 
 }

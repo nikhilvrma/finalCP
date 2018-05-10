@@ -70,7 +70,7 @@
                     <a class="btn btn-success" href = "<?= base_url('edit-offer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Edit Offer</a>
                     <?php } ?>
                     <?php if($offer['approved'] != 2){?>
-                    <a class="btn btn-primary" href = "<?= base_url('access-applicants/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Access Applicants</a>
+                    <a class="btn btn-primary" href = "<?= base_url('hiring-nucleus/applicants/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Access Applicants</a>
                     <?php } ?>
                     <a class="btn btn-primary" href = "<?= base_url('offer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">View Offer</a>
                   </small>
