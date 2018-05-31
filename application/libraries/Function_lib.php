@@ -205,10 +205,10 @@ class Function_lib {
 		return false;
 	}
 
-	public function getOfferApplicants($driveID, $offset = 0, $limit = 10){
+	public function getOfferApplicants($driveID, $offset = 0, $limit = 10, $type = 1){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getOfferApplicants($driveID, $offset, $limit);
+		return $CI->function->getOfferApplicants($driveID, $offset, $limit, $type);
 	}
 
 	public function validateImage($file)
@@ -424,28 +424,28 @@ class Function_lib {
 		return $CI->function->getAllOfferSkills();
 	}
 
-	public function getAllColleges(){
+	public function getAllApplicantColleges($offerID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getAllColleges();
+		return $CI->function->getAllApplicantColleges($offerID);
 	}
 
-	public function getAllCourses(){
+	public function getAllApplicantCourses($offerID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getAllCourses();
+		return $CI->function->getAllApplicantCourses($offerID);
 	}
 
-	public function getAllUserOfferLocations($userID){
+	public function getAllApplicantOfferLocations($offerID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getAllUserOfferLocations($userID);
+		return $CI->function->getAllApplicantOfferLocations($offerID);
 	}
 
-	public function getAllUserOfferSkills($userID){
+	public function getAllApplicantOfferSkills($offerID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getAllUserOfferSkills($userID);
+		return $CI->function->getAllApplicantOfferSkills($offerID);
 	}
 
 	public function getFilteredOffers($offset, $limit, $offerType, $offerSkills, $offerLocations){
@@ -551,15 +551,39 @@ class Function_lib {
 		return $CI->function->getCandidateDetails($userID);
 	}
 	
-	public function hasMoreOfferApplicants($offerID, $offset, $limit){
+	public function hasMoreOfferApplicants($offerID, $offset, $limit, $type = 1){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->hasMoreOfferApplicants($offerID, $offset, $limit);
+		return $CI->function->hasMoreOfferApplicants($offerID, $offset, $limit, $type);
 	}
 
 	public function isOfferAcceptedAndActive($offerID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->isOfferAcceptedAndActive($offerID);
-		}
+	}
+
+	public function getApplicantSkills($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getApplicantSkills($userID);
+	}
+
+	public function getApplicantLocations($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getApplicantLocations($userID);
+	}
+
+	public function getApplicantColleges($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getApplicantColleges($userID);
+	}
+
+	public function getApplicantCourses($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getApplicantCourses($userID);
+	}
 }

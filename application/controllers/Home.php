@@ -424,12 +424,26 @@ class Home extends CI_Controller {
 				$this->data['pageTitle'] = "Applicants";
 				$this->data['activePage'] = "8";
 				$this->data['offer'] = $offerID;
-				$this->data['allOfferLocations'] = $this->function_lib->getAllUserOfferLocations($_SESSION['user_data']['userID']);
-				$this->data['allOfferSkills'] = $this->function_lib->getAllUserOfferSkills($_SESSION['user_data']['userID']);
-				$this->data['colleges'] = $this->function_lib->getAllColleges();
-				$this->data['courses'] = $this->function_lib->getAllCourses();
-				$this->data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10);
-				$this->data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10);
+				$this->data['allOfferLocations'] = $this->function_lib->getAllApplicantOfferLocations($offerID);
+				$this->data['allOfferSkills'] = $this->function_lib->getAllApplicantOfferSkills($offerID);
+				$this->data['colleges'] = $this->function_lib->getAllApplicantColleges($offerID);
+				$this->data['courses'] = $this->function_lib->getAllApplicantCourses($offerID);
+				if(isset($_SESSION['filter']) && $_SESSION['filter'] == 1){
+					$this->data['applicants'] = $_SESSION['data']['applicants'];
+					$this->data['hasMore'] = $_SESSION['data']['hasMore'];
+					if(isset($_SESSION['data']['type'])){
+						$this->data['type'] = $_SESSION['data']['type'];
+					}else{
+						$this->data['type'] = 1;
+					}
+					if(isset($_SESSION['appliedFilters'])){
+						$this->data['appliedFilters'] = $_SESSION['appliedFilters'];
+					}
+				}else{
+					$this->data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, 1);
+					$this->data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10, 1);
+					$this->data['type'] = 1;
+				}
 				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
 				$this->load->view('applicants', $this->data);
 			}
@@ -443,10 +457,10 @@ class Home extends CI_Controller {
 	}
 
 	public function compareApplicants(){
-		if(true){
-			$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
-			redirect(base_url('my-added-offers'));
-		}
+		// if(true){
+		// 	$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
+		// 	redirect(base_url('my-added-offers'));
+		// }
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
@@ -498,8 +512,8 @@ class Home extends CI_Controller {
 					$this->data['status'] = $_SESSION['data']['status'];
 
 				}else{
-					unset($_SESSION['filter']);
-					unset($_SESSION['data']);
+				unset($_SESSION['filter']);
+				unset($_SESSION['data']);
 				$offers = $this->function_lib->getAppliedOffers($_SESSION['user_data']['userID'],0,10,0);
 				$this->data['hasMore'] = $this->function_lib->hasMoreAppliedOffers($_SESSION['user_data']['userID'],10,10,0);
 				$this->data['offers'] = $offers;

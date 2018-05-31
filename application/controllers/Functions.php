@@ -1434,6 +1434,20 @@ class Functions extends CI_Controller {
 		}
 	}
 
+	public function filterApplicantsByStatus($offerID){
+		$type = $this->input->get('type');
+		if ($type == 5) {
+			redirect(base_url('hiring-nucleus/compare-applicants'));
+		}else{
+			$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, $type);
+			$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10, $type);
+			$data['type'] = $type;
+			$_SESSION['filter'] = 1;
+			$_SESSION['data'] = $data;
+			redirect(base_url('hiring-nucleus/applicants/'.$offerID));
+		}
+	}
+
 	public function filterAppliedOffers(){
 		unset($_SESSION['filter']);
 		unset($_SESSION['data']);
@@ -1547,7 +1561,207 @@ class Functions extends CI_Controller {
 	}else{
 			redirect(base_url());
 		}
-}
+}	
+
+	public function filterApplicantsByParameters($offerID){
+		unset($_SESSION['filter']);
+		unset($_SESSION['data']);
+		unset($_SESSION['appliedFilters']);
+		$gender = '';
+		$locations = '';
+		$skills = '';
+		$colleges = '';
+		$courses = '';
+		if($x = $this->input->get('gender')){
+			$gender = $x;
+		}
+		if($x = $this->input->get('locations')){
+			$locations = $x;
+		}
+		if($x = $this->input->get('skills')){
+			$skills = $x;
+		}
+		if($x = $this->input->get('colleges')){
+			$colleges = $x;
+		}
+		if($x = $this->input->get('courses')){
+			$courses = $x;
+		}
+			$_SESSION['appliedFilters'] = array(
+				'gender' => $gender,
+				'locations' => $locations,
+				'skills' => $skills,
+				'colleges' => $colleges,
+				'courses' => $courses
+			);
+		// var_dump($offerLocations); die;
+		$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, 1);
+		$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10, 1);
+
+		if(!empty($gender)){
+		$genderApplicants = array_column($data['applicants'], 'userID');
+		$j = 0;
+		foreach ($data['applicants'] as $key => $applicant) {
+			if(!in_array($applicant['gender'], $gender)){
+				unset($genderApplicants[$j]);
+			}
+			$j++;
+		}
+		}else{
+			$genderApplicants = array();
+		}
+
+		if(!empty($skills)){
+		$skillApplicants = array_column($data['applicants'], 'userID');
+		$j = 0;
+		foreach ($data['applicants'] as $key => $applicant) {
+			$applicantSkill = $this->function_lib->getApplicantSkills($applicant['userID']);
+			$i = 0;
+			$skillIDs = array();
+			foreach ($applicantSkill as $key => $value) {
+				$skillIDs[$i] = $value['skillID'];
+				$i++;
+			}
+
+			if(empty(array_intersect($skills, $skillIDs))){
+				if(!in_array('0', $skills)){
+					unset($skillApplicants[$j]);
+				}
+			}
+			$j++;
+		}
+		}else{
+			$skillApplicants = array();
+		}
+		if(!empty($colleges)){
+		$collegeApplicants = array_column($data['applicants'], 'userID');
+		$j = 0;
+		foreach ($data['applicants'] as $key => $applicant) {
+			$applicantCollege = $this->function_lib->getApplicantColleges($applicant['userID']);
+			$i = 0;
+			$collegeIDs = array();
+			foreach ($applicantCollege as $key => $value) {
+				$collegeIDs[$i] = $value['instituteID'];
+				$i++;
+			}
+
+			if(empty(array_intersect($colleges, $collegeIDs))){
+				if(!in_array('0', $colleges)){
+					unset($collegeApplicants[$j]);
+				}
+			}
+			$j++;
+		}
+		}else{
+			$collegeApplicants = array();
+		}
+
+		if(!empty($courses)){
+		$courseApplicants = array_column($data['applicants'], 'userID');
+		$j = 0;
+		foreach ($data['applicants'] as $key => $applicant) {
+			$applicantCourse = $this->function_lib->getApplicantCourses($applicant['userID']);
+			$i = 0;
+			$courseIDs = array();
+			foreach ($applicantCourse as $key => $value) {
+				$courseIDs[$i] = $value['courseID'];
+				$i++;
+			}
+
+			if(empty(array_intersect($courses, $courseIDs))){
+				if(!in_array('0', $courses)){
+					unset($courseApplicants[$j]);
+				}
+			}
+			$j++;
+		}
+		}else{
+			$courseApplicants = array();
+		}
+
+		if(!empty($locations)){
+		$locationApplicants = array_column($data['applicants'], 'userID');
+		$j = 0;
+		foreach ($data['applicants'] as $key => $applicant) {
+			$applicantLocation = $this->function_lib->getApplicantLocations($applicant['userID']);
+			$i = 0;
+			$locationIDs = array();
+			foreach ($applicantLocation as $key => $value) {
+				$locationIDs[$i] = $value['cityID'];
+				$i++;
+			}
+
+			if(empty(array_intersect($locations, $locationIDs))){
+				if(!in_array('0', $locations)){
+					unset($locationApplicants[$j]);
+				}
+			}
+			$j++;
+		}
+		}else{
+			$locationApplicants = array();
+		}
+
+		$filterArray= array();
+		$g=0;
+		if(!empty($locationApplicants)){
+			$filterArray[$g] = $locationApplicants;
+			$g++;
+		}
+		if(!empty($skillApplicants)){
+			$filterArray[$g] = $skillApplicants;
+			$g++;
+		}
+		if(!empty($genderApplicants)){
+			$filterArray[$g] = $genderApplicants;
+			$g++;
+		}
+		if(!empty($collegeApplicants)){
+			$filterArray[$g] = $collegeApplicants;
+			$g++;
+		}
+		if(!empty($courseApplicants)){
+			$filterArray[$g] = $courseApplicants;
+			$g++;
+		}
+
+		if($g == 5){
+			$filteredOffer = array_intersect($filterArray[0], $filterArray[1], $filterArray[2], $filterArray[3], $filterArray[4]);
+		}
+		if($g == 4){
+			$filteredOffer = array_intersect($filterArray[0], $filterArray[1], $filterArray[2], $filterArray[3]);
+		}
+		if($g == 3){
+			$filteredOffer = array_intersect($filterArray[0], $filterArray[1], $filterArray[2]);
+		}
+		if($g == 2){
+			$filteredOffer = array_intersect($filterArray[0], $filterArray[1]);
+		}
+		if($g == 1){
+			$filteredOffer = $filterArray[0];
+		}
+		if($g == 0){
+			$filteredOffer = array();
+		}
+
+		$j=0;
+		foreach ($data['applicants'] as $key => $applicant) {
+			if(!in_array($applicant['userID'], $filteredOffer)){
+				unset($data['applicants'][$j]);
+			}
+			$j++;
+		}
+		$_SESSION['filter'] = 1;
+		$_SESSION['data'] = $data;
+		redirect(base_url('hiring-nucleus/applicants/'.$offerID));
+	}
+
+
+
+
+
+
+
 
 	public function filterAvailableOffers(){
 		unset($_SESSION['filter']);
@@ -1958,13 +2172,6 @@ class Functions extends CI_Controller {
 			}else{
 				echo "false2";
 			}
-		}
-	}
-
-	public function filterApplicantsByStatus(){
-		$type = $this->input->get('type');
-		if ($type == 5) {
-			redirect(base_url('hiring-nucleus/compare-applicants'));
 		}
 	}
 
