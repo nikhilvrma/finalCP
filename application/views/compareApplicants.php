@@ -51,7 +51,7 @@
           <div class="clearfix"></div>
           <p>Comparing Applicants for the Offer: <b>This is a Test Offer Title</b></p>
           <hr>
-          <?php var_dump($candidates);?>
+          <?php var_dump($candidates['educationalDetails']);?>
           <div class="row">
 
             <div class="col-md-12 mb-4">
@@ -62,7 +62,7 @@
                     <th scope="col" style="width: 28%;">Name</th>
                     <?php if(isset($candidates['userDetails'][0])){?>
                     <th scope="col" style="background: #2c3e50; color: white; width: 36%;"><?= $candidates['userDetails'][0][0]['name']?><br><p style="font-size: 14px; float: right; color: red;">Remove from Compare</p></th>
-                    <?php }if(isset($candidates['userDetails'][1])){?>
+                    <?php }else{}if(isset($candidates['userDetails'][1])){?>
                     <th scope="col" style="background: #2c3e50; color: white; width: 36%;"><?= $candidates['userDetails'][1][0]['name']?><br><p style="font-size: 14px; float: right; color: red;">Remove from Compare</p></th>
                     <?php } ?>
                   </tr>
@@ -70,18 +70,40 @@
                 <tbody>
                   <tr>
                     <th scope="row">Gender</th>
-                    <td>Male</td>
-                    <td>Female</td>
+                    <?php if(isset($candidates['userDetails'][0])){if($candidates['userDetails'][0][0]['gender'] == 'M'){echo "<td>Male</td>";}else{echo "<td>Female</td>";}}?>
+                    <?php if(isset($candidates['userDetails'][0])){if($candidates['userDetails'][1][0]['gender'] == 'M'){echo "<td>Male</td>";}else{echo "<td>Female</td>";}}?>
                   </tr>
-                  <tr>
+                  <tr>  
                     <th scope="row">Education:<br><label style="float: right;">High-School</label></th>
+                    <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){?>
                     <td><p style="font-size: 14px;">Central Board of Secondory Education, New Delhi<br><b>Score: </b>90%<br><b>Batch: </b>2009</p></td>
+                    <?php }else{echo "<td>Not Found.</td>";} if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ ?>
                     <td><p style="font-size: 14px;">Central Board of Secondory Education, New Delhi<br><b>Score: </b>95%<br><b>Batch: </b>2010</p></td>
+                    <?php }else{echo "<td>Not Found.</td>";} ?>
+                  </tr>
+                   <tr>  
+                    <th scope="row">Education:<br><label style="float: right;">Secondary School</label></th>
+                    <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){?>
+                    <td><p style="font-size: 14px;">Central Board of Secondory Education, New Delhi<br><b>Score: </b>90%<br><b>Batch: </b>2009</p></td>
+                    <?php }else{echo "<td>Not Found.</td>";} if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ ?>
+                    <td><p style="font-size: 14px;">Central Board of Secondory Education, New Delhi<br><b>Score: </b>95%<br><b>Batch: </b>2010</p></td>
+                    <?php }else{echo "<td>Not Found.</td>";} ?>
                   </tr>
                   <tr>
                     <th scope="row">Education:<br><label style="float: right;">Graduation</label></th>
+                    <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){?>
                     <td><p style="font-size: 14px;">JSS Academy of Technical Education, Noida<br><b>Course: </b>Bachelor of Technology- Computer Science and Engineering<br><b>Score: </b>90%<br><b>Batch: </b>2016</p></td>
+                    <?php }else{echo "<td>Not Found.</td>";} if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ ?>
                     <td><p style="font-size: 14px;">JSS Academy of Technical Education, Noida<br><b>Course: </b>Bachelor of Technology- Information Technology<br><b>Score: </b>90%<br><b>Batch: </b>2016</p></td>
+                    <?php }else{echo "<td>Not Found.</td>";} ?>
+                  </tr>
+                  <tr>
+                    <th scope="row">Education:<br><label style="float: right;">Post-Graduation</label></th>
+                    <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){?>
+                    <td><p style="font-size: 14px;">JSS Academy of Technical Education, Noida<br><b>Course: </b>Bachelor of Technology- Computer Science and Engineering<br><b>Score: </b>90%<br><b>Batch: </b>2016</p></td>
+                    <?php }else{echo "<td>Not Found.</td>";} if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ ?>
+                    <td><p style="font-size: 14px;">JSS Academy of Technical Education, Noida<br><b>Course: </b>Bachelor of Technology- Information Technology<br><b>Score: </b>90%<br><b>Batch: </b>2016</p></td>
+                    <?php }else{echo "<td>Not Found.</td>";} ?>
                   </tr>
                   <tr>
                     <th scope="row">Skill:<br><label style="float: right;">PHP</label></th>
