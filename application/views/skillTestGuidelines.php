@@ -50,6 +50,7 @@
                   <li>This test goes on for <?= $settings['testTime']/60?> minutes.</li>
                 </ol>
               </p>
+
               </div>
               <div class="col-lg-12 mb-4">
               <center>

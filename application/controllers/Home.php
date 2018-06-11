@@ -908,4 +908,36 @@ class Home extends CI_Controller {
 
 	}
 
+
+	public function getReport($userID){
+
+		$this->data['generalData'] = $this->function_lib->getUserGeneralData($userID)[0];
+		$this->data['educationalDetails'] = $this->function_lib->getUserEducationalDetails($userID);
+		$this->data['workExperience'] = $this->function_lib->getUserWorkExperience($userID);
+		$this->data['skills'] = $this->skill_lib->getUserSkills($userID);
+		$premiumSkills = $this->skill_lib->getPremiumSkills($userID);
+		$this->data['premiumSkills'] = $premiumSkills;
+		foreach ($premiumSkills as $key => $value) {
+			$this->data['skillResponse'][$value['skillID']] = $this->skill_lib->getResponses($userID, $value['skillID']);
+			$this->data['skillCorrect'][$value['skillID']] = $this->skill_lib->getCorrectResponses($userID, $value['skillID']);
+			$this->data['skillIncorrect'][$value['skillID']] = $this->skill_lib->getIncorrectResponses($userID, $value['skillID']);
+			$this->data['skillMax'][$value['skillID']] = $this->skill_lib->getSkillMax($value['skillID']);
+		}
+
+		$this->load->view('report', $this->data);
+	}
+
+	public function calculateScore($difficulty_level, $expert_time, $timeConsumed, $correct){
+		$score = 0;
+		if($correct == 0){
+			$correct = -1;
+		}
+		$score = pow(((pow(3, ($difficulty_level/2)) * ((2*$expert_time)-$timeConsumed))/(2*$expert_time)), (2/$difficulty_level));
+		$score = $score * $correct;
+		if($correct == -1){
+			$score = $score/2;
+		}
+		echo $score;
+	}
+
 }
