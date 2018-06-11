@@ -16,6 +16,10 @@
     <meta property="og:type"               content="article" />
     <meta property="og:title"              content="<?= $offerDetails[0]['offerTitle']?>" />
     <?php
+    if(isset($_SESSION['loginRedirect']) && isset($_SESSION['offerID'])){
+      unset($_SESSION['loginRedirect']);
+      unset($_SESSION['offerID']);
+    }
     if($offerDetails[0]['offerType'] == 1 ){
       $type = 'Job';
     }else{
@@ -86,8 +90,10 @@
                     </div>
                     <div class="col-md-3 mb-4">
                       <p class="card-text"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
-                      <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] == 1 ){?>
-                      <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p>
+                      <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] != 2){?>
+                        <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p>
+                      <?php }else if(!isset($_SESSION['user_data']['accountType'])){?>
+                        <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p>
                       <?php }?>
                     </div>
                   </div>
@@ -178,6 +184,30 @@
 
 </div>
     </div>
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Modal Header</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>
+               <ol>
+                 <li>High School Educational Detail. <i class="fa fa-check" aria-hidden="true" style="color: green;"></i></li>
+                 <li>Senior Secondary (or equivalent) Educational Details.</li>
+                 <li>Graduation Educational Details. <i class="fa fa-times" aria-hidden="true" style="color: red;"></i></li>
+                 <li>Skill: <b>PHP</b>. <i class="fa fa-times" aria-hidden="true" style="color: red;"></i><i style="font-size: 14px;"><a>Add Skill to Profile Now</a></i></li>
+                 <li>Skill: <b>HTML</b>. <i class="fa fa-check" aria-hidden="true" style="color: green;"></i></li>
+               </ol>
+             </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <?php echo $footer; ?>
 
@@ -185,6 +215,11 @@
 
     <script src="<?= base_url('assets/ckeditor/ckeditor.js')?>"></script>
 
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#myModal').modal('show');
+      })
+    </script>
 
   </body>
 

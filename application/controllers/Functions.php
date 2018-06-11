@@ -34,6 +34,9 @@ class Functions extends CI_Controller {
 			$password = md5($password);
 			$result = $this->function_lib->login($email, $password);
 			if($result){
+				if(isset($_SESSION['loginRedirect']) && $_SESSION['loginRedirect'] == 1){
+					redirect(base_url('offer/'.$_SESSION['offerID']));
+				}
 				redirect(base_url('/general-details'));
 			}
 			else{
@@ -93,7 +96,7 @@ class Functions extends CI_Controller {
 				$this->session->set_flashdata('message', array('content'=>'Your Mobile Number has been successfully verified.','color'=>'green'));
 				redirect(base_url('verify-contact-details'));
 			}else{
-				$this->session->set_flashdata('message', array('content'=>'The Verification Code Entered is Wrong..','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'The Verification Code Entered is Wrong.','color'=>'red'));
 				redirect(base_url('verify-contact-details'));
 			}
 		}else{
@@ -117,7 +120,7 @@ class Functions extends CI_Controller {
 				$this->session->set_flashdata('message', array('content'=>'Your Email Address has been successfully verified.','color'=>'green'));
 				redirect(base_url('verify-contact-details'));
 			}else{
-				$this->session->set_flashdata('message', array('content'=>'The Verification Code Entered is Wrong..','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'The Verification Code Entered is Wrong.','color'=>'red'));
 				redirect(base_url('verify-contact-details'));
 			}
 		}else{
@@ -232,7 +235,7 @@ class Functions extends CI_Controller {
 			$message = $x;
 		}
 		if($name == "" || $email == "" || $mobile == "" || $message == ""){
-			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.1','color'=>'red'));
+			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 			redirect(base_url('contact-us'));
 		}
 		$data = array(
@@ -338,7 +341,7 @@ class Functions extends CI_Controller {
 				$fileName = $base_url.'assets/uploads/EducationalDocuments/'.$x['file_name'];
 				if($type == 1 || $type == 2){
 				if($board == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.2','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 					redirect(base_url('educational-details'));
 				}
 				if($error == ''){
@@ -366,12 +369,12 @@ class Functions extends CI_Controller {
 			if($type == 3){
 				if($other != 1){
 					if($college == ''){
-						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.3','color'=>'red'));
+						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 						redirect(base_url('educational-details'));
 					}
 				}
 					if($courseBach == ''){
-						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.4','color'=>'red'));
+						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 						redirect(base_url('educational-details'));
 					}
 					// $newCollege = str_replace(' ', '', $newCollege);
@@ -470,7 +473,7 @@ class Functions extends CI_Controller {
 			$fileName = $base_url.'assets/uploads/EducationalDocuments/'.$x['file_name'];
 			if($type == 1 || $type == 2){
 				if($board == ''){
-					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.2','color'=>'red'));
+					$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 					redirect(base_url('educational-details'));
 				}
 				if($error == ''){
@@ -1559,7 +1562,9 @@ class Functions extends CI_Controller {
 				redirect(base_url('offer/'.$offerID));
 		}
 	}else{
-			redirect(base_url());
+		$_SESSION['loginRedirect'] = 1;
+		$_SESSION['offerID'] = $offerID;
+		redirect(base_url());
 		}
 }	
 
