@@ -227,7 +227,7 @@ class Function_model extends CI_Model {
 	}
 
 	public function getUserGeneralData($userID){
-		$this->db->select('users.name, users.email, users.mobile, users.gender, users.cityID, indianCities.city, indianCities.state');
+		$this->db->select('users.userID, users.name, users.email, users.mobile, users.gender, users.cityID, indianCities.city, indianCities.state');
 		$this->db->join('indianCities', 'users.cityID = indianCities.cityID');
 		$result = $this->db->get_where('users', array('userID'=>$userID))->result_array();
 		return $result;
@@ -808,8 +808,13 @@ class Function_model extends CI_Model {
 		$this->db->select('educationalDetails.courseID, courses.course');
 		$this->db->join('courses', 'educationalDetails.courseID = courses.course_id');
 		$result = $this->db->get_where('educationalDetails', array('userID' => $userID))->result_array();
-		var_dump($this->db->last_query());echo "<br>";
 		return $result;
 	}
 
+	public function getCurrentApplicantStatus($userID){
+		$this->db->select('status');
+		$result = $this->db->get_where('applicants', array('userID'=> $userID));
+		// var_dump($this->db->last_query());die;
+		return $result->result_array();
+	}
 }

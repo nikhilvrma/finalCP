@@ -91,9 +91,11 @@
                     <div class="col-md-3 mb-4">
                       <p class="card-text"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
                       <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] != 2){?>
-                        <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p>
+                        <!-- <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p> -->
+                        <p class="card-text"><button class="btn btn-primary applyNow" style="color: white;">Apply Now</button></p>
                       <?php }else if(!isset($_SESSION['user_data']['accountType'])){?>
                         <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p>
+                        
                       <?php }?>
                     </div>
                   </div>
@@ -185,20 +187,20 @@
 </div>
     </div>
     <div id="myModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Modal Header</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
           <div class="modal-body">
             <p>
                <ol>
-                 <li>High School Educational Detail. <i class="fa fa-check" aria-hidden="true" style="color: green;"></i></li>
-                 <li>Senior Secondary (or equivalent) Educational Details.</li>
-                 <li>Graduation Educational Details. <i class="fa fa-times" aria-hidden="true" style="color: red;"></i></li>
-                 <li>Skill: <b>PHP</b>. <i class="fa fa-times" aria-hidden="true" style="color: red;"></i><i style="font-size: 14px;"><a>Add Skill to Profile Now</a></i></li>
-                 <li>Skill: <b>HTML</b>. <i class="fa fa-check" aria-hidden="true" style="color: green;"></i></li>
+                 <li>High School Educational Detail. <?php if($userData['education'][1]){?><i class="fa fa-check" aria-hidden="true" style="color: green;"></i><?php }else{?><i class="fa fa-times" aria-hidden="true" style="color: red;"></i><i style="font-size: 14px;"><a href = "<?= base_url('educational-details')?>">Add Education to Profile Now</a></i><?php } ?></li>
+
+                 <li>Senior Secondary (or equivalent) Educational Details. <?php if($userData['education'][2]){?><i class="fa fa-check" aria-hidden="true" style="color: green;"></i><?php }else{?><i class="fa fa-times" aria-hidden="true" style="color: red;"></i><i style="font-size: 14px;"><a href = "<?= base_url('educational-details')?>">Add Education to Profile Now</a></i><?php } ?></li>
+
+                 <li>Graduation Educational Details. <?php if($userData['education'][3]){?><i class="fa fa-check" aria-hidden="true" style="color: green;"></i><?php }else{?><i class="fa fa-times" aria-hidden="true" style="color: red;"></i><i style="font-size: 14px;"><a href = "<?= base_url('educational-details')?>">Add Education to Profile Now</a></i><?php } ?></li>
+                 <?php if(!empty($offerSkills)){
+                  foreach($offerSkills as $offerSkill){?>
+                    <li>Skill: <b><?= $offerSkill['skill_name']?></b>. <?php if(!$offerSkill['user']){?><i class="fa fa-times" aria-hidden="true" style="color: red;"></i><?php }else{?><i class="fa fa-check" aria-hidden="true" style="color: green;"></i><i style="font-size: 14px;"><a>Add Skill to Profile Now</a></i><?php } ?></li>
+                  <?php } }?>
                </ol>
              </p>
           </div>
@@ -209,15 +211,32 @@
       </div>
     </div>
 
+
     <?php echo $footer; ?>
 
     <?php echo $footerFiles; ?>
 
     <script src="<?= base_url('assets/ckeditor/ckeditor.js')?>"></script>
-
     <script type="text/javascript">
+      education = '<?= json_encode($userData['education'])?>'
+      skills = '<?= json_encode($offerSkills)?>'
+      allSkillSatisfied = '<?= json_encode($allSkillSatisfied)?>'
+      education = JSON.parse(education)
+      skills = JSON.parse(skills)
+      console.log(skills)
+      console.log(education)
+      console.log(allSkillSatisfied)
       $(document).ready(function(){
-        $('#myModal').modal('show');
+        $('body').on('click','.applyNow', function(){
+          if(!education[1] || !education[2] || !education[3]){
+           $('#myModal').modal('show');
+          }else if(!allSkillSatisfied){
+            $('#myModal').modal('show');
+          }else{
+            window.location.href = '<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>'
+          }
+        })
+        // 
       })
     </script>
 

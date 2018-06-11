@@ -586,4 +586,10 @@ class Function_lib {
 		$CI->load->model('function_model','function');
 		return $CI->function->getApplicantCourses($userID);
 	}
+
+	public function getCurrentApplicantStatus($userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getCurrentApplicantStatus($userID);
+	}
 }

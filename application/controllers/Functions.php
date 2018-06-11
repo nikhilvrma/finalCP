@@ -2153,7 +2153,7 @@ class Functions extends CI_Controller {
 
 	public function addToCompare(){
 		$userID = $_GET['data'];
-		if(isset($_SESSION['compare'][0]) && isset($_SESSION['compare'][1]) && isset($_SESSION['compare'][2])) {
+		if(isset($_SESSION['compare'][0]) && isset($_SESSION['compare'][1])) {
 			echo 'false';
 		}else{
 			if(in_array($userID, $_SESSION['compare'])){
@@ -2176,6 +2176,39 @@ class Functions extends CI_Controller {
 				}
 			}else{
 				echo "false2";
+			}
+		}
+	}
+
+	public function removeFromCompare(){
+		$userID = $_GET['data'];
+		if(!isset($_SESSION['compare'][0]) && !isset($_SESSION['compare'][1])) {
+			echo 'false';
+		}else{
+			if(!in_array($userID, $_SESSION['compare'])){
+				echo "false1";
+				die;
+			}
+			if(isset($_SESSION['compare'][0]) && isset($_SESSION['compare'][1])){
+				if($_SESSION['compare'][0] == $userID){
+					unset($_SESSION['compare'][0]);
+					echo "true";
+				}elseif($_SESSION['compare'][1] == $userID){
+					unset($_SESSION['compare'][1]);
+					echo "true";
+				}
+			}elseif (isset($_SESSION['compare'][1])) {
+				if($_SESSION['compare'][1] == $userID){
+					unset($_SESSION['compare'][1]);
+					echo "true";
+				}
+			}elseif (isset($_SESSION['compare'][0])) {
+				if($_SESSION['compare'][0] == $userID){
+					unset($_SESSION['compare'][0]);
+					echo "true";
+				}
+			}else{
+				echo "false1";
 			}
 		}
 	}

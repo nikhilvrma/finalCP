@@ -47,7 +47,7 @@
 
           <h3 class="mt-4 mb-3" style="float: right;"><?php echo $pageTitle; ?></h3>
           <div class="clearfix"></div>
-          <p>Listing Applicants for the Offer: <b>This is a Test Offer Title</b></p>
+          <p>Listing Applicants for the Offer: <b><?= $offerTitle?></b></p>
           <hr>
 
           <div class="row">
