@@ -95,7 +95,7 @@
                         <p class="card-text"><button class="btn btn-primary applyNow" style="color: white;">Apply Now</button></p>
                       <?php }else if(!isset($_SESSION['user_data']['accountType'])){?>
                         <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p>
-                        
+
                       <?php }?>
                     </div>
                   </div>
@@ -107,12 +107,12 @@
               <div class="col-md-12 mb-4" style="font-size: 14px;">
 
                 <p>
-                <h6><b>Offer Title</b></h6>
+                <b>Offer Title: </b>
                   <?= $offerDetails[0]['offerTitle' ]?>
                 </p>
 
                 <p>
-                <h6><b>Offer Description</b></h6>
+                <b>Offer Description: </b><br>
                   <?= $offerDetails[0]['offerDescription']?>
                 </p>
 
@@ -236,7 +236,7 @@
             window.location.href = '<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>'
           }
         })
-        // 
+        //
       })
     </script>
 

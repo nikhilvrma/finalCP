@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?php echo $pageTitle."|Backoffice-CampusPuppy"; ?></title>
+    <title><?php echo $pageTitle."|CampusPuppy"; ?></title>
 
     <?php echo $headerFiles; ?>
 
@@ -55,10 +55,10 @@
               <div class="row">
 
               <div class="col-sm-2 mb-4">
-                <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#filters">Filter Applicants</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filters">Filter Applicants</button>
               </div>
               <div class="col-sm-3 mb-4">
-               
+
               </div>
               <div class="col-sm-7 mb-4">
                 <form class="form-inline" style="float: right;" method = "get" action = "<?= base_url('functions/filterApplicantsByStatus/'. $offer)?>">
@@ -80,7 +80,7 @@
           </div>
 
           <div class="row">
-            
+
             <div class="col-md-12 mb-4" id = "candidateList">
               <?php if(empty($applicants)){echo "<center>No Applicant Found.</center>";}foreach($applicants as $applicant){ ?>
               <div class="card" id = "candidate<?= $applicant['userID']?>">
@@ -96,7 +96,7 @@
                                 $i=0;
                                 $k = 0;
                           if($applicant['skillName'] == Null){
-                            echo "No Skill Found";  
+                            echo "No Skill Found";
                           }else{
                           foreach ($skills as $key => $skill) {
                             if(($skillType[$i] == 2 && $skillScore[$i] >= 10) || $skillType[$i] == 1){ $k++;?>
@@ -129,13 +129,13 @@
 
                     <?php if($applicant['status'] != '3' && $applicant['status'] != '2'&& $applicant['status'] != '4'){?>
                       <a class="btn btn-warning shortlistCandidate" id = "shortlistCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Short-list Applicant</a>
-                    <?php }else if($applicant['status'] == '3'){ ?> 
+                    <?php }else if($applicant['status'] == '3'){ ?>
                       <a class="btn btn-warning" id = 'shortlistCandidate<?= $applicant['userID']?>' style="color: white; margin: 10px;">Shortlisted</a>
                     <?php } ?>
 
                     <?php if($applicant['status'] != '4' && $applicant['status'] != '2'){?>
                       <a class="btn btn-danger rejectCandidate" id = "rejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Reject Applicant</a>
-                    <?php }else if($applicant['status'] == '4') { ?> 
+                    <?php }else if($applicant['status'] == '4') { ?>
                       <a class="btn btn-danger" id = "rejectCandidate<?= $applicant['userID']?>" style="color: white; margin: 10px;">Rejected</a>
                       <a class="btn btn-primary unrejectCandidate" id = "unrejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
                     <?php }?>
@@ -146,6 +146,7 @@
                   </small>
                 </div>
               </div>
+              <br>
               <?php } ?>
             </div>
 
@@ -292,8 +293,8 @@
                   <div class="row">
                     <div class="col-md-6 mb-4">
                       <p class="card-text" style="font-size: 14px;"><b>Skills: </b><br>
-                        <ul style="font-size: 14px;" class = "skillList">   
-                            
+                        <ul style="font-size: 14px;" class = "skillList">
+
                          <!--<sup style="color: red;">Premium</sup>  -->
                         </ul>
                       </p>
@@ -321,7 +322,7 @@
                 </div>
               </div>
 
-             
+
               <a class="btn btn-success selectClone" style="color: white; margin: 10px;display: none">Select Applicant</a>
               <a class="btn btn-warning shortlistClone" style="color: white; margin: 10px;display: none">Short-list Applicant</a>
               <a class="btn btn-danger rejectClone" style="color: white; margin: 10px;display: none">Reject Applicant</a>
@@ -389,7 +390,7 @@
                 var skilltype = (res[i].type).split(',')
                 var skillScore = (res[i].score).split(',')
                 var k = 0;
-                if(skilltype[0] == 2 && skillScore[0] >=10){ 
+                if(skilltype[0] == 2 && skillScore[0] >=10){
                   var skill = '<li>'+ skillName[0] +'</li><sup style="color: red;">Premium</sup>';
                   k++;
                 }
@@ -399,7 +400,7 @@
                 }
 
                 for(var j = 1; j < skillName.length; j++){
-                   if(skilltype[j] == 2 && skillScore[j] >=10){ 
+                   if(skilltype[j] == 2 && skillScore[j] >=10){
                   var skill = '<li>'+ skillName[j] +'</li><sup style="color: red;">Premium</sup>';
                   k++;
                 }
@@ -421,7 +422,7 @@
               if(res[i].status == 1){
                 container.find('.unrejectCandidate').remove();
               }
-              
+
               if(res[i].status == 2){
                 container.find('.shortlistCandidate').remove();
                 container.find('.selectCandidate').html('Selected').removeClass('selectCandidate').attr('id','');
@@ -469,8 +470,8 @@
         if(res.res == 'true'){
           $('#email'+data).html(candidateDetail.email)
           $('#mobile'+data).html(candidateDetail.mobile)
-          $('#shortlistCandidate'+data).html('Shortlisted').removeClass('shortlistCandidate')  
-          alert('The candidate has been shortlisted');       
+          $('#shortlistCandidate'+data).html('Shortlisted').removeClass('shortlistCandidate')
+          alert('The candidate has been shortlisted');
         }
       })
     })
@@ -495,7 +496,7 @@
           $('#unrejectCandidate'+data).remove();
           $('#rejectCandidate'+data).remove();
           $('#addToCompare'+data).remove();
-          alert('The candidate has been selected');  
+          alert('The candidate has been selected');
         }
       })
     })
@@ -520,7 +521,7 @@
           clone.show();
           $('#rejectCandidate'+data).html('Rejected').removeClass('rejectCandidate');
           $('#addToCompare'+data).remove();
-          alert('The candidate has been rejected');  
+          alert('The candidate has been rejected');
         }
       })
     })
