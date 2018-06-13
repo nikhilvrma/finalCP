@@ -1510,9 +1510,16 @@ class Functions extends CI_Controller {
 	}
 
 	public function apply($offerID){
-		if($this->function_lib->auth()){
+		if($this->function_lib->auth()){	
 		if($this->function_lib->checkAlreadyApplied($offerID, $_SESSION['user_data']['userID'])){
 			$offer = $this->function_lib->getOfferDetails($offerID);
+			date_default_timezone_set("Asia/Kolkata");
+			$date = strtotime($offer[0]['applicationDeadline']);
+			$timestamp = time();
+			if($date<=$timestamp){
+				$this->session->set_flashdata('message', array('content'=>'The Application Deadline has already passed for this offer.','color'=>'red'));
+				redirect(base_url('offer/'.$offerID));
+			} 
 			$offerSkills = $this->function_lib->getOfferSkills($offerID);
 			$userSkills =  $this->skill_lib->getUserSkills($_SESSION['user_data']['userID']);
 			$i = 0;

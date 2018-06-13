@@ -592,4 +592,17 @@ class Function_lib {
 		$CI->load->model('function_model','function');
 		return $CI->function->getCurrentApplicantStatus($userID);
 	}
+
+	public function hasApplicantAppliedForOffer($offerID, $userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->hasApplicantAppliedForOffer($offerID, $userID);
+	}
+
+	public function getUserOfferDetails($offerID, $userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getUserOfferDetails($offerID, $userID);
+	}
 }
+
