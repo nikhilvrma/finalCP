@@ -426,7 +426,7 @@ class Home extends CI_Controller {
 		}
 
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
-		
+
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Applicants";
@@ -510,10 +510,10 @@ class Home extends CI_Controller {
 					$i = 0;
 					foreach ($allSkillsID as $key => $value) {
 						$allSkills[$i]['skillID'] = $value;
-						$i++; 
+						$i++;
 					}
 					$i = 0;
-					foreach ($allSkillName as $key => $value) {		
+					foreach ($allSkillName as $key => $value) {
 							$allSkills[$i]['skillName'] = $value;
 							$i++;
 					}
@@ -686,19 +686,19 @@ class Home extends CI_Controller {
 			if(!empty($userEducations)){
 				foreach ($userEducations as $key => $education) {
 					if(isset($education['educationType']) && $education['educationType'] == 1){
-						$this->data['userData']['education'][1] = true; 
+						$this->data['userData']['education'][1] = true;
 					}else{
 						if(!$this->data['userData']['education'][1])
 						$this->data['userData']['education'][1] = false;
 					}
 					if(isset($education['educationType']) && $education['educationType'] == 2){
-						$this->data['userData']['education'][2] = true; 
+						$this->data['userData']['education'][2] = true;
 					}else{
 						if(!$this->data['userData']['education'][2])
 						$this->data['userData']['education'][2] = false;
 					}
 					if(isset($education['educationType']) && $education['educationType'] == 3){
-						$this->data['userData']['education'][3] = true; 
+						$this->data['userData']['education'][3] = true;
 					}else{
 						if(!$this->data['userData']['education'][3])
 						$this->data['userData']['education'][3] = false;
@@ -712,8 +712,11 @@ class Home extends CI_Controller {
 			}
 		}
 		$offerSkills = $this->function_lib->getOfferSkills($offerID);
-
-		$userSkills = array_column($userSkills, 'skillID');
+		if(!empty($userSkills)){
+			$userSkills = array_column($userSkills, 'skillID');
+		}else{
+			$userSkills = array();
+		}
 		if(!empty($offerSkills)){
 			foreach ($offerSkills as $key => $value) {
 				if(in_array($value['skillID'], $userSkills)){
