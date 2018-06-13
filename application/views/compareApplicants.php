@@ -72,9 +72,9 @@
                   <tr>
                     <th scope="col" style="width: 28%;">Name</th>
                     <?php if(isset($candidates['userDetails'][0])){?>
-                    <th scope="col" style="background: #2c3e50; color: white; width: 36%;"><?= $candidates['userDetails'][0][0]['name']?><br><p style="font-size: 14px; float: right; color: red;">Remove from Compare</p></th>
+                    <th scope="col" style="background: #2c3e50; color: white; width: 36%;"><?= $candidates['userDetails'][0][0]['name']?></th>
                     <?php }else{}if(isset($candidates['userDetails'][1])){?>
-                    <th scope="col" style="background: #2c3e50; color: white; width: 36%;"><?= $candidates['userDetails'][1][0]['name']?><br><p style="font-size: 14px; float: right; color: red;">Remove from Compare</p></th>
+                    <th scope="col" style="background: #2c3e50; color: white; width: 36%;"><?= $candidates['userDetails'][1][0]['name']?></th>
                     <?php } ?>
                   </tr>
                 </thead>
@@ -84,66 +84,146 @@
                     <?php if(isset($candidates['userDetails'][0])){if($candidates['userDetails'][0][0]['gender'] == 'M'){echo "<td>Male</td>";}else{echo "<td>Female</td>";}}?>
                     <?php if(isset($candidates['userDetails'][0])){if($candidates['userDetails'][1][0]['gender'] == 'M'){echo "<td>Male</td>";}else{echo "<td>Female</td>";}}?>
                   </tr>
+
                   <tr>  
                     <th scope="row">Education:<br><label style="float: right;">High-School</label></th>
 
-                    <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){?>
+                    <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){ $yes = 0;
+                      foreach($candidates['educationalDetails'][0] as $educate){ 
+                        if($educate['educationType'] == 1){ 
+                          $yes = 1;?>
+                    <td><p style="font-size: 14px;"><?= $educate['institute']?><br><b>Score: </b><?= $educate['score']?><?php if($educate['scoreType'] == 1){echo " CGPA";}else{echo '%';}?><br><b>Batch: </b><?= $educate['year']?></p></td>
+
+                    <?php }
+                          } 
+                          if($yes != 1){
+                      echo "<td>Not Found.</td>";
+                    }
+                     }else{echo "<td>Not Found.</td>";}?>
+
                     
-                    <td><p style="font-size: 14px;">Central Board of Secondory Education, New Delhi<br><b>Score: </b>90%<br><b>Batch: </b>2009</p></td>
+                    <?php if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ $yes = 0;
+                      foreach($candidates['educationalDetails'][1] as $educate){ 
+                        if($educate['educationType'] == 1){ $yes = 1;?>
                     
-                    <?php }else{echo "<td>Not Found.</td>";} if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ ?>
-                    
-                    <td><p style="font-size: 14px;">Central Board of Secondory Education, New Delhi<br><b>Score: </b>95%<br><b>Batch: </b>2010</p></td>
-                    
-                    <?php }else{echo "<td>Not Found.</td>";} ?>
+                    <td><p style="font-size: 14px;"><?= $educate['institute']?><br><b>Score: </b><?= $educate['score']?><?php if($educate['scoreType'] == 1){echo " CGPA";}else{echo '%';}?><br><b>Batch: </b><?= $educate['year']?></p></td>
+                    <?php }} if($yes != 1){echo "<td>Not Found.</td>";}
+                     }else{echo "<td>Not Found.</td>";}?>
                   </tr>
+
                    <tr>  
                     <th scope="row">Education:<br><label style="float: right;">Secondary School</label></th>
 
-                    <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){?>
+                     <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){ $yes = 0;
+                      foreach($candidates['educationalDetails'][0] as $educate){ 
+                        if($educate['educationType'] == 2){ 
+                          $yes = 1;?>
+                    <td><p style="font-size: 14px;"><?= $educate['institute']?><br><b>Score: </b><?= $educate['score']?><?php if($educate['scoreType'] == 1){echo " CGPA";}else{echo '%';}?><br><b>Batch: </b><?= $educate['year']?></p></td>
+
+                    <?php }
+                          } 
+                          if($yes != 1){
+                      echo "<td>Not Found.</td>";
+                    }
+                     }else{echo "<td>Not Found.</td>";}?>
+
                     
-                    <td><p style="font-size: 14px;">Central Board of Secondory Education, New Delhi<br><b>Score: </b>90%<br><b>Batch: </b>2009</p></td>
+                    <?php if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ $yes = 0;
+                      foreach($candidates['educationalDetails'][1] as $educate){ 
+                        if($educate['educationType'] == 2){ $yes = 1;?>
                     
-                    <?php }else{echo "<td>Not Found.</td>";} if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ ?>
-                    
-                    <td><p style="font-size: 14px;">Central Board of Secondory Education, New Delhi<br><b>Score: </b>95%<br><b>Batch: </b>2010</p></td>
-                    
-                    <?php }else{echo "<td>Not Found.</td>";} ?>
+                    <td><p style="font-size: 14px;"><?= $educate['institute']?><br><b>Score: </b><?= $educate['score']?><?php if($educate['scoreType'] == 1){echo " CGPA";}else{echo '%';}?><br><b>Batch: </b><?= $educate['year']?></p></td>
+                    <?php }} if($yes != 1){echo "<td>Not Found.</td>";}
+                     }else{echo "<td>Not Found.</td>";}?>
                   </tr>
+
                   <tr>
                     <th scope="row">Education:<br><label style="float: right;">Graduation</label></th>
 
-                    <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){?>
+                     <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){ $yes = 0;
+                      foreach($candidates['educationalDetails'][0] as $educate){ 
+                        if($educate['educationType'] == 3){ 
+                          $yes = 1;?>
+                    <td><p style="font-size: 14px;"><?= $educate['college']?><br><b>Course: </b><?= $educate['course']?><br><b>Score: </b><?= $educate['score']?><?php if($educate['scoreType'] == 1){echo " CGPA";}else{echo '%';}?><br><b>Batch: </b><?= $educate['year']?></p></td>
+
+                    <?php }
+                          } 
+                          if($yes != 1){
+                      echo "<td>Not Found.</td>";
+                    }
+                     }else{echo "<td>Not Found.</td>";}?>
+
                     
-                    <td><p style="font-size: 14px;">JSS Academy of Technical Education, Noida<br><b>Course: </b>Bachelor of Technology- Computer Science and Engineering<br><b>Score: </b>90%<br><b>Batch: </b>2016</p></td>
+                    <?php if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ $yes = 0;
+                      foreach($candidates['educationalDetails'][1] as $educate){ 
+                        if($educate['educationType'] == 3){ $yes = 1;?>
                     
-                    <?php }else{echo "<td>Not Found.</td>";} if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ ?>
-                    
-                    <td><p style="font-size: 14px;">JSS Academy of Technical Education, Noida<br><b>Course: </b>Bachelor of Technology- Information Technology<br><b>Score: </b>90%<br><b>Batch: </b>2016</p></td>
-                    
-                    <?php }else{echo "<td>Not Found.</td>";} ?>
+                    <td><p style="font-size: 14px;"><?= $educate['college']?><br><b>Course: </b><?= $educate['course']?><br><b>Score: </b><?= $educate['score']?><?php if($educate['scoreType'] == 1){echo " CGPA";}else{echo '%';}?><br><b>Batch: </b><?= $educate['year']?></p></td>
+                    <?php }} if($yes != 1){echo "<td>Not Found.</td>";}
+                     }else{echo "<td>Not Found.</td>";}?>
                   </tr>
+
                   <tr>
                     <th scope="row">Education:<br><label style="float: right;">Post-Graduation</label></th>
 
-                    <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){?>
+                     <?php if(isset($candidates['educationalDetails'][0]) && !empty($candidates['educationalDetails'][0])){ $yes = 0;
+                      foreach($candidates['educationalDetails'][0] as $educate){ 
+                        if($educate['educationType'] == 4){ 
+                          $yes = 1;?>
+                    <td><p style="font-size: 14px;"><?= $educate['college']?><br><b>Course: </b><?= $educate['course']?><br><b>Score: </b><?= $educate['score']?><?php if($educate['scoreType'] == 1){echo " CGPA";}else{echo '%';}?><br><b>Batch: </b><?= $educate['year']?></p></td>
+
+                    <?php }
+                          } 
+                          if($yes != 1){
+                      echo "<td>Not Found.</td>";
+                    }
+                     }else{echo "<td>Not Found.</td>";}?>
+
                     
-                    <td><p style="font-size: 14px;">JSS Academy of Technical Education, Noida<br><b>Course: </b>Bachelor of Technology- Computer Science and Engineering<br><b>Score: </b>90%<br><b>Batch: </b>2016</p></td>
+                    <?php if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ $yes = 0;
+                      foreach($candidates['educationalDetails'][1] as $educate){ 
+                        if($educate['educationType'] == 4){ $yes = 1;?>
                     
-                    <?php }else{echo "<td>Not Found.</td>";} if(isset($candidates['educationalDetails'][1]) && !empty($candidates['educationalDetails'][1])){ ?>
-                    
-                    <td><p style="font-size: 14px;">JSS Academy of Technical Education, Noida<br><b>Course: </b>Bachelor of Technology- Information Technology<br><b>Score: </b>90%<br><b>Batch: </b>2016</p></td>
-                    
-                    <?php }else{echo "<td>Not Found.</td>";} ?>
+                    <td><p style="font-size: 14px;"><?= $educate['college']?><br><b>Course: </b><?= $educate['course']?><br><b>Score: </b><?= $educate['score']?><?php if($educate['scoreType'] == 1){echo " CGPA";}else{echo '%';}?><br><b>Batch: </b><?= $educate['year']?></p></td>
+                    <?php }} if($yes != 1){echo "<td>Not Found.</td>";}
+                     }else{echo "<td>Not Found.</td>";}?>
                   </tr>
 
                   <?php if(!empty($allSkills)){
-                   // var_dump($skills);
-                    foreach($allSkills as $allSkill){ if(isset($allSkill['skillName']) && $allSkill['skillName'] != NULL){ ?>
+                    foreach($allSkills as $allSkill){ if(isset($allSkill['skillName']) && $allSkill['skillName'] != NULL){?>
                     <th scope="row">Skill:<br><label style="float: right;"><?php echo $allSkill['skillName'];?></label></th>
 
-                    <td><?php if(!empty($skills[0]) && isset($skills[0][$allSkill['skillID']])){echo $skills[0][$allSkill['skillID']]['score'];}else{echo "Skill Not Found";} if($skills[0][$allSkill['skillID']]['type'] == 2){?><sup style="color: red;"><b>Premium</b></sup><?php }?></td>
-                    <td><?php if(!empty($skills[1])){ if(isset($skills[1][$allSkill['skillID']])){echo $skills[1][$allSkill['skillID']]['score'];}}else{echo "Skill Not Found";}if(!empty($skills[1])){if($skills[1][$allSkill['skillID']]['type'] == 2){?><sup style="color: red;"><b>Premium</b></sup><?php }}?></td>
+                    <td><?php 
+                            if(!empty($skills[0])){ 
+                                if(isset($skills[0][$allSkill['skillID']])){
+                                  echo $skills[0][$allSkill['skillID']]['score'];
+                                }else{
+                                  echo "Skill Not Found";
+                                }
+                              }else{
+                                echo "Skill Not Found";
+                              } 
+                            if(!empty($skills[0]) && isset($skills[0][$allSkill['skillID']])){
+                              if($skills[0][$allSkill['skillID']]['type'] == 2){?>
+                                <sup style="color: red;"><b>Premium</b></sup>
+                        <?php }} ?>
+                    </td>
+
+                    <td><?php 
+                            if(!empty($skills[1])){ 
+                              if(isset($skills[1][$allSkill['skillID']])){ 
+                                echo $skills[1][$allSkill['skillID']]['score'];
+                              }else{
+                                echo "Skill Not Found";
+                              }
+                            }else{
+                              echo "Skill Not Found";
+                            }
+                            if(!empty($skills[1]) && isset($skills[1][$allSkill['skillID']])){
+                              if($skills[1][$allSkill['skillID']]['type'] == 2){?>
+                                <sup style="color: red;"><b>Premium</b></sup>
+                    <?php }}?>
+                    </td>
                   </tr>
                 <?php }}}else{?>
                   <tr>

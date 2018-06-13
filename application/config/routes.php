@@ -83,6 +83,7 @@ $route['offer/(:num)'] = 'home/offer/$1';
 
 $route['hiring-nucleus/applicants/(:num)'] = 'home/applicants/$1';
 $route['hiring-nucleus/compare-applicants'] = 'home/compareApplicants';
+$route['hiring-nucleus/profile/(:num)/(:num)'] = 'home/profile/$1/$2';
 
 $route['employer'] = 'home/employer';
 $route['report/(:num)'] = 'home/report/$1';

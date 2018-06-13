@@ -418,7 +418,15 @@ class Home extends CI_Controller {
 			$this->session->set_flashdata('message', array('content'=>'This offer is not Accepted or is not Active.','color'=>'red'));
 		 	redirect(base_url('my-added-offers'));
 		}
+
+		$offerDetails = $this->function_lib->getOfferDetails($offerID)[0];
+		if($offerDetails['addedBy'] != $_SESSION['user_data']['userID']){
+			$this->session->set_flashdata('message', array('content'=>'Something went wrong. Please Try Again.','color'=>'red'));
+		 	redirect(base_url('my-added-offers'));
+		}
+
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
+		
 		if($this->function_lib->auth()){
 			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
 				$this->data['pageTitle'] = "Applicants";
@@ -493,8 +501,8 @@ class Home extends CI_Controller {
 					$this->data['candidates'][1] = null;
 				}
 				if(!empty($skills[0]) && !empty($skills[1])){
-					$candidate[1] = array_column($skills[0] ,'skillID');
-					$candidate[0] = array_column($skills[1] ,'skillID');
+					$candidate[0] = array_column($skills[0] ,'skillID');
+					$candidate[1] = array_column($skills[1] ,'skillID');
 					$skill_name[0] = array_column($skills[0], 'skill_name');
 					$skill_name[1] = array_column($skills[1], 'skill_name');
 					$allSkillsID = array_unique(array_merge($candidate[1], $candidate[0]));
@@ -504,16 +512,10 @@ class Home extends CI_Controller {
 						$allSkills[$i]['skillID'] = $value;
 						$i++; 
 					}
-
 					$i = 0;
-					foreach ($allSkillsID as $key => $value) {
-						if($x = array_search($value, $candidate[1])){
-							$allSkills[$i]['skillName'] = $allSkillName[$x];
+					foreach ($allSkillName as $key => $value) {		
+							$allSkills[$i]['skillName'] = $value;
 							$i++;
-						}elseif($x = array_search($value, $candidate[0])){
-							$allSkills[$i]['skillName'] = $allSkillName[$x];
-							$i++;
-						}
 					}
 				}else if(empty($skills[1])){
 					$i = 0;
@@ -773,6 +775,32 @@ class Home extends CI_Controller {
 		$this->data['pageTitle'] = "Employer";
 
 		$this->load->view('employer', $this->data);
+	}
+
+	public function profile($offerID, $userID){
+		if($_SESSION['user_data']['userID'] != $userID && $_SESSION['user_data']['accountType'] == 1){
+			redirect(base_url('404'));
+		}
+		$userOffer = $this->function_lib->getUserOfferDetails($offerID, $userID);
+		if(count($userOffer) == 0){
+			$this->session->set_flashdata('message', array('content'=>'Something went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url('hiring-nucleus/applicants/'.$offerID));
+		}
+		$this->data['userOffer'] = $userOffer[0];
+		$this->data['generalData'] = $this->function_lib->getUserGeneralData($userID)[0];
+		$this->data['educationalDetails'] = $this->function_lib->getUserEducationalDetails($userID);
+		$this->data['workExperience'] = $this->function_lib->getUserWorkExperience($userID);
+		$this->data['skills'] = $this->skill_lib->getUserSkills($userID);
+		$premiumSkills = $this->skill_lib->getPremiumSkills($userID);
+		$this->data['premiumSkills'] = $premiumSkills;
+		foreach ($premiumSkills as $key => $value) {
+			$this->data['skillResponse'][$value['skillID']] = $this->skill_lib->getResponses($userID, $value['skillID']);
+			$this->data['skillCorrect'][$value['skillID']] = $this->skill_lib->getCorrectResponses($userID, $value['skillID']);
+			$this->data['skillIncorrect'][$value['skillID']] = $this->skill_lib->getIncorrectResponses($userID, $value['skillID']);
+			$this->data['skillMax'][$value['skillID']] = $this->skill_lib->getSkillMax($value['skillID']);
+		}
+
+		$this->load->view('profile', $this->data);
 	}
 
 	public function report($userID){

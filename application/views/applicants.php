@@ -82,9 +82,10 @@
           <div class="row">
             
             <div class="col-md-12 mb-4" id = "candidateList">
-              <?php if(empty($applicants)){echo "<center>No Applicant Found.</center>";}foreach($applicants as $applicant){ ?>
+              <?php  
+              if(empty($applicants)){echo "<center>No Applicant Found.</center>";}foreach($applicants as $applicant){ ?>
               <div class="card" id = "candidate<?= $applicant['userID']?>">
-                <h6 class="card-header cardheader"><?= $applicant['name']?><br><br><a href = "<?= base_url('report/'.$applicant['userID'])?>"><label style="font-size: 14px;">View Profile</label></a></h6>
+                <h6 class="card-header cardheader"><?= $applicant['name']?><br><br><a href = "<?= base_url('hiring-nucleus/profile/'.$offer.'/'.$applicant['userID'])?>"><label style="font-size: 14px;">View Profile</label></a></h6>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-6 mb-4">
@@ -107,7 +108,7 @@
                       </p>
                     </div>
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Status: </b><label><?php if($applicant['status'] == 1){echo "<b>Applied</b>";}else if($applicant['status'] == 2){echo "<b style = 'color:green'>Selected</b>";}else if($applicant['status'] == 3){echo "<b style = 'color:yellow'>Shortlisted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></label></p>
+                      <p class="card-text"><b>Status: </b><label class = "status" id = "status<?= $applicant['userID']?>"><?php if($applicant['status'] == 1){echo "<b>Applied</b>";}else if($applicant['status'] == 2){echo "<b style = 'color:green'>Selected</b>";}else if($applicant['status'] == 3){echo "<b style = 'color:yellow'>Shortlisted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></label></p>
                       <p class="card-text"><b>Gender: </b><?php if($applicant['gender'] == 'M'){echo "Male";}else{echo "Female";}?></p>
                       <p class="card-text"><b>Location: </b><?= $applicant['city'].', '. $applicant['state']?></p>
                     </div>
@@ -373,6 +374,7 @@
               }else{
                 container.find('.gender').html('Female');
               }
+              container.find('.status').attr('id', 'status'+res[i].userID)
               if(res[i].status == 1){
                 container.find('.status').html('<b>Applied</b>');
               }else if(res[i].status == 2){
@@ -456,7 +458,7 @@
   $(document).ready(function(){
     $('body').on('click', '.shortlistCandidate', function(){
       id = $(this).attr('id')
-      data = $('#'+id).attr('data')
+      data = $('#'+id).attr('data') 
       url = '<?=base_url('functions/shortlist')?>';
       postData = {
         data: data
@@ -467,6 +469,7 @@
          res = JSON.parse(res);
         candidateDetail = res.data[0];
         if(res.res == 'true'){
+          $('#status'+data).html('<b style = "color:yellow">Shortlisted</b>')
           $('#email'+data).html(candidateDetail.email)
           $('#mobile'+data).html(candidateDetail.mobile)
           $('#shortlistCandidate'+data).html('Shortlisted').removeClass('shortlistCandidate')  
@@ -488,6 +491,7 @@
         res = JSON.parse(res);
         candidateDetail = res.data[0];
         if(res.res == 'true'){
+           $('#status'+data).html('<b style = "color:green">Selected</b>')
           $('#email'+data).html(candidateDetail.email)
           $('#mobile'+data).html(candidateDetail.mobile)
           $('#shortlistCandidate'+data).remove();
@@ -511,6 +515,7 @@
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){
+          $('#status'+data).html('<b style = "color:red">Rejected</b>')
           $('#shortlistCandidate'+data).remove();
           $('#selectCandidate'+data).remove();
           var clone = $('.unrejectClone').clone();
@@ -561,6 +566,7 @@
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){
+          $('#status'+data).html('<b>Applied</b>')
           $("#unrejectCandidate"+data).remove();
           $('#rejectCandidate'+data).remove();
           var selectClone = $('.selectClone').clone();

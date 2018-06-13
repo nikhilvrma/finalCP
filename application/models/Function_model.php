@@ -271,6 +271,7 @@ class Function_model extends CI_Model {
 
 	public function getUserEducationalDetails($userID){
 		$this->db->join('colleges', 'educationalDetails.instituteID = colleges.college_id', 'left');
+		$this->db->join('courses', 'educationalDetails.courseID = courses.course_id', 'left');
 		$result = $this->db->get_where('educationalDetails', array('userID'=>$userID));
 		return $result->result_array();
 	}
@@ -815,6 +816,11 @@ class Function_model extends CI_Model {
 		$this->db->select('status');
 		$result = $this->db->get_where('applicants', array('userID'=> $userID));
 		// var_dump($this->db->last_query());die;
+		return $result->result_array();
+	}
+
+	public function getUserOfferDetails($offerID, $userID){
+		$result = $this->db->get_where('applicants', array('offerID' => $offerID, 'userID' => $userID));
 		return $result->result_array();
 	}
 }
