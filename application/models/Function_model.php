@@ -65,7 +65,7 @@ class Function_model extends CI_Model {
 
 	public function getOfferApplicants($offerID, $offset = 0, $limit = 10, $type){
 		if($type == 1){
-			$result = $this->db->query('SELECT `applicants`.`applicantID`, `applicants`.`userID`, `applicants`.`userID`, `applicants`.`status`, `users`.`name`, `users`.`email`, `users`.`mobile`, `users`.`gender`, `users`.`cityID`, GROUP_CONCAT(DISTINCT `userSkills`.`skillID`) as `skillID`, GROUP_CONCAT(`userSkills`.`type`) as `type`, GROUP_CONCAT(DISTINCT `userSkills`.`score`) as `score`, GROUP_CONCAT(DISTINCT `skills`.`skill_name`) as `skillName`, `indianCities`.`city`, `indianCities`.`state` FROM `applicants` JOIN `users` ON `applicants`.`userID` = `users`.`userID` LEFT JOIN `userSkills` ON `users`.`userID` = `userSkills`.`userID` LEFT JOIN `indianCities` ON `users`.`cityID` = `indianCities`.`cityID` LEFT JOIN `skills` ON `userSkills`.`skillID` = `skills`.`skillID` WHERE `applicants`.`offerID` ='. $offerID .' AND `userSkills`.`score` > 0 GROUP BY `applicants`.`applicantID` LIMIT '.$limit.' OFFSET '. $offset);
+			$result = $this->db->query('SELECT `applicants`.`applicantID`, `applicants`.`userID`, `applicants`.`status`, `users`.`name`, `users`.`email`, `users`.`mobile`, `users`.`gender`, `users`.`cityID`, GROUP_CONCAT(DISTINCT `userSkills`.`skillID`) as `skillID`, GROUP_CONCAT(`userSkills`.`type`) as `type`, GROUP_CONCAT(DISTINCT `userSkills`.`score`) as `score`, GROUP_CONCAT(DISTINCT `skills`.`skill_name`) as `skillName`, `indianCities`.`city`, `indianCities`.`state` FROM `applicants` JOIN `users` ON `applicants`.`userID` = `users`.`userID` LEFT JOIN `userSkills` ON `users`.`userID` = `userSkills`.`userID` LEFT JOIN `indianCities` ON `users`.`cityID` = `indianCities`.`cityID` LEFT JOIN `skills` ON `userSkills`.`skillID` = `skills`.`skillID` WHERE `applicants`.`offerID` ='. $offerID .' AND `userSkills`.`score` > 0 GROUP BY `applicants`.`applicantID` LIMIT '.$limit.' OFFSET '. $offset);
 		}
 		else{
 			$result = $this->db->query('SELECT `applicants`.`applicantID`, `applicants`.`userID`, `applicants`.`userID`, `applicants`.`status`, `users`.`name`, `users`.`email`, `users`.`mobile`, `users`.`gender`, `users`.`cityID`, GROUP_CONCAT(DISTINCT `userSkills`.`skillID`) as `skillID`, GROUP_CONCAT(`userSkills`.`type`) as `type`, GROUP_CONCAT(DISTINCT `userSkills`.`score`) as `score`, GROUP_CONCAT(DISTINCT `skills`.`skill_name`) as `skillName`, `indianCities`.`city`, `indianCities`.`state` FROM `applicants` JOIN `users` ON `applicants`.`userID` = `users`.`userID` LEFT JOIN `userSkills` ON `users`.`userID` = `userSkills`.`userID` LEFT JOIN `indianCities` ON `users`.`cityID` = `indianCities`.`cityID` LEFT JOIN `skills` ON `userSkills`.`skillID` = `skills`.`skillID` WHERE `applicants`.`offerID` ='. $offerID .' AND `applicants`.`status` = '. $type .' AND `userSkills`.`score` > 0  GROUP BY `applicants`.`applicantID` LIMIT '.$limit.' OFFSET '. $offset);
@@ -488,6 +488,7 @@ class Function_model extends CI_Model {
 	public function getAddedOffers($userID, $offset, $limit){
 		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate, approved');
 		$this->db->limit($limit, $offset);
+		$this->db->order_by('offerID','DESC');
 		$result = $this->db->get_where('offers', array('addedBy'=>$userID))->result_array();
 		// var_dump($this->db->last_query()); die;,
 		return $result;
@@ -513,6 +514,7 @@ class Function_model extends CI_Model {
 		$this->db->select('applicants.offerID, offerType, offerTitle, applicationDeadline, joiningDate, status');
 		$this->db->limit($limit, $offset);
 		$this->db->join('offers','applicants.offerID = offers.offerID');
+		$this->db->order_by('offerID','DESC');
 		if($status != 0)
 			$this->db->where('status', $status);
 		$result = $this->db->get_where('applicants', array('userID'=>$userID))->result_array();
@@ -535,6 +537,7 @@ class Function_model extends CI_Model {
 	public function getAllOffers($offset, $limit){
 		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate');
 		$this->db->limit($limit, $offset);
+		$this->db->order_by('offerID','DESC');
 		$result = $this->db->get_where('offers', array('active' => 1, 'approved' => 1))->result_array();
 		// var_dump($this->db->last_query()); die;,
 		return $result;
@@ -615,9 +618,9 @@ class Function_model extends CI_Model {
 	}
 
 	public function getAllApplicantOfferLocations($offerID){
-		$this->db->select('DISTINCT(preferredLocations.cityID), city, state');
-		$this->db->join('preferredLocations','applicants.userID = preferredLocations.userID', 'left');
-		$this->db->join('indianCities','preferredLocations.cityID = indianCities.cityID', 'left');
+		$this->db->select('DISTINCT(users.cityID), city, state');
+		$this->db->join('users','applicants.userID = users.userID', 'left');
+		$this->db->join('indianCities','users.cityID = indianCities.cityID', 'left');
 		$result = $this->db->get_where('applicants', array('applicants.offerID' => $offerID));
 		return $result->result_array();
 	}
@@ -792,9 +795,9 @@ class Function_model extends CI_Model {
 	}
 
 	public function getApplicantLocations($userID){
-		$this->db->select('preferredLocations.cityID, indianCities.city, indianCities.state');
-		$this->db->join('indianCities', 'preferredLocations.cityID = indianCities.cityID');
-		$result = $this->db->get_where('preferredLocations', array('userID' => $userID))->result_array();
+		$this->db->select('users.cityID, indianCities.city, indianCities.state');
+		$this->db->join('indianCities', 'users.cityID = indianCities.cityID');
+		$result = $this->db->get_where('users', array('userID' => $userID))->result_array();
 		return $result;
 	}
 
