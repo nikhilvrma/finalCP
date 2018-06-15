@@ -123,25 +123,20 @@
                   <small class="text-muted buttonContainer<?= $applicant['userID']?>" style="float: right;">
                     <?php if($applicant['status'] != '2' && $applicant['status'] != '4'){?>
                       <a class="btn btn-success selectCandidate" id = "selectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Select Applicant</a>
-                    <?php }else if($applicant['status'] == '2') {?>
-                      <a class="btn btn-success" style="color: white; margin: 10px;">Selected</a>
                     <?php }
                     ?>
 
                     <?php if($applicant['status'] != '3' && $applicant['status'] != '2'&& $applicant['status'] != '4'){?>
                       <a class="btn btn-warning shortlistCandidate" id = "shortlistCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Short-list Applicant</a>
-                    <?php }else if($applicant['status'] == '3'){ ?>
-                      <a class="btn btn-warning" id = 'shortlistCandidate<?= $applicant['userID']?>' style="color: white; margin: 10px;">Shortlisted</a>
-                    <?php } ?>
-
-                    <?php if($applicant['status'] != '4' && $applicant['status'] != '2'){?>
-                      <a class="btn btn-danger rejectCandidate" id = "rejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Reject Applicant</a>
-                    <?php }else if($applicant['status'] == '4') { ?>
-                      <a class="btn btn-danger" id = "rejectCandidate<?= $applicant['userID']?>" style="color: white; margin: 10px;">Rejected</a>
-                      <a class="btn btn-primary unrejectCandidate" id = "unrejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
                     <?php }?>
 
-                    <?php if($applicant['status'] != '2' && $applicant['status'] != '4'){?>
+                    <?php if($applicant['status'] != '4'){?>
+                      <a class="btn btn-danger rejectCandidate" id = "rejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Reject Applicant</a>
+                    <?php }else if($applicant['status'] == '4') { ?>
+                      <a class="btn btn-info unrejectCandidate" id = "unrejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
+                    <?php }?>
+
+                    <?php if($applicant['status'] != '4'){?>
                     <a class="btn btn-primary addToCompare" id = "addToCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Compare Applicant</a>
                     <?php }?>
                   </small>
@@ -328,7 +323,7 @@
               <a class="btn btn-warning shortlistClone" style="color: white; margin: 10px;display: none">Short-list Applicant</a>
               <a class="btn btn-danger rejectClone" style="color: white; margin: 10px;display: none">Reject Applicant</a>
               <a class="btn btn-info unrejectClone" style="color: white; margin: 10px;display: none">Remove From Reject</a>
-              <a class="btn btn-info addToClone" style="color: white; margin: 10px;display: none">Compare Applicant</a>
+              <a class="btn btn-primary addToClone" style="color: white; margin: 10px;display: none">Compare Applicant</a>
 
     <?php echo $footer; ?>
 
@@ -473,7 +468,8 @@
           $('#status'+data).html('<b style = "color:yellow">Shortlisted</b>')
           $('#email'+data).html(candidateDetail.email)
           $('#mobile'+data).html(candidateDetail.mobile)
-          $('#shortlistCandidate'+data).html('Shortlisted').removeClass('shortlistCandidate')
+          $('#shortlistCandidate'+data).remove();
+          // $('#shortlistCandidate'+data).html('Shortlisted').removeClass('shortlistCandidate')
           alert('The candidate has been shortlisted');
         }
       })
@@ -495,11 +491,12 @@
            $('#status'+data).html('<b style = "color:green">Selected</b>')
           $('#email'+data).html(candidateDetail.email)
           $('#mobile'+data).html(candidateDetail.mobile)
-          $('#shortlistCandidate'+data).remove();
-          $('#selectCandidate'+data).html('Selected').removeClass('selectCandidate').attr('id','');
+          $('#selectCandidate'+data).remove();
+          // $('#selectCandidate'+data).html('Selected').removeClass('selectCandidate').attr('id','');
           $('#unrejectCandidate'+data).remove();
-          $('#rejectCandidate'+data).remove();
-          $('#addToCompare'+data).remove();
+          $('#shortlistCandidate'+data).remove();
+          // $('#rejectCandidate'+data).remove();
+          // $('#addToCompare'+data).remove();
           alert('The candidate has been selected');
         }
       })
@@ -517,15 +514,16 @@
       $.get(url,postData).done(function(res){
         if(res == 'true'){
           $('#status'+data).html('<b style = "color:red">Rejected</b>')
-          $('#shortlistCandidate'+data).remove();
-          $('#selectCandidate'+data).remove();
           var clone = $('.unrejectClone').clone();
           clone.addClass('unrejectCandidate');
           clone.attr({id:'unrejectCandidate'+data, data:data});
           $('.buttonContainer'+data).append(clone[0]);
+          $('#rejectCandidate'+data).remove();
           clone.show();
-          $('#rejectCandidate'+data).html('Rejected').removeClass('rejectCandidate');
+          // $('#rejectCandidate'+data).html('Rejected').removeClass('rejectCandidate');
           $('#addToCompare'+data).remove();
+          $('#selectCandidate'+data).remove();
+          $('#shortlistCandidate'+data).remove();
           alert('The candidate has been rejected');
         }
       })

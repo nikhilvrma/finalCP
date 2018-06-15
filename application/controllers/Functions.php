@@ -817,6 +817,32 @@ class Functions extends CI_Controller {
 	}
 
 
+	public function addAvailability(){
+		$availability = '';
+		if($x = $this->input->post('availability')){
+			$availability = $x;
+		}
+
+		if($availability == ''){
+			$this->session->set_flashdata('message', array('content'=>'Select a offer type To update availability.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}
+
+		$data = array(
+				'available' => $availability
+			);
+		$result = $this->function_lib->updateGeneralDetails($data, $_SESSION['user_data']['userID']);
+		if($result){
+			$this->session->set_flashdata('message', array('content'=>'Availability updated.','color'=>'green'));
+			redirect(base_url('general-details'));		
+		}else{
+			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
+			redirect(base_url('general-details'));
+		}
+	}
+
+	
+
 	public function addPreferredLocation(){
 		$location = "";
 		if($x = $this->input->post('preferredLocation')){
