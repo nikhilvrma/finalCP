@@ -522,6 +522,7 @@ class Home extends CI_Controller {
 				}else{
 					$this->data['candidates'][1] = null;
 				}
+				$allSkills = array();
 				if(!empty($skills[0]) && !empty($skills[1])){
 					$candidate[0] = array_column($skills[0] ,'skillID');
 					$candidate[1] = array_column($skills[1] ,'skillID');
