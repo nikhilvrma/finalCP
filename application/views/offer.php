@@ -95,8 +95,11 @@
                         <p class="card-text"><button class="btn btn-primary applyNow" style="color: white;">Apply Now</button></p>
                       <?php }else if(!isset($_SESSION['user_data']['accountType'])){?>
                         <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p>
-
                       <?php }?>
+                      <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] == 2){
+                        if($offerDetails[0]['approved'] == 0){?>
+                         <p class="card-text"><a class="btn btn-primary editoffer" target="_blank" href = "<?= base_url('edit-offer/'.$offerDetails[0]['offerID'])?>" style="color: white;">Edit Offer</a></p>
+                      <?php }}?>
                     </div>
                   </div>
 

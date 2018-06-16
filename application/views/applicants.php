@@ -85,7 +85,7 @@
               <?php  
               if(empty($applicants)){echo "<center>No Applicant Found.</center>";}foreach($applicants as $applicant){ ?>
               <div class="card" id = "candidate<?= $applicant['userID']?>">
-                <h6 class="card-header cardheader"><?= $applicant['name']?><br><br><a href = "<?= base_url('hiring-nucleus/profile/'.$offer.'/'.$applicant['userID'])?>"><label style="font-size: 14px;">View Profile</label></a></h6>
+                <h6 class="card-header cardheader"><span class = "title" id = 'title<?= $applicant['userID']?>'><?= $applicant['name']?></span><br><br><a href = "<?= base_url('hiring-nucleus/profile/'.$offer.'/'.$applicant['userID'])?>" target = "_blank"><label style="font-size: 14px;">View Profile</label></a></h6>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-6 mb-4">
@@ -136,9 +136,12 @@
                       <a class="btn btn-info unrejectCandidate" id = "unrejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
                     <?php }?>
 
-                    <?php if($applicant['status'] != '4'){?>
+                    <?php if($applicant['status'] != '4'){ if(!in_array($applicant['userID'], $_SESSION['compare'])){?>
                     <a class="btn btn-primary addToCompare" id = "addToCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Compare Applicant</a>
-                    <?php }?>
+                    <?php }else{?>
+                      <a class="btn btn-primary removeFromCompare" id = "removeFromCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Compare</a>
+                    <?php }}?>
+                    <br><a href="<?= base_url('hiring-nucleus/compare-applicants')?>" style="float: right; margin-right: 2% ">Access Compare Applicants</a>
                   </small>
                 </div>
               </div>
@@ -200,7 +203,7 @@
                 <div class="controls">
                   <b>Location</b>
                   <div style="margin-top: 10px;">
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" value = "0" name="locations[]" <?php if(isset($appliedFilters['locations']) && $appliedFilters['locations'] != '' && in_array('0',$appliedFilters['locations'])){echo "checked";}?>><label style="margin-left: 5px;">Work From Home.</label></div>
+                    <!-- <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" value = "0" name="locations[]" <?php if(isset($appliedFilters['locations']) && $appliedFilters['locations'] != '' && in_array('0',$appliedFilters['locations'])){echo "checked";}?>><label style="margin-left: 5px;">Work From Home.</label></div> -->
                     <?php if(!empty($allOfferLocations)){ foreach($allOfferLocations as $offerLocation){ if(isset($offerLocation['cityID'])){?>
                       <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="locations[]" value = "<?= $offerLocation['cityID']?>" <?php if(isset($appliedFilters['locations']) && $appliedFilters['locations'] != '' && in_array($offerLocation['cityID'] ,$appliedFilters['locations'])){echo "checked";} ?>><label style="margin-left: 5px;"><?= $offerLocation['city'].', '.$offerLocation['state']?></label></div>
                     <?php }}}?>
@@ -357,6 +360,7 @@
               container.attr('id', 'candidate'+res[i].userID)
               container.removeClass('candidateWrap');
               container.find('.title').html(res[i].name);
+              container.find('.title').attr('id', 'title'+res[i].userID)
               container.find('.location').html(res[i].city+' '+res[i].state)
               if(res[i].status == 2){
                 container.find('.email').html(res[i].email).attr('id', 'email'+res[i].userID)
@@ -470,7 +474,7 @@
           $('#mobile'+data).html(candidateDetail.mobile)
           $('#shortlistCandidate'+data).remove();
           // $('#shortlistCandidate'+data).html('Shortlisted').removeClass('shortlistCandidate')
-          alert('The candidate has been shortlisted');
+          alert($('#title'+data).html()+' has been successfully shortlisted for the Offer: '+'<?= $offerTitle?>');
         }
       })
     })
@@ -497,7 +501,7 @@
           $('#shortlistCandidate'+data).remove();
           // $('#rejectCandidate'+data).remove();
           // $('#addToCompare'+data).remove();
-          alert('The candidate has been selected');
+          alert($('#title'+data).html()+' has been successfully selected for the Offer: '+'<?= $offerTitle?>');
         }
       })
     })
@@ -524,7 +528,7 @@
           $('#addToCompare'+data).remove();
           $('#selectCandidate'+data).remove();
           $('#shortlistCandidate'+data).remove();
-          alert('The candidate has been rejected');
+          alert($('#title'+data).html()+' has been successfully rejected for the Offer: '+'<?= $offerTitle?>');
         }
       })
     })
@@ -541,19 +545,51 @@
       $.get(url,postData).done(function(res){
         console.log(res);
         if(res == 'true'){
-          console.log('yo');
-          alert('Added to Compare');
+          $('#'+id).addClass('removeFromCompare');
+          $('#'+id).removeClass('addToCompare')
+          $('#'+id).attr('id', 'removeFromCompare'+data)
+          $('#removeFromCompare'+data).html('Remove From Compare')
+          alert($('#title'+data).html()+' has been successfully added for Candidate Compare for the Offer: '+'<?= $offerTitle?>');
         }
         if(res == 'false'){
-          console.log('hoe');
-          alert('2 candidate limit has been reached.');
+          
+          alert('You can only add a Maximum of Two Candidates to Compare.');
         }
         if(res == 'false1'){
-          alert('This candidate has already been added');
+          alert($('#title'+data).html()+' has already been added for Candidate Compare for the Offer: '+'<?= $offerTitle?>');
         }
       })
     })
   })
+
+
+  $(document).ready(function(){
+    $('body').on('click', '.removeFromCompare', function(){
+      id = $(this).attr('id')
+      data = $('#'+id).attr('data')
+      url = '<?=base_url('functions/RemoveFromCompare')?>'
+      postData = {
+        data: data
+      }
+      $.get(url,postData).done(function(res){
+        console.log(res);
+        if(res == 'true'){
+          $('#'+id).addClass('addToCompare')
+          $('#'+id).removeClass('removeFromCompare');
+          $('#'+id).attr('id', 'addToCompare'+data)
+          $('#addToCompare'+data).html('Add To Compare')
+          alert($('#title'+data).html()+' has been successfully Removed from Candidate Compare for the Offer: '+'<?= $offerTitle?>');
+        }
+        if(res == 'false'){
+          alert('No candidate Added To compare.');
+        }
+        if(res == 'false1'){
+          alert('This candidate has not been added to Compare.');
+        }
+      })
+    })
+  })
+
 
   $(document).ready(function(){
     $('body').on('click', '.unrejectCandidate', function(){
@@ -588,6 +624,7 @@
           addToClone.attr({id:'addToCompare'+data, data:data});
           $('.buttonContainer'+data).append(addToClone[0]);
           addToClone.show();
+          alert($('#title'+data).html()+' has been successfully removed from rejected.');
         }
       })
     })

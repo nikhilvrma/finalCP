@@ -53,7 +53,7 @@
                       <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
                     </div>
                     <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Status: </b><?php if($offer['approved'] == 0){echo "<b>Added</b>";}else if($offer['approved'] == 1){echo "<b style = 'color:green'>Accepted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></p>
+                      <p class="card-text"><b>Status: </b><?php if($offer['approved'] == 0){echo "<b>Approval Pending</b>";}else if($offer['approved'] == 1){echo "<b style = 'color:green'>Accepted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></p>
                       <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
                       <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                     </div>
@@ -69,7 +69,7 @@
                     <?php if($offer['approved'] == 0){?>
                     <a class="btn btn-success" href = "<?= base_url('edit-offer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Edit Offer</a>
                     <?php } ?>
-                    <?php if($offer['approved'] != 2){?>
+                    <?php if($offer['approved'] == 1){?>
                     <a class="btn btn-primary" href = "<?= base_url('hiring-nucleus/applicants/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">Access Applicants</a>
                     <?php } ?>
                     <a class="btn btn-primary" href = "<?= base_url('offer/'.$offer['offerID'])?>" target = "_blank" style="color: white; margin: 10px;">View Offer</a>

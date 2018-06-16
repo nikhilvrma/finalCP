@@ -325,6 +325,10 @@ class Home extends CI_Controller {
 				$this->data['locations'] = $this->function_lib->getAllLocations();
 				if(!empty($this->function_lib->getOfferDetails($offerID))){
 					$this->data['redirect'] = $this->function_lib->getOfferDetails($offerID)[0];
+					if($this->data['redirect']['addedBy'] != $_SESSION['user_data']['userID']){
+						// $this->session->set_flashdata('message', array('content'=>'Something went Wrong or Broken Link.','color'=>'red'));
+						redirect(base_url('404'));
+					}
 					if(isset($this->data['redirect']['compensation'])){
 						$this->data['redirect']['compensationType'] = 1;
 					}else if(isset($this->data['redirect']['minCompensation']) || isset($this->data['redirect']['maxCompensation'])){
@@ -361,8 +365,8 @@ class Home extends CI_Controller {
 				redirect(base_url('verify-contact-details'));
 			}
 		}else{
-			$this->session->set_flashdata('message', array('content'=>'Approved and Rejected offers cannot be edited.','color'=>'red'));
-			redirect(base_url('my-added-offers'));
+			// $this->session->set_flashdata('message', array('content'=>'Something went Wrong or Broken Link','color'=>'red'));
+			redirect(base_url('404'));
 		}
 	}else{
 			redirect(base_url());
@@ -472,7 +476,7 @@ class Home extends CI_Controller {
 			redirect(base_url('hiring-nucleus/applicants/'.$_SESSION['currentOffer']['offerID']));
 		}
 		if(!isset($_SESSION['compare'][0]) || !isset($_SESSION['compare'][1])){
-			$this->session->set_flashdata('message', array('content'=>'You need to add atleast 2 candidates for accessing the Compare feature.','color'=>'red'));
+			$this->session->set_flashdata('message', array('content'=>'You need to add Two Candidates to Compare.','color'=>'red'));
 			redirect(base_url('hiring-nucleus/applicants/'.$_SESSION['currentOffer']['offerID']));
 		}
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
@@ -675,7 +679,14 @@ class Home extends CI_Controller {
 		if(empty($this->function_lib->getOfferDetails($offerID))){
 			redirect(base_url('404'));
 		}
-
+		if($this->data['offerDetails'][0]['approved'] != 1 || $this->data['offerDetails'][0]['active'] == 0){
+			if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] == 1){
+				redirect(base_url('404'));
+			}
+			if(!isset($_SESSION['user_data']['accountType'])){
+				redirect(base_url('404'));
+			}
+		}
 		if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] == 1){
 			$userEducations = $this->function_lib->getUserEducationalDetails($_SESSION['user_data']['userID']);
 			$userSkills = $this->skill_lib->getUserSkills($_SESSION['user_data']['userID']);
