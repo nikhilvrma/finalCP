@@ -459,7 +459,8 @@ class Home extends CI_Controller {
 					$applicants = array_column($userSkills, 'applicantID');
 					$i = 0;
 					foreach ($this->data['applicants'] as $key => $value) {
-						if($x = array_search($value['applicantID'], $applicants)){
+							$x = array_search($value['applicantID'], $applicants);
+						if(is_int($x)){
 							$this->data['applicants'][$i]['skillID'] = $userSkills[$x]['skillID'];
 							$this->data['applicants'][$i]['type'] = $userSkills[$x]['type'];
 							$this->data['applicants'][$i]['score'] = $userSkills[$x]['score'];
@@ -521,6 +522,7 @@ class Home extends CI_Controller {
 				}else{
 					$this->data['candidates'][1] = null;
 				}
+				$allSkills = array();
 				if(!empty($skills[0]) && !empty($skills[1])){
 					$candidate[0] = array_column($skills[0] ,'skillID');
 					$candidate[1] = array_column($skills[1] ,'skillID');
