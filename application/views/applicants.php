@@ -136,9 +136,12 @@
                       <a class="btn btn-info unrejectCandidate" id = "unrejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
                     <?php }?>
 
-                    <?php if($applicant['status'] != '4'){?>
+                    <?php if($applicant['status'] != '4'){ if(!in_array($applicant['userID'], $_SESSION['compare'])){?>
                     <a class="btn btn-primary addToCompare" id = "addToCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Compare Applicant</a>
-                    <?php }?>
+                    <?php }else{?>
+                      <a class="btn btn-primary removeFromCompare" id = "removeFromCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Compare</a>
+                    <?php }}?>
+                    <br><a href="<?= base_url('hiring-nucleus/compare-applicants')?>" style="float: right; margin-right: 2% ">Access Compare Applicants</a>
                   </small>
                 </div>
               </div>
@@ -542,19 +545,51 @@
       $.get(url,postData).done(function(res){
         console.log(res);
         if(res == 'true'){
-          console.log('yo');
-          alert('Added to Compare');
+          $('#'+id).addClass('removeFromCompare');
+          $('#'+id).removeClass('addToCompare')
+          $('#'+id).attr('id', 'removeFromCompare'+data)
+          $('#removeFromCompare'+data).html('Remove From Compare')
+          alert($('#title'+data).html()+' has been successfully added for Candidate Compare for the Offer: '+'<?= $offerTitle?>');
         }
         if(res == 'false'){
-          console.log('hoe');
+          
           alert('You can only add a Maximum of Two Candidates to Compare.');
         }
         if(res == 'false1'){
-          alert($('#title'+data).html()+' has been successfully added for Candidate Compare for the Offer: '+'<?= $offerTitle?>');
+          alert($('#title'+data).html()+' has already been added for Candidate Compare for the Offer: '+'<?= $offerTitle?>');
         }
       })
     })
   })
+
+
+  $(document).ready(function(){
+    $('body').on('click', '.removeFromCompare', function(){
+      id = $(this).attr('id')
+      data = $('#'+id).attr('data')
+      url = '<?=base_url('functions/RemoveFromCompare')?>'
+      postData = {
+        data: data
+      }
+      $.get(url,postData).done(function(res){
+        console.log(res);
+        if(res == 'true'){
+          $('#'+id).addClass('addToCompare')
+          $('#'+id).removeClass('removeFromCompare');
+          $('#'+id).attr('id', 'addToCompare'+data)
+          $('#addToCompare'+data).html('Add To Compare')
+          alert($('#title'+data).html()+' has been successfully Removed from Candidate Compare for the Offer: '+'<?= $offerTitle?>');
+        }
+        if(res == 'false'){
+          alert('No candidate Added To compare.');
+        }
+        if(res == 'false1'){
+          alert('This candidate has not been added to Compare.');
+        }
+      })
+    })
+  })
+
 
   $(document).ready(function(){
     $('body').on('click', '.unrejectCandidate', function(){
