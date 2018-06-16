@@ -73,14 +73,12 @@
                       <p class="card-text"><b>Offer Type: </b><?php if($offer['offerType'] == 1){echo "Job Offer";}else{echo "Internship Offer";}?></p>
                       <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}else $location = "Work From Home";?>
                       <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
-                      <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
-                    </div>
-                    <div class="col-md-12 mb-4">
                       <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}else $skill = "None";?>
                       <p class="card-text"><b>Skills Required: </b><?= $skill?></p>
+                      <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                     </div>
                   </div>
 
@@ -145,7 +143,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <b>Location</b>
@@ -220,7 +218,7 @@
             }else{
               offerType = 'Internship Offer'
             }
-            
+
             locations = '';
             skills = '';
             if(res.offerLocations[res.offers[i].offerID]){
@@ -253,14 +251,14 @@
             month = month[date.getMonth()];
             day = date.getDate();
             year = date.getFullYear();
-            date  = day+'-'+month+'-'+year; 
+            date  = day+'-'+month+'-'+year;
             container.find('.applicationDeadline').html(date)
             date = new Date(res.offers[i].joiningDate)
             month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
             month = month[date.getMonth()];
             day = date.getDate();
             year = date.getFullYear();
-            date  = day+'-'+month+'-'+year; 
+            date  = day+'-'+month+'-'+year;
             container.find('.joiningDate').html(date)
             view = '<?= base_url('offer/')?>'
             edit = '<?= base_url('editOffer/')?>'
@@ -273,7 +271,7 @@
             if(!res.hasMore){
               $('.loadMore').hide();
             }
-            
+
           })
         })
       })

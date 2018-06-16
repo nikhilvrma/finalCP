@@ -73,16 +73,17 @@
                       <p class="card-text"><b>Offer Type: </b><?php if($offer['offerType'] == 1){echo "Job Offer";}else{echo "Internship Offer";}?></p>
                       <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}else $location = "Work From Home"; ?>
                       <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Status: </b><?php if($offer['status'] == 1){echo "<b>Applied</b>";}else if($offer['status'] == 2){echo "<b style = 'color:green'>Selected</b>";}else if($offer['status'] == 3){echo "<b style = 'color:yellow'>Shortlisted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></p>
-                      <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
-                      <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
-                    </div>
-                    <div class="col-md-12 mb-4">
                       <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}else $skill = "None";?>
                       <p class="card-text"><b>Skills Required: </b><?= $skill?></p>
+                      <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
                     </div>
+                    
+                    <div class="col-md-6 mb-4">
+                      <p class="card-text"><b>Status: </b><?php if($offer['status'] == 1){echo "<b>Applied</b>";}else if($offer['status'] == 2){echo "<b style = 'color:green'>Selected</b>";}else if($offer['status'] == 3){echo "<b style = 'color:yellow'>Shortlisted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></p>
+
+                      <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
+                    </div>
+
                   </div>
 
                 </div>
