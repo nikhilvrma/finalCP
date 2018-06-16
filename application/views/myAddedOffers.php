@@ -76,8 +76,8 @@
                   </small>
                 </div>
               </div>
-
-              <?php }}else{ echo "<center>You have added no Offers Yet.</center>"; } ?>
+              <br>
+            <?php }  }else{ echo "<center>You have added no Offers Yet.</center>"; } ?>
               <div class ="offerCont"></div>
             </div>
 

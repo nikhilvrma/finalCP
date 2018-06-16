@@ -42,7 +42,7 @@
 
             <div class="row">
 
-              <div class="col-md-5 control-group form-group offerType">
+              <div class="col-md-3 control-group form-group offerType">
                 <div class="controls">
                   <label><b>Offer Type:</b></label>
                   <select class="form-control" name="offerType" id ="offerType" required>
@@ -61,16 +61,16 @@
                 </div>
               </div>
 
-              <div class="col-md-3 control-group form-group">
-               <div class="controls">
-                 <label><b>Part Time:</b></label>
-                 <select class="form-control" required name="partTime" id="partTime">
-                   <option value="1" <?php if(isset($redirect) && $redirect['partTime'] == 1){ echo "selected";}?>>Yes</option>
-                   <option value="2" <?php if(isset($redirect) && $redirect['partTime'] == 2){ echo "selected";}?>>No</option>
-                 </select>
-                 <p class="help-block"></p>
-               </div>
-             </div>
+              <div class="col-md-5 control-group form-group">
+                <div class="controls">
+                  <label><b>Type of Applicants:</b></label>
+                  <select class="form-control" name="applicantType" id="applicantType" required>
+                    <option value="1" <?php if(isset($redirect) && $redirect['applicantType'] == 1){ echo "selected";}?>>Anyone can Apply</option>
+                    <option value="2" <?php if(isset($redirect) && $redirect['applicantType'] == 2){ echo "selected";}?>>Applicants with specific Skills</option>
+                  </select>
+                  <p class="help-block"></p>
+                </div>
+              </div>
 
               <div class="col-md-12 control-group form-group">
                 <div class="controls">
@@ -228,16 +228,7 @@
               </div>
 
 
-              <div class="col-md-12 control-group form-group">
-                <div class="controls">
-                  <label><b>Type of Applicants:</b></label>
-                  <select class="form-control" name="applicantType" id="applicantType" required>
-                    <option value="1" <?php if(isset($redirect) && $redirect['applicantType'] == 1){ echo "selected";}?>>Anyone can Apply</option>
-                    <option value="2" <?php if(isset($redirect) && $redirect['applicantType'] == 2){ echo "selected";}?>>Applicants with specific Skills</option>
-                  </select>
-                  <p class="help-block"></p>
-                </div>
-              </div>
+
 
               <div class="col-md-12 selectSkills" <?php if(isset($redirect) && $redirect['applicantType'] == 2){ }else{ echo 'style ="display: none"';}?>>
                 <label><b>Skills:</b></label>

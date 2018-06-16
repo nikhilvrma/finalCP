@@ -834,14 +834,14 @@ class Functions extends CI_Controller {
 		$result = $this->function_lib->updateGeneralDetails($data, $_SESSION['user_data']['userID']);
 		if($result){
 			$this->session->set_flashdata('message', array('content'=>'Availability updated.','color'=>'green'));
-			redirect(base_url('general-details'));		
+			redirect(base_url('general-details'));
 		}else{
 			$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 			redirect(base_url('general-details'));
 		}
 	}
 
-	
+
 
 	public function addPreferredLocation(){
 		$location = "";
@@ -1101,35 +1101,35 @@ class Functions extends CI_Controller {
 			$d1 = DateTime::createFromFormat('Y-m-d', $joiningDate);
 			$d2 = DateTime::createFromFormat('Y-m-d', $applicationDeadline);
 			if(!is_numeric($openings)){
-				$this->session->set_flashdata('message', array('content'=>'Number of Openings Must be entered as Integer. Please Try Again.','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Number of Openings should be a Integer. Please Try Again.','color'=>'red'));
 				if(isset($_POST['edit'])){
 					redirect(base_url('edit-offer/'.$_POST['edit']));
 				}
 				redirect(base_url('add-new-offer'));
 			}
 			if(!is_numeric($duration) && $offerType == 2){
-				$this->session->set_flashdata('message', array('content'=>'Duration Must be entered as Integer. Please Try Again.','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Duration should be a Integer. Please Try Again.','color'=>'red'));
 				if(isset($_POST['edit'])){
 					redirect(base_url('edit-offer/'.$_POST['edit']));
 				}
 				redirect(base_url('add-new-offer'));
 			}
 			if(!is_numeric($compensation) && $compensationType == 1){
-				$this->session->set_flashdata('message', array('content'=>'Compensation Must be entered as Integer. Please Try Again.','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Compensation should be a Integer. Please Try Again.','color'=>'red'));
 				if(isset($_POST['edit'])){
 					redirect(base_url('edit-offer/'.$_POST['edit']));
 				}
 				redirect(base_url('add-new-offer'));
 			}
 			if(!is_numeric($minCompensation) && $compensationType == 2){
-				$this->session->set_flashdata('message', array('content'=>'Compensation Must be entered as Integer. Please Try Again.','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Compensation should be a Integer. Please Try Again.','color'=>'red'));
 				if(isset($_POST['edit'])){
 					redirect(base_url('edit-offer/'.$_POST['edit']));
 				}
 				redirect(base_url('add-new-offer'));
 			}
 			if(!is_numeric($maxCompensation) && $compensationType == 2){
-				$this->session->set_flashdata('message', array('content'=>'Compensation Must be entered as Integer. Please Try Again.','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Compensation should be a Integer. Please Try Again.','color'=>'red'));
 				if(isset($_POST['edit'])){
 					redirect(base_url('edit-offer/'.$_POST['edit']));
 				}
@@ -1536,7 +1536,7 @@ class Functions extends CI_Controller {
 	}
 
 	public function apply($offerID){
-		if($this->function_lib->auth()){	
+		if($this->function_lib->auth()){
 		if($this->function_lib->checkAlreadyApplied($offerID, $_SESSION['user_data']['userID'])){
 			$offer = $this->function_lib->getOfferDetails($offerID);
 			date_default_timezone_set("Asia/Kolkata");
@@ -1545,7 +1545,7 @@ class Functions extends CI_Controller {
 			if($date<=$timestamp){
 				$this->session->set_flashdata('message', array('content'=>'The Application Deadline has already passed for this offer.','color'=>'red'));
 				redirect(base_url('offer/'.$offerID));
-			} 
+			}
 			$offerSkills = $this->function_lib->getOfferSkills($offerID);
 			$userSkills =  $this->skill_lib->getUserSkills($_SESSION['user_data']['userID']);
 			$i = 0;
@@ -1599,7 +1599,7 @@ class Functions extends CI_Controller {
 		$_SESSION['offerID'] = $offerID;
 		redirect(base_url());
 		}
-}	
+}
 
 	public function filterApplicantsByParameters($offerID){
 		unset($_SESSION['filter']);
