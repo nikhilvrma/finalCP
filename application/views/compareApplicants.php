@@ -72,9 +72,9 @@
                   <tr>
                     <th scope="col" style="width: 25%;">Name</th>
                     <?php if(isset($candidates['userDetails'][0])){?>
-                    <th scope="col" style="background: #2c3e50; color: white; width: 25%;"><?= $candidates['userDetails'][0][0]['name']?></th>
+                    <th scope="col" style="background: #2c3e50; color: white; width: 25%;" class = "title" id = "title<?= $candidates['userDetails'][0][0]['userID']?>"><?= $candidates['userDetails'][0][0]['name']?></th>
                     <?php }else{}if(isset($candidates['userDetails'][1])){?>
-                    <th scope="col" style="background: #2c3e50; color: white; width: 25%;"><?= $candidates['userDetails'][1][0]['name']?></th>
+                    <th scope="col" style="background: #2c3e50; color: white; width: 25%;" class = "title" id = "title<?= $candidates['userDetails'][1][0]['userID']?>"><?= $candidates['userDetails'][1][0]['name']?></th>
                     <?php } ?>
                   </tr>
                 </thead>
@@ -254,7 +254,7 @@
                       <a class="btn btn-danger rejectCandidate" id = "rejectCandidate<?= $candidates['userDetails'][0][0]['userID']?>" data = "<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Reject Applicant</a>
                     <?php }else if($candidates['status'][0] == '4') { ?>
                       <a class="btn btn-danger" id = "rejectCandidate<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Rejected</a>
-                      <a class="btn btn-primary unrejectCandidate" id = "unrejectCandidate<?= $candidates['userDetails'][0][0]['userID']?>" data = "<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
+                      <a class="btn btn-info unrejectCandidate" id = "unrejectCandidate<?= $candidates['userDetails'][0][0]['userID']?>" data = "<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
                     <?php }?>
 
                    </small>
@@ -321,7 +321,7 @@
   $(document).ready(function(){
     $('body').on('click', '.shortlistCandidate', function(){
       id = $(this).attr('id')
-      data = $('#'+id).attr('data')
+      data = $('#'+id).attr('data') 
       url = '<?=base_url('functions/shortlist')?>';
       postData = {
         data: data
@@ -332,10 +332,12 @@
          res = JSON.parse(res);
         candidateDetail = res.data[0];
         if(res.res == 'true'){
+          $('#status'+data).html('<b style = "color:yellow">Shortlisted</b>')
           $('#email'+data).html(candidateDetail.email)
           $('#mobile'+data).html(candidateDetail.mobile)
+          // $('#shortlistCandidate'+data).remove();
           $('#shortlistCandidate'+data).html('Shortlisted').removeClass('shortlistCandidate')
-          alert('The candidate has been shortlisted');
+          alert($('#title'+data).html()+' has been successfully shortlisted for the Offer: '+'<?= $offerTitle?>');
         }
       })
     })
@@ -353,13 +355,16 @@
         res = JSON.parse(res);
         candidateDetail = res.data[0];
         if(res.res == 'true'){
+           $('#status'+data).html('<b style = "color:green">Selected</b>')
           $('#email'+data).html(candidateDetail.email)
           $('#mobile'+data).html(candidateDetail.mobile)
-          $('#shortlistCandidate'+data).remove();
-          $('#selectCandidate'+data).html('Selected').removeClass('selectCandidate').attr('id','');
+          // $('#selectCandidate'+data).remove();
+          $('#selectCandidate'+data).html('Selected').removeClass('selectCandidate');
           $('#unrejectCandidate'+data).remove();
-          $('#rejectCandidate'+data).remove();
-          alert('The candidate has been selected');
+          $('#shortlistCandidate'+data).remove();
+          // $('#rejectCandidate'+data).remove();
+          // $('#addToCompare'+data).remove();
+          alert($('#title'+data).html()+' has been successfully selected for the Offer: '+'<?= $offerTitle?>');
         }
       })
     })
@@ -375,19 +380,22 @@
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){
-          $('#shortlistCandidate'+data).remove();
-          $('#selectCandidate'+data).remove();
+          $('#status'+data).html('<b style = "color:red">Rejected</b>')
           var clone = $('.unrejectClone').clone();
           clone.addClass('unrejectCandidate');
           clone.attr({id:'unrejectCandidate'+data, data:data});
           $('.buttonContainer'+data).append(clone[0]);
+          $('#selectCandidate'+data).remove();
+          $('#shortlistCandidate'+data).remove();
+          // $('#rejectCandidate'+data).remove();
           clone.show();
           $('#rejectCandidate'+data).html('Rejected').removeClass('rejectCandidate');
-          alert('The candidate has been rejected');
+          alert($('#title'+data).html()+' has been successfully rejected for the Offer: '+'<?= $offerTitle?>');
         }
       })
     })
   })
+
 
   $(document).ready(function(){
     $('body').on('click', '.removeFromCompare', function(){
@@ -400,7 +408,11 @@
       $.get(url,postData).done(function(res){
         console.log(res);
         if(res == 'true'){
-          alert('The Applicant has been Removed From Compare. You Will be redirected to the Applicants Page.');
+          $('#'+id).addClass('addToCompare')
+          $('#'+id).removeClass('removeFromCompare');
+          $('#'+id).attr('id', 'addToCompare'+data)
+          $('#addToCompare'+data).html('Add To Compare')
+          alert($('#title'+data).html()+' has been successfully Removed from Candidate Compare for the Offer: '+'<?= $offerTitle?>');
           window.location.href = '<?= base_url('hiring-nucleus/applicants/'.$offer)?>';
         }
         if(res == 'false'){
@@ -413,6 +425,7 @@
     })
   })
 
+
   $(document).ready(function(){
     $('body').on('click', '.unrejectCandidate', function(){
       id = $(this).attr('id')
@@ -423,6 +436,7 @@
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){
+          $('#status'+data).html('<b>Applied</b>')
           $("#unrejectCandidate"+data).remove();
           $('#rejectCandidate'+data).remove();
           var selectClone = $('.selectClone').clone();
@@ -440,6 +454,12 @@
           rejectClone.attr({id:'rejectCandidate'+data, data:data});
           $('.buttonContainer'+data).append(rejectClone[0]);
           rejectClone.show();
+          var addToClone = $('.addToClone').clone();
+          addToClone.addClass('addToCompare');
+          addToClone.attr({id:'addToCompare'+data, data:data});
+          $('.buttonContainer'+data).append(addToClone[0]);
+          addToClone.show();
+          alert($('#title'+data).html()+' has been successfully removed from rejected.');
         }
       })
     })
