@@ -63,12 +63,23 @@ class Function_model extends CI_Model {
 		return $this->db->update('users', $data);
 	}
 
-	public function getOfferApplicants($offerID, $offset = 0, $limit = 10, $type){
+	public function getOfferApplicantSkills($offerID, $offset = 0, $limit = 10, $type){
 		if($type == 1){
-			$result = $this->db->query('SELECT `applicants`.`applicantID`, `applicants`.`userID`, `applicants`.`status`, `users`.`name`, `users`.`email`, `users`.`mobile`, `users`.`gender`, `users`.`cityID`, GROUP_CONCAT(DISTINCT `userSkills`.`skillID`) as `skillID`, GROUP_CONCAT(`userSkills`.`type`) as `type`, GROUP_CONCAT(DISTINCT `userSkills`.`score`) as `score`, GROUP_CONCAT(DISTINCT `skills`.`skill_name`) as `skillName`, `indianCities`.`city`, `indianCities`.`state` FROM `applicants` JOIN `users` ON `applicants`.`userID` = `users`.`userID` LEFT JOIN `userSkills` ON `users`.`userID` = `userSkills`.`userID` LEFT JOIN `indianCities` ON `users`.`cityID` = `indianCities`.`cityID` LEFT JOIN `skills` ON `userSkills`.`skillID` = `skills`.`skillID` WHERE `applicants`.`offerID` ='. $offerID .' AND `userSkills`.`score` > 0 GROUP BY `applicants`.`applicantID` LIMIT '.$limit.' OFFSET '. $offset);
+			$result = $this->db->query('SELECT `applicants`.`applicantID`, `applicants`.`userID`, GROUP_CONCAT(DISTINCT `userSkills`.`skillID`) as `skillID`, GROUP_CONCAT(`userSkills`.`type`) as `type`, GROUP_CONCAT(DISTINCT `userSkills`.`score`) as `score`, GROUP_CONCAT(DISTINCT `skills`.`skill_name`) as `skillName` FROM `applicants` JOIN `users` ON `applicants`.`userID` = `users`.`userID` LEFT JOIN `userSkills` ON `users`.`userID` = `userSkills`.`userID` LEFT JOIN `skills` ON `userSkills`.`skillID` = `skills`.`skillID` WHERE `applicants`.`offerID` ='. $offerID .' AND `userSkills`.`score` > 0 GROUP BY `applicants`.`applicantID` LIMIT '.$limit.' OFFSET '. $offset);
 		}
 		else{
-			$result = $this->db->query('SELECT `applicants`.`applicantID`, `applicants`.`userID`, `applicants`.`userID`, `applicants`.`status`, `users`.`name`, `users`.`email`, `users`.`mobile`, `users`.`gender`, `users`.`cityID`, GROUP_CONCAT(DISTINCT `userSkills`.`skillID`) as `skillID`, GROUP_CONCAT(`userSkills`.`type`) as `type`, GROUP_CONCAT(DISTINCT `userSkills`.`score`) as `score`, GROUP_CONCAT(DISTINCT `skills`.`skill_name`) as `skillName`, `indianCities`.`city`, `indianCities`.`state` FROM `applicants` JOIN `users` ON `applicants`.`userID` = `users`.`userID` LEFT JOIN `userSkills` ON `users`.`userID` = `userSkills`.`userID` LEFT JOIN `indianCities` ON `users`.`cityID` = `indianCities`.`cityID` LEFT JOIN `skills` ON `userSkills`.`skillID` = `skills`.`skillID` WHERE `applicants`.`offerID` ='. $offerID .' AND `applicants`.`status` = '. $type .' AND `userSkills`.`score` > 0  GROUP BY `applicants`.`applicantID` LIMIT '.$limit.' OFFSET '. $offset);
+			$result = $this->db->query('SELECT `applicants`.`applicantID`, `applicants`.`userID`, GROUP_CONCAT(DISTINCT `userSkills`.`skillID`) as `skillID`, GROUP_CONCAT(`userSkills`.`type`) as `type`, GROUP_CONCAT(DISTINCT `userSkills`.`score`) as `score`, GROUP_CONCAT(DISTINCT `skills`.`skill_name`) as `skillName` FROM `applicants` JOIN `users` ON `applicants`.`userID` = `users`.`userID` LEFT JOIN `userSkills` ON `users`.`userID` = `userSkills`.`userID` LEFT JOIN `skills` ON `userSkills`.`skillID` = `skills`.`skillID` WHERE `applicants`.`offerID` ='. $offerID .' AND `applicants`.`status` = '. $type .' AND `userSkills`.`score` > 0  GROUP BY `applicants`.`applicantID` LIMIT '.$limit.' OFFSET '. $offset);
+		}
+		// var_dump($this->db->last_query()); die;
+		return $result->result_array();
+	}
+
+	public function getOfferApplicants($offerID, $offset = 0, $limit = 10, $type){
+		if($type == 1){
+			$result = $this->db->query('SELECT `applicants`.`applicantID`, `applicants`.`userID`, `applicants`.`status`, `users`.`name`, `users`.`email`, `users`.`mobile`, `users`.`gender`, `users`.`cityID`, `indianCities`.`city`, `indianCities`.`state` FROM `applicants` JOIN `users` ON `applicants`.`userID` = `users`.`userID` LEFT JOIN `indianCities` ON `users`.`cityID` = `indianCities`.`cityID` WHERE `applicants`.`offerID` ='. $offerID .' GROUP BY `applicants`.`applicantID` LIMIT '.$limit.' OFFSET '. $offset);
+		}
+		else{
+			$result = $this->db->query('SELECT `applicants`.`applicantID`, `applicants`.`userID`, `applicants`.`status`, `users`.`name`, `users`.`email`, `users`.`mobile`, `users`.`gender`, `users`.`cityID`, `indianCities`.`city`, `indianCities`.`state` FROM `applicants` JOIN `users` ON `applicants`.`userID` = `users`.`userID` LEFT JOIN `indianCities` ON `users`.`cityID` = `indianCities`.`cityID` WHERE `applicants`.`offerID` ='. $offerID .' AND `applicants`.`status` = '. $type .' GROUP BY `applicants`.`applicantID` LIMIT '.$limit.' OFFSET '. $offset);
 		}
 		// var_dump($this->db->last_query()); die;
 		return $result->result_array();

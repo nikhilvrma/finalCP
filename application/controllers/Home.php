@@ -455,6 +455,23 @@ class Home extends CI_Controller {
 					}
 				}else{
 					$this->data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, 1);
+					$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, 0, 10, 1);
+					$applicants = array_column($userSkills, 'applicantID');
+					$i = 0;
+					foreach ($this->data['applicants'] as $key => $value) {
+						if($x = array_search($value['applicantID'], $applicants)){
+							$this->data['applicants'][$i]['skillID'] = $userSkills[$x]['skillID'];
+							$this->data['applicants'][$i]['type'] = $userSkills[$x]['type'];
+							$this->data['applicants'][$i]['score'] = $userSkills[$x]['score'];
+							$this->data['applicants'][$i]['skillName'] = $userSkills[$x]['skillName'];
+						}else{
+							$this->data['applicants'][$i]['skillID'] = NULL;
+							$this->data['applicants'][$i]['type'] = NULL;
+							$this->data['applicants'][$i]['score'] = NULL;
+							$this->data['applicants'][$i]['skillName'] = NULL;
+						}
+						$i++;
+					}
 					$this->data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10, 1);
 					$this->data['type'] = 1;
 				}

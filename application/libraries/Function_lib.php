@@ -211,6 +211,12 @@ class Function_lib {
 		return $CI->function->getOfferApplicants($driveID, $offset, $limit, $type);
 	}
 
+	public function getOfferApplicantSkills($driveID, $offset = 0, $limit = 10, $type = 1){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->getOfferApplicantSkills($driveID, $offset, $limit, $type);
+	}
+
 	public function validateImage($file)
 	{
 		$data = getimagesize($file);
@@ -591,12 +597,6 @@ class Function_lib {
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
 		return $CI->function->getCurrentApplicantStatus($userID);
-	}
-
-	public function hasApplicantAppliedForOffer($offerID, $userID){
-		$CI = &get_instance();
-		$CI->load->model('function_model','function');
-		return $CI->function->hasApplicantAppliedForOffer($offerID, $userID);
 	}
 
 	public function getUserOfferDetails($offerID, $userID){
