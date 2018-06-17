@@ -1077,7 +1077,6 @@ class Functions extends CI_Controller {
 			'maxCompensation' => $maxCompensation,
 			'workHome' => $workHome,
 			'location'=> $selectedLocations,
-			'partTime' => $partTime,
 			'duration' => $duration,
 			'applicantType' => $applicantType,
 			'selectedSkills' => $selectedSkills
@@ -1254,7 +1253,6 @@ class Functions extends CI_Controller {
 					$data['joiningDate'] = $joiningDate;
 					$data['applicationDeadline'] = $applicationDeadline;
 					$data['workFromHome'] = $workHome;
-					$data['partTime'] = $partTime;
 					$data['addedBy'] = $_SESSION['user_data']['userID'];
 					$data['skillRequired'] = $applicantType;
 

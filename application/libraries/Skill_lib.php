@@ -102,10 +102,10 @@ class Skill_lib {
 	}
 
 
-	public function getQuestionDetails($skillID){
+	public function getQuestionDetails($level, $skillID){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->getQuestionDetails($skillID);
+		return $CI->function->getQuestionDetails($level, $skillID);
 	}
 
 	public function updateResponse($data){

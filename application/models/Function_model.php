@@ -363,14 +363,31 @@ class Function_model extends CI_Model {
 		return $this->db->get('skills')->result_array();
 	}
 
-	public function getQuestionDetails($skillID, $max = 0){
+	public function getQuestionDetails($level, $skillID, $max = 0){
 		$this->db->select('question_id, question, option1, option2, option3, option4, expert_time');
-		$this->db->where_in('difficulty_level', [1,2]);
+		$this->db->where('difficulty_level', $level);
 		if(!empty($_SESSION['userData'][$skillID]['responses']))
 		$this->db->where_not_in('question_id', $_SESSION['userData'][$skillID]['responses']);
 		$this->db->where('skill_id', $skillID);
 		$this->db->order_by('RAND()');
 		$result = $this->db->get('skillQuestions',1);
+		if(empty($result->result_array())){
+			if($level <= 0){
+				return false;
+			}
+			if($level<8){
+				if($max == 0){
+					$level++;
+					return $this->getQuestionDetails($level, $skillID, $max);
+				}else{
+					$level--;
+					return $this->getQuestionDetails($level, $skillID, 1);
+				}
+			}elseif($level == 8){
+				$level-- ;
+				return $this->getQuestionDetails($level, $skillID, 1);
+			}
+		}
 		return $result->result_array();
 	}
 
