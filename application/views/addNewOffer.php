@@ -218,7 +218,7 @@
 
               <div class = "row col-md-12 duration" <?php if(isset($redirect) && $redirect['offerType'] == 2){}else{echo 'style ="display: none"';}?>>
 
-              <div class="col-md-12 control-group form-group ">
+              <div class="col-md-12 control-group form-group">
                 <div class="controls">
                   <label><b>Duration:</b></label>
                   <input type="number" class="form-control" name="duration" placeholder="in weeks">

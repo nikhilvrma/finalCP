@@ -89,7 +89,7 @@
                   </small>
                 </div>
               </div>
-
+              <br>
               <?php }}else{ echo "<center>There are no Offers Available Yet.</center>"; } ?>
               <div class ="offerCont"></div>
             </div>

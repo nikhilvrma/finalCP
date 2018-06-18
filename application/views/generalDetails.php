@@ -173,7 +173,7 @@
                 <tr>
                   <td colspan="3"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#availability" style="color: white; float: right;">Update Availability</button></td>
                 </tr>
-                
+
               </tbody>
             </table>
             </div>
@@ -387,10 +387,10 @@
               <div class="controls">
                 <label>Availability:</label>
                 <select name = "availability" class="form-control">
-                    <option value = "0">Not available for any kind of offer.</option>
-                    <option value = "1">Available for Job offers</option>
-                    <option value = "2">Available for internship offers</option>
-                    <option value = "3">Available for both kinds of offers.</option>
+                    <option value = "0">Not available for both Job and Internship Offers</option>
+                    <option value = "1">Available for Job Offers</option>
+                    <option value = "2">Available for Internship Offers</option>
+                    <option value = "3">Available for Job and Internship Offers</option>
                   </select>
               </div>
             </div>
