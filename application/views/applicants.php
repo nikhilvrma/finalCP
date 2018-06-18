@@ -30,8 +30,7 @@
 
       <div class="row">
 
-        <?php echo $sidebar; unset($_SESSION['filter']);
-        unset($_SESSION['data']);?>
+        <?php echo $sidebar; ?>
 
         <div class="col-lg-9 mb-4">
 
@@ -196,7 +195,7 @@
                   <div style="margin-top: 10px;">
                     <?php if(!empty($allOfferSkills)){ foreach($allOfferSkills as $offerSkill){ if(isset($offerSkill['skillID'])){?>
                       <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="skills[]" value = "<?=$offerSkill['skillID']?>" <?php if(isset($appliedFilters['skills']) && $appliedFilters['skills'] != '' && in_array($offerSkill['skillID'] ,$appliedFilters['skills'])){echo "checked";} ?>><label style="margin-left: 5px;"><?= $offerSkill['skill_name']?></label></div>
-                    <?php }}}?>
+                    <?php }}}else{echo "Skill Filter Not Applicable."}?>
                   </div>
                 </div>
               </div>
@@ -208,7 +207,7 @@
                     <!-- <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" value = "0" name="locations[]" <?php if(isset($appliedFilters['locations']) && $appliedFilters['locations'] != '' && in_array('0',$appliedFilters['locations'])){echo "checked";}?>><label style="margin-left: 5px;">Work From Home.</label></div> -->
                     <?php if(!empty($allOfferLocations)){ foreach($allOfferLocations as $offerLocation){ if(isset($offerLocation['cityID'])){?>
                       <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="locations[]" value = "<?= $offerLocation['cityID']?>" <?php if(isset($appliedFilters['locations']) && $appliedFilters['locations'] != '' && in_array($offerLocation['cityID'] ,$appliedFilters['locations'])){echo "checked";} ?>><label style="margin-left: 5px;"><?= $offerLocation['city'].', '.$offerLocation['state']?></label></div>
-                    <?php }}}?>
+                    <?php }}}else{echo "Location Filter Not Applicable.";}?>
                   </div>
                 </div>
               </div>
@@ -219,7 +218,7 @@
                   <div style="margin-top: 10px;">
                      <?php if(!empty($colleges)){ foreach($colleges as $college){ if(isset($college['instituteID'])){?>
                     <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="colleges[]" value = "<?= $college['instituteID']?>" <?php if(isset($appliedFilters['colleges']) && $appliedFilters['colleges'] != '' && in_array($college['instituteID'] ,$appliedFilters['colleges'])){echo "checked";} ?>><label style="margin-left: 5px;"><?= $college['college']?></label></div>
-                    <?php }}} ?>
+                    <?php }}}else{ echo "College Filter Not Applicable.";} ?>
                   </div>
                 </div>
               </div>
@@ -230,7 +229,7 @@
                   <div style="margin-top: 10px;">
                     <?php if(!empty($courses)){ foreach($courses as $course){ if(isset($course['courseID'])){?>
                     <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="courses[]" value = "<?= $course['courseID']?>" <?php if(isset($appliedFilters['courses']) && $appliedFilters['courses'] != '' && in_array($course['courseID'] ,$appliedFilters['courses'])){echo "checked";} ?>><label style="margin-left: 5px;"><?= $course['course']?></label></div>
-                    <?php }}} ?>
+                    <?php }}}else{ echo "Course Filter Not Applicable.";} ?>
                   </div>
                 </div>
               </div>
@@ -538,7 +537,7 @@
     $('body').on('click', '.selectCandidate', function(){
       id = $(this).attr('id')
       data = $('#'+id).attr('data')
-
+      url = '<?=base_url('functions/select')?>';
       postData = {
         data: data,
         offer: '<?= $offer?>'
@@ -574,11 +573,8 @@
   $(document).ready(function(){
     $('body').on('click', '.addRemark', function(){
       data = $('.candidateID').val()
-      console.log(data)
       value = $('.remark').val()
-      console.log(value)
       if(value == 4){
-        remark = $('.other').val()
       }else{
         remark = '';
       }
