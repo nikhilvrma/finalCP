@@ -2254,8 +2254,8 @@ class Functions extends CI_Controller {
 	public function addToCompare(){
 		$userID = $_GET['data'];
 		$offer = $_GET['offer'];
-		if($this->function_lib->isOfferApplicant($userID, $offer)){
-			echo false2; die;
+		if(!$this->function_lib->isOfferApplicant($userID, $offer)){
+			echo 'false2'; die;
 		}
 		if(isset($_SESSION['compare'][0]) && isset($_SESSION['compare'][1])) {
 			echo 'false';
@@ -2287,8 +2287,8 @@ class Functions extends CI_Controller {
 	public function removeFromCompare(){
 		$userID = $_GET['data'];
 		$offer = $_GET['offer'];
-		if($this->function_lib->isOfferApplicant($userID, $offer)){
-			echo false2; die;
+		if(!$this->function_lib->isOfferApplicant($userID, $offer)){
+			echo 'false2'; die;
 		}
 		if(!isset($_SESSION['compare'][0]) && !isset($_SESSION['compare'][1])) {
 			echo 'false';

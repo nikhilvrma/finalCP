@@ -641,6 +641,10 @@
         if(res == 'false1'){
           alert($('#title'+data).html()+' has already been added for Candidate Compare for the Offer: '+'<?= $offerTitle?>');
         }
+        if(res == 'false2'){
+          alert('Something went wrong. Please Try Again.')
+          location.reload()
+        }
       })
     })
   })
@@ -674,6 +678,10 @@
         }
         if(res == 'false1'){
           alert('This candidate has not been added to Compare.');
+        }
+        if(res == 'false2'){
+          alert('Something went wrong. Please Try Again.')
+          location.reload()
         }
       })
     })
