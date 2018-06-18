@@ -418,16 +418,18 @@ class Home extends CI_Controller {
 		// 	$this->session->set_flashdata('message', array('content'=>'You can access Applicants from 3rd of May to 6th of May.','color'=>'red'));
 		// 	redirect(base_url('my-added-offers'));
 		// }
-		if(!$this->function_lib->isOfferAcceptedAndActive($offerID)){
-			$this->session->set_flashdata('message', array('content'=>'This offer is not Accepted or is not Active.','color'=>'red'));
-		 	redirect(base_url('my-added-offers'));
-		}
 
 		$offerDetails = $this->function_lib->getOfferDetails($offerID)[0];
 		if($offerDetails['addedBy'] != $_SESSION['user_data']['userID']){
+			$this->session->set_flashdata('message', array('content'=>'Something went wrong or Broken Link.','color'=>'red'));
+			redirect(base_url('404'));
+		}
+
+		if(!$this->function_lib->isOfferAcceptedAndActive($offerID)){
 			$this->session->set_flashdata('message', array('content'=>'Something went wrong. Please Try Again.','color'=>'red'));
 		 	redirect(base_url('my-added-offers'));
 		}
+
 
 		if($_SESSION['user_data']['accountType'] == 1){redirect(base_url());}
 
