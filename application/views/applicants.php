@@ -195,7 +195,7 @@
                   <div style="margin-top: 10px;">
                     <?php if(!empty($allOfferSkills)){ foreach($allOfferSkills as $offerSkill){ if(isset($offerSkill['skillID'])){?>
                       <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="skills[]" value = "<?=$offerSkill['skillID']?>" <?php if(isset($appliedFilters['skills']) && $appliedFilters['skills'] != '' && in_array($offerSkill['skillID'] ,$appliedFilters['skills'])){echo "checked";} ?>><label style="margin-left: 5px;"><?= $offerSkill['skill_name']?></label></div>
-                    <?php }}}else{echo "Skill Filter Not Applicable."}?>
+                    <?php }}}else{echo "Skill Filter Not Applicable.";}?>
                   </div>
                 </div>
               </div>

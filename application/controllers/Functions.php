@@ -1466,8 +1466,8 @@ class Functions extends CI_Controller {
 		if ($type == 5) {
 			redirect(base_url('hiring-nucleus/compare-applicants'));
 		}else{
-			$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, $type);
-			$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, 0, 10, 1);
+			$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, -1, -1, $type);
+			$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, -1, -1, 1);
 			$applicants = array_column($userSkills, 'applicantID');
 			$i = 0;
 			foreach ($data['applicants'] as $key => $value) {
@@ -1485,7 +1485,7 @@ class Functions extends CI_Controller {
 				}
 				$i++;
 			}
-			$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10, $type);
+			$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, -1, -1, $type);
 			$data['type'] = $type;
 			$_SESSION['filter'] = 1;
 			$_SESSION['data'] = $data;
@@ -1649,8 +1649,8 @@ class Functions extends CI_Controller {
 				'courses' => $courses
 			);
 		// var_dump($offerLocations); die;
-		$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, 1);
-		$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, 0, 10, 1);
+		$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, -1, -1, 1);
+		$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, -1, -1, 1);
 		$applicants = array_column($userSkills, 'applicantID');
 		$i = 0;
 		foreach ($data['applicants'] as $key => $value) {
@@ -1668,7 +1668,7 @@ class Functions extends CI_Controller {
 			}
 			$i++;
 		}
-		$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10, 1);
+		$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, -1, -1, 1);
 
 		if(!empty($gender)){
 		$genderApplicants = array_column($data['applicants'], 'userID');
@@ -2168,7 +2168,7 @@ class Functions extends CI_Controller {
 		$page = $_GET['page'];
 		$offset = ($page-1) * 10;
 		$candidates['data'] = $this->function_lib->getOfferApplicants($slug, $offset , 10);
-		$userSkills = $this->function_lib->getOfferApplicantSkills($slug, 0, 10, 1);
+		$userSkills = $this->function_lib->getOfferApplicantSkills($slug, $offset, 10, 1);
 		$applicants = array_column($userSkills, 'applicantID');
 		$i = 0;
 		foreach ($candidates['data'] as $key => $value) {
