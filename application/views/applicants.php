@@ -56,9 +56,11 @@
               <div class="col-sm-2 mb-4">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filters">Filter Applicants</button>
               </div>
-              <div class="col-sm-3 mb-4">
-
+              <div class="col-sm-1 mb-4"></div>
+              <div class="col-sm-1 mb-4">
+                <a href = "<?= base_url('functions/clearFilters/'.$offer)?>" class="btn btn-primary">Clear Filters</a>
               </div>
+              <div class="col-sm-1 mb-4"></div>
               <div class="col-sm-7 mb-4">
                 <form class="form-inline" style="float: right;" method = "get" action = "<?= base_url('functions/filterApplicantsByStatus/'. $offer)?>">
                   <label style="margin: 5px;"><b>Display Applicants</b></label>
@@ -240,44 +242,6 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Apply</button>
-          </div>
-        </form>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="message" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Message for the Appicant</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form>
-          <div class="modal-body">
-
-              <div class="row">
-
-              <div class="col-md-12 control-group form-group">
-                <div class="controls">
-                  <b>Message</b>
-                  <div style="margin-top: 10px;">
-                    <textarea class="form-control"></textarea>
-                    <p class="help-text" style="font-size: 14px;"><i>leave blank if you do not want to leave message for the Applicant</i></p>
-                  </div>
-                </div>
-              </div>
-
-
-
-              </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success">Select Applicant</button>
           </div>
         </form>
         </div>

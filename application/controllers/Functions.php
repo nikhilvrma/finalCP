@@ -1461,38 +1461,6 @@ class Functions extends CI_Controller {
 		}
 	}
 
-	public function filterApplicantsByStatus($offerID){
-		$type = $this->input->get('type');
-		if ($type == 5) {
-			redirect(base_url('hiring-nucleus/compare-applicants'));
-		}else{
-			$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, -1, -1, $type);
-			$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, -1, -1, 1);
-			$applicants = array_column($userSkills, 'applicantID');
-			$i = 0;
-			foreach ($data['applicants'] as $key => $value) {
-					$x = array_search($value['applicantID'], $applicants);
-				if(is_int($x)){
-					$data['applicants'][$i]['skillID'] = $userSkills[$x]['skillID'];
-					$data['applicants'][$i]['type'] = $userSkills[$x]['type'];
-					$data['applicants'][$i]['score'] = $userSkills[$x]['score'];
-					$data['applicants'][$i]['skillName'] = $userSkills[$x]['skillName'];
-				}else{
-					$data['applicants'][$i]['skillID'] = NULL;
-					$data['applicants'][$i]['type'] = NULL;
-					$data['applicants'][$i]['score'] = NULL;
-					$data['applicants'][$i]['skillName'] = NULL;
-				}
-				$i++;
-			}
-			$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, -1, -1, $type);
-			$data['type'] = $type;
-			$_SESSION['filter'] = 1;
-			$_SESSION['data'] = $data;
-			redirect(base_url('hiring-nucleus/applicants/'.$offerID));
-		}
-	}
-
 	public function filterAppliedOffers(){
 		unset($_SESSION['filter']);
 		unset($_SESSION['data']);
@@ -1616,6 +1584,79 @@ class Functions extends CI_Controller {
 		redirect(base_url());
 		}
 }
+
+public function clearFilters($offerID){
+	if(isset($_SESSION['filter'])){
+		unset($_SESSION['filter']);
+	}
+	if(isset($_SESSION['data'])){
+		unset($_SESSION['data']);
+	}
+	if(isset($_SESSION['dataFilter'])){
+		unset($_SESSION['dataFilter']);
+	}
+	if(isset($_SESSION['byParameter'])){
+		unset($_SESSION['byParameter']);
+	}
+	if(isset($_SESSION['appliedFilters'])){
+		unset($_SESSION['appliedFilters']);
+	}
+	redirect(base_url('hiring-nucleus/applicants/'.$offerID));
+}
+
+	public function filterApplicantsByStatus($offerID){
+		$type = $this->input->get('type');
+		if ($type == 5) {
+			redirect(base_url('hiring-nucleus/compare-applicants'));
+		}else{
+			if(isset($_SESSION['filter']) && isset($_SESSION['filter']) == 1){
+				if(isset($_SESSION['byParameter']) && isset($_SESSION['byParameter']) == 1){
+					$this->applyBothFilters($type, $offerID);
+				}
+			}
+			$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, -1, -1, $type);
+			$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, -1, -1, 1);
+			$applicants = array_column($userSkills, 'applicantID');
+			$i = 0;
+			foreach ($data['applicants'] as $key => $value) {
+					$x = array_search($value['applicantID'], $applicants);
+				if(is_int($x)){
+					$data['applicants'][$i]['skillID'] = $userSkills[$x]['skillID'];
+					$data['applicants'][$i]['type'] = $userSkills[$x]['type'];
+					$data['applicants'][$i]['score'] = $userSkills[$x]['score'];
+					$data['applicants'][$i]['skillName'] = $userSkills[$x]['skillName'];
+				}else{
+					$data['applicants'][$i]['skillID'] = NULL;
+					$data['applicants'][$i]['type'] = NULL;
+					$data['applicants'][$i]['score'] = NULL;
+					$data['applicants'][$i]['skillName'] = NULL;
+				}
+				$i++;
+			}
+			$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, -1, -1, $type);
+			$data['type'] = $type;
+			$_SESSION['filter'] = 1;
+			$_SESSION['data'] = $data;
+			redirect(base_url('hiring-nucleus/applicants/'.$offerID));
+		}
+	}
+
+	public function applyBothFilters($type, $offerID){
+		$data = $_SESSION['dataFilter'];
+		if($type == 1){
+			$data['type'] = $type;
+			$_SESSION['data'] = $data;
+			redirect(base_url('hiring-nucleus/applicants/'.$offerID));
+		}
+		foreach ($data['applicants'] as $key => $value) {
+			if($value['status'] != $type){
+				unset($data['applicants'][$key]);
+			}
+		}
+	$data['type'] = $type;
+	$_SESSION['data'] = $data;
+	redirect(base_url('hiring-nucleus/applicants/'.$offerID));
+	}
 
 	public function filterApplicantsByParameters($offerID){
 		unset($_SESSION['filter']);
@@ -1824,7 +1865,9 @@ class Functions extends CI_Controller {
 			$j++;
 		}
 		$_SESSION['filter'] = 1;
+		$_SESSION['byParameter'] = 1;
 		$_SESSION['data'] = $data;
+		$_SESSION['dataFilter'] = $data;
 		redirect(base_url('hiring-nucleus/applicants/'.$offerID));
 	}
 

@@ -444,6 +444,7 @@ class Home extends CI_Controller {
 				$this->data['allOfferSkills'] = $this->function_lib->getAllApplicantOfferSkills($offerID);
 				$this->data['colleges'] = $this->function_lib->getAllApplicantColleges($offerID);
 				$this->data['courses'] = $this->function_lib->getAllApplicantCourses($offerID);
+				
 				if(isset($_SESSION['filter']) && $_SESSION['filter'] == 1){
 					$this->data['applicants'] = $_SESSION['data']['applicants'];
 					$this->data['hasMore'] = $_SESSION['data']['hasMore'];
