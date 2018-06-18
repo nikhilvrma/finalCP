@@ -63,22 +63,30 @@
           <div class="row">
             <div class="col-md-12 mb-4">
               <?php if(!empty($offers)){
+                $i = 0;
               foreach($offers as $offer){
+                date_default_timezone_set("Asia/Kolkata");
+          			$date = strtotime($offer['applicationDeadline']);
+          			$timestamp = time();
+          			if(!($date<=$timestamp)){
+                  $i++;
                 ?>
               <div class="card">
                 <h6 class="card-header cardheader"><?= $offer['offerTitle']?></h6>
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-7 mb-4">
                       <p class="card-text"><b>Offer Type: </b><?php if($offer['offerType'] == 1){echo "Job Offer";}else{echo "Internship Offer";}?></p>
                       <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}else $location = "Work From Home";?>
                       <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
                       <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}else $skill = "None";?>
                       <p class="card-text"><b>Skills Required: </b><?= $skill?></p>
                       <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
+                        <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                     </div>
-                    <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
+                    <div class="col-md-5 mb-4">
+                      <center><img src="<?= base_url($offer['companyLogo'])?>" alt = "<?$offer['companyLogo']?>'s Logo.'" width="150px"></center>
+                      <p class = card-text><center><b><?= $offer['companyName']?></b></center></p>
                     </div>
                   </div>
 
@@ -90,7 +98,7 @@
                 </div>
               </div>
 
-              <?php }}else{ echo "<center>There are no Offers Available Yet.</center>"; } ?>
+            <?php }}}else{ echo "<center>There are no Offers Available Yet.</center>"; } if($i == 0){echo "<center>There are no Offers Available Yet.</center>";}?>
               <div class ="offerCont"></div>
             </div>
 

@@ -171,12 +171,7 @@
                   <?= $offerDetails[0]['openings']?>
                 </p>
               </div>
-              <div class="col-md-4 mb-4" style="font-size: 14px;">
-                <p>
-                <h6><b>Part Time Allowed</b></h6>
-                  <?php if($offerDetails[0]['partTime'] == 1){echo "Yes";}else{echo "No";}?>
-                </p>
-              </div>
+            
 
 
 
