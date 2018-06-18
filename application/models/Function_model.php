@@ -514,7 +514,7 @@ class Function_model extends CI_Model {
 	}
 
 	public function getAddedOffers($userID, $offset, $limit){
-		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate, approved');
+		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate, approved, rejectMessage');
 		$this->db->limit($limit, $offset);
 		$this->db->order_by('offerID','DESC');
 		$result = $this->db->get_where('offers', array('addedBy'=>$userID))->result_array();
@@ -789,7 +789,7 @@ class Function_model extends CI_Model {
 	}
 
 	public function removeFromReject($userID){
-		$this->db->set('status', '1');
+		$this->db->set('status', '3');
 		$this->db->where('userID', $userID);
 		$result = $this->db->update('applicants');
 		return $result;
