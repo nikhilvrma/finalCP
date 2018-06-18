@@ -337,6 +337,25 @@
 
     <script src="<?= base_url('assets/ckeditor/ckeditor.js')?>"></script>
 
+    <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Remarks</h4>
+      </div>
+      <div class="modal-body">
+        <textarea id = "remarkEditor"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
   </body>
 
@@ -474,7 +493,7 @@
       url = '<?=base_url('functions/shortlist')?>';
       postData = {
         data: data,
-        offer: '<?= $offerID?>'
+        offer: '<?= $offer?>'
       }
 
       $.get(url,postData).done(function(res){
@@ -500,7 +519,7 @@
       url = "<?= base_url('functions/select')?>"
       postData = {
         data: data,
-        offer: '<?= $offerID?>'
+        offer: '<?= $offer?>'
       }
       $.get(url,postData).done(function(res){
         res = JSON.parse(res);
@@ -528,7 +547,7 @@
       url = '<?=base_url('functions/reject')?>'
       postData = {
         data: data,
-        offer: '<?= $offerID?>'
+        offer: '<?= $offer?>'
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){
@@ -556,7 +575,7 @@
       url = '<?=base_url('functions/addToCompare')?>'
       postData = {
         data: data,
-        offer: '<?= $offerID?>'
+        offer: '<?= $offer?>'
       }
       $.get(url,postData).done(function(res){
         console.log(res);
@@ -591,7 +610,7 @@
       url = '<?=base_url('functions/RemoveFromCompare')?>'
       postData = {
         data: data,
-        offer: '<?= $offerID?>'
+        offer: '<?= $offer?>'
       }
       $.get(url,postData).done(function(res){
         console.log(res);
@@ -625,7 +644,7 @@
       url = '<?=base_url('functions/removeFromReject')?>'
       postData = {
         data: data,
-        offer: '<?= $offerID?>'
+        offer: '<?= $offer?>'
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){
