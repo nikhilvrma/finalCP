@@ -539,13 +539,14 @@ class Function_model extends CI_Model {
 	}
 
 	public function getAppliedOffers($userID, $offset, $limit, $status = 0){
-		$this->db->select('applicants.offerID, offerType, offerTitle, applicationDeadline, joiningDate, status');
+		$this->db->select('applicants.offerID, offerType, offerTitle, applicationDeadline, joiningDate, status, companyName, companyLogo');
 		$this->db->limit($limit, $offset);
 		$this->db->join('offers','applicants.offerID = offers.offerID');
+		$this->db->join('employers', 'offers.addedBy = employers.userID');
 		$this->db->order_by('offerID','DESC');
 		if($status != 0)
 			$this->db->where('status', $status);
-		$result = $this->db->get_where('applicants', array('userID'=>$userID))->result_array();
+		$result = $this->db->get_where('applicants', array('applicants.userID'=>$userID))->result_array();
 		// var_dump($this->db->last_query()); die;
 		return $result;
 	}
@@ -563,7 +564,8 @@ class Function_model extends CI_Model {
 	}
 
 	public function getAllOffers($offset, $limit){
-		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate');
+		$this->db->select('offerID, offerType, offerTitle, applicationDeadline, joiningDate, companyName, companyLogo');
+		$this->db->join('employers', 'offers.addedBy = employers.userID');
 		$this->db->limit($limit, $offset);
 		$this->db->order_by('offerID','DESC');
 		$result = $this->db->get_where('offers', array('active' => 1, 'approved' => 1))->result_array();
