@@ -37,12 +37,13 @@ class Skill_functions extends CI_Controller {
 			$_SESSION['userData']['currentSkill'] = $skill_id;
 			$_SESSION['userData']['currentSkillName'] = $this->skill_lib->getSkillData($skill_id)[0]['skill_name'];
 			$_SESSION['userData'][$skill_id]['totalScore'] = 0;
-			$_SESSION['userData'][$skill_id]['skips'] = 1;
+			$_SESSION['userData'][$skill_id]['skips'] = 3;
 			$_SESSION['userData'][$skill_id]['skipStatus'] = 0;
+			$_SESSION['userData'][$skill_id]['level'] = 1;
 			$testTime = $this->skill_lib->getTestSettings($skill_id)[0]['testTime'];
 			$_SESSION['userData'][$skill_id]['totalTime'] = $testTime;
 			$_SESSION['userData'][$skill_id]['responses'] = array();
-			$_SESSION['questionData'] = $this->getQuestionDetails($skill_id);
+			$_SESSION['questionData'] = $this->getQuestionDetails(1,$skill_id);
 			redirect(base_url('skill-test'));
 		}
 
@@ -74,10 +75,13 @@ class Skill_functions extends CI_Controller {
 				'correct' => $correct
 				);
 			if($this->skill_lib->updateResponse($data, $score)){
+				$this->updateSkip($skill_id, $score);
 				$_SESSION['userData'][$skill_id]['totalScore'] += $score;
 				$totalScore = $_SESSION['userData'][$skill_id]['totalScore'];
+				$level = $this->getLevel($totalScore);
+				$_SESSION['userData'][$skill_id]['level'] = $level;
 				array_push($_SESSION['userData'][$skill_id]['responses'], $_SESSION['questionData'][0]['question_id']);
-				$_SESSION['questionData'] = $this->getQuestionDetails($skill_id);
+				$_SESSION['questionData'] = $this->getQuestionDetails($level, $skill_id);
 				$testData['questionData'] = $_SESSION['questionData'][0];
 					if($_SESSION['userData'][$skill_id]['skips'] > 0){
 						$testData['skipsLeft'] = $_SESSION['userData'][$skill_id]['skips'];
@@ -87,9 +91,10 @@ class Skill_functions extends CI_Controller {
 						$testData['skipsLeft'] = 0;
 						$testData['skips'] = false;
 					}
+					$testData['level'] = $level;
 					$testData['totalScore'] = $totalScore;
 					$testData['totalTime'] = $_SESSION['userData'][$skill_id]['totalTime'];
-					if($totalScore >= 10 || $totalScore <= -10){
+					if($totalScore >= 100 || $totalScore <= -10){
 						$testData['questionData'] = null;
 					}
 					echo json_encode($testData);
@@ -98,6 +103,50 @@ class Skill_functions extends CI_Controller {
 				$this->logout();
 			}
 		}
+
+	private function updateSkip($skill_id, $score){
+		if($_SESSION['userData'][$skill_id]['totalScore'] <= 30 && ($_SESSION['userData'][$skill_id]['totalScore'] + $score) >= 30 && $_SESSION['userData'][$skill_id]['skipStatus'] == 0){
+			$_SESSION['userData'][$skill_id]['skipStatus'] = 1;
+			$_SESSION['userData'][$skill_id]['skips'] +=1;
+		}else{
+			if($_SESSION['userData'][$skill_id]['totalScore'] <= 60 && ($_SESSION['userData'][$skill_id]['totalScore'] + $score) >= 60 && $_SESSION['userData'][$skill_id]['skipStatus'] == 1){
+				$_SESSION['userData'][$skill_id]['skipStatus'] = 2;
+				$_SESSION['userData'][$skill_id]['skips'] +=1;
+			}
+		}
+	}
+
+	private function getLevel($totalScore = 0){
+		if($totalScore < -10 && $totalScore != NULL){
+			$level = 0;
+		}
+		if(($totalScore >=-10 && $totalScore < 10) || $totalScore == NULL){
+			$level = 1;
+		}
+		if($totalScore >= 10 && $totalScore < 20){
+			$level = 2;
+		}
+		if($totalScore >= 20 && $totalScore < 35){
+			$level = 3;
+		}
+		if($totalScore >= 35 && $totalScore < 45){
+			$level = 4;
+		}
+		if($totalScore >= 45 && $totalScore < 55){
+			$level = 5;
+		}
+		if($totalScore >= 55 && $totalScore < 75){
+			$level = 6;
+		}
+		if($totalScore >= 75 && $totalScore < 85){
+			$level = 7;
+		}
+		if($totalScore > 85){
+			$level = 8;
+		}
+		return $level;
+	}	
+
 
 	public function skipQuestion(){
 		if(!$_SESSION['userData']['intest'] || !isset($_SESSION['userData']['intest'])){
@@ -122,8 +171,9 @@ class Skill_functions extends CI_Controller {
 				);
 			if($this->skill_lib->updateResponse($data)){	
 				$totalScore = $_SESSION['userData'][$skill_id]['totalScore'];
+				$level = $this->getLevel($totalScore);
 				array_push($_SESSION['userData'][$skill_id]['responses'], $_SESSION['questionData'][0]['question_id']);
-				$_SESSION['questionData'] = $this->getQuestionDetails($skill_id);
+				$_SESSION['questionData'] = $this->getQuestionDetails($level,$skill_id);
 				$testData['questionData'] = $_SESSION['questionData'][0];
 				if($_SESSION['userData'][$skill_id]['skips'] > 0){
 					$testData['skipsLeft'] = $_SESSION['userData'][$skill_id]['skips'];
@@ -151,7 +201,7 @@ class Skill_functions extends CI_Controller {
 		if($score >= 10){
 			$result = $this->skill_lib->addSkill($score, $userID, $skill_id);
 			if(!$result){
-				$this->session->set_flashdata('message', array('content'=>'Some Error Occured. Please Try Again.1','color'=>'red'));
+				$this->session->set_flashdata('message', array('content'=>'Some Error Occured. Please Try Again.','color'=>'red'));
 				$this->updateInfo();
 				redirect('skills');
 			}
@@ -177,8 +227,8 @@ class Skill_functions extends CI_Controller {
 		$_SESSION['userData']['intest'] = false;
 	}
 
-	private function getQuestionDetails($skillID){
-		$questionDetails = $this->skill_lib->getQuestionDetails($skillID);
+	private function getQuestionDetails($level, $skillID){
+		$questionDetails = $this->skill_lib->getQuestionDetails($level, $skillID);
 		return $questionDetails;
 	}
 

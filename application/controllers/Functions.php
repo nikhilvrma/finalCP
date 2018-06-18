@@ -1077,7 +1077,6 @@ class Functions extends CI_Controller {
 			'maxCompensation' => $maxCompensation,
 			'workHome' => $workHome,
 			'location'=> $selectedLocations,
-			'partTime' => $partTime,
 			'duration' => $duration,
 			'applicantType' => $applicantType,
 			'selectedSkills' => $selectedSkills
@@ -1254,7 +1253,6 @@ class Functions extends CI_Controller {
 					$data['joiningDate'] = $joiningDate;
 					$data['applicationDeadline'] = $applicationDeadline;
 					$data['workFromHome'] = $workHome;
-					$data['partTime'] = $partTime;
 					$data['addedBy'] = $_SESSION['user_data']['userID'];
 					$data['skillRequired'] = $applicantType;
 
@@ -2134,6 +2132,24 @@ class Functions extends CI_Controller {
 		$page = $_GET['page'];
 		$offset = ($page-1) * 10;
 		$candidates['data'] = $this->function_lib->getOfferApplicants($slug, $offset , 10);
+		$userSkills = $this->function_lib->getOfferApplicantSkills($slug, 0, 10, 1);
+		$applicants = array_column($userSkills, 'applicantID');
+		$i = 0;
+		foreach ($candidates['data'] as $key => $value) {
+				$x = array_search($value['applicantID'], $applicants);
+			if(is_int($x)){
+				$candidates['data'][$i]['skillID'] = $userSkills[$x]['skillID'];
+				$candidates['data'][$i]['type'] = $userSkills[$x]['type'];
+				$candidates['data'][$i]['score'] = $userSkills[$x]['score'];
+				$candidates['data'][$i]['skillName'] = $userSkills[$x]['skillName'];
+			}else{
+				$candidates['data'][$i]['skillID'] = NULL;
+				$candidates['data'][$i]['type'] = NULL;
+				$candidates['data'][$i]['score'] = NULL;
+				$candidates['data'][$i]['skillName'] = NULL;
+			}
+			$i++;
+		}
 		$candidates['more'] = $this->function_lib->hasMoreOfferApplicants($slug, $offset+10, 10);
 		echo json_encode($candidates);
 	}

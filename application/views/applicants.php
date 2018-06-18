@@ -120,6 +120,16 @@
 
                 </div>
                 <div class="card-footer ">
+                  <small style = "float:right;">
+                    <?php  if(!in_array($applicant['userID'], $_SESSION['compare'])){?>
+                    <a class="btn btn-primary addToCompare" id = "addToCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Compare Applicant</a>
+                    <?php }else{?>
+                      <a class="btn btn-primary removeFromCompare" id = "removeFromCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Compare</a>
+                    <?php }?>
+                  
+                    <br><a href="<?= base_url('hiring-nucleus/compare-applicants')?>" style="float: right; margin-right: 2% ">Access Compare Applicants</a>
+                  </small>
+
                   <small class="text-muted buttonContainer<?= $applicant['userID']?>" style="float: right;">
                     <?php if($applicant['status'] != '2' && $applicant['status'] != '4'){?>
                       <a class="btn btn-success selectCandidate" id = "selectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Select Applicant</a>
@@ -135,13 +145,6 @@
                     <?php }else if($applicant['status'] == '4') { ?>
                       <a class="btn btn-info unrejectCandidate" id = "unrejectCandidate<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
                     <?php }?>
-
-                    <?php if($applicant['status'] != '4'){ if(!in_array($applicant['userID'], $_SESSION['compare'])){?>
-                    <a class="btn btn-primary addToCompare" id = "addToCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Compare Applicant</a>
-                    <?php }else{?>
-                      <a class="btn btn-primary removeFromCompare" id = "removeFromCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Compare</a>
-                    <?php }}?>
-                    <br><a href="<?= base_url('hiring-nucleus/compare-applicants')?>" style="float: right; margin-right: 2% ">Access Compare Applicants</a>
                   </small>
                 </div>
               </div>
@@ -311,12 +314,15 @@
 
                 </div>
                 <div class="card-footer">
+                  <small>
+                    <a class="btn btn-primary addToCompare" style="color: white; margin: 10px;">Compare Applicant</a>
+                    <br><a href="<?= base_url('hiring-nucleus/compare-applicants')?>" style="float: right; margin-right: 2% ">Access Compare Applicants</a>
+                  </small>
                   <small class="text-muted buttonContainer" style="float: right;">
                     <a class="btn btn-success selectCandidate" style="color: white; margin: 10px;">Select Applicant</a>
                     <a class="btn btn-warning shortlistCandidate" style="color: white; margin: 10px;">Short-List Applicant</a>
                     <a class="btn btn-danger rejectCandidate" style="color: white; margin: 10px;">Reject Applicant</a>
                     <a class="btn btn-info unrejectCandidate" style="display: none">Remove From Reject</a>
-                    <a class="btn btn-primary addToCompare" style="color: white; margin: 10px;">Compare Applicant</a>
                   </small>
                 </div>
               </div>
@@ -340,6 +346,8 @@
   <script type="text/javascript">
   var page = 1;
   var slug = '<?= $offer?>';
+  var compare = '<?= json_encode($_SESSION['compare'])?>'
+  compare = JSON.parse(compare)
     $(document).ready(function(){
       $('#loadMore'). click(function(){
         page++;
@@ -420,6 +428,12 @@
               container.find('.selectCandidate').attr({id:'selectCandidate'+res[i].userID, data:res[i].userID})
               container.find('.rejectCandidate').attr({id:'rejectCandidate'+res[i].userID, data:res[i].userID})
               container.find('.addToCompare').attr({id:'addToCompare'+res[i].userID, data:res[i].userID})
+              x = compare.indexOf(res[i].userID)
+              if(x != -1){
+                container.find('.addToCompare').attr('id' , 'removeFromCompare'+res[i].userID).html('Remove From Compare')
+                container.find('.addToCompare').addClass('removeFromCompare')
+                container.find('removeFromCompare').removeClass('addToCompare')
+              }
               if(res[i].status == 1){
                 container.find('.unrejectCandidate').remove();
               }
@@ -455,6 +469,7 @@
 
 </script>
 <script type="text/javascript">
+
   $(document).ready(function(){
     $('body').on('click', '.shortlistCandidate', function(){
       id = $(this).attr('id')
@@ -525,9 +540,9 @@
           $('#rejectCandidate'+data).remove();
           clone.show();
           // $('#rejectCandidate'+data).html('Rejected').removeClass('rejectCandidate');
-          $('#addToCompare'+data).remove();
           $('#selectCandidate'+data).remove();
           $('#shortlistCandidate'+data).remove();
+          // $('#addToCompare'+data).remove();
           alert($('#title'+data).html()+' has been successfully rejected for the Offer: '+'<?= $offerTitle?>');
         }
       })
@@ -549,6 +564,11 @@
           $('#'+id).removeClass('addToCompare')
           $('#'+id).attr('id', 'removeFromCompare'+data)
           $('#removeFromCompare'+data).html('Remove From Compare')
+          if(compare[0] == null){
+            compare[0] = data
+          }else{
+            compare[1] = data 
+          }
           alert($('#title'+data).html()+' has been successfully added for Candidate Compare for the Offer: '+'<?= $offerTitle?>');
         }
         if(res == 'false'){
@@ -577,7 +597,12 @@
           $('#'+id).addClass('addToCompare')
           $('#'+id).removeClass('removeFromCompare');
           $('#'+id).attr('id', 'addToCompare'+data)
-          $('#addToCompare'+data).html('Add To Compare')
+          $('#addToCompare'+data).html('Compare Applicant')
+          if(compare[0] == data){
+            compare[0] = null
+          }else{
+            compare[1] = null
+          }
           alert($('#title'+data).html()+' has been successfully Removed from Candidate Compare for the Offer: '+'<?= $offerTitle?>');
         }
         if(res == 'false'){
@@ -619,9 +644,13 @@
           rejectClone.attr({id:'rejectCandidate'+data, data:data});
           $('.buttonContainer'+data).append(rejectClone[0]);
           rejectClone.show();
-          var addToClone = $('.addToClone').clone();
-          addToClone.addClass('addToCompare');
-          addToClone.attr({id:'addToCompare'+data, data:data});
+          // var addToClone = $('.addToClone').clone();
+          // if(compare.indexOf(data) == -1){
+          //   addToClone.addClass('addToCompare');
+          //   addToClone.attr({id:'addToCompare'+data, data:data});
+          // }else{
+          //   addToClone.addClass('remoce')
+          // }
           $('.buttonContainer'+data).append(addToClone[0]);
           addToClone.show();
           alert($('#title'+data).html()+' has been successfully removed from rejected.');

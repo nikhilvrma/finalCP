@@ -451,15 +451,6 @@
           }
         });
 
-        //  $('#partTime').on('change', function(){
-        //   value = $(this).val();
-        //   if(value == 2){
-        //     if($('#offerType').val() == 2)
-        //       $('.duration').show();
-        //   }else if(value == 1){
-        //     $('.duration').hide();
-        //   }
-        // });
 
         $('#applicantType').on('change', function(){
           value = $(this).val();

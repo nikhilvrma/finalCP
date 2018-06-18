@@ -80,7 +80,7 @@
 
 
                   <div class="col-lg-12 md-4">
-                    <p class="mcq" style="float: right;"><a style="font-size: 16px;" class = "skipQuestion">Skip Question (<b>Skips Left: </b><?= $skips?>)</a></p>
+                    <p class="mcq" style="float: right;"><a style="font-size: 16px;" class = "skipQuestion">Skip Question (<b>Skips Left: </b><span id = "skipsLeft"><?= $skips?></span>)</a></p>
                     <p class="mcq"><strong>Question</strong></p>
                     <div class="mcq" id = "question"><?= $questionData[0]['question']?></div>
                                 <div class="options">
@@ -109,6 +109,8 @@
                     <center>
                                   <button id="reset" class="btn btn-primary" style="margin-top: 10px;">RESET</button>
                                   <button class="btn btn-primary submitAns" style="margin-top: 10px;">SUBMIT</button>
+                                  <br>
+                                  <button class="btn btn-primary finishTest" style="margin-top: 10px;">FINISH TEST</button>
                               </center>
 
 
@@ -194,6 +196,7 @@ $('.skipQuestion').on('click', function(){
     data = {answer: '0', timeConsumed: totalTime-tmp, totalTime:tmp};
    $.get('<?= base_url('skill_functions/skipQuestion')?>', data).done(function(res){
         res = JSON.parse(res);
+        console.log(res);
         if(res.skips!=false)
             populate(res);
         else{
@@ -225,6 +228,7 @@ function submitAnswers(ans, timePassed, tmp){
             window.location = "<?= base_url('skill-tests')?>";
         }
         res = JSON.parse(res);
+        console.log(res);
         if(res.skips!=false){
             populate(res);
             $('.skipQuestion').show();
