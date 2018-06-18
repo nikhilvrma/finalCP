@@ -1470,7 +1470,7 @@ class Functions extends CI_Controller {
 			$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, 0, 10, 1);
 			$applicants = array_column($userSkills, 'applicantID');
 			$i = 0;
-			foreach ($this->data['applicants'] as $key => $value) {
+			foreach ($data['applicants'] as $key => $value) {
 					$x = array_search($value['applicantID'], $applicants);
 				if(is_int($x)){
 					$data['applicants'][$i]['skillID'] = $userSkills[$x]['skillID'];
@@ -1653,7 +1653,7 @@ class Functions extends CI_Controller {
 		$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, 0, 10, 1);
 		$applicants = array_column($userSkills, 'applicantID');
 		$i = 0;
-		foreach ($this->data['applicants'] as $key => $value) {
+		foreach ($data['applicants'] as $key => $value) {
 				$x = array_search($value['applicantID'], $applicants);
 			if(is_int($x)){
 				$data['applicants'][$i]['skillID'] = $userSkills[$x]['skillID'];

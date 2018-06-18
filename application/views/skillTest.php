@@ -112,18 +112,10 @@
                                   <br><hr>
                                   <button class="btn btn-primary finishTest" style="margin-top: 10px;">FINISH TEST</button>
                               </center>
-
-
+                              
                   </div>
 
-
-
-
-
-
-
             </div>
-
 
         </div>
       </div>
