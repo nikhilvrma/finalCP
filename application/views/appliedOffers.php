@@ -82,7 +82,7 @@
 
                     <div class="col-md-6 mb-4">
                       <p class="card-text"><b>Status: </b><?php if($offer['status'] == 1){echo "<b>Applied</b>";}else if($offer['status'] == 2){echo "<b style = 'color:green'>Selected</b>";}else if($offer['status'] == 3){echo "<b style = 'color:yellow'>Shortlisted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></p>
-                        <center><img src="<?= base_url($offer['companyLogo'])?>" alt = "<?$offer['companyLogo']?>'s Logo.'" width="150px"></center>
+                        <center><img src="<?= base_url($offer['companyLogo'])?>" alt = "<?=$offer['companyLogo']?>'s Logo.'" width="150px"></center>
                         <p class = card-text><center><b><?= $offer['companyName']?></b></center></p>
 
                     </div>

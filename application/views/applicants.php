@@ -82,7 +82,7 @@
           <div class="row">
 
             <div class="col-md-12 mb-4" id = "candidateList">
-              <?php  
+              <?php
               if(empty($applicants)){echo "<center>No Applicant Found.</center>";}foreach($applicants as $applicant){ ?>
               <div class="card" id = "candidate<?= $applicant['userID']?>">
                 <h6 class="card-header cardheader"><span class = "title" id = 'title<?= $applicant['userID']?>'><?= $applicant['name']?></span><br><br><a href = "<?= base_url('hiring-nucleus/profile/'.$offer.'/'.$applicant['userID'])?>" target = "_blank"><label style="font-size: 14px;">View Profile</label></a></h6>
@@ -126,7 +126,7 @@
                     <?php }else{?>
                       <a class="btn btn-primary removeFromCompare" id = "removeFromCompare<?= $applicant['userID']?>" data = "<?= $applicant['userID']?>" style="color: white; margin: 10px;">Remove From Compare</a>
                     <?php }?>
-                  
+
                     <br><a href="<?= base_url('hiring-nucleus/compare-applicants')?>" style="float: right; margin-right: 2% ">Access Compare Applicants</a>
                   </small>
 
@@ -194,7 +194,6 @@
                 <div class="controls">
                   <b>Skills</b>
                   <div style="margin-top: 10px;">
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="skills[]" value = "0" <?php if(isset($appliedFilters['skills']) && $appliedFilters['skills'] != '' && in_array('0',$appliedFilters['skills'])){echo "checked";}?>><label style="margin-left: 5px;">No Skills Required.</label></div>
                     <?php if(!empty($allOfferSkills)){ foreach($allOfferSkills as $offerSkill){ if(isset($offerSkill['skillID'])){?>
                       <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="skills[]" value = "<?=$offerSkill['skillID']?>" <?php if(isset($appliedFilters['skills']) && $appliedFilters['skills'] != '' && in_array($offerSkill['skillID'] ,$appliedFilters['skills'])){echo "checked";} ?>><label style="margin-left: 5px;"><?= $offerSkill['skill_name']?></label></div>
                     <?php }}}?>
@@ -218,7 +217,6 @@
                 <div class="controls">
                   <b>College(s)</b>
                   <div style="margin-top: 10px;">
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="colleges[]" value = "0" <?php if(isset($appliedFilters['colleges']) && $appliedFilters['colleges'] != '' && in_array('0',$appliedFilters['colleges'])){echo "checked";}?>><label style="margin-left: 5px;">Not College Specific.</label></div>
                      <?php if(!empty($colleges)){ foreach($colleges as $college){ if(isset($college['instituteID'])){?>
                     <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="colleges[]" value = "<?= $college['instituteID']?>" <?php if(isset($appliedFilters['colleges']) && $appliedFilters['colleges'] != '' && in_array($college['instituteID'] ,$appliedFilters['colleges'])){echo "checked";} ?>><label style="margin-left: 5px;"><?= $college['college']?></label></div>
                     <?php }}} ?>
@@ -230,7 +228,6 @@
                 <div class="controls">
                   <b>Courses</b>
                   <div style="margin-top: 10px;">
-                    <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="courses[]" value = "0" <?php if(isset($appliedFilters['courses']) && $appliedFilters['courses'] != '' && in_array('0',$appliedFilters['courses'])){echo "checked";}?>><label style="margin-left: 5px;">Not Course Specific.</label></div>
                     <?php if(!empty($courses)){ foreach($courses as $course){ if(isset($course['courseID'])){?>
                     <div class="col-sm-12" style="font-size: 14px;"><input type="checkbox" name="courses[]" value = "<?= $course['courseID']?>" <?php if(isset($appliedFilters['courses']) && $appliedFilters['courses'] != '' && in_array($course['courseID'] ,$appliedFilters['courses'])){echo "checked";} ?>><label style="margin-left: 5px;"><?= $course['course']?></label></div>
                     <?php }}} ?>
@@ -473,7 +470,7 @@
   $(document).ready(function(){
     $('body').on('click', '.shortlistCandidate', function(){
       id = $(this).attr('id')
-      data = $('#'+id).attr('data') 
+      data = $('#'+id).attr('data')
       url = '<?=base_url('functions/shortlist')?>';
       postData = {
         data: data
@@ -567,12 +564,12 @@
           if(compare[0] == null){
             compare[0] = data
           }else{
-            compare[1] = data 
+            compare[1] = data
           }
           alert($('#title'+data).html()+' has been successfully added for Candidate Compare for the Offer: '+'<?= $offerTitle?>');
         }
         if(res == 'false'){
-          
+
           alert('You can only add a Maximum of Two Candidates to Compare.');
         }
         if(res == 'false1'){
