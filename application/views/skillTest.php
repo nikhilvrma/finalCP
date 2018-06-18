@@ -109,7 +109,7 @@
                     <center>
                                   <button id="reset" class="btn btn-primary" style="margin-top: 10px;">RESET</button>
                                   <button class="btn btn-primary submitAns" style="margin-top: 10px;">SUBMIT</button>
-                                  <br>
+                                  <br><hr>
                                   <button class="btn btn-primary finishTest" style="margin-top: 10px;">FINISH TEST</button>
                               </center>
 
@@ -144,7 +144,7 @@ var questionTime = <?= 2*$questionData[0]['expert_time']?>;
 var interval = null;
 (function ( $ ) {
     $.fn.svgTimer = function(options) {
-        
+
         return this.each(function() {
           var qtime = questionTime,r=document.getElementById('questionTimer'),temp=qtime;
             interval = setInterval(function () {
@@ -159,11 +159,11 @@ var interval = null;
                 }
 
             },1000);
-    
+
         });
     };
 
-   
+
 }(jQuery));
 
 $(function () {
@@ -191,7 +191,7 @@ var selected = null;
 $('.option').on('click', function(){
     selected = $(this).find("input[name = answer]").attr('id');
     ans = $("#"+selected).val();
-});    
+});
 $('.skipQuestion').on('click', function(){
     data = {answer: '0', timeConsumed: totalTime-tmp, totalTime:tmp};
    $.get('<?= base_url('skill_functions/skipQuestion')?>', data).done(function(res){
@@ -221,7 +221,7 @@ $('.submitAns').on('click', function(){
 $('.finishTest').on('click', function(){
     finishTest();
 });
-function submitAnswers(ans, timePassed, tmp){   
+function submitAnswers(ans, timePassed, tmp){
    data = {answer: ans, timeConsumed: timePassed, totalTime:tmp};
    $.get('<?= base_url('skill_functions/nextQuestion')?>', data).done(function(res){
         if(res == 'false'){
@@ -270,13 +270,13 @@ function populate(res){
             if (nc<=0) {
                 clearInterval(hey);
                 $('.submitAns').show()
-                $('#reset').show()   
+                $('#reset').show()
                 }
         },1000);
-} 
+}
 }
 
-    
+
   </script>
 
   </body>
