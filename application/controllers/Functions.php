@@ -2207,7 +2207,18 @@ class Functions extends CI_Controller {
 	public function reject(){
 		$userID = $_GET['data'];
 		$offer = $_GET['offer'];
-		$result = $this->function_lib->rejectCandidate($userID, $offer);
+		$value = $_GET['value'];
+		$remark = $_GET['remark'];
+		if($value == 4){
+			$remark = $remark;
+		}else if($value == 3){
+			$remark = 'Work Experience Requirement(s) not met.';
+		}else if($value == 2){
+			$remark = 'Educational Requirement(s) Not Met.';
+		}else if($value == 1){
+			$remark = 'Skill Requirement(s) Not Met.';
+		}
+		$result = $this->function_lib->rejectCandidate($userID, $offer, $remark);
 		if($result){
 			echo "true";
 		}else{

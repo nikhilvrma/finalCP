@@ -533,10 +533,10 @@ class Function_lib {
 		return $CI->function->shortlistCandidate($userID, $offer);
 	}
 
-	public function rejectCandidate($userID, $offer){
+	public function rejectCandidate($userID, $offer, $remark){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->rejectCandidate($userID, $offer);
+		return $CI->function->rejectCandidate($userID, $offer, $remark);
 	}
 
 	public function removeFromReject($userID, $offer){

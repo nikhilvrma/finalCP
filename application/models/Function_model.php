@@ -782,10 +782,13 @@ class Function_model extends CI_Model {
 		return $result;
 	}
 
-	public function rejectCandidate($userID, $offer){
-		$this->db->set('status', '4');
+	public function rejectCandidate($userID, $offer, $remark){
+		$data = array(
+			'status'=> '4',
+			'remark'=>$remark
+		);
 		$this->db->where(array('userID' => $userID, 'offerID' => $offer));
-		$result = $this->db->update('applicants');
+		$result = $this->db->update('applicants', $data);
 		return $result;
 	}
 

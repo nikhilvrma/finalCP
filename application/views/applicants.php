@@ -346,13 +346,21 @@
         <h4 class="modal-title">Remarks</h4>
       </div>
       <div class="modal-body">
-        <select id="remark" class="form-control remark" name = "remark">
+          <label><b>Select Remark:</b></label>
+        <select class="form-control remark" name = "remark">
           <option value = "1">Skill Requirement(s) Not Met.</option>
           <option value = "2">Educational Requirement(s) Not Met.</option>
           <option value = "3">Work Experience Requirement(s) not met.</option>
           <option value = "4">Other</option>
         </select>
-        <input type="text" class = "form-control other" name = "other" placeholder = "Remark..">
+        <br>
+      <div class = "otherRemark" style ="display:none">
+        <label><b>Add Other Remark:</b></label>
+        <textarea class = "form-control other" name = "other" placeholder="Remark.."></textarea>
+      </div>
+        <div class="candidateData"></div><br>
+        <button  class = "form-control btn btn-primary addRemark">Add Remark</button>
+
       </div>
     </div>
 
@@ -515,10 +523,22 @@
   })
 
   $(document).ready(function(){
+    $('body').on('change', '.remark', function(){
+      data = $('.remark').val()
+      console.log(data);
+      if(data == 4){
+        $('.otherRemark').show();
+      }else{
+        $('.otherRemark').hide();
+      }
+    })
+  })
+
+  $(document).ready(function(){
     $('body').on('click', '.selectCandidate', function(){
       id = $(this).attr('id')
       data = $('#'+id).attr('data')
-      url = "<?= base_url('functions/select')?>"
+
       postData = {
         data: data,
         offer: '<?= $offer?>'
@@ -546,9 +566,28 @@
     $('body').on('click', '.rejectCandidate', function(){
       id = $(this).attr('id')
       data = $('#'+id).attr('data')
+      $('.candidateData').html('<input type="hidden" class = "candidateID" name = "candidateData" value = "'+data+'">')
+      $('#myModal').modal({backdrop: 'static', keyboard: false})
+    })
+  })
+
+  $(document).ready(function(){
+    $('body').on('click', '.addRemark', function(){
+      data = $('.candidateID').val()
+      console.log(data)
+      value = $('.remark').val()
+      console.log(value)
+      if(value == 4){
+        remark = $('.other').val()
+      }else{
+        remark = '';
+      }
+      console.log(remark)
       url = '<?=base_url('functions/reject')?>'
       postData = {
         data: data,
+        value:value,
+        remark:remark,
         offer: '<?= $offer?>'
       }
       $.get(url,postData).done(function(res){
@@ -565,6 +604,8 @@
           $('#shortlistCandidate'+data).remove();
           // $('#addToCompare'+data).remove();
           alert($('#title'+data).html()+' has been successfully rejected for the Offer: '+'<?= $offerTitle?>');
+          $('#myModal').modal('hide')
+          $('.candidateData').empty()
         }
       })
     })
