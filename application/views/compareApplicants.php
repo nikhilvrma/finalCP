@@ -240,17 +240,17 @@
                       <?php if($candidates['status'][0] != '2' && $candidates['status'][0] != '4'){?>
                       <a class="btn btn-success selectCandidate" id = "selectCandidate<?= $candidates['userDetails'][0][0]['userID']?>" data = "<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Select Applicant</a>
                     <?php }else if($candidates['status'][0] == '2') {?>
-                      <a class="btn btn-success" style="color: white; margin: 10px;">Selected</a>
+                      <a class="btn btn-success" style="color: white; margin: 10px;" id = "selectCandidate<?= $candidates['userDetails'][0][0]['userID']?>">Selected</a>
                     <?php }
                     ?>
 
                     <?php if($candidates['status'][0] != '3' && $candidates['status'][0] != '2'&& $candidates['status'][0] != '4'){?>
                       <a class="btn btn-warning shortlistCandidate" id = "shortlistCandidate<?= $candidates['userDetails'][0][0]['userID']?>" data = "<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Short-list Applicant</a>
                     <?php }else if($candidates['status'][0] == '3'){ ?>
-                      <a class="btn btn-warning" id = 'shortlistCandidate<?= $candidates['userDetails'][0][0]['userID']?>' style="color: white; margin: 10px;">Shortlisted</a>
+                      <a class="btn btn-warning" id = 'shortlistCandidate<?= $candidates['userDetails'][0][0]['userID']?>' style="color: white; margin: 10px;" id = "shortlistCandidate<?= $candidates['userDetails'][0][0]['userID']?>">Shortlisted</a>
                     <?php } ?>
 
-                    <?php if($candidates['status'][0] != '4' && $candidates['status'][0] != '2'){?>
+                    <?php if($candidates['status'][0] != '4'){?>
                       <a class="btn btn-danger rejectCandidate" id = "rejectCandidate<?= $candidates['userDetails'][0][0]['userID']?>" data = "<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Reject Applicant</a>
                     <?php }else if($candidates['status'][0] == '4') { ?>
                       <a class="btn btn-danger" id = "rejectCandidate<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Rejected</a>
@@ -268,17 +268,17 @@
                      <?php if($candidates['status'][1] != '2' && $candidates['status'][1] != '4'){?>
                       <a class="btn btn-success selectCandidate" id = "selectCandidate<?= $candidates['userDetails'][1][0]['userID']?>" data = "<?= $candidates['userDetails'][1][0]['userID']?>" style="color: white; margin: 10px;">Select Applicant</a>
                     <?php }else if($candidates['status'][1] == '2') {?>
-                      <a class="btn btn-success" style="color: white; margin: 10px;">Selected</a>
+                      <a class="btn btn-success" style="color: white; margin: 10px;" id = "selectCandidate<?= $candidates['userDetails'][1][0]['userID']?>">Selected</a>
                     <?php }
                     ?>
 
                     <?php if($candidates['status'][1] != '3' && $candidates['status'][1] != '2'&& $candidates['status'][1] != '4'){?>
                       <a class="btn btn-warning shortlistCandidate" id = "shortlistCandidate<?= $candidates['userDetails'][1][0]['userID']?>" data = "<?= $candidates['userDetails'][1][0]['userID']?>" style="color: white; margin: 10px;">Short-list Applicant</a>
                     <?php }else if($candidates['status'][1] == '3'){ ?>
-                      <a class="btn btn-warning" id = 'shortlistCandidate<?= $candidates['userDetails'][1][0]['userID']?>' style="color: white; margin: 10px;">Shortlisted</a>
+                      <a class="btn btn-warning" id = 'shortlistCandidate<?= $candidates['userDetails'][1][0]['userID']?>' style="color: white; margin: 10px;" id = "shortlistCandidate<?= $candidates['userDetails'][1][0]['userID']?>">Shortlisted</a>
                     <?php } ?>
 
-                    <?php if($candidates['status'][1] != '4' && $candidates['status'][1] != '2'){?>
+                    <?php if($candidates['status'][1] != '4'){?>
                       <a class="btn btn-danger rejectCandidate" id = "rejectCandidate<?= $candidates['userDetails'][1][0]['userID']?>" data = "<?= $candidates['userDetails'][1][0]['userID']?>" style="color: white; margin: 10px;">Reject Applicant</a>
                     <?php }else if($candidates['status'][1] == '4') { ?>
                       <a class="btn btn-danger" id = "rejectCandidate<?= $candidates['userDetails'][1][0]['userID']?>" style="color: white; margin: 10px;">Rejected</a>
@@ -315,16 +315,48 @@
               <a class="btn btn-danger rejectClone" style="color: white; margin: 10px;display: none">Reject Applicant</a>
               <a class="btn btn-info unrejectClone" style="color: white; margin: 10px;display: none">Remove From Reject</a>
               <a class="btn btn-info removeFromClone" style="color: white; margin: 10px;display: none">Remove From Compare</a>
+
+              <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Remarks</h4>
+                </div>
+                <div class="modal-body">
+                    <label><b>Select Remark:</b></label>
+                  <select class="form-control remark" name = "remark">
+                    <option value = "1">Skill Requirement(s) Not Met.</option>
+                    <option value = "2">Educational Requirement(s) Not Met.</option>
+                    <option value = "3">Work Experience Requirement(s) not met.</option>
+                    <option value = "4">Other</option>
+                  </select>
+                  <br>
+                <div class = "otherRemark" style ="display:none">
+                  <label><b>Add Other Remark:</b></label>
+                  <textarea class = "form-control other" name = "other" placeholder="Remark.."></textarea>
+                </div>
+                  <div class="candidateData"></div><br>
+                  <button  class = "form-control btn btn-primary addRemark">Add Remark</button>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
   </body>
 
 <script type="text/javascript">
   $(document).ready(function(){
     $('body').on('click', '.shortlistCandidate', function(){
       id = $(this).attr('id')
-      data = $('#'+id).attr('data') 
+      data = $('#'+id).attr('data')
       url = '<?=base_url('functions/shortlist')?>';
       postData = {
-        data: data
+        data: data,
+        offer: '<?= $offer?>'
       }
 
       $.get(url,postData).done(function(res){
@@ -349,7 +381,8 @@
       data = $('#'+id).attr('data')
       url = "<?= base_url('functions/select')?>"
       postData = {
-        data: data
+        data: data,
+        offer: '<?= $offer?>'
       }
       $.get(url,postData).done(function(res){
         res = JSON.parse(res);
@@ -371,26 +404,56 @@
   })
 
   $(document).ready(function(){
+    $('body').on('change', '.remark', function(){
+      data = $('.remark').val()
+      console.log(data);
+      if(data == 4){
+        $('.otherRemark').show();
+      }else{
+        $('.otherRemark').hide();
+      }
+    })
+  })
+
+  $(document).ready(function(){
     $('body').on('click', '.rejectCandidate', function(){
       id = $(this).attr('id')
       data = $('#'+id).attr('data')
+      $('.candidateData').html('<input type="hidden" class = "candidateID" name = "candidateData" value = "'+data+'">')
+      $('#myModal').modal({backdrop: 'static', keyboard: false})
+    })
+  })
+
+  $(document).ready(function(){
+    $('body').on('click', '.addRemark', function(){
+      data = $('.candidateID').val()
+      value = $('.remark').val()
+      if(value == 4){
+      }else{
+        remark = '';
+      }
+      console.log(remark)
       url = '<?=base_url('functions/reject')?>'
       postData = {
-        data: data
+        data: data,
+        value:value,
+        remark:remark,
+        offer: '<?= $offer?>'
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){
-          $('#status'+data).html('<b style = "color:red">Rejected</b>')
           var clone = $('.unrejectClone').clone();
           clone.addClass('unrejectCandidate');
           clone.attr({id:'unrejectCandidate'+data, data:data});
           $('.buttonContainer'+data).append(clone[0]);
-          $('#selectCandidate'+data).remove();
-          $('#shortlistCandidate'+data).remove();
-          // $('#rejectCandidate'+data).remove();
           clone.show();
           $('#rejectCandidate'+data).html('Rejected').removeClass('rejectCandidate');
+          $('#selectCandidate'+data).remove();
+          $('#shortlistCandidate'+data).remove();
+          // $('#addToCompare'+data).remove();
           alert($('#title'+data).html()+' has been successfully rejected for the Offer: '+'<?= $offerTitle?>');
+          $('#myModal').modal('hide')
+          $('.candidateData').empty()
         }
       })
     })
@@ -403,7 +466,8 @@
       data = $('#'+id).attr('data')
       url = '<?=base_url('functions/RemoveFromCompare')?>'
       postData = {
-        data: data
+        data: data,
+        offer: '<?= $offer?>'
       }
       $.get(url,postData).done(function(res){
         console.log(res);
@@ -432,11 +496,12 @@
       data = $('#'+id).attr('data')
       url = '<?=base_url('functions/removeFromReject')?>'
       postData = {
-        data: data
+        data: data,
+        offer: <?= $offer?>
       }
       $.get(url,postData).done(function(res){
+        console.log(res);
         if(res == 'true'){
-          $('#status'+data).html('<b>Applied</b>')
           $("#unrejectCandidate"+data).remove();
           $('#rejectCandidate'+data).remove();
           var selectClone = $('.selectClone').clone();
@@ -445,8 +510,8 @@
           $('.buttonContainer'+data).append(selectClone[0]);
           selectClone.show();
           var shortlistClone = $('.shortlistClone').clone();
-          shortlistClone.addClass('shortlistCandidate');
           shortlistClone.attr({id:'shortlistCandidate'+data, data:data});
+          shortlistClone.html('Shortlisted');
           $('.buttonContainer'+data).append(shortlistClone[0]);
           shortlistClone.show();
           var rejectClone = $('.rejectClone').clone();
