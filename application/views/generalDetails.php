@@ -355,6 +355,7 @@
                     <option value="<?= $location['cityID']?>"><?=$location['city']?>, <?=$location['state']?></option>
                     <?php } ?>
                   </select>
+                  <p class="help-text" style="font-size: 12px; color: red;">Maximum of 5 Preferred Location(s) can be Added to the Profile.</p>
               </div>
             </div>
             </div>
