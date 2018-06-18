@@ -473,7 +473,8 @@
       data = $('#'+id).attr('data')
       url = '<?=base_url('functions/shortlist')?>';
       postData = {
-        data: data
+        data: data,
+        offer: '<?= $offerID?>'
       }
 
       $.get(url,postData).done(function(res){
@@ -498,7 +499,8 @@
       data = $('#'+id).attr('data')
       url = "<?= base_url('functions/select')?>"
       postData = {
-        data: data
+        data: data,
+        offer: '<?= $offerID?>'
       }
       $.get(url,postData).done(function(res){
         res = JSON.parse(res);
@@ -525,7 +527,8 @@
       data = $('#'+id).attr('data')
       url = '<?=base_url('functions/reject')?>'
       postData = {
-        data: data
+        data: data,
+        offer: '<?= $offerID?>'
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){
@@ -552,7 +555,8 @@
       data = $('#'+id).attr('data')
       url = '<?=base_url('functions/addToCompare')?>'
       postData = {
-        data: data
+        data: data,
+        offer: '<?= $offerID?>'
       }
       $.get(url,postData).done(function(res){
         console.log(res);
@@ -586,7 +590,8 @@
       data = $('#'+id).attr('data')
       url = '<?=base_url('functions/RemoveFromCompare')?>'
       postData = {
-        data: data
+        data: data,
+        offer: '<?= $offerID?>'
       }
       $.get(url,postData).done(function(res){
         console.log(res);
@@ -619,7 +624,8 @@
       data = $('#'+id).attr('data')
       url = '<?=base_url('functions/removeFromReject')?>'
       postData = {
-        data: data
+        data: data,
+        offer: '<?= $offerID?>'
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){

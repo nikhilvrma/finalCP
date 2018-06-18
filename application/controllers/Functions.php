@@ -2192,7 +2192,8 @@ class Functions extends CI_Controller {
 
 	public function shortlist(){
 		$userID = $_GET['data'];
-		$result = $this->function_lib->shortlistCandidate($userID);
+		$offer = $_GET['offer'];
+		$result = $this->function_lib->shortlistCandidate($userID, $offer);
 		$data['data'] = $this->function_lib->getUserDataFromID($userID);
 		if($result){
 			$data['res'] = 'true';
@@ -2205,7 +2206,8 @@ class Functions extends CI_Controller {
 
 	public function reject(){
 		$userID = $_GET['data'];
-		$result = $this->function_lib->rejectCandidate($userID);
+		$offer = $_GET['offer'];
+		$result = $this->function_lib->rejectCandidate($userID, $offer);
 		if($result){
 			echo "true";
 		}else{
@@ -2215,7 +2217,8 @@ class Functions extends CI_Controller {
 
 	public function removeFromReject(){
 		$userID = $_GET['data'];
-		$result = $this->function_lib->removeFromReject($userID);
+		$offer = $_GET['offer'];
+		$result = $this->function_lib->removeFromReject($userID, $offer);
 		if($result){
 			echo "true";
 		}else{
@@ -2225,7 +2228,8 @@ class Functions extends CI_Controller {
 
 	public function select(){
 		$userID = $_GET['data'];
-		$result = $this->function_lib->selectCandidate($userID);
+		$offer = $_GET['offer'];
+		$result = $this->function_lib->selectCandidate($userID, $offer);
 		$data['data'] = $this->function_lib->getUserDataFromID($userID);
 		if($result){
 			$data['res'] = 'true';
@@ -2238,6 +2242,10 @@ class Functions extends CI_Controller {
 
 	public function addToCompare(){
 		$userID = $_GET['data'];
+		$offer = $_GET['offer'];
+		if($this->function_lib->isOfferApplicant($userID, $offer)){
+			echo false2; die;
+		}
 		if(isset($_SESSION['compare'][0]) && isset($_SESSION['compare'][1])) {
 			echo 'false';
 		}else{
@@ -2267,6 +2275,10 @@ class Functions extends CI_Controller {
 
 	public function removeFromCompare(){
 		$userID = $_GET['data'];
+		$offer = $_GET['offer'];
+		if($this->function_lib->isOfferApplicant($userID, $offer)){
+			echo false2; die;
+		}
 		if(!isset($_SESSION['compare'][0]) && !isset($_SESSION['compare'][1])) {
 			echo 'false';
 		}else{

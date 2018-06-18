@@ -12,7 +12,7 @@ class Function_lib {
 				'loggedIn' => true,
 				'userID' => $userData[0]['userID'],
 				'email' => $email,
-				'mobile' => $userData[0]['mobile'], 
+				'mobile' => $userData[0]['mobile'],
 				'name' => $userData[0]['name'],
 				'profileImage'	=>	$userData[0]['profileImage'],
 				'accountType' => $userData[0]['accountType'],
@@ -23,7 +23,7 @@ class Function_lib {
 			return 1;
 		}
 		return 0;
-	}	
+	}
 
 
 	public function updateEmailVerified(){
@@ -527,28 +527,28 @@ class Function_lib {
 	}
 
 
-	public function shortlistCandidate($userID){
+	public function shortlistCandidate($userID, $offer){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->shortlistCandidate($userID);
+		return $CI->function->shortlistCandidate($userID, $offer);
 	}
 
-	public function rejectCandidate($userID){
+	public function rejectCandidate($userID, $offer){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->rejectCandidate($userID);
+		return $CI->function->rejectCandidate($userID, $offer);
 	}
 
-	public function removeFromReject($userID){
+	public function removeFromReject($userID, $offer){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->removeFromReject($userID);
+		return $CI->function->removeFromReject($userID, $offer);
 	}
 
-	public function selectCandidate($userID){
+	public function selectCandidate($userID, $offer){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
-		return $CI->function->selectCandidate($userID);
+		return $CI->function->selectCandidate($userID, $offer);
 	}
 
 	public function getCandidateDetails($userID){
@@ -556,7 +556,7 @@ class Function_lib {
 		$CI->load->model('function_model','function');
 		return $CI->function->getCandidateDetails($userID);
 	}
-	
+
 	public function hasMoreOfferApplicants($offerID, $offset, $limit, $type = 1){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
@@ -604,5 +604,11 @@ class Function_lib {
 		$CI->load->model('function_model','function');
 		return $CI->function->getUserOfferDetails($offerID, $userID);
 	}
-}
 
+	public function isOfferApplicant($userID, $offerID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->isOfferApplicant($userID, $offerID);
+	}
+
+}
