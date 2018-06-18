@@ -283,6 +283,7 @@ class Function_model extends CI_Model {
 	public function getUserEducationalDetails($userID){
 		$this->db->join('colleges', 'educationalDetails.instituteID = colleges.college_id', 'left');
 		$this->db->join('courses', 'educationalDetails.courseID = courses.course_id', 'left');
+		$this->db->order_by('educationType','ASC');
 		$result = $this->db->get_where('educationalDetails', array('userID'=>$userID));
 		return $result->result_array();
 	}

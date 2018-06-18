@@ -343,14 +343,16 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Remarks</h4>
       </div>
       <div class="modal-body">
-        <textarea id = "remarkEditor"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <select id="remark" class="form-control remark" name = "remark">
+          <option value = "1">Skill Requirement(s) Not Met.</option>
+          <option value = "2">Educational Requirement(s) Not Met.</option>
+          <option value = "3">Work Experience Requirement(s) not met.</option>
+          <option value = "4">Other</option>
+        </select>
+        <input type="text" class = "form-control other" name = "other" placeholder = "Remark..">
       </div>
     </div>
 
