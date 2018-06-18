@@ -789,7 +789,7 @@ class Function_model extends CI_Model {
 	}
 
 	public function removeFromReject($userID){
-		$this->db->set('status', '1');
+		$this->db->set('status', '3');
 		$this->db->where('userID', $userID);
 		$result = $this->db->update('applicants');
 		return $result;
