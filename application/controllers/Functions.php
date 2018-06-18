@@ -1467,6 +1467,24 @@ class Functions extends CI_Controller {
 			redirect(base_url('hiring-nucleus/compare-applicants'));
 		}else{
 			$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, $type);
+			$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, 0, 10, 1);
+			$applicants = array_column($userSkills, 'applicantID');
+			$i = 0;
+			foreach ($this->data['applicants'] as $key => $value) {
+					$x = array_search($value['applicantID'], $applicants);
+				if(is_int($x)){
+					$data['applicants'][$i]['skillID'] = $userSkills[$x]['skillID'];
+					$data['applicants'][$i]['type'] = $userSkills[$x]['type'];
+					$data['applicants'][$i]['score'] = $userSkills[$x]['score'];
+					$data['applicants'][$i]['skillName'] = $userSkills[$x]['skillName'];
+				}else{
+					$data['applicants'][$i]['skillID'] = NULL;
+					$data['applicants'][$i]['type'] = NULL;
+					$data['applicants'][$i]['score'] = NULL;
+					$data['applicants'][$i]['skillName'] = NULL;
+				}
+				$i++;
+			}
 			$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10, $type);
 			$data['type'] = $type;
 			$_SESSION['filter'] = 1;
@@ -1632,6 +1650,24 @@ class Functions extends CI_Controller {
 			);
 		// var_dump($offerLocations); die;
 		$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, 1);
+		$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, 0, 10, 1);
+		$applicants = array_column($userSkills, 'applicantID');
+		$i = 0;
+		foreach ($this->data['applicants'] as $key => $value) {
+				$x = array_search($value['applicantID'], $applicants);
+			if(is_int($x)){
+				$data['applicants'][$i]['skillID'] = $userSkills[$x]['skillID'];
+				$data['applicants'][$i]['type'] = $userSkills[$x]['type'];
+				$data['applicants'][$i]['score'] = $userSkills[$x]['score'];
+				$data['applicants'][$i]['skillName'] = $userSkills[$x]['skillName'];
+			}else{
+				$data['applicants'][$i]['skillID'] = NULL;
+				$data['applicants'][$i]['type'] = NULL;
+				$data['applicants'][$i]['score'] = NULL;
+				$data['applicants'][$i]['skillName'] = NULL;
+			}
+			$i++;
+		}
 		$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10, 1);
 
 		if(!empty($gender)){
@@ -2156,7 +2192,8 @@ class Functions extends CI_Controller {
 
 	public function shortlist(){
 		$userID = $_GET['data'];
-		$result = $this->function_lib->shortlistCandidate($userID);
+		$offer = $_GET['offer'];
+		$result = $this->function_lib->shortlistCandidate($userID, $offer);
 		$data['data'] = $this->function_lib->getUserDataFromID($userID);
 		if($result){
 			$data['res'] = 'true';
@@ -2169,7 +2206,8 @@ class Functions extends CI_Controller {
 
 	public function reject(){
 		$userID = $_GET['data'];
-		$result = $this->function_lib->rejectCandidate($userID);
+		$offer = $_GET['offer'];
+		$result = $this->function_lib->rejectCandidate($userID, $offer);
 		if($result){
 			echo "true";
 		}else{
@@ -2179,7 +2217,8 @@ class Functions extends CI_Controller {
 
 	public function removeFromReject(){
 		$userID = $_GET['data'];
-		$result = $this->function_lib->removeFromReject($userID);
+		$offer = $_GET['offer'];
+		$result = $this->function_lib->removeFromReject($userID, $offer);
 		if($result){
 			echo "true";
 		}else{
@@ -2189,7 +2228,8 @@ class Functions extends CI_Controller {
 
 	public function select(){
 		$userID = $_GET['data'];
-		$result = $this->function_lib->selectCandidate($userID);
+		$offer = $_GET['offer'];
+		$result = $this->function_lib->selectCandidate($userID, $offer);
 		$data['data'] = $this->function_lib->getUserDataFromID($userID);
 		if($result){
 			$data['res'] = 'true';
@@ -2202,6 +2242,10 @@ class Functions extends CI_Controller {
 
 	public function addToCompare(){
 		$userID = $_GET['data'];
+		$offer = $_GET['offer'];
+		if($this->function_lib->isOfferApplicant($userID, $offer)){
+			echo false2; die;
+		}
 		if(isset($_SESSION['compare'][0]) && isset($_SESSION['compare'][1])) {
 			echo 'false';
 		}else{
@@ -2231,6 +2275,10 @@ class Functions extends CI_Controller {
 
 	public function removeFromCompare(){
 		$userID = $_GET['data'];
+		$offer = $_GET['offer'];
+		if($this->function_lib->isOfferApplicant($userID, $offer)){
+			echo false2; die;
+		}
 		if(!isset($_SESSION['compare'][0]) && !isset($_SESSION['compare'][1])) {
 			echo 'false';
 		}else{

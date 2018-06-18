@@ -77,7 +77,9 @@
                       <p class="card-text"><b>Skills Required: </b><?= $skill?></p>
                       <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
                         <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
-                          <p class="card-text"><b>Remarks: </b>None.</p>
+                        <?php if($offer['status'] == 4){?>
+                          <p class="card-text"><b>Remarks: </b><?php if($offer['remark'] == ''){echo "None.";}else{echo $offer['remark'];}?></p>
+                        <?php } ?>
                     </div>
 
                     <div class="col-md-6 mb-4">

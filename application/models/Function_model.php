@@ -539,7 +539,7 @@ class Function_model extends CI_Model {
 	}
 
 	public function getAppliedOffers($userID, $offset, $limit, $status = 0){
-		$this->db->select('applicants.offerID, offerType, offerTitle, applicationDeadline, joiningDate, status, companyName, companyLogo');
+		$this->db->select('applicants.offerID, offerType, offerTitle, applicationDeadline, joiningDate, status, companyName, companyLogo, remark');
 		$this->db->limit($limit, $offset);
 		$this->db->join('offers','applicants.offerID = offers.offerID');
 		$this->db->join('employers', 'offers.addedBy = employers.userID');
@@ -774,30 +774,30 @@ class Function_model extends CI_Model {
 		return $result[0]['userID'];
 	}
 
-	public function shortlistCandidate($userID){
+	public function shortlistCandidate($userID, $offer){
 		$this->db->set('status', '3');
-		$this->db->where('userID', $userID);
+		$this->db->where(array('userID' => $userID, 'offerID' => $offer));
 		$result = $this->db->update('applicants');
 		return $result;
 	}
 
-	public function rejectCandidate($userID){
+	public function rejectCandidate($userID, $offer){
 		$this->db->set('status', '4');
-		$this->db->where('userID', $userID);
+		$this->db->where(array('userID' => $userID, 'offerID' => $offer));
 		$result = $this->db->update('applicants');
 		return $result;
 	}
 
-	public function removeFromReject($userID){
+	public function removeFromReject($userID, $offer){
 		$this->db->set('status', '3');
-		$this->db->where('userID', $userID);
+		$this->db->where(array('userID' => $userID, 'offerID' => $offer));
 		$result = $this->db->update('applicants');
 		return $result;
 	}
 
-	public function selectCandidate($userID){
+	public function selectCandidate($userID, $offer){
 		$this->db->set('status', '2');
-		$this->db->where('userID', $userID);
+		$this->db->where(array('userID' => $userID, 'offerID' => $offer));
 		$result = $this->db->update('applicants');
 		return $result;
 	}
@@ -855,5 +855,14 @@ class Function_model extends CI_Model {
 	public function getUserOfferDetails($offerID, $userID){
 		$result = $this->db->get_where('applicants', array('offerID' => $offerID, 'userID' => $userID));
 		return $result->result_array();
+	}
+
+	public function isOfferApplicant($userID, $offerID){
+		$result = $this->db->get_where('applicants', array('offerID' => $offerID, 'userID' => $userID));
+		if($result->num_rows()> 0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
