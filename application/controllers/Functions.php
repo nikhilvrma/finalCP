@@ -1563,7 +1563,7 @@ class Functions extends CI_Controller {
 				'status' => 1
 			);
 			if($this->function_lib->insertApplicationData($data)){
-				$this->session->set_flashdata('message', array('content'=>'Application Successful.','color'=>'green'));
+				$this->session->set_flashdata('message', array('content'=>'You have Successfully Applied. All the Best.','color'=>'green'));
 				redirect(base_url('applied-offers'));
 			}else{
 				$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));

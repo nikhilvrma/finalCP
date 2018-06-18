@@ -96,7 +96,7 @@
                   </small>
                 </div>
               </div>
-
+              <br>
             <?php }}else{ echo "<center>You have applied For any Offers Yet.</center>"; } ?>
               <div class ="offerCont"></div>
             </div>
