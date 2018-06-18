@@ -82,10 +82,10 @@
                       <?php $skill = ""; $i = 1; if(!empty($offerSkills[$offer['offerID']]))foreach($offerSkills[$offer['offerID']] as $skills){ if($i == 1){$skill = $skill.$skills['skill_name'];}else{$skill = $skill.', '.$skills['skill_name']; } $i++;}else $skill = "None";?>
                       <p class="card-text"><b>Skills Required: </b><?= $skill?></p>
                       <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
-                        <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p> class="card-text"
+                        <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                     </div>
                     <div class="col-md-5 mb-4">
-                      <center><img src="<?= base_url($offer['companyLogo'])?>" alt = "<?=$offer['companyLogo']?>'s Logo.'" width="150px"></center>
+                      <center><img src="<?= base_url($offer['companyLogo'])?>" alt = "<?$offer['companyLogo']?>'s Logo.'" width="150px"></center>
                       <p class = card-text><center><b><?= $offer['companyName']?></b></center></p>
                     </div>
                   </div>
@@ -97,7 +97,7 @@
                   </small>
                 </div>
               </div>
-
+              <br>
             <?php }}}else{ echo "<center>There are no Offers Available Yet.</center>"; } if($i == 0){echo "<center>There are no Offers Available Yet.</center>";}?>
               <div class ="offerCont"></div>
             </div>
