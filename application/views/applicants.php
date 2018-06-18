@@ -623,7 +623,7 @@
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){
-          $('#status'+data).html('<b>Applied</b>')
+          $('#status'+data).html('<b style = "color:yellow">Shortlisted</b>')
           $("#unrejectCandidate"+data).remove();
           $('#rejectCandidate'+data).remove();
           var selectClone = $('.selectClone').clone();
@@ -631,11 +631,6 @@
           selectClone.attr({id:'selectCandidate'+data, data:data});
           $('.buttonContainer'+data).append(selectClone[0]);
           selectClone.show();
-          var shortlistClone = $('.shortlistClone').clone();
-          shortlistClone.addClass('shortlistCandidate');
-          shortlistClone.attr({id:'shortlistCandidate'+data, data:data});
-          $('.buttonContainer'+data).append(shortlistClone[0]);
-          shortlistClone.show();
           var rejectClone = $('.rejectClone').clone();
           rejectClone.addClass('rejectCandidate');
           rejectClone.attr({id:'rejectCandidate'+data, data:data});

@@ -539,7 +539,7 @@ class Function_model extends CI_Model {
 	}
 
 	public function getAppliedOffers($userID, $offset, $limit, $status = 0){
-		$this->db->select('applicants.offerID, offerType, offerTitle, applicationDeadline, joiningDate, status, companyName, companyLogo');
+		$this->db->select('applicants.offerID, offerType, offerTitle, applicationDeadline, joiningDate, status, companyName, companyLogo, remark');
 		$this->db->limit($limit, $offset);
 		$this->db->join('offers','applicants.offerID = offers.offerID');
 		$this->db->join('employers', 'offers.addedBy = employers.userID');

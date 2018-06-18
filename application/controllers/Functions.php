@@ -1467,6 +1467,24 @@ class Functions extends CI_Controller {
 			redirect(base_url('hiring-nucleus/compare-applicants'));
 		}else{
 			$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, $type);
+			$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, 0, 10, 1);
+			$applicants = array_column($userSkills, 'applicantID');
+			$i = 0;
+			foreach ($this->data['applicants'] as $key => $value) {
+					$x = array_search($value['applicantID'], $applicants);
+				if(is_int($x)){
+					$data['applicants'][$i]['skillID'] = $userSkills[$x]['skillID'];
+					$data['applicants'][$i]['type'] = $userSkills[$x]['type'];
+					$data['applicants'][$i]['score'] = $userSkills[$x]['score'];
+					$data['applicants'][$i]['skillName'] = $userSkills[$x]['skillName'];
+				}else{
+					$data['applicants'][$i]['skillID'] = NULL;
+					$data['applicants'][$i]['type'] = NULL;
+					$data['applicants'][$i]['score'] = NULL;
+					$data['applicants'][$i]['skillName'] = NULL;
+				}
+				$i++;
+			}
 			$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10, $type);
 			$data['type'] = $type;
 			$_SESSION['filter'] = 1;
@@ -1632,6 +1650,24 @@ class Functions extends CI_Controller {
 			);
 		// var_dump($offerLocations); die;
 		$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, 1);
+		$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, 0, 10, 1);
+		$applicants = array_column($userSkills, 'applicantID');
+		$i = 0;
+		foreach ($this->data['applicants'] as $key => $value) {
+				$x = array_search($value['applicantID'], $applicants);
+			if(is_int($x)){
+				$data['applicants'][$i]['skillID'] = $userSkills[$x]['skillID'];
+				$data['applicants'][$i]['type'] = $userSkills[$x]['type'];
+				$data['applicants'][$i]['score'] = $userSkills[$x]['score'];
+				$data['applicants'][$i]['skillName'] = $userSkills[$x]['skillName'];
+			}else{
+				$data['applicants'][$i]['skillID'] = NULL;
+				$data['applicants'][$i]['type'] = NULL;
+				$data['applicants'][$i]['score'] = NULL;
+				$data['applicants'][$i]['skillName'] = NULL;
+			}
+			$i++;
+		}
 		$data['hasMore'] = $this->function_lib->hasMoreOfferApplicants($offerID, 10, 10, 1);
 
 		if(!empty($gender)){
