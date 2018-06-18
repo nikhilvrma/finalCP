@@ -49,7 +49,7 @@
                <tbody>
                 <?php foreach ($educationalDetails as $key => $education) {?>
                  <tr>
-                   <td><b><?php if($education['educationType'] == 1){echo "High School";}elseif($education['educationType'] == 2){echo "Senior Secondary";}elseif($education['educationType'] == 3){echo "Graduation";}else{echo "Post Post-Graduation";}?></b> <?php if($education['status'] == 2){?><i class="fa fa-check-circle"></i><?php } ?></td>
+                   <td><b><?php if($education['educationType'] == 1){echo "High School";}elseif($education['educationType'] == 2){echo "Senior Secondary";}elseif($education['educationType'] == 3){echo "Graduation";}else{echo "Post-Graduation";}?></b> <?php if($education['status'] == 2){?><i class="fa fa-check-circle"></i><?php } ?></td>
                     <?php if($education['educationType'] == 1 || $education['educationType'] == 2){?>
                      <td><?= $education['institute']?></td>
                     <?php } ?>
