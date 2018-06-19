@@ -176,7 +176,7 @@
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
                             <label>Experience As:</label>
-                            <select class="form-control" name="experienceAs" required>
+                            <select class="form-control" name="experienceAs" id = "experienceAs" required>
                               <option value="1">Full-Time Employee</option>
                               <option value="2">Intern</option>
                               <option value="3">Freelancer</option>
@@ -264,6 +264,7 @@
             $('#position').val(data.position)
             $('#startMonth').val(data.startMonth)
             $('#startYear').val(data.startYear)
+            $('#experienceAs').val(data.experienceAs)
             value = data.currentlyWorking
             if(!(data.currentlyWorking == 1)){
               $('.endDates').show();

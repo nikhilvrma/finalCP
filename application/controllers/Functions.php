@@ -604,6 +604,7 @@ class Functions extends CI_Controller {
 		$endMonth = "";
 		$endYear = "";
 		$currentWorking = "";
+		$experienceAs = "";
 
 		if($x = $this->input->post('companyName')){
 			$companyName = $x;
@@ -629,8 +630,11 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('currentWorking')){
 			$currentWorking = $x;
 		}
+		if($x = $this->input->post('experienceAs')){
+			$experienceAs = $x;
+		}
 		// var_dump($currentWorking);die;
-		if($companyName == "" || $position == "" || $role == "" || $startYear == "" || $startMonth == ""){
+		if($companyName == "" || $position == "" || $role == "" || $startYear == "" || $startMonth == ""|| $experienceAs == ""){
 			$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 			redirect(base_url('work-experience'));
 		}
@@ -678,6 +682,7 @@ class Functions extends CI_Controller {
 				'startMonth' => $startMonth,
 				'endYear' => $endYear,
 				'endMonth' => $endMonth,
+				'experienceAs' => $experienceAs,
 				'currentlyWorking' => $currentWorking,
 				'supportingDocument' => $fileName
 			);
@@ -691,6 +696,7 @@ class Functions extends CI_Controller {
 				'startMonth' => $startMonth,
 				'endYear' => $endYear,
 				'endMonth' => $endMonth,
+				'experienceAs' => $experienceAs,
 				'currentlyWorking' => $currentWorking,
 			);
 			}
@@ -721,6 +727,7 @@ class Functions extends CI_Controller {
 				'startMonth' => $startMonth,
 				'endYear' => $endYear,
 				'endMonth' => $endMonth,
+				'experienceAs' => $experienceAs,
 				'currentlyWorking' => $currentWorking,
 				'supportingDocument' => $fileName
 			);
@@ -1617,6 +1624,7 @@ public function clearFilters($offerID){
 			$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, -1, -1, $type);
 			$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, -1, -1, 1);
 			$applicants = array_column($userSkills, 'applicantID');
+			$_SESSION['skillOffset'] = count($applicants);
 			$i = 0;
 			foreach ($data['applicants'] as $key => $value) {
 					$x = array_search($value['applicantID'], $applicants);
@@ -1693,6 +1701,7 @@ public function clearFilters($offerID){
 		$data['applicants'] = $this->function_lib->getOfferApplicants($offerID, -1, -1, 1);
 		$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, -1, -1, 1);
 		$applicants = array_column($userSkills, 'applicantID');
+		$_SESSION['skillOffset'] = count($applicants);
 		$i = 0;
 		foreach ($data['applicants'] as $key => $value) {
 				$x = array_search($value['applicantID'], $applicants);
@@ -2211,8 +2220,9 @@ public function clearFilters($offerID){
 		$page = $_GET['page'];
 		$offset = ($page-1) * 10;
 		$candidates['data'] = $this->function_lib->getOfferApplicants($slug, $offset , 10);
-		$userSkills = $this->function_lib->getOfferApplicantSkills($slug, $offset, 10, 1);
+		$userSkills = $this->function_lib->getOfferApplicantSkills($slug, $_SESSION['skillOffset'], 10, 1);
 		$applicants = array_column($userSkills, 'applicantID');
+		$_SESSION['skillOffset'] += count($applicants);
 		$i = 0;
 		foreach ($candidates['data'] as $key => $value) {
 				$x = array_search($value['applicantID'], $applicants);
