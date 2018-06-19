@@ -66,7 +66,7 @@
       <?php if(!(isset($_SESSION['user_data']['loggedIn']) && !($_SESSION['user_data']['loggedIn']))) { ?>
         <div class="col-lg-12 mb-4">
       <?php } ?>
-          <h3 class="mt-4 mb-3" style="float: right;"><?php echo $pageTitle; ?></h3>
+          <h3 class="mt-4 mb-3" style="float: right;"><?php echo $type." ".$pageTitle; ?></h3>
           <div class="clearfix"></div>
           <hr>
           <div class="row">
@@ -145,14 +145,15 @@
                         <p class="card-text"><b><?= $employerDetails['companyName']?></b></p>
                         </center>
                         <!-- <p class="card-text"><b>Website: </b>http://www.campuspuppy.com/</p> -->
+                        <?php if($offerDetails[0]['active'] == 1 && $offerDetails[0]['approved'] == 1){?>
                         <p class="card-text" style="margin-top: 15px;"><b>Share: </b></p>
-
                         <p class="card-text" style="margin-top: 40px;">
                           <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('offers/'.$offerDetails[0]['offerID'])?>" target="_blank" class="btn" style="color: white; background: #3b5998;"><i class="fa fa-facebook"></i></a>
                           <a href="https://twitter.com/intent/tweet?url=<?= base_url('offers/'.$offerDetails[0]['offerID'])?>" class="btn" style="color: white; background: #1DA1F2;"><i class="fa fa-twitter"></i></a>
                         </p>
+                      <?php } ?>
 
-                        <p class="card-text"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
+                        <p class="card-text" style="margin-top: 15px;"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
                         <br>
 
                         <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] != 2){?>
@@ -160,11 +161,11 @@
                           <br>
                           <center><button class="btn btn-primary btn-lg applyNow" style="color: white;">Apply Now</button></center>
                         <?php } else if(!isset($_SESSION['user_data']['accountType'])){?>
-                          <p class="card-text"><center><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-lg btn-primary" style="color: white;">Apply Now</a></center></p>
+                          <p class="card-text" style="margin-top: 15px;"><center><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-lg btn-primary" style="color: white;">Apply Now</a></center></p>
                         <?php }?>
                         <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] == 2){
                           if($offerDetails[0]['approved'] == 0){?>
-                           <p class="card-text"><center><a class="btn btn-primary editoffer" target="_blank" href = "<?= base_url('edit-offer/'.$offerDetails[0]['offerID'])?>" style="color: white;">Edit Offer</a></center></p>
+                           <p class="card-text" style="margin-top: 15px; float:right"><a class="btn btn-primary editoffer" target="_blank" href = "<?= base_url('edit-offer/'.$offerDetails[0]['offerID'])?>" style="color: white;">Edit Offer</a></p>
                         <?php }}?>
 
                     </div>
