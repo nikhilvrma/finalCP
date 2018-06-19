@@ -40,9 +40,13 @@
           <div class="row">
             <div class="col-md-12 mb-4">
               <div class="row">
-
-              <div class="col-sm-5 mb-4">
-                <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#filters">Filter Offers</button>
+                <div class="col-sm-2 mb-4">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" style="float: right;" data-target="#filters">Filter Offers</button>
+                </div>
+                <div class="col-sm-1 mb-4">
+                </div>
+              <div class="col-sm-2 mb-4">
+                <a href = "<?= base_url('functions/clearOfferFilters')?>" class="btn btn-primary" style="float: right;">Clear Filters</a>
               </div>
               <div class="col-sm-7 mb-4">
                 <form class="form-inline" style="float: right;" method="GET" action = "<?= base_url('functions/filterRelevantAvailable')?>">
@@ -50,7 +54,7 @@
                   <br>
                   <select class="form-control mb-2 mr-sm-2" name="status">
                     <option value = "1">All Available Offers</option>
-                    <option value = "2"  <?php if(isset($status) && $status == 2){echo "selected";} unset($_SESSION['filter']);?>>My Relevant Offers</option>
+                    <option value = "2"  <?php if(isset($status) && $status == 2){echo "selected";}?>>My Relevant Offers</option>
                   </select>
 
                   <button type="submit" class="btn btn-primary mb-2">Display</button>
@@ -85,7 +89,7 @@
                         <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                     </div>
                     <div class="col-md-5 mb-4">
-                      <center><img src="<?= base_url($offer['companyLogo'])?>" alt = "<?$offer['companyLogo']?>'s Logo.'" width="150px"></center>
+                      <center><img src="<?= base_url($offer['companyLogo'])?>" alt = "<?=$offer['companyLogo']?>'s Logo.'" width="150px"></center>
                       <p class = card-text><center><b><?= $offer['companyName']?></b></center></p>
                     </div>
                   </div>
