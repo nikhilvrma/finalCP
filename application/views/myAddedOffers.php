@@ -50,11 +50,13 @@
                     <div class="col-md-6 mb-4">
                       <p class="card-text"><b>Offer Type: </b><?php if($offer['offerType'] == 1){echo "Job Offer";}else{echo "Internship Offer";}?></p>
                       <?php $location = ""; $i = 1; if(!empty($offerLocations[$offer['offerID']]))foreach($offerLocations[$offer['offerID']] as $locations){ if($i == 1){$location = $location.$locations['city'];}else{$location = $location.', '.$locations['city'];} $i++;}else $location = "Work From Home"; ?>
-                      <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
                       <p class="card-text"><b>Application Deadline: </b><?= date_format(date_create($offer['applicationDeadline']), 'd-F-Y')?></p>
-                      <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
+                      <p class="card-text"><b>Offer Location(s): </b><?= $location?></p>
+
                     </div>
                     <div class="col-md-6 mb-4">
+
+                      <p class="card-text"><b>Joining Date: </b><?= date_format(date_create($offer['joiningDate']), 'd-F-Y')?></p>
                       <p class="card-text"><b>Status: </b><?php if($offer['approved'] == 0){echo "<b>Approval Pending</b>";}else if($offer['approved'] == 1){echo "<b style = 'color:green'>Accepted</b>";}else{echo "<b style = 'color:red'>Rejected</b>";}?></p>
                         <?php if($offer['approved'] == 2){?>
                           <p class="card-text"><b>Remarks: </b><?php if($offer['rejectMessage'] == ''){echo "None.";}else{echo $offer['rejectMessage'];}?></p>

@@ -175,6 +175,19 @@
                         <div class="row">
                         <div class="col-md-12 control-group form-group">
                           <div class="controls">
+                            <label>Experience As:</label>
+                            <select class="form-control" name="experienceAs" required>
+                              <option value="1">Full-Time Employee</option>
+                              <option value="2">Intern</option>
+                              <option value="3">Freelancer</option>
+                            </select>
+                          </div>
+                        </div>
+                        </div>
+
+                        <div class="row">
+                        <div class="col-md-12 control-group form-group">
+                          <div class="controls">
                             <label>Role:</label>
                             <textarea class="form-control" id="role" name="role" required>
                             </textarea>
