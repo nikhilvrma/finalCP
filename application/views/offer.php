@@ -71,108 +71,113 @@
           <hr>
           <div class="row">
 
-            <div class="col-md-12 mb-4">
 
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-6 mb-4">
-                      <p class="card-text"><b>Company Name: </b></p>
-                      <p class="card-text"><?= $employerDetails['companyName']?></p>
-                      <!-- <p class="card-text"><b>Website: </b>http://www.campuspuppy.com/</p> -->
-                    </div>
-                    <div class="col-md-3 mb-4">
-                      <p class="card-text"><b>Share: </b></p>
-                      <p class="card-text">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('offers/'.$offerDetails[0]['offerID'])?>" target="_blank" class="btn" style="color: white; background: #3b5998;"><i class="fa fa-facebook"></i></a>
-                        <a href="https://twitter.com/intent/tweet?url=<?= base_url('offers/'.$offerDetails[0]['offerID'])?>" class="btn" style="color: white; background: #1DA1F2;"><i class="fa fa-twitter"></i></a>
+              <div class="col-md-12 mb-4" style="font-size: 14px;">
+
+                <div class="row">
+
+                <div class="col-sm-8">
+
+                    <p>
+                    <b>Offer Title: </b>
+                      <?= $offerDetails[0]['offerTitle' ]?>
+                    </p>
+
+                    <p>
+                    <b>Offer Description: </b><br>
+                      <?= $offerDetails[0]['offerDescription']?>
+                    </p>
+
+                    <p>
+                    <b>Skill(s) Required</b><br>
+                      <ul>
+                        <?php if(!empty($offerSkills))foreach($offerSkills as $skills){ ?>
+                        <li><?= $skills['skill_name']?></li>
+                        <?php }else echo "No Skills Required"; ?>
+                      </ul>
+                    </p>
+
+                    <p>
+                    <b>Location(s)</b><br>
+                      <ul>
+                        <?php if(!empty($offerLocations))foreach($offerLocations as $locations){ ?>
+                        <li><?= $locations['city'].', '.$locations['state'] ?></li>
+                        <?php }else echo "Work From Home"; ?>
+                      </ul>
+                    </p>
+
+                    <p>
+                    <b>Compensation Offered</b>
+                    <?php if(isset($offerDetails[0]['compensation'])){?>
+                      INR <?= $offerDetails[0]['compensation'] ?>/- per month
+                    <?php }else if(isset($offerDetails[0]['minCompensation']) && isset($offerDetails[0]['maxCompensation'])){?>
+                      INR <?= $offerDetails[0]['minCompensation'].' - '. $offerDetails[0]['maxCompensation'] ?>/- per month
+                    <?php }else{?>
+                      <?php echo("No Compensation Will be awarded.")?>
+                    <?php } ?>
+                    </p>
+
+                    <p>
+                    <?php if($offerDetails[0]['offerType'] == 2){?>
+                      <h6><b>Internship Duration</b></h6>
+                        <?= $offerDetails[0]['duration'] ?> Weeks
                       </p>
+                    <?php } ?>
+
+                    <p>
+                    <b>Joining Date</b>
+                      <?= date_format(date_create($offerDetails[0]['joiningDate']), 'd-F-Y')?>
+                    </p>
+
+                    <p>
+                    <b>Number of Opening(s)</b>
+                      <?= $offerDetails[0]['openings']?>
+                    </p>
+
+              </div>
+
+              <div class="col-sm-4">
+
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                        <center><img src="<?php echo base_url().$employerDetails['companyLogo']; ?>" style="width: 60%;">
+                        <p class="card-text"><b><?= $employerDetails['companyName']?></b></p>
+                        </center>
+                        <!-- <p class="card-text"><b>Website: </b>http://www.campuspuppy.com/</p> -->
+                        <p class="card-text" style="margin-top: 15px;"><b>Share: </b></p>
+
+                        <p class="card-text" style="margin-top: 40px;">
+                          <a href="https://www.facebook.com/sharer/sharer.php?u=<?= base_url('offers/'.$offerDetails[0]['offerID'])?>" target="_blank" class="btn" style="color: white; background: #3b5998;"><i class="fa fa-facebook"></i></a>
+                          <a href="https://twitter.com/intent/tweet?url=<?= base_url('offers/'.$offerDetails[0]['offerID'])?>" class="btn" style="color: white; background: #1DA1F2;"><i class="fa fa-twitter"></i></a>
+                        </p>
+
+                        <p class="card-text"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
+                        <br>
+
+                        <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] != 2){?>
+                          <!-- <p class="card-text"><center><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-lg btn-primary" style="color: white;">Apply Now</a></center></p> -->
+                          <br>
+                          <center><button class="btn btn-primary btn-lg applyNow" style="color: white;">Apply Now</button></center>
+                        <?php } else if(!isset($_SESSION['user_data']['accountType'])){?>
+                          <p class="card-text"><center><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-lg btn-primary" style="color: white;">Apply Now</a></center></p>
+                        <?php }?>
+                        <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] == 2){
+                          if($offerDetails[0]['approved'] == 0){?>
+                           <p class="card-text"><center><a class="btn btn-primary editoffer" target="_blank" href = "<?= base_url('edit-offer/'.$offerDetails[0]['offerID'])?>" style="color: white;">Edit Offer</a></center></p>
+                        <?php }}?>
+
                     </div>
-                    <div class="col-md-3 mb-4">
-                      <p class="card-text"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
-                      <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] != 2){?>
-                        <!-- <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p> -->
-                        <p class="card-text"><button class="btn btn-primary applyNow" style="color: white;">Apply Now</button></p>
-                      <?php }else if(!isset($_SESSION['user_data']['accountType'])){?>
-                        <p class="card-text"><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-primary" style="color: white;">Apply Now</a></p>
-                      <?php }?>
-                      <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] == 2){
-                        if($offerDetails[0]['approved'] == 0){?>
-                         <p class="card-text"><a class="btn btn-primary editoffer" target="_blank" href = "<?= base_url('edit-offer/'.$offerDetails[0]['offerID'])?>" style="color: white;">Edit Offer</a></p>
-                      <?php }}?>
-                    </div>
+
                   </div>
 
                 </div>
 
               </div>
-              <br>
-              <div class="col-md-12 mb-4" style="font-size: 14px;">
-
-                <p>
-                <b>Offer Title: </b>
-                  <?= $offerDetails[0]['offerTitle' ]?>
-                </p>
-
-                <p>
-                <b>Offer Description: </b><br>
-                  <?= $offerDetails[0]['offerDescription']?>
-                </p>
-
-                <p>
-                <h6><b>Skill(s) Required</b></h6>
-                  <ul>
-                    <?php if(!empty($offerSkills))foreach($offerSkills as $skills){ ?>
-                    <li><?= $skills['skill_name']?></li>
-                    <?php }else echo "No Skills Required"; ?>
-                  </ul>
-                </p>
-
-                <p>
-                <h6><b>Location(s)</b></h6>
-                  <ul>
-                    <?php if(!empty($offerLocations))foreach($offerLocations as $locations){ ?>
-                    <li><?= $locations['city'].', '.$locations['state'] ?></li>
-                    <?php }else echo "Work From Home"; ?>
-                  </ul>
-                </p>
-
-                <p>
-                <h6><b>Compensation Offered</b></h6>
-                <?php if(isset($offerDetails[0]['compensation'])){?>
-                  INR <?= $offerDetails[0]['compensation'] ?>/- per month
-                <?php }else if(isset($offerDetails[0]['minCompensation']) && isset($offerDetails[0]['maxCompensation'])){?>
-                  INR <?= $offerDetails[0]['minCompensation'].' - '. $offerDetails[0]['maxCompensation'] ?>/- per month
-                <?php }else{?>
-                  <?php echo("No Compensation Will be awarded.")?>
-                <?php } ?>
-                </p>
-
-                <p>
-                <?php if($offerDetails[0]['offerType'] == 2){?>
-                  <h6><b>Internship Duration</b></h6>
-                    <?= $offerDetails[0]['duration'] ?> Weeks
-                  </p>
-                <?php } ?>
-              </div>
 
             </div>
 
-
-              <div class="col-md-4 mb-4" style="font-size: 14px;">
-                <p>
-                <h6><b>Joining Date</b></h6>
-                  <?= date_format(date_create($offerDetails[0]['joiningDate']), 'd-F-Y')?>
-                </p>
-              </div>
-              <div class="col-md-4 mb-4" style="font-size: 14px;">
-                <p>
-                <h6><b>Number of Opening(s)</b></h6>
-                  <?= $offerDetails[0]['openings']?>
-                </p>
-              </div>
-            
-
+            </div>
 
 
 
