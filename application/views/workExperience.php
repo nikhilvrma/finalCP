@@ -48,6 +48,7 @@
               <div class="card">
                 <h6 class="card-header"><b><?= $experience['companyName']?></b> <?php if($experience['status'] == 2){?><i class="fa fa-check-circle"></i><?php }?></h6>
                 <div class="card-body">
+                  <p class="card-text"><b>Worked As: </b><?php if($experience['experienceAs'] == 1){echo "Full-Time Employee";}else if($experience['experienceAs'] == 2){echo "Intern";}else{echo "Freelancer";}?></p>
                   <p class="card-text"><b>Duration: </b><?= $experience['startMonth']?> <?= $experience['startYear']?> - <?php if($experience['currentlyWorking'] == 1){echo "Present";}else{?><?= $experience['endMonth']?> <?= $experience['endYear']?><?php } ?></p>
                   <p class="card-text"><b>Position: </b><?= $experience['position']?></p>
                   <p class="card-text"><b>Role: </b><?= $experience['role']?></p>
