@@ -217,6 +217,16 @@ class Function_model extends CI_Model {
 		return $this->db->delete('preferredLocations');
 	}
 
+	public function isUserPreferredLocation($location, $userID){
+		$this->db->where(array('userID' => $userID, 'cityID' => $location));
+		$result = $this->db->get('preferredLocations');
+		if($result->num_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function updateGeneralDetails($data, $userID){
 		$this->db->where('userID', $userID);
 		return $this->db->update('users', $data);

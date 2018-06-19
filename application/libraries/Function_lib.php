@@ -133,6 +133,12 @@ class Function_lib {
 		return $CI->function->deletePreferredLocation($location, $userID);
 	}
 
+	public function isUserPreferredLocation($location, $userID){
+		$CI = &get_instance();
+		$CI->load->model('function_model','function');
+		return $CI->function->isUserPreferredLocation($location, $userID);
+	}
+
 	public function deleteEducationalDetail($education){
 		$CI = &get_instance();
 		$CI->load->model('function_model','function');
