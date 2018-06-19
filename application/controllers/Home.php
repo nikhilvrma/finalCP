@@ -444,7 +444,7 @@ class Home extends CI_Controller {
 				$this->data['allOfferSkills'] = $this->function_lib->getAllApplicantOfferSkills($offerID);
 				$this->data['colleges'] = $this->function_lib->getAllApplicantColleges($offerID);
 				$this->data['courses'] = $this->function_lib->getAllApplicantCourses($offerID);
-				
+
 				if(isset($_SESSION['filter']) && $_SESSION['filter'] == 1){
 					$this->data['applicants'] = $_SESSION['data']['applicants'];
 					$this->data['hasMore'] = $_SESSION['data']['hasMore'];
@@ -460,6 +460,7 @@ class Home extends CI_Controller {
 					$this->data['applicants'] = $this->function_lib->getOfferApplicants($offerID, 0, 10, 1);
 					$userSkills = $this->function_lib->getOfferApplicantSkills($offerID, 0, 10, 1);
 					$applicants = array_column($userSkills, 'applicantID');
+					$_SESSION['skillOffset'] = count($applicants);
 					$i = 0;
 					foreach ($this->data['applicants'] as $key => $value) {
 							$x = array_search($value['applicantID'], $applicants);
