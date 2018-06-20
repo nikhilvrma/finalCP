@@ -254,11 +254,10 @@
                       <a class="btn btn-danger rejectCandidate" id = "rejectCandidate<?= $candidates['userDetails'][0][0]['userID']?>" data = "<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Reject Applicant</a>
                     <?php }else if($candidates['status'][0] == '4') { ?>
                       <a class="btn btn-danger" id = "rejectCandidate<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Rejected</a>
-                      <a class="btn btn-info unrejectCandidate" id = "unrejectCandidate<?= $candidates['userDetails'][0][0]['userID']?>" data = "<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
                     <?php }?>
 
                    </small>
-                    <a class="btn btn-primary removeFromCompare" id = "removeFromCompare<?= $candidates['userDetails'][0][0]['userID']?>" data = "<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px;">Remove From Compare</a>
+                    <a class="btn btn-primary removeFromCompare" id = "removeFromCompare<?= $candidates['userDetails'][0][0]['userID']?>" data = "<?= $candidates['userDetails'][0][0]['userID']?>" style="color: white; margin: 10px; float: right;">Remove From Compare</a>
 
                     </td>
 
@@ -282,11 +281,10 @@
                       <a class="btn btn-danger rejectCandidate" id = "rejectCandidate<?= $candidates['userDetails'][1][0]['userID']?>" data = "<?= $candidates['userDetails'][1][0]['userID']?>" style="color: white; margin: 10px;">Reject Applicant</a>
                     <?php }else if($candidates['status'][1] == '4') { ?>
                       <a class="btn btn-danger" id = "rejectCandidate<?= $candidates['userDetails'][1][0]['userID']?>" style="color: white; margin: 10px;">Rejected</a>
-                      <a class="btn btn-info unrejectCandidate" id = "unrejectCandidate<?= $candidates['userDetails'][1][0]['userID']?>" data = "<?= $candidates['userDetails'][1][0]['userID']?>" style="color: white; margin: 10px;">Remove From Reject</a>
                     <?php }?>
 
                     </small>
-                    <a class="btn btn-primary removeFromCompare" id = "removeFromCompare<?= $candidates['userDetails'][1][0]['userID']?>" data = "<?= $candidates['userDetails'][1][0]['userID']?>" style="color: white; margin: 10px;">Remove From Compare</a>
+                    <a class="btn btn-primary removeFromCompare" id = "removeFromCompare<?= $candidates['userDetails'][1][0]['userID']?>" data = "<?= $candidates['userDetails'][1][0]['userID']?>" style="color: white; margin: 10px; float: right;">Remove From Compare</a>
 
 
                     </td>
@@ -313,7 +311,6 @@
     <a class="btn btn-success selectClone" style="color: white; margin: 10px;display: none">Select Applicant</a>
               <a class="btn btn-warning shortlistClone" style="color: white; margin: 10px;display: none">Short-list Applicant</a>
               <a class="btn btn-danger rejectClone" style="color: white; margin: 10px;display: none">Reject Applicant</a>
-              <a class="btn btn-info unrejectClone" style="color: white; margin: 10px;display: none">Remove From Reject</a>
               <a class="btn btn-info removeFromClone" style="color: white; margin: 10px;display: none">Remove From Compare</a>
 
               <div id="myModal" class="modal fade" role="dialog">
@@ -393,7 +390,6 @@
           $('#mobile'+data).html(candidateDetail.mobile)
           // $('#selectCandidate'+data).remove();
           $('#selectCandidate'+data).html('Selected').removeClass('selectCandidate');
-          $('#unrejectCandidate'+data).remove();
           $('#shortlistCandidate'+data).remove();
           // $('#rejectCandidate'+data).remove();
           // $('#addToCompare'+data).remove();
@@ -442,15 +438,9 @@
       }
       $.get(url,postData).done(function(res){
         if(res == 'true'){
-          var clone = $('.unrejectClone').clone();
-          clone.addClass('unrejectCandidate');
-          clone.attr({id:'unrejectCandidate'+data, data:data});
-          $('.buttonContainer'+data).append(clone[0]);
-          clone.show();
           $('#rejectCandidate'+data).html('Rejected').removeClass('rejectCandidate');
           $('#selectCandidate'+data).remove();
           $('#shortlistCandidate'+data).remove();
-          // $('#addToCompare'+data).remove();
           alert($('#title'+data).html()+' has been successfully rejected for the Offer: '+'<?= $offerTitle?>');
           $('#myModal').modal('hide')
           $('.candidateData').empty()
@@ -489,46 +479,6 @@
     })
   })
 
-
-  $(document).ready(function(){
-    $('body').on('click', '.unrejectCandidate', function(){
-      id = $(this).attr('id')
-      data = $('#'+id).attr('data')
-      url = '<?=base_url('functions/removeFromReject')?>'
-      postData = {
-        data: data,
-        offer: <?= $offer?>
-      }
-      $.get(url,postData).done(function(res){
-        console.log(res);
-        if(res == 'true'){
-          $("#unrejectCandidate"+data).remove();
-          $('#rejectCandidate'+data).remove();
-          var selectClone = $('.selectClone').clone();
-          selectClone.addClass('selectCandidate');
-          selectClone.attr({id:'selectCandidate'+data, data:data});
-          $('.buttonContainer'+data).append(selectClone[0]);
-          selectClone.show();
-          var shortlistClone = $('.shortlistClone').clone();
-          shortlistClone.attr({id:'shortlistCandidate'+data, data:data});
-          shortlistClone.html('Shortlisted');
-          $('.buttonContainer'+data).append(shortlistClone[0]);
-          shortlistClone.show();
-          var rejectClone = $('.rejectClone').clone();
-          rejectClone.addClass('rejectCandidate');
-          rejectClone.attr({id:'rejectCandidate'+data, data:data});
-          $('.buttonContainer'+data).append(rejectClone[0]);
-          rejectClone.show();
-          var addToClone = $('.addToClone').clone();
-          addToClone.addClass('addToCompare');
-          addToClone.attr({id:'addToCompare'+data, data:data});
-          $('.buttonContainer'+data).append(addToClone[0]);
-          addToClone.show();
-          alert($('#title'+data).html()+' has been successfully removed from rejected.');
-        }
-      })
-    })
-  })
 
 </script>
 
