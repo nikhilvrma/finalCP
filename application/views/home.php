@@ -125,7 +125,7 @@
                   </div>
                   <div class="form-group col-md-3">
                     <label for="type"><b>Gender</b></label>
-                    <select class="form-control" name="accountType" id="type" required>
+                    <select class="form-control" name="gender" id="gender" required>
                       <option value="M">Male</option>
                       <option value="F">Female</option>
                     </select>
