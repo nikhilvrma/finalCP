@@ -327,8 +327,8 @@ class Functions extends CI_Controller {
 				redirect(base_url('educational-details'));
 			}
 		}
-		if(isset($_POST['edit']) && $_POST['edit'] == 1){
-			if($this->function_lib->getUserIDForEducation($_POST['id']) != $_SESSION['user_data']['userID']){
+		if(isset($_POST['edit'])){
+			if($this->function_lib->getUserIDForEducation($_POST['edit']) != $_SESSION['user_data']['userID']){
 				redirect(base_url('404'));
 			}
 		}
