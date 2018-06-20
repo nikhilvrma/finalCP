@@ -144,6 +144,7 @@ class Functions extends CI_Controller {
 		$password = '';
 		$cpassword = '';
 		$accountType = '';
+		$gender = '';
 		if($x = $this->input->post('name')){
 			$name = $x;
 		}
@@ -162,6 +163,9 @@ class Functions extends CI_Controller {
 		if($x = $this->input->post('accountType')){
 			$accountType = $x;
 		}
+		if($x = $this->input->post('gender')){
+			$gender = $x;
+		}
 		if($password == $cpassword){
 			if($this->function_lib->checkEMailExist($email)){
 				$this->session->set_flashdata('message', array('content'=>'This E-Mail Address already exists. Please Try Again.','color'=>'red'));
@@ -178,12 +182,16 @@ class Functions extends CI_Controller {
 						$this->session->set_flashdata('message', array('content'=>'Something Went Wrong. Please Try Again.','color'=>'red'));
 						redirect(base_url());
 					}
+					if($gender != 'M' && $gender != 'F'){
+						$gender = 'M';
+					}
 					$data = array(
 						'name' => $name,
 						'email' => $email,
 						'mobile' => $mobile,
 						'password' => $password,
-						'accountType' => $accountType
+						'accountType' => $accountType,
+						'gender' => $gender
 					);
 					$result = $this->function_lib->register($data);
 					if($result){

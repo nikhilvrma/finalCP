@@ -223,14 +223,11 @@
 
     <script src="<?= base_url('assets/ckeditor/ckeditor.js')?>"></script>
     <script type="text/javascript">
-      education = '<?= json_encode($userData['education'])?>'
+      education = '<?php if(isset($userData['education'])){ echo json_encode($userData['education']);}else{echo "null";}?>'
       skills = '<?= json_encode($offerSkills)?>'
       allSkillSatisfied = '<?= json_encode($allSkillSatisfied)?>'
       education = JSON.parse(education)
       skills = JSON.parse(skills)
-      console.log(skills)
-      console.log(education)
-      console.log(allSkillSatisfied)
       $(document).ready(function(){
         $('body').on('click','.applyNow', function(){
           if(!education[1] || !education[2] || !education[3]){
