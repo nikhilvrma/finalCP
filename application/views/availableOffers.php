@@ -66,14 +66,13 @@
 
           <div class="row">
             <div class="col-md-12 mb-4">
-              <?php if(!empty($offers)){
-                $i = 0;
+              <?php $j = 0; if(!empty($offers)){
               foreach($offers as $offer){
                 date_default_timezone_set("Asia/Kolkata");
           			$date = strtotime($offer['applicationDeadline']);
           			$timestamp = time();
           			if(!($date<=$timestamp)){
-                  $i++;
+                  $j++;
                 ?>
               <div class="card">
                 <h6 class="card-header cardheader"><?= $offer['offerTitle']?></h6>
@@ -102,7 +101,7 @@
                 </div>
               </div>
               <br>
-            <?php }}}else{ echo "<center>There are no Offers Available Yet.</center>"; } if($i == 0){echo "<center>There are no Offers Available Yet.</center>";}?>
+            <?php }}}else{ echo "<center>There are no Offers Available Yet.</center>"; } if(!empty($offers) && $j == 0){echo "<center>There are no Offers Available Yet.</center>";}?>
               <div class ="offerCont"></div>
             </div>
 

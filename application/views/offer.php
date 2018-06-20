@@ -166,7 +166,7 @@
                         <?php }?>
                         <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] == 2){
                           if($offerDetails[0]['approved'] == 0){?>
-                           <p class="card-text" style="margin-top: 15px; float:right"><center><a class="btn btn-primary editoffer" target="_blank" href = "<?= base_url('edit-offer/'.$offerDetails[0]['offerID'])?>" style="color: white;">Edit Offer</a></center></p>
+                           <p class="card-text" style="margin-top: 15px; float:right"><a class="btn btn-primary editoffer" target="_blank" href = "<?= base_url('edit-offer/'.$offerDetails[0]['offerID'])?>" style="color: white;">Edit Offer</a></p>
                         <?php }}?>
 
                     </div>
