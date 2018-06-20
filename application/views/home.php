@@ -77,7 +77,7 @@
 
             <div class="row">
 
-            
+
 
           <div class="col-lg-5 mb-4 offset-md-7">
           <div class="card h-100" style="opacity: 0.9">
@@ -116,11 +116,18 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div class="form-group col-md-12">
+                  <div class="form-group col-md-9">
                     <label for="type"><b>You are a _____?</b></label>
                     <select class="form-control" name="accountType" id="type" required>
                       <option value="1">Job/Internship Opportunity Seeker</option>
                       <option value="2">Employer</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="type"><b>Gender</b></label>
+                    <select class="form-control" name="accountType" id="type" required>
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
                     </select>
                   </div>
                 </div>
