@@ -141,7 +141,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="row">
-                        <center><img src="<?php echo base_url().$employerDetails['companyLogo']; ?>" style="width: 60%;">
+                        <center><img src="<?php echo base_url().$employerDetails['companyLogo']; ?>" style="width: 80%;">
                         <p class="card-text"><b><?= $employerDetails['companyName']?></b></p>
                         </center>
                         <!-- <p class="card-text"><b>Website: </b>http://www.campuspuppy.com/</p> -->
@@ -155,6 +155,7 @@
 
                         <p class="card-text" style="margin-top: 15px;"><b>Application Deadline: </b><br><?php echo date_format(date_create($offerDetails[0]['applicationDeadline']), 'd-F-Y');?></p>
                         <br>
+                        <hr>
 
                         <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] != 2){?>
                           <!-- <p class="card-text"><center><a href = "<?= base_url('functions/apply/'.$offerDetails[0]['offerID'])?>" class="btn btn-lg btn-primary" style="color: white;">Apply Now</a></center></p> -->
@@ -165,7 +166,7 @@
                         <?php }?>
                         <?php if(isset($_SESSION['user_data']['accountType']) && $_SESSION['user_data']['accountType'] == 2){
                           if($offerDetails[0]['approved'] == 0){?>
-                           <p class="card-text" style="margin-top: 15px; float:right"><a class="btn btn-primary editoffer" target="_blank" href = "<?= base_url('edit-offer/'.$offerDetails[0]['offerID'])?>" style="color: white;">Edit Offer</a></p>
+                           <p class="card-text" style="margin-top: 15px; float:right"><center><a class="btn btn-primary editoffer" target="_blank" href = "<?= base_url('edit-offer/'.$offerDetails[0]['offerID'])?>" style="color: white;">Edit Offer</a></center></p>
                         <?php }}?>
 
                     </div>
