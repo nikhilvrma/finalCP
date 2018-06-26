@@ -425,7 +425,7 @@ class Functions extends CI_Controller {
 						redirect(base_url('educational-details'));
 					}
 				}
-					if($courseBach == ''){
+					if($courseMast == ''){
 						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 						redirect(base_url('educational-details'));
 					}
@@ -556,7 +556,7 @@ class Functions extends CI_Controller {
 						redirect(base_url('educational-details'));
 					}
 				}
-					if($courseBach == ''){
+					if($courseMast == ''){
 						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 						redirect(base_url('educational-details'));
 					}
@@ -740,7 +740,7 @@ class Functions extends CI_Controller {
 				'supportingDocument' => $fileName
 			);
 
-			if($this->function_lib->addWorkExperience($data, $id)){
+			if($this->function_lib->addWorkExperience($data, $_POST['id'])){
 				$this->session->set_flashdata('message', array('content'=>'Work Experience Added Successfully.','color'=>'green'));
 				redirect(base_url('work-experience'));
 			}else{
