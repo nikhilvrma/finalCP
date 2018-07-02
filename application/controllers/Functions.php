@@ -327,8 +327,8 @@ class Functions extends CI_Controller {
 				redirect(base_url('educational-details'));
 			}
 		}
-		if(isset($_POST['edit']) && $_POST['edit'] == 1){
-			if($this->function_lib->getUserIDForEducation($_POST['id']) != $_SESSION['user_data']['userID']){
+		if(isset($_POST['edit'])){
+			if($this->function_lib->getUserIDForEducation($_POST['edit']) != $_SESSION['user_data']['userID']){
 				redirect(base_url('404'));
 			}
 		}
@@ -425,7 +425,7 @@ class Functions extends CI_Controller {
 						redirect(base_url('educational-details'));
 					}
 				}
-					if($courseBach == ''){
+					if($courseMast == ''){
 						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 						redirect(base_url('educational-details'));
 					}
@@ -556,7 +556,7 @@ class Functions extends CI_Controller {
 						redirect(base_url('educational-details'));
 					}
 				}
-					if($courseBach == ''){
+					if($courseMast == ''){
 						$this->session->set_flashdata('message', array('content'=>'Incomplete Data Inputted.','color'=>'red'));
 						redirect(base_url('educational-details'));
 					}
@@ -740,7 +740,7 @@ class Functions extends CI_Controller {
 				'supportingDocument' => $fileName
 			);
 
-			if($this->function_lib->addWorkExperience($data, $id)){
+			if($this->function_lib->addWorkExperience($data, $_POST['id'])){
 				$this->session->set_flashdata('message', array('content'=>'Work Experience Added Successfully.','color'=>'green'));
 				redirect(base_url('work-experience'));
 			}else{
