@@ -9,6 +9,7 @@
 
     <?php if($_SESSION['user_data']['accountType']=='1') { ?>
     <a href="<?php echo base_url('skills'); ?>" class="list-group-item sidebar-item <?php if($activePage=="3") { echo "sidebar-active"; } ?>">Skills</a>
+    <a href="<?php echo base_url('psychometric-evaluation'); ?>" class="list-group-item sidebar-item <?php if($activePage=="12") { echo "sidebar-active"; } ?>">Psychometric Evaluation</a>
     <a href="<?php echo base_url('educational-details'); ?>" class="list-group-item sidebar-item <?php if($activePage=="4") { echo "sidebar-active"; } ?>">Educational Details</a>
     <a href="<?php echo base_url('work-experience'); ?>" class="list-group-item sidebar-item <?php if($activePage=="5") { echo "sidebar-active"; } ?>">Work Experience</a>
     <a href="<?php echo base_url('resume'); ?>" class="list-group-item sidebar-item <?php if($activePage=="6") { echo "sidebar-active"; } ?>">Resume</a>

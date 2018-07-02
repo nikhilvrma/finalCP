@@ -92,6 +92,7 @@ $route['employer/job-offers'] = 'home/jobOffers';
 
 $route['reset-password'] = 'home/resetPassword';
 
+$route['psychometric-evaluation'] = 'home/psychometricEvaluation';
 
 $route['404'] = 'home/pageNotFound';
 
