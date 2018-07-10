@@ -216,6 +216,26 @@ public function psychometricEvaluation(){
 			$this->data['pageTitle'] = "Psychometric Evaluation";
 			$this->data['activePage'] = "12";
 			$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+			$categories = $this->psych_lib->getPsychCategories();
+			// var_dump($categories);die;
+			$categoryResponse = array_column($categories ,'psychometricEvaluationCategoryID');
+			$userResponses = $this->psych_lib->getResponses($_SESSION['user_data']['userID']);
+			if(empty($userResponses)){
+				$this->data['empty'] = 1;
+			}else{
+				$this->data['empty'] = 0;
+			}
+			$rsponses = array();
+			for ($i = 0; $i<count($categories); $i++) {
+						$categories[$i]['responses'] = 0;
+			}
+			foreach ($userResponses as $key => $userResponse) {
+				if(in_array($userResponse['psychometricEvaluationCategoryID'],$categoryResponse)){
+			  	$search = array_search($userResponse['psychometricEvaluationCategoryID'],$categoryResponse);
+					$categories[$search]['responses']++;
+				}
+			}
+			$this->data['categories'] = $categories;
 			$this->load->view('psychometricEvaluation', $this->data);
 		}
 		else{

@@ -114,28 +114,17 @@ class Psych_lib {
 		return $CI->psych->updateResponse($data);
 	}
 
-	public function getResponses($userID, $skillID){
+	public function getPsychCategories(){
 		$CI = &get_instance();
 		$CI->load->model('psych_model','psych');
-		return $CI->psych->getResponses($userID, $skillID);
+		return $CI->psych->getPsychCategories();
 	}
 
-	public function getCorrectResponses($userID, $skillID){
+	public function getResponses($userID){
 		$CI = &get_instance();
 		$CI->load->model('psych_model','psych');
-		return $CI->psych->getCorrectResponses($userID, $skillID);
+		return $CI->psych->getResponses($userID);
 	}
 
-	public function getIncorrectResponses($userID, $skillID){
-		$CI = &get_instance();
-		$CI->load->model('psych_model','psych');
-		return $CI->psych->getIncorrectResponses($userID, $skillID);
-	}
-
-	public function getSkillMax($skillID){
-		$CI = &get_instance();
-		$CI->load->model('psych_model','psych');
-		return $CI->psych->getSkillMax($skillID);
-	}
 
 }

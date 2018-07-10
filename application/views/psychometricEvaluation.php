@@ -41,38 +41,38 @@
 
         <div class="col-md-12 control-group form-group">
           <div class="controls">
-            <h5>Other Skills</h5>
+            <h5>Psychometric Evaluation Results</h5>
           </div>
         </div>
-         <?php if(isset($otherSkills)){
-          foreach($otherSkills as $value){?>
+         <?php if($empty == 0){
+          foreach($categories as $value){?>
 
         <div class="col-lg-6 mb-4">
           <div class="card h-100">
-            <h5 class="card-header cardheader"><?= $value['skill_name']?></h5>
-            <!-- <div class="card-body">
-              <p class="card-text"><b>Skill-Score</b><h3 style="float: right;">26%</h3></p>
-            </div> -->
+            <h5 class="card-header cardheader"><?= $value['psychometricEvaluationCategory']?></h5>
+            <div class="card-body">
+              <p class="card-text"><b>Score</b><h3 style="float: right;"><?= $value['responses']?></h3></p>
+            </div>
           </div>
         </div>
         <?php }}else{?>
           <div class="col-lg-12">
-            <p><center>Abhi work karte hai ki kaise dikhana hai</center></p>
+            <p><center>Your Psychometric Evaluation has not been done please have your Psychometric Evaluation done Below.</center></p>
           </div>
         <?php } ?>
-
 
         <div class="col-md-12 control-group form-group">
           <div class="controls">
             <h5>Take Psychometric Evaluation Test</h5>
           </div>
         </div>
-
+        <?php if($empty == 1){?>
         <div class="col-md-12 control-group form-group">
           <a href = "<?= base_url('psychometric-evaluation-guidelines')?>" class="btn btn-primary mb-2 btn-lg">Start Evaluation</a>
-
-
-</div>
+        </div>
+      <?php }else{
+        echo 'Your Psychometric Evaluation has already been done. Your results have been posted above';
+      }?>
 
 
 
