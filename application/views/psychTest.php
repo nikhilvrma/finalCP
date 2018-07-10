@@ -44,10 +44,9 @@
 
               <div class="col-lg-4 mb-4">
                   <div class="card h-100">
-                    <h6 class="card-header cardheader">Skill Name</h6>
 
                     <div class="card-body">
-                      <p class="card-text"><?= $skillData['skillName']?></p>
+                      <p class="card-text">Psychometric Evaluation</p>
                     </div>
 
 
@@ -66,7 +65,7 @@
                     </div>
                   </div>
 
-                  <div class="col-lg-4 mb-4">
+                  <!-- <div class="col-lg-4 mb-4">
                       <div class="card h-100">
                         <h6 class="card-header cardheader">Remaining Question Time</h6>
 
@@ -76,11 +75,10 @@
 
 
                       </div>
-                    </div>
+                    </div> -->
 
 
                   <div class="col-lg-12 md-4">
-                    <p class="mcq" style="float: right;"><a style="font-size: 16px;" class = "skipQuestion">Skip Question (<b>Skips Left: </b><span id = "skipsLeft"><?= $skips?></span>)</a></p>
                     <p class="mcq"><strong>Question</strong></p>
                     <div class="mcq" id = "question"><?= $questionData[0]['question']?></div>
                                 <div class="options">
@@ -112,7 +110,7 @@
                                   <br><hr>
                                   <button class="btn btn-primary finishTest" style="margin-top: 10px;">FINISH TEST</button>
                               </center>
-                              
+
                   </div>
 
             </div>
@@ -121,7 +119,6 @@
       </div>
 
     </div>
-
     <?php echo $footer; ?>
 
     <?php echo $footerFiles; ?>
@@ -130,37 +127,7 @@
     <script type="text/javascript">
     var timePassed= 0;
 
-var totalTime = <?php echo $totalTime; ?>;
-// var totalTime = 90;
-var questionTime = <?= 2*$questionData[0]['expert_time']?>;
-var interval = null;
-(function ( $ ) {
-    $.fn.svgTimer = function(options) {
-
-        return this.each(function() {
-          var qtime = questionTime,r=document.getElementById('questionTimer'),temp=qtime;
-            interval = setInterval(function () {
-                var tt = temp--,hr = (tt/3600)>>0,min=((tt-hr*3600)/60)>>0,sec=(tt-min*60-hr*3600)+'';
-                if(min>0){
-                    questionTimer.textContent= min+' : '+(sec.length>1?'':'0')+sec
-                }else{
-                    questionTimer.textContent= (sec.length>1?'':'0')+sec
-                }
-                if (tt<1) {
-                    submitAnswers('0',--questionTime,tmp);
-                }
-
-            },1000);
-
-        });
-    };
-
-
-}(jQuery));
-
-$(function () {
-  $('#questionTimer').svgTimer();
-});
+var totalTime = <?= $totalTime ?>;
 
 var time = totalTime,r=document.getElementById('timer'),tmp=time;
 setInterval(function () {
@@ -184,19 +151,7 @@ $('.option').on('click', function(){
     selected = $(this).find("input[name = answer]").attr('id');
     ans = $("#"+selected).val();
 });
-$('.skipQuestion').on('click', function(){
-    data = {answer: '0', timeConsumed: totalTime-tmp, totalTime:tmp};
-   $.get('<?= base_url('skill_functions/skipQuestion')?>', data).done(function(res){
-        res = JSON.parse(res);
-        console.log(res);
-        if(res.skips!=false)
-            populate(res);
-        else{
-            populate(res);
-            $('.skipQuestion').hide();
-        }
-   })
-});
+
 
 $('#reset').on('click', function() {
    $('input[type=radio]').prop('checked', function () {
@@ -213,28 +168,22 @@ $('.submitAns').on('click', function(){
 $('.finishTest').on('click', function(){
     finishTest();
 });
-function submitAnswers(ans, timePassed, tmp){
-   data = {answer: ans, timeConsumed: timePassed, totalTime:tmp};
-   $.get('<?= base_url('skill_functions/nextQuestion')?>', data).done(function(res){
+
+function submitAnswers(ans, tmp){
+   data = {answer: ans, totalTime:tmp};
+   $.get('<?= base_url('psych_functions/nextQuestion')?>', data).done(function(res){
         if(res == 'false'){
-            window.location = "<?= base_url('skill-tests')?>";
+            window.location = "<?= base_url('psychometric-evaluation')?>";
         }
         res = JSON.parse(res);
         console.log(res);
-        if(res.skips!=false){
             populate(res);
-            $('.skipQuestion').show();
-        }
-        else{
-            populate(res);
-            $('.skipQuestion').hide();
-        }
    })
 }
 
 function finishTest(){
     clearInterval(interval);
-    window.location = "<?= base_url('skill_functions/endTest')?>";
+    window.location = "<?= base_url('psych_functions/endTest')?>";
 }
 
 function populate(res){
@@ -250,13 +199,7 @@ function populate(res){
     $('#option2').html(res.questionData.option2);
     $('#option3').html(res.questionData.option3);
     $('#option4').html(res.questionData.option4);
-    $(document).find('#skipsLeft').html(res.skipsLeft);
-    $('.skipQuestion').show();
-    questionTime = 2*res.questionData.expert_time;
     totalTime = res.totalTime;
-    clearInterval(interval);
-    $('#questionTimer').empty();
-    $('#questionTimer').svgTimer();
         var hey = setInterval(function () {
             var nc = 0;
             if (nc<=0) {

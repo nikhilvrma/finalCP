@@ -94,6 +94,7 @@ $route['reset-password'] = 'home/resetPassword';
 
 $route['psychometric-evaluation'] = 'home/psychometricEvaluation';
 $route['psychometric-evaluation-guidelines'] = 'home/psychTestGuidelines';
+$route['psychometric-evaluation-test'] = 'home/psychTest';
 
 $route['404'] = 'home/pageNotFound';
 
