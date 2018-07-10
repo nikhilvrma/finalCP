@@ -21,7 +21,21 @@ class Psych_model extends CI_Model {
 	}
 
 	public function updateResponse($data){
-		return $this->db->insert('psychometricEvaluationResponses', $data);
+		$c = 0;
+
+		foreach($data as $dat){
+			 if($this->db->insert('psychometricEvaluationResponses', $dat)){
+				 $c = $c;
+			 }else{
+				 $c++;
+			 }
+		}
+
+		if($c > 0){
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	public function addSkilltoUser($skill_id, $user_id, $score){

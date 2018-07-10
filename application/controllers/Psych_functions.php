@@ -45,7 +45,7 @@ class Psych_functions extends CI_Controller {
 			$_SESSION['userData']['psychTest']['userResponses'] = array();
 
 			if($_SESSION['userData']['psychTest']['numberQuestions'] != NULL && $_SESSION['numberQuestions'] > $_SESSION['userData']['psychTest']['numberQuestions']){
-				redirect(base_url('homeFunctions/endTest'));
+				redirect(base_url('psych_functions/endTest'));
 			}
 			redirect(base_url('psychometric-evaluation-test'));
 		}
@@ -59,7 +59,7 @@ class Psych_functions extends CI_Controller {
 			$_SESSION['userData']['psychTest']['totalTime'] = $this->input->get('totalTime');
 			$data = array(
 				'userID' => $_SESSION['user_data']['userID'],
-				'psychometricEvaluationQuestionID' => $_SESSION['questionData'][0]['questionID'],
+				'questionID' => $_SESSION['questionData'][0]['questionID'],
 				'responseOption' => $answer,
 				'psychometricEvaluationCategoryID' => $_SESSION['questionData'][0]['category'.$answer],
 				'responseAt' => date('Y-m-d H:i:s')
@@ -67,6 +67,9 @@ class Psych_functions extends CI_Controller {
 				array_push($_SESSION['userData']['psychTest']['userResponses'], $data);
 				array_push($_SESSION['userData']['psychTest']['responses'], $_SESSION['questionData'][0]['questionID']);
 				$question = $this->getQuestionDetails();
+				if(empty($question)){
+					echo 'false';die;
+				}
 				$question = $question[0];
 				$options = json_decode($question['psychometricE1psychometricEvaluationQuestionOptions']);
 				$options = (array) $options;
@@ -87,36 +90,27 @@ class Psych_functions extends CI_Controller {
 				$_SESSION['numberQuestions']++;
 				$testData['questionData'] = $_SESSION['questionData'][0];
 				if($_SESSION['userData']['psychTest']['numberQuestions'] != NULL && $_SESSION['numberQuestions'] > $_SESSION['userData']['psychTest']['numberQuestions']){
-					redirect(base_url('homeFunctions/endTest'));
+					echo 'false';die;
 				}
-
 					echo json_encode($testData);
 		}
 
 	public function endTest(){
 		$userID = $_SESSION['user_data']['userID'];
-		$psychTest = $_SESSION['userData']['currentSkill'];
-		$score = $_SESSION['userData']['psychTest']['totalScore'];
-		if($score >= 10){
-			$result = $this->skill_lib->addSkill($score, $userID, 'psychTest');
-			if(!$result){
-				$this->session->set_flashdata('message', array('content'=>'Some Error Occured. Please Try Again.','color'=>'red'));
-				$this->updateInfo();
-				redirect('skills');
-			}
-			$this->session->set_flashdata('message', array('content'=>'Congratulations, you cleared the skill Test and your skill was Successfully added to your Profile.','color'=>'green'));
+		if($this->psych_lib->updateResponse($_SESSION['userData']['psychTest']['userResponses'])){
+			$this->session->set_flashdata('message', array('content'=>'Congratulations, you completed the test your behaviour traits has been added to your profile.','color'=>'green'));
 		}else{
-			$this->session->set_flashdata('message', array('content'=>'Sorry, you were unable to clear the skill Test. Better Luck Next Time.','color'=>'red'));
+			$this->session->set_flashdata('message', array('content'=>'Something went wrong. Please Try Again','color'=>'red'));
 		}
 		$this->updateInfo();
-		redirect('skills');
+		redirect(base_url('psychometric-evaluation'));
 	}
 
 	public function updateInfo(){
 		$_SESSION['questionData'] = NULL;
 		$_SESSION['userData']['psychTest']['totalTime'] = NULL;
 		$_SESSION['userData']['psychTest']['responses'] = NULL;
-		$_SESSION['userData']['psychTest']['userResponses']
+		$_SESSION['userData']['psychTest']['userResponses'] = NULL;
 		$_SESSION['userData']['psychTest']['numberQuestions'] = NULL;
 		$_SESSION['userData']['intest'] = false;
 	}

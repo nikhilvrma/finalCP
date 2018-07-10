@@ -107,8 +107,6 @@
                     <center>
                                   <button id="reset" class="btn btn-primary" style="margin-top: 10px;">RESET</button>
                                   <button class="btn btn-primary submitAns" style="margin-top: 10px;">SUBMIT</button>
-                                  <br><hr>
-                                  <button class="btn btn-primary finishTest" style="margin-top: 10px;">FINISH TEST</button>
                               </center>
 
                   </div>
@@ -165,9 +163,9 @@ $('.submitAns').on('click', function(){
     submitAnswers(ans, totalTime-tmp, tmp);
 });
 
-$('.finishTest').on('click', function(){
-    finishTest();
-});
+// $('.finishTest').on('click', function(){
+//     finishTest();
+// });
 
 function submitAnswers(ans, tmp){
    data = {answer: ans, totalTime:tmp};
@@ -177,19 +175,19 @@ function submitAnswers(ans, tmp){
         }
         res = JSON.parse(res);
         console.log(res);
+        if(res != 'false'){
             populate(res);
+          }else{
+            finishTest();
+          }
    })
 }
 
 function finishTest(){
-    clearInterval(interval);
     window.location = "<?= base_url('psych_functions/endTest')?>";
 }
 
 function populate(res){
-    if(res.questionData == null){
-        finishTest();
-    }else{
     $('.submitAns').hide()
     $('#reset').hide();
     $('#question').empty();
@@ -208,7 +206,6 @@ function populate(res){
                 $('#reset').show()
                 }
         },1000);
-}
 }
 
 
