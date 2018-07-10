@@ -5,7 +5,7 @@ class Home extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->library(array('session', 'function_lib', 'skill_lib'));
+		$this->load->library(array('session', 'function_lib', 'skill_lib', 'psych_lib'));
 		$this->load->helper(array('url'));
 		$this->data = array();
 
@@ -144,24 +144,6 @@ class Home extends CI_Controller {
 		}
 	}
 
-	public function psychometricEvaluation(){
-		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
-		if($this->function_lib->auth()){
-			if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
-				$this->data['pageTitle'] = "Psychometric Evaluation";
-				$this->data['activePage'] = "12";
-				$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
-				$this->load->view('psychometricEvaluation', $this->data);
-			}
-			else{
-				redirect(base_url('verify-contact-details'));
-			}
-		}
-		else{
-			redirect(base_url());
-		}
-	}
-
 	public function skillTest(){
 		if($this->function_lib->skillAdded($_SESSION['user_data']['userID'], $_SESSION['userData']['currentSkill'])){
 			$this->session->set_flashdata('message', array('content'=>'This Skill has already been added to your profile.','color'=>'red'));
@@ -225,6 +207,95 @@ class Home extends CI_Controller {
 			redirect(base_url());
 		}
 	}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+public function psychometricEvaluation(){
+	if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
+	if($this->function_lib->auth()){
+		if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+			$this->data['pageTitle'] = "Psychometric Evaluation";
+			$this->data['activePage'] = "12";
+			$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+			$this->load->view('psychometricEvaluation', $this->data);
+		}
+		else{
+			redirect(base_url('verify-contact-details'));
+		}
+	}
+	else{
+		redirect(base_url());
+	}
+}
+
+
+
+public function psychTest(){
+	if($this->function_lib->skillAdded($_SESSION['user_data']['userID'], $_SESSION['userData']['currentSkill'])){
+		$this->session->set_flashdata('message', array('content'=>'This Skill has already been added to your profile.','color'=>'red'));
+		redirect(base_url('skills'));
+	}
+	if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
+	if($this->function_lib->auth()){
+		if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+			if($_SESSION['userData']['intest']){
+			// if(false){
+				$_SESSION['questionData'] = NULL;
+				$skill_id = $_SESSION['userData']['currentSkill'];
+				$_SESSION['userData']['currentSkill'] = NULL;
+				$_SESSION['userData']['currentSkillName'] = NULL;
+				$_SESSION['userData'][$skill_id]['totalScore'] = NULL;
+				$_SESSION['userData'][$skill_id]['skips'] = NULL;
+				$_SESSION['userData'][$skill_id]['skipStatus'] = NULL;
+				$_SESSION['userData'][$skill_id]['totalTime'] = NULL;
+				$_SESSION['userData'][$skill_id]['responses'] = NULL;
+				$_SESSION['userData']['intest'] = false;
+				$this->session->set_flashdata('message', array('content'=>'Page Reload Not allowed During test.','color'=>'red'));
+				redirect(base_url('skills'));
+			}
+			$_SESSION['userData']['intest'] = true;
+			$this->data['skillData']['skillID'] = $_SESSION['userData']['currentSkill'];
+			$this->data['skillData']['skillName'] = $_SESSION['userData']['currentSkillName'];
+			$this->data['questionData'] = $_SESSION['questionData'];
+			$totalTime = $_SESSION['userData'][$_SESSION['userData']['currentSkill']]['totalTime'];
+			$this->data['totalTime'] = $totalTime;
+			$this->data['skips'] = $_SESSION['userData'][$_SESSION['userData']['currentSkill']]['skips'];
+			$this->data['pageTitle'] = "Skill Test";
+			$this->data['activePage'] = "3";
+			$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+			$this->load->view('skillTest', $this->data);
+		}
+		else{
+			redirect(base_url('verify-contact-details'));
+		}
+	}
+	else{
+		redirect(base_url());
+	}
+}
+
+public function psychTestGuidelines(){
+	if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}
+	if($this->function_lib->auth()){
+		if($_SESSION['user_data']['emailVerified'] == '1' && $_SESSION['user_data']['mobileVerified'] == '1'){
+			$this->data['pageTitle'] = "Psychometric Evaluation Guidelines";
+			$this->data['activePage'] = "3";
+			$this->data['settings'] = $this->psych_lib->getTestSettings()[0];
+			$this->data['sidebar'] =  $this->load->view('commonCode/sidebar',$this->data,true);
+			$this->load->view('psychTestGuidelines', $this->data);
+		}else{
+			redirect(base_url('verify-contact-details'));
+		}
+	}
+	else{
+		redirect(base_url());
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 	public function educationalDetails(){
 		if($_SESSION['user_data']['accountType'] == 2){redirect(base_url());}

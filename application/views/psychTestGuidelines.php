@@ -42,8 +42,8 @@
               <div class="col-lg-12 mb-4">
               <p>
                 <ol>
-                  <?php if($settings['numberQuestions'] != NULL){?>
-                    <li>This test has <?= $settings['numberQuestions']?> questions.</li>
+                  <?php if($settings['numberOfQuestions'] != NULL){?>
+                    <li>This test has <?= $settings['numberOfQuestions']?> questions.</li>
                   <?php }else{ ?>
                     <li>This test has no fixed number of questions.</li>
                   <?php }?>
@@ -54,7 +54,7 @@
               </div>
               <div class="col-lg-12 mb-4">
               <center>
-                <a class="btn btn-lg btn-primary" href = "<?= base_url('skill_functions/beginTest?skillID='.$skill);?>">Start Test</a>
+                <a class="btn btn-lg btn-primary" href = "<?= base_url('psych_functions/beginTest');?>">Start Test</a>
               </center>
               </div>
 

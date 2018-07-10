@@ -1,47 +1,47 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Skill_lib {
+class Psych_lib {
 
 	public function getPremiumSkills($userID){
 		$CI = &get_instance();
-		$CI->load->model('function_model','function');
-		return $CI->function->getPremiumSkills($userID);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getPremiumSkills($userID);
 	}
 
 	public function getUserSkills($userID){
 		$CI = &get_instance();
-		$CI->load->model('function_model','function');
-		return $CI->function->getUserSkills($userID);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getUserSkills($userID);
 	}
 
 	public function getOtherSkills($userID){
 		$CI = &get_instance();
-		$CI->load->model('function_model','function');
-		return $CI->function->getOtherSkills($userID);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getOtherSkills($userID);
 	}
 
 	public function getNotAddedSkills($userID){
 		$CI = &get_instance();
-		$CI->load->model('function_model','function');
-		return $CI->function->getNotAddedSkills($userID);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getNotAddedSkills($userID);
 	}
 
 	public function getActiveSkills(){
 		$CI = &get_instance();
-		$CI->load->model('function_model','function');
-		return $CI->function->getActiveSkills();
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getActiveSkills();
 	}
 
-	public function getTestSettings($skillID){
+	public function getTestSettings(){
 		$CI = &get_instance();
-		$CI->load->model('function_model','function');
-		return $CI->function->getTestSettings($skillID);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getTestSettings();
 	}
 
 	public function checkAnswer($questionID, $answer, $test = 0){
 		$CI = &get_instance();
-		$CI->load->model('function_model', 'function');
-		$correctAnswer = $CI->function->getAnswer($questionID)[0]['answer'];
+		$CI->load->model('psych_model','psych');
+		$correctAnswer = $CI->psych->getAnswer($questionID)[0]['answer'];
 		if($answer == $correctAnswer){
 			return 1;
 		}else{
@@ -66,12 +66,12 @@ class Skill_lib {
 	{
 		$response = 0;
 		$CI = &get_instance();
-		$CI->load->model('function_model', 'function');
+		$CI->load->model('psych_model','psych');
 			date_default_timezone_set('Asia/Kolkata');
 			$time = time();
 			$date = date("d-m-Y", $time);
 			$datestamp = strtotime($date);
-			if($CI->function->addSkillToUser($skill_id, $userID, $score)){
+			if($CI->psych->addSkillToUser($skill_id, $userID, $score)){
 				return true;
 			}else{
 				return false;
@@ -80,8 +80,8 @@ class Skill_lib {
 
 	public function testAvailable($skillID){
 		$CI = &get_instance();
-		$CI->load->model('function_model', 'function');
-		if($CI->function->testAvailable($skillID) == 1){
+		$CI->load->model('psych_model','psych');
+		if($CI->psych->testAvailable($skillID) == 1){
 			return true;
 		}else{
 			return false;
@@ -90,8 +90,8 @@ class Skill_lib {
 
 	public function getSkillData($skill_id){
 		$CI = &get_instance();
-		$CI->load->model('function_model', 'function');
-		return $CI->function->getSkillData($skill_id);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getSkillData($skill_id);
 	}
 
 	public function isInTest()
@@ -102,40 +102,40 @@ class Skill_lib {
 	}
 
 
-	public function getQuestionDetails($level, $skillID){
+	public function getQuestionDetails(){
 		$CI = &get_instance();
-		$CI->load->model('function_model','function');
-		return $CI->function->getQuestionDetails($level, $skillID);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getQuestionDetails();
 	}
 
 	public function updateResponse($data){
 		$CI = &get_instance();
-		$CI->load->model('function_model', 'function');
-		return $CI->function->updateResponse($data);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->updateResponse($data);
 	}
 
 	public function getResponses($userID, $skillID){
 		$CI = &get_instance();
-		$CI->load->model('function_model', 'function');
-		return $CI->function->getResponses($userID, $skillID);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getResponses($userID, $skillID);
 	}
 
 	public function getCorrectResponses($userID, $skillID){
 		$CI = &get_instance();
-		$CI->load->model('function_model', 'function');
-		return $CI->function->getCorrectResponses($userID, $skillID);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getCorrectResponses($userID, $skillID);
 	}
 
 	public function getIncorrectResponses($userID, $skillID){
 		$CI = &get_instance();
-		$CI->load->model('function_model', 'function');
-		return $CI->function->getIncorrectResponses($userID, $skillID);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getIncorrectResponses($userID, $skillID);
 	}
 
 	public function getSkillMax($skillID){
 		$CI = &get_instance();
-		$CI->load->model('function_model', 'function');
-		return $CI->function->getSkillMax($skillID);
+		$CI->load->model('psych_model','psych');
+		return $CI->psych->getSkillMax($skillID);
 	}
 
 }
