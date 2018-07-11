@@ -38,17 +38,14 @@ class Psych_model extends CI_Model {
 		}
 	}
 
-	public function addSkilltoUser($skill_id, $user_id, $score){
-		$data = ['skillID'=> $skill_id, 'userID'=> $user_id, 'score'=> $score, 'status'=> 4, 'type' => 1];
-		// var_dump($data);die;
-		return $this->db->insert('userSkills', $data);
-	}
+public function getPsychCategories(){
+	$result = $this->db->get('psychometricEvaluationCategories')->result_array();
+	return $result;
+}
 
-
-	public function getResponses($userID, $skillID){
-		$this->db->select('count(*) as responses');
-		$this->db->join('psychometricEvaluationQuestions', 'psychometricEvaluationQuestions.psychometricEvaluationQuestionID = psychometricEvaluationResponses.questionID');
-		$result = $this->db->get_where('psychometricEvaluationResponses', array('psychometricEvaluationQuestions.skill_id'=> $skillID, 'psychometricEvaluationResponses.userID' => $userID))->result_array()[0];
+	public function getResponses($userID){
+		$this->db->select();
+		$result = $this->db->get_where('psychometricEvaluationResponses', array('userID' => $userID))->result_array();
 		return $result;
 	}
 
