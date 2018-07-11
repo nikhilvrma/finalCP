@@ -71,12 +71,7 @@
         <div class="col-md-12 control-group form-group">
           <a href = "<?= base_url('psychometric-evaluation-guidelines')?>" class="btn btn-primary mb-2 btn-lg">Start Evaluation</a>
 
-
 </div>
-
-
-
-
 
 
             </div>

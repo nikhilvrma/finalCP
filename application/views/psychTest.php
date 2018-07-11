@@ -42,24 +42,19 @@
 
 
 
-              <div class="col-lg-4 mb-4">
+              <div class="col-lg-7 mb-4">
                   <div class="card h-100">
+                    <h6 class="card-header cardheader" style="font-size: 15px;">Psychometric Evaluation</h6>
 
-                    <div class="card-body">
-                      <p class="card-text">Psychometric Evaluation</p>
-                    </div>
 
 
                   </div>
                 </div>
 
-                <div class="col-lg-4 mb-4">
+                <div class="col-lg-5 mb-4">
                     <div class="card h-100">
-                      <h6 class="card-header cardheader">Remaining Test Time</h6>
+                      <h6 class="card-header cardheader" style="font-size: 15px;">Remaining Test Time: <b><span class="card-text" style="font-size: 17px;" id = "timer"></span></b></h6>
 
-                      <div class="card-body">
-                        <p class="card-text" id = "timer"></p>
-                      </div>
 
 
                     </div>
