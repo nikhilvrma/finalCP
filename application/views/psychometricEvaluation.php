@@ -42,20 +42,16 @@
               <?php if($empty == 0){?>
         <div class="col-md-12 control-group form-group">
           <div class="controls">
-            <h5>Psychometric Evaluation Results</h5>
+            <h4><b>Psychometric Traits</b></h4>
           </div>
         </div>
+        <ul>
           <?php foreach($categories as $value){?>
 
-        <div class="col-lg-6 mb-4">
-          <div class="card h-100">
-            <h5 class="card-header cardheader"><?= $value['psychometricEvaluationCategory']?></h5>
-            <div class="card-body">
-              <p class="card-text"><b>Score</b><h3 style="float: right;"><?= $value['responses']?></h3></p>
-            </div>
-          </div>
-        </div>
-        <?php }}else{?>
+
+              <li><p class="card-text"><h5><?= $value['psychometricEvaluationCategory']?><sup><b><?php if($value['responses']< 4){echo "<span style = 'color:red'>Low</span>";}elseif($value['responses'] >= 4 && $value['responses']< 7){echo "<span style = 'color:yellow'>Medium</span>";}elseif($value['responses']> 7){echo "<span style = 'color:green'>Green</span>";}?></b></sup></h5></p></li>
+
+        <?php }?> </ul> <?php}else{?>
           <!-- <div class="col-lg-12">
             <p><center>Your Psychometric Evaluation has not been done please have your Psychometric Evaluation done Below.</center></p>
           </div> -->
@@ -63,7 +59,7 @@
 
         <div class="col-md-12 control-group form-group">
           <div class="controls">
-            <h5>Take Psychometric Evaluation Test</h5>
+            <h4><b>Take Psychometric Evaluation Test</b></h5>
           </div>
         </div>
         <?php if($empty == 1){?>

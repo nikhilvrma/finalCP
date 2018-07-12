@@ -168,8 +168,8 @@ function submitAnswers(ans, tmp){
         if(res == 'false'){
           finishTest();
         }
-        res = JSON.parse(res);
         console.log(res);
+        res = JSON.parse(res);
         populate(res);
    })
 }

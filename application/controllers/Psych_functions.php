@@ -74,6 +74,7 @@ class Psych_functions extends CI_Controller {
 				$options = json_decode($question['psychometricE1psychometricEvaluationQuestionOptions']);
 				$options = (array) $options;
 				$i = 1;
+				$option = array();
 				foreach ($options as $key => $value) {
 					$option['option'.$i] = (array)$options['option'.$i];
 					$i++;
