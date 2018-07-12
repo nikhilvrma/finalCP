@@ -41,7 +41,7 @@
 
         <div class="col-md-12 control-group form-group">
           <div class="controls">
-            <h5>Psychometric Evaluation Results</h5>
+            <h5><b>Psychometric Evaluation</b></h5>
           </div>
         </div>
          <?php if($empty == 0){
@@ -60,15 +60,15 @@
             <p><center>Your Psychometric Evaluation has not been done please have your Psychometric Evaluation done Below.</center></p>
           </div>
         <?php } ?>
-
         <div class="col-md-12 control-group form-group">
+          <hr>
           <div class="controls">
-            <h5>Take Psychometric Evaluation Test</h5>
+            <h5><b>Take Psychometric Evaluation Test</b></h5>
           </div>
         </div>
         <?php if($empty == 1){?>
         <div class="col-md-12 control-group form-group">
-          <a href = "<?= base_url('psychometric-evaluation-guidelines')?>" class="btn btn-primary mb-2 btn-lg">Start Evaluation</a>
+          <a href = "<?= base_url('psychometric-evaluation-guidelines')?>" class="btn btn-primary mb-2 btn-lg">Start Evaluation Now</a>
         </div>
       <?php }else{
         echo 'Your Psychometric Evaluation has already been done. Your results have been posted above';
