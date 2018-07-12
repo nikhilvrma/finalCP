@@ -166,15 +166,11 @@ function submitAnswers(ans, tmp){
    data = {answer: ans, totalTime:tmp};
    $.get('<?= base_url('psych_functions/nextQuestion')?>', data).done(function(res){
         if(res == 'false'){
-            window.location = "<?= base_url('psychometric-evaluation')?>";
+          finishTest();
         }
         res = JSON.parse(res);
         console.log(res);
-        if(res != 'false'){
-            populate(res);
-          }else{
-            finishTest();
-          }
+        populate(res);
    })
 }
 

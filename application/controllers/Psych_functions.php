@@ -53,7 +53,7 @@ class Psych_functions extends CI_Controller {
 		public function nextQuestion(){
 			if(!$_SESSION['userData']['intest']){
 				$this->session->set_flashdata('message', array('content'=>'You Need to Start or Resume a test to Answer.','color'=>'red'));
-				redirect(base_url('skill-tests'));
+				echo "false";
 			}
 			$answer = $this->input->get('answer');
 			$_SESSION['userData']['psychTest']['totalTime'] = $this->input->get('totalTime');

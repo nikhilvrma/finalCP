@@ -39,13 +39,13 @@
 
             <div class="row">
 
+              <?php if($empty == 0){?>
         <div class="col-md-12 control-group form-group">
           <div class="controls">
             <h5><b>Psychometric Evaluation</b></h5>
           </div>
         </div>
-         <?php if($empty == 0){
-          foreach($categories as $value){?>
+          <?php foreach($categories as $value){?>
 
         <div class="col-lg-6 mb-4">
           <div class="card h-100">
@@ -56,9 +56,9 @@
           </div>
         </div>
         <?php }}else{?>
-          <div class="col-lg-12">
+          <!-- <div class="col-lg-12">
             <p><center>Your Psychometric Evaluation has not been done please have your Psychometric Evaluation done Below.</center></p>
-          </div>
+          </div> -->
         <?php } ?>
         <div class="col-md-12 control-group form-group">
           <hr>
