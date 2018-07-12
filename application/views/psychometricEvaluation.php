@@ -49,7 +49,7 @@
           <?php foreach($categories as $value){?>
 
 
-              <li><p class="card-text"><h5><?= $value['psychometricEvaluationCategory']?><sup><b><?php if($value['responses']< 4){echo "<span style = 'color:red'>Low</span>";}elseif($value['responses'] >= 4 && $value['responses']< 7){echo "<span style = 'color:yellow'>Medium</span>";}elseif($value['responses']> 7){echo "<span style = 'color:green'>Green</span>";}?></b></sup></h5></p></li>
+              <li><p class="card-text"><h5><?= $value['psychometricEvaluationCategory']?><sup><b><?php if($value['responses']< 4){echo "<span style = 'color:red'>Low</span>";}elseif($value['responses'] >= 4 && $value['responses']< 7){echo "<span style = 'color:yellow'>Medium</span>";}elseif($value['responses']>= 7){echo "<span style = 'color:green'>Green</span>";}?></b></sup></h5></p></li>
 
         <?php }?> </ul> <?php}else{?>
           <!-- <div class="col-lg-12">

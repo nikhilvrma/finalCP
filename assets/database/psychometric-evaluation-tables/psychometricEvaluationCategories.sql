@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Host: localhost:3306
--- Generation Time: Jul 02, 2018 at 09:40 PM
--- Server version: 5.7.22-0ubuntu18.04.1
--- PHP Version: 7.2.5-0ubuntu0.18.04.1
+-- Host: localhost
+-- Generation Time: Jul 12, 2018 at 11:10 PM
+-- Server version: 5.7.22-0ubuntu0.16.04.1
+-- PHP Version: 7.0.30-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -37,11 +37,12 @@ CREATE TABLE `psychometricEvaluationCategories` (
 --
 
 INSERT INTO `psychometricEvaluationCategories` (`psychometricEvaluationCategoryID`, `psychometricEvaluationCategory`, `active`) VALUES
-(1, 'Risk Taking', 1),
-(2, 'Leadership', 1),
-(3, 'Assertive', 1),
-(4, 'Adaptive', 1),
-(5, 'Team Work', 1);
+(1, 'Team-Worker', 1),
+(2, 'Diplomatic', 1),
+(3, 'Optimistic', 1),
+(4, 'Executor/Autonomous', 1),
+(5, 'Risk-Taker', 1),
+(6, 'Leader', 1);
 
 --
 -- Indexes for dumped tables
@@ -61,7 +62,7 @@ ALTER TABLE `psychometricEvaluationCategories`
 -- AUTO_INCREMENT for table `psychometricEvaluationCategories`
 --
 ALTER TABLE `psychometricEvaluationCategories`
-  MODIFY `psychometricEvaluationCategoryID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `psychometricEvaluationCategoryID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
